@@ -63,6 +63,31 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .lk-pad button:active{background:var(--card2);transform:scale(.94)}
 .lk-pad .lk-del{color:var(--ink2);font-size:14px;font-family:var(--fb);font-weight:600}
 .lk-forgot{margin-top:18px;font-size:11.5px;color:var(--ink3);text-decoration:underline}
+#ritual{position:absolute;top:0;left:0;right:0;bottom:0;z-index:60;background:radial-gradient(120% 90% at 50% 0%,#1E1810 0%,var(--bg) 70%);display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 30px) 26px calc(env(safe-area-inset-bottom) + 26px)}
+#ritual[hidden]{display:none!important}
+.rt-mid{flex:1;display:flex;flex-direction:column;justify-content:center;padding:14px 0}
+.rt-ic{margin:0 auto 16px;display:block;animation:rtb 2.6s ease infinite}
+@keyframes rtb{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.rt-t{font-family:var(--fd);font-size:24px;font-weight:800;text-align:center}
+.rt-t em{font-style:normal;color:var(--acc)}
+.rt-s{text-align:center;color:var(--ink2);font-size:13px;line-height:1.9;margin-top:9px}
+.rt-sec{margin-top:22px}
+.rt-lab{text-align:center;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:11px}
+.rt-faces{display:flex;gap:7px;justify-content:center}
+.rt-face{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 8px;border-radius:14px;border:1.5px solid var(--line);color:var(--ink3);font-size:10.5px;transition:.18s;max-width:74px}
+.rt-face.on{color:var(--acc);border-color:var(--acc);background:var(--acc-soft);animation:pop .3s ease}
+.rt-face:active{transform:scale(.93)}
+@keyframes pop{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.rt-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.rt-chip{padding:10px 15px;border-radius:100px;border:1.5px solid var(--line);color:var(--ink2);font-size:13px;transition:.18s}
+.rt-chip.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink);font-weight:700}
+.rt-chip:active{transform:scale(.95)}
+.rt-btn{display:block;width:100%;background:var(--acc);color:var(--acc-ink);font-weight:800;font-size:15.5px;border-radius:15px;padding:15px;text-align:center;margin-top:26px;transition:.15s;font-family:var(--fd)}
+.rt-btn:active{transform:scale(.97)}
+.rt-ghost{display:block;width:100%;background:transparent;color:var(--ink2);font-size:12.5px;border-radius:13px;padding:11px;text-align:center;margin-top:9px}
+.rt-links{text-align:center;margin-top:16px}
+.rt-links button{font-size:11.5px;color:var(--ink3);text-decoration:underline;margin:0 8px}
+.rt-note{min-height:64px}
 #app{display:flex;flex-direction:column;height:100%}
 #app[hidden]{display:none!important}
 .app-head{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 16px) 20px 12px;border-bottom:1px solid var(--line)}
@@ -94,6 +119,14 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .greet-t small{display:block;font-family:var(--fb);font-size:12.5px;font-weight:400;color:var(--ink2);margin-top:5px}
 .st-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:4px 11px;margin-top:9px}
 .st-chip .ic{color:var(--acc)}
+.in-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--c-growth);border:1px dashed var(--line2);border-radius:100px;padding:4px 11px;margin-top:7px;margin-inline-end:6px}
+.otd{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px;display:flex;gap:11px;align-items:flex-start;animation:viewIn .4s ease}
+.otd-ic{width:36px;height:36px;flex:none;border-radius:11px;display:grid;place-items:center;background:var(--card2);border:1px solid var(--line2);color:var(--acc)}
+.otd-b{flex:1;min-width:0}
+.otd-b b{font-size:12px;color:var(--acc);display:block;margin-bottom:4px}
+.otd-b p{font-size:13.5px;line-height:1.7}
+.otd-b span{font-size:10.5px;color:var(--ink3)}
+.otd-x{color:var(--ink3);flex:none;padding:2px}
 .quest{margin-top:14px;border:1px solid var(--acc);background:var(--acc-soft);border-radius:16px;padding:13px 15px;display:flex;gap:11px;align-items:center}
 .quest.done{border-color:var(--good);background:rgba(132,200,142,.1)}
 .quest-ic{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line2);color:var(--acc)}
@@ -107,10 +140,22 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .qbar input{flex:1}
 .qbar .qbtn{width:46px;height:46px;flex:none;border-radius:13px;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center}
 .qbar .qbtn:active{transform:scale(.93)}
+.pred-wrap{margin-top:10px}
+.pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
+.pred-row::-webkit-scrollbar{display:none}
+.pred-chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);font-size:12px;max-width:82%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s}
+.pred-chip .ic{color:var(--acc);flex:none}
+.pred-chip:active{transform:scale(.95);border-color:var(--acc);color:var(--acc)}
+.pred-empty{font-size:11.5px;color:var(--ink3);padding:4px 2px;line-height:1.8}
 .qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .qa{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 2px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-size:10.5px;font-weight:500}
 .qa .ic{color:var(--acc)}
 .qa:active{transform:scale(.94)}
+.story-btn{display:flex;align-items:center;gap:11px;width:100%;margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:13px 15px;text-align:right;transition:.15s}
+.story-btn:active{transform:scale(.98)}
+.story-btn .sb-ic{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)}
+.story-btn b{font-size:13.5px;display:block;color:var(--ink)}
+.story-btn span{font-size:11px;color:var(--ink2)}
 .life-card{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 16px 14px;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
 .life-card:active{border-color:var(--line2)}
 .lc-top{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--ink2)}
@@ -152,8 +197,9 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .rec-btn{flex:none;align-self:center;font-size:11.5px;font-weight:600;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:7px 12px;transition:.15s}
 .rec-btn:active{transform:scale(.94)}
 .rec-off{color:var(--ink3);border-color:transparent}
-.ev{display:flex;gap:11px;align-items:flex-start;padding:11px 2px;border-bottom:1px solid var(--line)}
+.ev{display:flex;gap:11px;align-items:flex-start;padding:11px 2px;border-bottom:1px solid var(--line);cursor:pointer}
 .ev:last-child{border-bottom:none}
+.ev:active{background:var(--card2)}
 .ev-ic{width:32px;height:32px;flex:none;border-radius:10px;display:grid;place-items:center;color:var(--rc);background:var(--card);border:1px solid var(--line)}
 .ev-b{flex:1;min-width:0}
 .ev-b p{font-size:13.5px;line-height:1.6}
@@ -195,8 +241,9 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .cal-d.future{opacity:.28}
 .cal-dots{display:flex;gap:2.5px;height:5px}
 .cal-dots i{width:5px;height:5px;border-radius:50%}
-.day-ev{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--line)}
+.day-ev{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--line);cursor:pointer}
 .day-ev:last-child{border-bottom:none}
+.day-ev:active{background:var(--card2)}
 .day-time{font-size:10.5px;color:var(--ink3);flex:none;width:36px}
 .rel-sum{margin-top:14px;font-size:13px;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px;line-height:1.8}
 .rel-sum b{color:var(--ink)}
@@ -331,7 +378,6 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .mood-lg{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 8px;border-radius:14px;border:1.5px solid var(--line);color:var(--ink3);font-size:10.5px;transition:all .18s}
 .mood-lg.on{color:var(--acc);border-color:var(--acc);background:var(--acc-soft);animation:pop .32s ease}
 .mood-lg:active{transform:scale(.93)}
-@keyframes pop{0%{transform:scale(.82)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
 .dq-row{display:flex;gap:7px}
 .dq{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--line);color:var(--ink2);font-size:13px;text-align:center;transition:.15s}
 .dq.on{border-color:var(--acc);color:var(--acc);background:var(--acc-soft);font-weight:600}
@@ -344,6 +390,11 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .stp button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);color:var(--acc);font-size:18px;font-weight:700;display:grid;place-items:center}
 .stp button:active{transform:scale(.9)}
 .stp b{font-family:var(--fd);min-width:36px;text-align:center;font-size:16px}
+.ev-tools{display:flex;align-items:center;gap:10px;margin-top:9px}
+.mic-btn{width:42px;height:42px;flex:none;border-radius:13px;border:1.5px solid var(--line2);color:var(--ink2);display:grid;place-items:center;transition:.15s}
+.mic-btn.on{color:var(--bad);border-color:var(--bad);background:rgba(228,121,107,.1);animation:mq 1s ease infinite}
+.mic-btn:active{transform:scale(.92)}
+.mic-hint{font-size:11px;color:var(--ink3);line-height:1.6}
 #evDateWrap{overflow:hidden;max-height:0;transition:max-height .3s ease}
 #evDateWrap.open{max-height:90px;padding-top:12px}
 #relDateWrap{overflow:hidden;max-height:0;transition:max-height .3s ease}
@@ -378,6 +429,14 @@ html[data-theme="light"] #backdrop{background:rgba(40,32,16,.4)}
 .cat-hint{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);margin-bottom:9px;flex-wrap:wrap}
 .cat-hint b{color:var(--acc)}
 .auto-tag{font-size:10px;border:1px solid var(--line2);border-radius:100px;padding:2px 8px;color:var(--ink3)}
+.mem-hero{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.mem-big{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:var(--rc);background:var(--card);border:1.5px solid var(--rc)}
+.mem-qt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;font-size:14.5px;line-height:2;border-right:3px solid var(--rc,var(--acc));margin-bottom:10px}
+.mem-meta{font-size:11.5px;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mem-photos{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.mem-photos .att-th{width:96px;height:96px}
+.story-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 16px;font-size:14.5px;line-height:2.15;white-space:pre-wrap;margin-top:13px}
+.story-box b{color:var(--acc)}
 .more-hi{font-family:var(--fd);font-size:17px;font-weight:700;margin-bottom:3px}
 .more-sub{font-size:12px;color:var(--ink3);margin-bottom:16px}
 .more-item{display:flex;align-items:center;gap:12px;width:100%;padding:13px 4px;border-bottom:1px solid var(--line);font-size:14px;text-align:right;transition:.15s}
@@ -386,7 +445,7 @@ html[data-theme="light"] #backdrop{background:rgba(40,32,16,.4)}
 .more-item span{flex:1}
 .more-item small{color:var(--ink3);font-size:11px}
 .more-div{height:1px;background:var(--line);margin:13px 0}
-#toast{position:absolute;top:calc(env(safe-area-inset-top) + 14px);right:50%;transform:translate(50%,-160%);transition:.45s cubic-bezier(.2,.9,.3,1.15);background:var(--panel);border:1px solid var(--line2);border-right:3px solid var(--tc,var(--acc));border-radius:14px;padding:11px 15px;display:flex;gap:10px;align-items:center;z-index:70;max-width:90%;font-size:12.5px;line-height:1.6;box-shadow:0 14px 40px rgba(0,0,0,.55)}
+#toast{position:absolute;top:calc(env(safe-area-inset-top) + 14px);right:50%;transform:translate(50%,-160%);transition:.45s cubic-bezier(.2,.9,.3,1.15);background:var(--panel);border:1px solid var(--line2);border-right:3px solid var(--tc,var(--acc));border-radius:14px;padding:11px 15px;display:flex;gap:10px;align-items:center;z-index:97;max-width:90%;font-size:12.5px;line-height:1.6;box-shadow:0 14px 40px rgba(0,0,0,.55)}
 #toast.show{transform:translate(50%,0)}
 #toast .ic{color:var(--tc,var(--acc));flex:none}
 #toast span{flex:1}
@@ -438,6 +497,7 @@ html[dir="ltr"] .more-item:active{padding-right:4px;padding-left:9px}
 html[dir="ltr"] .hint-x{float:right}
 html[dir="ltr"] .pick-card.on::after{left:auto;right:7px}
 html[dir="ltr"] .att-x{left:auto;right:3px}
+html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--acc))}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
 </style>
@@ -456,6 +516,7 @@ html[dir="ltr"] .att-x{left:auto;right:3px}
         <button class="lk-forgot" id="lkForgot">نسيت الرمز؟</button>
       </div>
     </div>
+    <div id="ritual" hidden></div>
     <div id="ob"></div>
     <div id="app" hidden>
       <header class="app-head" id="appHead"></header>
@@ -465,6 +526,8 @@ html[dir="ltr"] .att-x{left:auto;right:3px}
     <div id="backdrop"></div>
     <div class="sheet" id="shEvent"></div>
     <div class="sheet" id="shDay"></div>
+    <div class="sheet" id="shMem"></div>
+    <div class="sheet" id="shStory"></div>
     <div class="sheet" id="shRel"></div>
     <div class="sheet" id="shContact"></div>
     <div class="sheet" id="shStats"></div>
@@ -498,7 +561,6 @@ setTimeout(function(){if(!window.__rfBooted)__rfErr('المحرك لم يُقل�
 <script>
 'use strict';
 window.__rfStage='قراءة الأدوات';
-/* =============== أدوات =============== */
 const $=s=>document.querySelector(s), $$=s=>[].slice.call(document.querySelectorAll(s));
 const put=(sel,html)=>{const el=$(sel);if(el)el.innerHTML=html;return el};
 const uid=()=>'x'+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
@@ -524,20 +586,19 @@ function pd(n){return LANG==='ar'?(n===1?'يوم':'أيام'):(n===1?'day':'days
 function calcAge(b){if(!b)return null;const d=new Date(b),n=new Date();let a=n.getFullYear()-d.getFullYear();if(n<new Date(n.getFullYear(),d.getMonth(),d.getDate()))a--;return a}
 const hashPin=p=>'r'+String(p).split('').reduce((a,c)=>((a*31+c.charCodeAt(0))|0),7).toString(36);
 
-/* =============== الترجمة =============== */
 let LANG='ar';
 const T={
  tab_home:['الرئيسية','Home'],tab_cal:['التقويم','Calendar'],tab_chat:['رفيق','Rafiq'],tab_more:['المزيد','More'],
  ti_cal:['التقويم','Calendar'],ti_life:['لوحة الحياة','Life Dashboard'],ti_relations:['العلاقات','Relationships'],ti_decisions:['مركز القرارات','Decision Center'],ti_report:['التقرير الأسبوعي','Weekly Report'],ti_twin:['التوأم الرقمي','Digital Twin'],ti_settings:['الإعدادات','Settings'],
  save:['حفظ','Save'],cancel:['إلغاء','Cancel'],del:['حذف','Delete'],done:['تم','Done'],next:['متابعة','Continue'],
  ob_h:['رفيق <em>·</em> شريك حياتك','Rafiq <em>·</em> your life companion'],
- ob_p:['ليس تطبيق مهام ولا دفتر ملاحظات. رفيقٌ يفهمك، يتذكر تفاصيلك بالصور، ويحوّل يومياتك إلى مؤشرات وقرارات أذكى.','Not a to-do app, not a notebook. Rafiq understands you, remembers your details and photos, and turns your days into signals and smarter decisions.'],
- ob_f1b:['يتذكر','Remembers'],ob_f1:[' — كل حدث تحكيه له يبقى في ذاكرته، حتى صوره',' — every event you tell him stays in memory, photos included'],
- ob_f2b:['يقيس','Measures'],ob_f2:[' — ستة مؤشرات حية لصحتك وعلاقاتك ومالك وصفائك',' — six live scores for health, relationships, money and mind'],
- ob_f3b:['يشاركك','Shares'],ob_f3:[' — تقارير أسبوعية جاهزة على واتساب بضغطة واحدة',' — weekly reports ready for WhatsApp, one tap away'],
+ ob_p:['ليس تطبيق مهام ولا دفتر ملاحظات. رفيقٌ يبدأ حوارك صباحاً ومساءً، يتوقع إيقاعك، ويحوّل ذاكرتك إلى حكايات.','Not a to-do app, not a notebook. Rafiq greets you morning and evening, predicts your rhythm, and turns your memory into stories.'],
+ ob_f1b:['يستيقظ معك','Wakes with you'],ob_f1:[' — لقاء صباحي ومسائي بلمستين: نمتك؟ نيتك؟ أغلق يومك',' — a two-tap morning and evening ritual'],
+ ob_f2b:['يتوقع','Predicts'],ob_f2:[' — يتذكر إيقاعك فيقترح يومك قبل أن تكتبه',' — learns your rhythm and suggests your day before you type it'],
+ ob_f3b:['يحكي','Tells stories'],ob_f3:[' — أسبوعك يتحول حكاية تُشارك بضغطة',' — your week becomes a story, shareable in one tap'],
  ob_start:['ابدأ الرحلة','Start the journey'],
  ob2_h:['كيف <em>نناديك</em>؟','What should <em>we call you</em>?'],
- ob2_p:['سأناديك بهذا الاسم في كل محادثة وتقرير.','I will use this name in every conversation and report.'],
+ ob2_p:['سأناديك بهذا الاسم في كل محادثة وحكاية.','I will use this name in every conversation and story.'],
  lbl_name:['اسمك','Your name'],ph_name:['مثال: مراد','e.g. Murad'],lbl_job:['مهنتك (اختياري)','Occupation (optional)'],ph_job:['مثال: مهندس، طالب، رائد أعمال','e.g. engineer, student, founder'],
  need_name:['أخبرني أولاً كيف أناديك','First tell me what to call you'],
  ob3_h:['أين تريد أن <em>يساندك</em>؟','Where do you want <em>his support</em>?'],
@@ -561,12 +622,13 @@ const T={
  tag_pos:[' · إيجابي',' · positive'],tag_neg:[' · سلبي',' · negative'],
  a2hs:['<b>اجعل رفيق تطبيقاً حقيقياً:</b> من سفاري اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية» — يفتح بملء الشاشة ويحفظ بياناتك بإحكام.','<b>Make Rafiq a real app:</b> in Safari tap Share then “Add to Home Screen” — it opens full-screen and keeps your data safe.'],
  a2hs_ok:['فهمت','Got it'],
- ev_t:['حدث جديد','New event'],ev_ph:['ماذا حدث اليوم؟ اكتب ببساطة كما تحكي لصديق…','What happened? Write it simply, like telling a friend…'],
+ ev_t:['حدث جديد','New event'],ev_edit_t:['تعديل الحدث','Edit event'],ev_ph:['ماذا حدث اليوم؟ اكتب ببساطة كما تحكي لصديق…','What happened? Write it simply, like telling a friend…'],
  ev_cat:['التصنيف','Category'],ev_auto:['تلقائي','auto'],ev_sensed:['فهم رفيق: ','Rafiq sensed: '],
  ev_mood:['مزاجك حول هذا الحدث (اختياري)','Your mood about it (optional)'],
  ev_att:['مرفقات — صور اللحظة (حتى صورتين)','Attachments — photos (up to two)'],
  ev_date:['التاريخ','Date'],dq_today:['اليوم','Today'],dq_yest:['أمس','Yesterday'],dq_custom:['تاريخ محدد','Pick a date'],
- ev_save:['حفظ الحدث','Save event'],
+ ev_save:['حفظ الحدث','Save event'],ev_update:['تحديث الحدث','Update event'],
+ ev_updated:['حُدّث الحدث — الذاكرة محدثة','Event updated — memory refreshed'],
  need_text:['اكتب الحدث أولاً — حتى سطر واحد يكفي','Write the event first — one line is enough'],
  need_date:['اختر التاريخ','Pick a date'],
  future:['لا أستطيع توثيق المستقبل — اختر اليوم أو أقدم','I cannot document the future — pick today or earlier'],
@@ -692,13 +754,15 @@ const T={
  st_wa_r:['تقرير الأسبوع','Weekly report'],st_wa_r_p:['رسالة جاهزة تلخص مؤشراتك وإنجازك وتوصياتك.','A ready message with your scores, wins and tips.'],
  st_wa_t:['بصمة التوأم','Twin fingerprint'],st_wa_t_p:['ملخص شخصيتك الرقمية ومصادر طاقتك.','Your digital personality and energy sources.'],
  st_wa_note:['يفتح واتساب برسالة معبأة تختار محادثتها — من جهازك مباشرة دون خوادم وسيطة.','Opens WhatsApp with a pre-filled message you address — straight from your device.'],
- more_hi:['أهلاً ','Hi '],more_sub:['رفيق نسخة 2.2 · كل بياناتك على جهازك وحدك','Rafiq v2.2 · all data stays on your device'],
+ more_hi:['أهلاً ','Hi '],more_sub:['رفيق نسخة 2.5 · كل بياناتك على جهازك وحدك','Rafiq v2.5 · all data stays on your device'],
  m_life:['لوحة الحياة','Life dashboard'],m_life_s:['سداسي المؤشرات','The six-sided view'],
  m_cal:['التقويم','Calendar'],m_cal_s:['ذكرياتك يوماً بيوم','Your days, one by one'],
  m_twin:['التوأم الرقمي','Digital twin'],m_twin_s:['أنماطك وتوقعاتك','Patterns and forecasts'],
  m_rel:['العلاقات','Relationships'],m_rel_s:['شبكتك الإنسانية','Your human circle'],
  m_dec:['مركز القرارات','Decision center'],m_dec_s:['قبل أن تخاطر','Before you risk it'],
  m_rep:['التقرير الأسبوعي','Weekly report'],m_rep_s:['مرايا أسبوعك','Your week, reflected'],
+ m_story:['حكاياتي','My stories'],m_story_s:['ذاكرتك تُروى لا تُسرد','Your memory, told not listed'],
+ m_ritual:['لقاء اليوم','Daily check-in'],m_ritual_s:['صباحي أو مسائي — بلمستين','Morning or evening — two taps'],
  m_set:['الإعدادات','Settings'],m_set_s:['الملف · القفل · المظهر · اللغة','Profile · lock · appearance · language'],
  m_exp:['تصدير نسخة احتياطية','Export backup'],m_exp_s:['rafiq-backup.json مع الصور','rafiq-backup.json with photos'],
  m_imp:['استيراد نسخة احتياطية','Import backup'],m_imp_s:['للانتقال بين الأجهزة','Move between devices'],
@@ -734,9 +798,8 @@ const T={
  rec_rem_t:['تذكير منك لنفسك','A reminder from you to you'],
  rec_rem_done:['أُنجز التذكير — أحسنت','Reminder done — well played'],
  wa_rep_r:['إعادة الإرسال','Resend'],
- seed_ready:['مرحباً ','Welcome '],seed_ready2:[' — بيئة حية جاهزة: تقويم وصور وتوأم وقفل وإعدادات. تنقّل بحرية',' — a living playground: calendar, photos, twin, lock and settings. Explore freely'],
+ seed_ready:['مرحباً ','Welcome '],seed_ready2:[' — بيئة حية جاهزة. جرّب اللقاء والتنبؤ والحكايات',' — a living playground. Try the check-in, predictions and stories'],
  prep:['أجهّز لك بيئة حية…','Preparing a living playground…'],
- /* 2.2 */
  q_t:['مهمة اليوم','Today quest'],
  q_log:['وثّق لحظة واحدة من يومك — سطر واحد يكفي','Document one moment of your day — one line is enough'],
  q_mood:['سجل مزاجك الآن — وقود مؤشر النفسية','Log your mood now — fuel for your mind score'],
@@ -748,7 +811,7 @@ const T={
  undo:['تراجع','Undo'],
  undo_ok:['تراجعنا — لم يُسجل شيء','Undone — nothing was logged'],
  qa_ev:['حدث','Event'],qa_ct:['تواصل','Contact'],qa_dec:['قرار','Decision'],qa_rep:['تقرير','Report'],
- qa_ph:['سطر واحد يكفي… مثال: ركضت 3 كم','One line is enough… e.g. ran 3 km'],
+ qa_ph:['سطر واحد يكفي… أو اضغط توقعاتي بالأسفل','One line is enough… or tap my predictions below'],
  qa_saved:['سُجل فوراً — ','Logged instantly — '],
  pf_t:['ملخص أدائك','Your performance'],
  pf_day:['يوم','Day'],pf_week:['أسبوع','Week'],pf_month:['شهر','Month'],
@@ -775,11 +838,46 @@ const T={
  pick_t:['مع من تواصلت؟','Who did you contact?'],
  pick_empty:['لا أسماء في شبكتك بعد — أضف شخصاً أولاً من شاشة العلاقات','No names in your circle yet — add someone from Relationships first'],
  call:['اتصال','Call'],
+ rt_m_t:['صباح الخير يا ','Good morning, '],
+ rt_m_s:['لنبدأ يومك في عشر ثوانٍ فقط','Let us start your day in ten seconds'],
+ rt_sleep:['كيف نمتك الليلة؟','How did you sleep?'],
+ rt_intent:['وش نيّتك لهذا اليوم؟','What is your intention today?'],
+ rt_go:['ابدأ يومي','Start my day'],
+ rt_m_saved:['صباح مشرق يا ','A bright morning, '],rt_m_saved2:[' — نيتك مسجلة وسأذكّرك بها',' — your intention is set and I will hold you to it'],
+ rt_e_t:['هيا نغلق اليوم','Let us close the day'],
+ rt_e_s:['ما حدث من هذا؟ اضغط ما تحقق فعلاً — أو اكتب ملاحظة','What happened? Tap what actually did — or write a note'],
+ rt_note:['ملاحظة عن يومك (اختيارية)','A note about your day (optional)'],
+ rt_mood2:['مزاجك الآن','Your mood now'],
+ rt_close:['أغلق يومي','Close my day'],
+ rt_e_done:['أُغلق يومك — نم جيداً، أراك صباحاً','Your day is closed — sleep well, see you in the morning'],
+ rt_skip:['تخطي اللقاء اليوم','Skip today check-in'],
+ rt_never:['لا تظهر لي اللقاءات','Never show check-ins'],
+ intent_today:['نية اليوم: ',"Today's intention: "],
+ pred_t:['متوقع اليوم — بضغطة واحدة','Expected today — one tap'],
+ pred_none:['سجل أيامك أياماً قليلة وسأبدأ بتوقع إيقاعك بنفسي','Log a few days and I will start predicting your rhythm myself'],
+ pred_saved:['سُجل فوراً — ','Logged instantly — '],
+ pred_hint:['اضغط للتسجيل الفوري، وتراجع متاح بعد الحفظ','Tap to log instantly — undo available after'],
+ story_t:['حكاية ','The story of '],
+ story_week:['أسبوعك','your week'],story_month:['شهرَك','your month'],
+ story_open:['حكايتي','My story'],story_open_s:['ذاكرتك تُروى لا تُسرد','Your memory, told not listed'],
+ story_empty:['لا ذكريات كافية في هذه الفترة بعد — سجّل لحظاتك وستتحول لحكاية','Not enough memories in this period yet — log moments and they become a story'],
+ story_share:['شارك الحكاية على واتساب','Share the story on WhatsApp'],
+ story_range_w:['أسبوع','Week'],story_range_m:['شهر','Month'],
+ story_sign:['— رفيق، راوي ذاكرتك','— Rafiq, the teller of your memory'],
+ mem_edit:['تعديل','Edit'],mem_del:['حذف','Delete'],
+ mem_del_t:['حذف هذه الذكرى؟','Delete this memory?'],
+ mem_del_p:['ستُمحى نهائياً من ذاكرة رفيق وتؤثر على مؤشراتك.','It will be erased from Rafiq memory for good and your scores will adjust.'],
+ mem_deleted:['مُحيت الذكرى','Memory erased'],
+ voice_bad:['الإدخال الصوتي غير مدعوم في هذا المتصفح','Voice input is not supported in this browser'],
+ voice_on:['أستمع إليك… تحدث بوضوح','Listening… speak clearly'],
+ voice_err:['لم أسمعك جيداً — حاول مرة أخرى','I could not hear you — try again'],
+ otd_a:['في هذا اليوم ','On this day '],
+ otd_30:['قبل شهر','a month ago'],otd_90:['قبل 3 أشهر','3 months ago'],otd_180:['قبل 6 أشهر','6 months ago'],otd_365:['قبل سنة','a year ago'],
+ voice:['صوت','Voice']
 };
 function t(k){const v=T[k];return v?(LANG==='ar'?v[0]:v[1]):k}
 
 window.__rfStage='قاعدة البيانات';
-/* =============== طبقة التخزين =============== */
 const STORES=['events','rels','decisions','chat','meta'];
 const DB={driver:'mem',ok:false,_m:{},_idb:null,
  async open(){
@@ -826,7 +924,6 @@ const DB={driver:'mem',ok:false,_m:{},_idb:null,
  _lsSave(s){try{localStorage.setItem('rafiq:'+s,JSON.stringify(DB._m[s]||[]))}catch(e){}}
 };
 
-/* =============== التصنيفات =============== */
 const CATS=['health','relations','money','work','mind','growth'];
 const CAT_META={
  health:{color:'#84C88E',icon:'heart',soft:'rgba(132,200,142,.14)',ar:'الصحة',en:'Health'},
@@ -866,8 +963,14 @@ const REL_T={
  work:{ar:'عمل',en:'Work',icon:'briefcase',color:'var(--c-work)'}};
 function classify(tx){let best=null,bn=0;const s=' '+tx+' ';CATS.forEach(c=>{let n=0;KW[c].forEach(w=>{if(s.indexOf(w)>=0)n++});if(n>bn){bn=n;best=c}});return best}
 function sentiment(tx){let p=0,n=0;POS.forEach(w=>{if(tx.indexOf(w)>=0)p++});NEG.forEach(w=>{if(tx.indexOf(w)>=0)n++});return p>n?1:(n>p?-1:0)}
+function topKeyword(tx){
+ const s=' '+tx+' ';let bk=null,bn=0;
+ const list=(KW[classify(tx)||'mind']||[]);
+ list.forEach(w=>{if(s.indexOf(w)>=0)bn++;});
+ list.forEach(w=>{if(s.indexOf(w)>=0&&!bk)bk=w;});
+ return bk;
+}
 
-/* =============== الأيقونات =============== */
 const ICONS={
  heart:'<path d="M12 20s-7-4.4-9.3-8.6C1 8 2.6 4.8 5.8 4.3c1.9-.3 3.8.6 4.9 2.2L12 8l1.3-1.5c1.1-1.6 3-2.5 4.9-2.2 3.2.5 4.8 3.7 3.1 7.1C19 15.6 12 20 12 20z"/>',
  users:'<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.9-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><path d="M15.5 5.4a3 3 0 0 1 0 5.9M17 14.8c2 .5 3.4 1.9 3.9 4.2"/>',
@@ -908,13 +1011,16 @@ const ICONS={
  mail:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4.5 7.5 7.5 5.5 7.5-5.5"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.6 1.6"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.6-1.6"/>',
  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/>',
- db:'<ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/>'};
+ db:'<ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/>',
+ book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>',
+ mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
+ history:'<path d="M3.5 12a8.5 8.5 0 1 1 2.5 6"/><path d="M3.5 12V7.5M3.5 12H8"/><path d="M12 8v4.5l3 2"/>',
+ sun2:'<circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>'};
 function ic(n,s){s=s||18;return '<svg class="ic" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[n]||'')+'</svg>'}
 function logoSvg(s){s=s||46;return '<svg class="logo" width="'+s+'" height="'+s+'" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><circle cx="24" cy="24" r="17.5" stroke="#E5A83E" stroke-width="1.2" opacity=".25"/><path class="lg-ekg" d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
 function faceSvg(m,s){s=s||30;const mouth={1:'M8.4 16.6c2.4-2.2 4.8-2.2 7.2 0',2:'M8.6 16c2.1-1.3 4.7-1.3 6.8 0',3:'M8.6 15.3h6.8',4:'M8.6 14c2.1 1.3 4.7 1.3 6.8 0',5:'M8.4 13.4c2.4 2.2 4.8 2.2 7.2 0'}[m];const brow=m<=2?'<path d="M7.6 8.2l3 1.1M16.4 8.2l-3 1.1"/>':'';
  return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="9.1" cy="10" r=".7" fill="currentColor" stroke="none"/><circle cx="14.9" cy="10" r=".7" fill="currentColor" stroke="none"/><path d="'+mouth+'"/>'+brow+'</svg>'}
 
-/* =============== المظهر واللغة =============== */
 const ACCENTS={
  amber:{ar:'كهرماني',en:'Amber',dark:'#E5A83E',darkInk:'#241B08',light:'#B07A10',lightInk:'#241B08',softD:'rgba(229,168,62,.13)',softL:'rgba(176,122,16,.12)'},
  emerald:{ar:'زمردي',en:'Emerald',dark:'#5CB98C',darkInk:'#0B2417',light:'#1E7A4F',lightInk:'#F1FBF4',softD:'rgba(92,185,140,.13)',softL:'rgba(30,122,79,.12)'},
@@ -935,15 +1041,15 @@ function applyLang(){
 }
 
 window.__rfStage='الحالة';
-/* =============== الحالة =============== */
 const S={profile:{name:'',job:'',email:'',bday:'',goals:[]},
- settings:{lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false},
+ settings:{lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},
  events:[],rels:[],decisions:[],chat:[],reminders:[],
  ind:{},catDelta:{},life:50,delta:0,spark:[],recs:[],staleRels:[]};
 const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
-let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true;
-let perfR='week',csRelId=null,csDur=0,pendingUndo=null,pinBuf='',pinEdit=false;
+let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null;
+let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
+let ritualMode=null,ritualPick=null;
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
 async function loadAll(){
  S.events=(await DB.all('events')).sort((a,b)=>a.ts-b.ts);
@@ -953,7 +1059,6 @@ async function loadAll(){
  S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);
 }
 
-/* =============== المحرك =============== */
 function catScoreAt(c,until){let s=50;S.events.forEach(e=>{if(e.category!==c||e.ts>=until||e.ts<until-30*DAY)return;
  if(e.polarity>0)s+=6;else if(e.polarity<0)s-=7;else s+=1;if(e.mood)s+=(e.mood-3)*5});return clamp(Math.round(s),5,100)}
 function lifeAt(until){const v=CATS.map(c=>catScoreAt(c,until));return Math.round(v.reduce((a,b)=>a+b,0)/v.length)}
@@ -997,7 +1102,6 @@ function buildRecs(){
  return recs.filter(r=>!dismissed.has(r.id)).slice(0,4);
 }
 
-/* =============== محلل القرارات =============== */
 function analyzeDecision(title,kind){
  const m=S.ind.money,w=S.ind.work,AR=LANG==='ar',pros=[],risks=[],qs=[];
  if(kind==='buy'){pros.push(AR?'قد يوفر وقتاً أو راحة يومية إن كان ضرورة حقيقية لا رفاهية':'May save daily time or comfort if it is a real need, not a luxury');pros.push(AR?'تفكيرك الآن بمنهجية — وهذا وحده يرفع جودة القرار':'You are thinking methodically right now — that alone raises decision quality');}
@@ -1019,7 +1123,6 @@ function analyzeDecision(title,kind){
   summary:(AR?'حللتُ القرار على ضوء مؤشراتك: المال ':'Analyzed against your scores: Money ')+m+'/100, '+(AR?'العمل ':'Work ')+w+'/100.'};
 }
 
-/* =============== التقرير الأسبوعي =============== */
 function weeklyReport(off){
  off=off||0;
  const end=dayStart(Date.now())+DAY-off*7*DAY,start=end-7*DAY;
@@ -1038,10 +1141,9 @@ function weeklyReport(off){
  return {start:start,end:end,ev:ev,days:days,avgMood:avgMood,strongest:strongest,strongestN:posBy[strongest],weakest:weakest,achieve:achieve,warm:warm};
 }
 
-/* =============== ملخص الأداء =============== */
 function perfStats(range){
  const now=Date.now();
- let start=range==='day'?dayStart(now):range==='week'?dayStart(now)-6*DAY:dayStart(now)-29*DAY;
+ const start=range==='day'?dayStart(now):range==='week'?dayStart(now)-6*DAY:dayStart(now)-29*DAY;
  const ev=S.events.filter(e=>e.ts>=start);
  const acts=ev.filter(e=>e.type!=='mood');
  const pos=acts.filter(e=>e.polarity>0).length,neg=acts.filter(e=>e.polarity<0).length;
@@ -1051,7 +1153,6 @@ function perfStats(range){
  return {n:acts.length,pos:pos,neg:neg,mood:mood,contacts:contacts};
 }
 
-/* =============== مهمة اليوم =============== */
 function dailyQuest(){
  const ds=dayStart(Date.now());
  const today=S.events.filter(e=>dayStart(e.ts)===ds);
@@ -1062,6 +1163,106 @@ function dailyQuest(){
  if(S.staleRels.length)return {id:'rel',txt:t('q_rel')+S.staleRels[0].name+t('q_rel2'),act:'openPick',done:false};
  if(!acts.some(e=>e.polarity>0))return {id:'pos',txt:t('q_pos'),act:'openEvent',done:false};
  return {id:'done',txt:t('q_done_s'),act:null,done:true};
+}
+
+/* =============== التنبؤ الذكي =============== */
+function smartPredictions(n){
+ n=n||4;
+ const now=new Date(),dow=now.getDay(),hp=now.getHours();
+ const part=hp<12?'m':hp<18?'a':'e';
+ const acts=S.events.filter(e=>e.type!=='mood');
+ if(acts.length<3)return [];
+ const grp={};
+ acts.forEach(e=>{
+  const kw=topKeyword(e.text);
+  const key=kw||('tx:'+e.text);
+  if(!grp[key])grp[key]={n:0,best:null,bestSc:-1};
+  const g=grp[key];g.n++;
+  let sc=1;const d=new Date(e.ts);
+  if(d.getDay()===dow)sc+=2;
+  const p=d.getHours()<12?'m':d.getHours()<18?'a':'e';
+  if(p===part)sc+=1.5;
+  if(daysSince(e.ts)<=14)sc+=1;
+  if(e.polarity>0)sc+=0.5;
+  if(sc>g.bestSc||!g.best){g.bestSc=sc;g.best=e}
+ });
+ return Object.keys(grp).map(k=>grp[k])
+  .filter(g=>g.n>=2||g.bestSc>=3.5)
+  .sort((a,b)=>(b.n*b.bestSc)-(a.n*a.bestSc))
+  .slice(0,n).map(g=>g.best);
+}
+async function quickSaveEvent(tx,ms){
+ const cat=classify(tx)||'mind',pol=sentiment(tx);
+ const ev={id:uid(),text:tx,category:cat,polarity:pol,mood:null,ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);
+ toast(t('pred_saved')+cn(cat),'var(--acc)','check',t('undo'),async()=>{
+  await DB.del('events',ev.id);
+  S.events=S.events.filter(x=>x.id!==ev.id);
+  toast(t('undo_ok'),'var(--ink2)','x',null,null,2000);
+  refresh();
+ },ms||6000);
+ refresh();
+}
+
+/* =============== الحكايات =============== */
+function buildStory(range){
+ const days=range==='week'?7:30;
+ const start=dayStart(Date.now())-(days-1)*DAY;
+ const evs=S.events.filter(e=>e.ts>=start&&e.type!=='mood').sort((a,b)=>a.ts-b.ts);
+ const AR=LANG==='ar';
+ if(evs.length<2)return null;
+ const pos=evs.filter(e=>e.polarity>0);
+ const neg=evs.filter(e=>e.polarity<0);
+ const moods=S.events.filter(e=>e.type==='mood'&&e.ts>=start);
+ const avg=moods.length?moods.reduce((a,e)=>a+e.mood,0)/moods.length:null;
+ const best=pos.length?(pos.reduce((a,b)=>((b.mood||0)>(a.mood||0)?b:a))):null;
+ const rel=pos.filter(e=>e.category==='relations');
+ const human=rel.length?rel[rel.length-1]:null;
+ const grw=pos.filter(e=>e.category==='growth');
+ const grow=grw.length?grw[grw.length-1]:null;
+ const name=S.profile.name||(AR?'صديقي':'friend');
+ const period=range==='week'?t('story_week'):t('story_month');
+ let s='';
+ s+='«'+t('story_t')+period+'»\n\n';
+ s+=(AR?('يا '+name+'، خُضت خلال هذه الفترة '+(evs.length)+' لحظة موثقة'):('Dear '+name+', you lived '+(evs.length)+' documented moments this period'));
+ if(avg)s+=(AR?('، ومزاجك العام كان «'+mw(Math.round(avg))+'»'):(', your overall mood was "'+mw(Math.round(avg))+'"'));
+ s+='.\n\n';
+ if(best){
+  s+=(AR?('أجمل لحظة كانت حين «'+best.text+'» — يوم '+fmtShort(best.ts)+'.'):('The most beautiful moment: "'+best.text+'" on '+fmtShort(best.ts)+'.'))+'\n';
+ }
+ if(human&&(!best||human.id!==best.id)){
+  s+=(AR?('وقلبك كان في مكانه حين «'+human.text+'».\n'):('Your heart was in the right place when "'+human.text+'".\n'));
+ }
+ if(neg.length){
+  const heavy=neg[0];
+  s+=(AR?('وما يومٌ بلا ثقل: «'+heavy.text+'». لكنك عادت للضوء بعده — وهذه أجمل ما أعرفه عنك.\n'):('And no week without weight: "'+heavy.text+'". But you returned to the light after it — the finest thing I know about you.\n'));
+ }
+ if(grow&&(!best||grow.id!==best.id)){
+  s+=(AR?('ونموك لم يتوقف: «'+grow.text+'».\n'):('Your growth never paused: "'+grow.text+'".\n'));
+ }
+ s+='\n'+(AR?('الخلاصة: '+lifeWord(S.life)+' — مؤشر حياتك '+S.life+'/100.'):('In sum: '+lifeWord(S.life)+' — your life score '+S.life+'/100.'));
+ if(S.recs[0])s+='\n'+(AR?('وتوصيتي لك: '+S.recs[0].title+'.'):('And my tip: '+S.recs[0].title+'.'));
+ s+='\n\n'+t('story_sign');
+ return s;
+}
+
+/* =============== في هذا اليوم =============== */
+function onThisDay(){
+ const offs=[[30,'otd_30'],[90,'otd_90'],[180,'otd_180'],[365,'otd_365']];
+ for(let i=0;i<offs.length;i++){
+  const off=offs[i][0],key=offs[i][1];
+  const target=new Date();target.setDate(target.getDate()-off);
+  const hits=S.events.filter(e=>{
+   const d=new Date(e.ts);
+   return d.getDate()===target.getDate()&&d.getMonth()===target.getMonth()&&e.type!=='mood';
+  });
+  if(hits.length){
+   const bestP=hits.filter(e=>e.polarity>0);
+   const ev=bestP.length?bestP[bestP.length-1]:hits[hits.length-1];
+   return {ev:ev,key:key,off:off};
+  }
+ }
+ return null;
 }
 
 /* =============== واتساب =============== */
@@ -1081,7 +1282,6 @@ function twinWaText(){
  return (AR?'بصمة توأمي الرقمي — رفيق':'My digital twin fingerprint — Rafiq')+'\n\n• '+(AR?'اكتمال التوأم: ':'Twin completeness: ')+d.compl+'%\n• '+(AR?'مصدر طاقتي: ':'Energy source: ')+cn(d.energy)+'\n• '+(AR?'سلسلة التوثيق: ':'Logging streak: ')+d.streak+' '+pd(d.streak)+'\n'+(AR?'• جملة هويتي: ':'• Identity line: ')+d.idPlain+'\n\n'+(AR?'أُرسل من رفيق — شريك حياة رقمي':'Sent from Rafiq — your life companion');
 }
 
-/* =============== التوأم =============== */
 function twinData(){
  const n=S.events.length,attN=S.events.filter(e=>e.att&&e.att.length).length;
  const compl=clamp(Math.round(n*1.6+S.rels.length*4+S.decisions.length*4+attN*3+S.chat.length*.5),4,100);
@@ -1117,7 +1317,6 @@ function twinData(){
  return {compl:compl,energy:energy,energyN:posBy[energy],stress:stress,stressN:negBy[stress],when:when,idPlain:idPlain,dist:dist,avgH:avgH,wdPos:wdPos,bestWd:bestWd,streak:streak,topW:topW,rec:rec,proj:proj,projD:projD};
 }
 
-/* =============== رفيق: المحادثة =============== */
 function lifeLine(){const d=S.delta,AR=LANG==='ar';
  return (AR?'مؤشر حياتك الآن ':'Your life score is now ')+S.life+'/100 '+(d>0?(AR?'وصاعد بـ'+d+' نقاط هذا الأسبوع':'and up '+d+' points this week'):d<0?(AR?'ونازل بـ'+Math.abs(d)+' نقطة هذا الأسبوع':'and down '+Math.abs(d)+' points this week'):(AR?'ومستقر مقارنة بالأسبوع الماضي':'and steady vs last week'));}
 function rafiqReply(tx){
@@ -1159,16 +1358,23 @@ function rafiqReply(tx){
   const ex=nn.length?nn[nn.length-1]:null;
   return {text:(AR?'مصدر ضغطك الأكثر تكراراً: ':'Your most frequent pressure source: ')+cn(top)+' — '+(AR?'ظهر سلبياً ':'negative ')+cnt[top]+(AR?' مرة.\nآخر مرة: «':' times.\nLast time: "')+(ex?esc(ex.text):'')+'».\n'+(AR?'هذه الأشياء لا تُحل بتفكير أطول بل بتقليص مساحتها: ما أصغر خطوة تقلص الضغط 20% هذا الأسبوع؟':'These are not solved by longer thinking but by shrinking their space: what smallest step cuts this pressure 20% this week?')};
  }
+ if(has(/حكاية|حكايات|قصة|اقصي|story/i)){
+  const st=buildStory('week');
+  if(!st)return {text:t('story_empty')};
+  setTimeout(()=>openStorySheet(),400);
+  return {text:(AR?'جهّزت حكاية أسبوعك — ستفتح لك الآن، ويمكنك مشاركتها على واتساب.':'Your weekly story is ready — opening now, shareable on WhatsApp.')};
+ }
  if(has(/تذكرني|ذكّرني|ذكرني|remind me/i)){
   const txt=s.replace(/.*(تذكرني بـ|تذكرني ب|تذكرني|ذكّرني بـ|ذكّرني ب|ذكّرني|ذكرني|remind me to|remind me)/i,'').trim();
   if(!txt)return {text:AR?'بكل سرور — أكمل الجملة: «ذكّرني بـ…»':'With pleasure — complete the sentence: “Remind me to…”'};
   S.reminders.push({id:uid(),text:txt});saveMeta();
   return {text:AR?'سجّلته في سجل التنبيهات. سأعرضه في صفحتك الرئيسية حتى تنجزه. لن أدعك تنساه.':'Added to your reminders. It will sit on your home page until done. I will not let you forget.'};
  }
- if(has(/واتساب|واتس|whatsapp|(share|send).*(report|week)/i)){
+ if(has(/واتساب|واتس|whatsapp|(share|send).*(report|week|story)/i)){
+  if(has(/حكاية|story/)){const st=buildStory('week');if(st){setTimeout(()=>shareWa(st),400);return {text:AR?'حكايته جاهزة على واتساب — شاركها مع من تحب.':'Your story is packed for WhatsApp — share it with someone you love.'}}}
   if(has(/تقرير|أسبوع|report|week/)){setTimeout(()=>shareWa(weeklyWaText()),400);
    return {text:AR?'جهّزت تقرير أسبوعك كرسالة واتساب — ستفتح الآن، اختر المحادثة واضغط إرسال.':'Your weekly report is packed as a WhatsApp message — opening now, pick the chat and hit send.',actions:[{label:t('wa_rep_r'),run:()=>shareWa(weeklyWaText())}]}}
-  return {text:AR?'أستطيع تجهيز رسالة واتساب جاهزة: تقرير أسبوعي أو بصمة توأمك. قل: «أرسل تقريري على واتساب».':'I can pack a WhatsApp message: weekly report or your twin fingerprint. Say: “Send my report on WhatsApp”.'};
+  return {text:AR?'أستطيع تجهيز رسالة واتساب جاهزة: تقرير أسبوعي أو بصمة توأمك أو حكايتهم.':'I can pack a WhatsApp message: weekly report, twin fingerprint or your story.'};
  }
  if(has(/وش سويت|وش فعلت|ماذا فعلت|ماذا سجلت|يومياتي|سجلات اليوم|أحداث اليوم|حدث اليوم|أمس|البارحة|yesterday|what did i (do|log)|my day/i)){
   const wantY=has(/أمس|البارحة|yesterday/i);
@@ -1185,15 +1391,14 @@ function rafiqReply(tx){
  }
  if(has(/شكرا|شكرًا|مشكور|تسلم|thank|thx/i))return {text:AR?'على أتم الاستعداد دائماً. أنا لا أنجح إلا إذا نجحت أنت — وسجل يومك أولاً بأول.':'Always ready. I only succeed when you do — so log your day, first thing.'};
  if(has(/من أنت|من انت|ماذا تفعل|قدراتك|ساعدني|تساعدني|وش تقدر|who are you|what can you|help/i))
-  return {text:AR?'أنا رفيق — مدير حياتك الشخصي:\n• أحوّل يومياتك إلى ستة مؤشرات حية.\n• أراقب علاقاتك وأنبّه قبل أن تبرد.\n• أحلل قراراتك قبل أن تخسر فيها.\n• أتذكر كل شيء تسجله — بالصور.\n• وأجهّز تقاريرك على واتساب حين تريد.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your personal life manager:\n• I turn your days into six live scores.\n• I watch your relationships and warn before they cool.\n• I stress-test decisions before they cost you.\n• I remember everything you log — photos included.\n• And I pack your reports for WhatsApp on demand.\nAll of it on your device — your data belongs to you alone.'};
+  return {text:AR?'أنا رفيق — مدير حياتك الشخصي:\n• أبدأ يومك بلقاء صباحي وأنهيه بلقاء مسائي.\n• أتوقع إيقاعك فأقترح يومك قبل أن تكتبه.\n• أحوّل ذاكرتك حكايات تُشارك.\n• أراقب علاقاتك وأحلل قراراتك.\n• وأتذكر كل شيء — بالصور والصوت.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your personal life manager:\n• I greet your morning and close your evening.\n• I predict your rhythm and suggest your day.\n• I turn your memory into shareable stories.\n• I watch relationships and stress-test decisions.\n• And I remember everything — photos and voice.\nAll of it on your device — your data belongs to you alone.'};
  if(has(/حزين|تعبان|مرهق|مكتئب|depressed|exhausted/i))
   return {text:AR?'أنا معك. الأيام الثقيلة تمر أسرع حين تُكتب. ما الذي أثقل عليك تحديداً اليوم؟ سجّله وأنا أتصرف بالباقي — وحتى لو كان مجرد كلام، هنا مكانه الآمن.':'I am with you. Heavy days pass faster when written. What weighed on you today, exactly? Log it and I handle the rest — even if it is just words, this is their safe place.'};
- const fb=AR?['أسمعك تماماً. هل نحوّل ما قلته إلى حدث؟ اضغط (+) واكتبه — سأصنفه تلقائياً وأربطه بمؤشراتك.','جرّبني: «كيف حالي؟» أو «وش سجلت أمس؟» أو «أفكر بـ…» أو «أرسل تقريري واتساب».','سأحتفظ بكلامك في ذاكرتي. بالمناسبة — هل أنجزت مهمة اليوم في الصفحة الرئيسية؟']
- :['I hear you. Shall we turn this into an event? Tap (+) and write it — I will classify it and wire it to your scores.','Try me: “How am I?” or “What did I log yesterday?” or start with “I am thinking of…”','Your words stay in my memory. By the way — did you complete the daily quest on your home page?'];
+ const fb=AR?['أسمعك تماماً. هل نحوّل ما قلته إلى حدث؟ اضغط (+) واكتبه — أو جرّب «حكاية أسبوعي».','جرّبني: «كيف حالي؟» أو «حكاية أسبوعي» أو «أفكر بـ…».','سأحتفظ بكلامك في ذاكرتي. بالمناسبة — هل أغلقنا يوم أمس بلقاء المساء؟']
+ :['I hear you. Shall we turn this into an event? Tap (+) and write it — or try “my weekly story”.','Try me: “How am I?” or “my weekly story” or start with “I am thinking of…”','Your words stay in my memory. By the way — did we close yesterday with the evening check-in?'];
  return {text:fb[Math.floor(Math.random()*fb.length)]};
 }
 
-/* =============== توست ومودال =============== */
 let toastTimer,toastAct=null;
 function toast(msg,color,icon,actLabel,actFn,ms){
  const el=$('#toast');if(!el)return;
@@ -1219,7 +1424,6 @@ function openSheet(id){const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('sho
 function closeSheets(){$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
 
 window.__rfStage='البذر والترحيب';
-/* =============== البذر التجريبي =============== */
 async function seedDemo(){
  const now=Date.now(),AR=LANG==='ar';
  const mk=(d,h,mi,a,en,cat,pol,mood)=>({id:uid(),seed:true,text:AR?a:en,category:cat,polarity:pol,mood:(mood===undefined?null:mood),ts:now-d*DAY+h*36e5+mi*6e4});
@@ -1263,11 +1467,10 @@ async function finalizeSeed(){
  d1.analysis=analyzeDecision(d1.title,d1.kind);await DB.put('decisions',d1);
  const d2={id:uid(),seed:true,title:AR?'الاستثمار في صندوق مؤشرات':'Index fund investing',kind:'invest',amount:AR?'≈ 500 ر.س شهرياً':'≈ SAR 500 monthly',status:'open',ts:Date.now()-1*DAY};
  d2.analysis=analyzeDecision(d2.title,d2.kind);await DB.put('decisions',d2);
- await DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:AR?('أهلاً بك يا '+(S.profile.name||'صديقي')+'. أنا رفيق — أراقب يومياتك بهدوء وأحوّلها إلى فهم.\nجرّبني: «كيف حالي؟» أو «وش سجلت أمس؟» أو شاركني قراراً يبدأ بـ «أفكر بـ…».'):(('Welcome, '+(S.profile.name||'friend'))+'. I am Rafiq — I quietly watch your days and turn them into understanding.\nTry me: “How am I?” or “What did I log yesterday?” or share a decision starting with “I am thinking of…”.')});
+ await DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:AR?('أهلاً بك يا '+(S.profile.name||'صديقي')+'. أنا رفيق — أبدأ صباحك، أتوقع يومك، وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «كيف حالي؟» أو شاركني قراراً يبدأ بـ «أفكر بـ…».'):(('Welcome, '+(S.profile.name||'friend'))+'. I am Rafiq — I open your morning, predict your day and tell your memory.\nTry: “my weekly story” or “How am I?” or share a decision starting with “I am thinking of…”.')});
  await saveMeta();
 }
 
-/* =============== الترحيب =============== */
 let obStep=1;const obData={goals:new Set()};
 function renderOb(){
  killSplash();
@@ -1278,9 +1481,9 @@ function renderOb(){
   ob.innerHTML=langBtns+'<div class="ob-mid">'+logoSvg(84)+
    '<h1 class="ob-h">'+t('ob_h')+'</h1><p class="ob-p">'+t('ob_p')+'</p>'+
    '<div class="ob-feats">'+
-   '<div class="ob-feat">'+ic('brain',20)+'<p><b>'+t('ob_f1b')+'</b>'+t('ob_f1')+'</p></div>'+
-   '<div class="ob-feat">'+ic('pulse',20)+'<p><b>'+t('ob_f2b')+'</b>'+t('ob_f2')+'</p></div>'+
-   '<div class="ob-feat">'+ic('shield',20)+'<p><b>'+(LANG==='ar'?'يحميك':'Protects you')+'</b>'+(LANG==='ar'?' — قفل برمز سري وبياناتك على جهازك وحدك':' — PIN lock, and your data stays on your device only')+'</p></div>'+
+   '<div class="ob-feat">'+ic('sun2',20)+'<p><b>'+t('ob_f1b')+'</b>'+t('ob_f1')+'</p></div>'+
+   '<div class="ob-feat">'+ic('spark',20)+'<p><b>'+t('ob_f2b')+'</b>'+t('ob_f2')+'</p></div>'+
+   '<div class="ob-feat">'+ic('book',20)+'<p><b>'+t('ob_f3b')+'</b>'+t('ob_f3')+'</p></div>'+
    '</div></div>'+ind+'<div class="ob-nav"><button class="btn" data-ob-next="2">'+t('ob_start')+'</button></div>';
  }else if(obStep===2){
   ob.innerHTML=langBtns+'<div class="ob-mid"><h1 class="ob-h">'+t('ob2_h')+'</h1><p class="ob-p">'+t('ob2_p')+'</p>'+
@@ -1327,11 +1530,10 @@ async function obFinish(seed){
 });
 
 window.__rfStage='بناء الواجهة';
-/* =============== الهيكل =============== */
 const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings'];
 const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings'};
 function buildShell(){
- put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.2 — شريك حياة رقمي · عربي/إنجليزي · قفل PIN':'Rafiq 2.2 — Life Companion · AR/EN · PIN lock')+'</b>');
+ put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.5 — يستيقظ ويحكي · لقاء + تنبؤ + حكايات + قفل':'Rafiq 2.5 — wakes & tells · check-in + predictions + stories + lock')+'</b>');
  put('#appHead','<div class="h-brand" id="hBrand">'+logoSvg(34)+'<b>'+t('tab_chat')+'</b></div>'+
   '<div class="h-title" id="hTitle" hidden></div>'+
   '<div class="h-date" id="hDate">'+fmtDate(Date.now())+'</div>');
@@ -1365,6 +1567,7 @@ function setLang(l){
 }
 
 /* =============== القفل =============== */
+let locked=false;
 function showLock(){
  const l=$('#lock');if(!l)return;
  locked=true;pinBuf='';
@@ -1388,7 +1591,6 @@ function tryUnlock(){
   pinBuf='';drawDots();
  }
 }
-let locked=false;
 function buildLockPad(){
  const pad=$('#lkPad');if(!pad)return;
  let h='';
@@ -1396,7 +1598,6 @@ function buildLockPad(){
  h+='<button data-k="x" style="visibility:hidden"></button><button data-k="0">0</button><button class="lk-del" data-k="del">'+t('lk_del')+'</button>';
  pad.innerHTML=h;
 }
- $('#lkPad')&&null;
 document.addEventListener('click',e=>{
  const kb=e.target.closest('#lkPad [data-k]');
  if(kb){
@@ -1410,6 +1611,123 @@ document.addEventListener('click',e=>{
 document.addEventListener('visibilitychange',()=>{
  if(document.hidden&&S.settings.pin&&S.settings.pinOn)showLock();
 });
+
+/* =============== اللقاء اليومي =============== */
+const INTENTS={ar:['طاقة كاملة','يوم هادئ','إنجاز كبير','لقاءات ودّية','تعلّم جديد'],en:['Full energy','A calm day','A big win','Warm gatherings','Learn something']};
+function showRitualIfNeeded(){
+ if(S.settings.ritualOff)return;
+ const now=new Date(),h=now.getHours(),iso=isoDate(Date.now());
+ if(h>=5&&h<12&&S.settings.ritualM!==iso){openRitual('m');return true}
+ if(h>=17&&h<24&&S.settings.ritualE!==iso){openRitual('e');return true}
+ return false;
+}
+function openRitual(mode){
+ ritualMode=mode;
+ ritualPick={sleep:null,intent:null,conf:[],mood:null,note:''};
+ renderRitual();
+ const r=$('#ritual');if(r){r.hidden=false;r.scrollTop=0}
+}
+function closeRitual(){const r=$('#ritual');if(r)r.hidden=true;ritualMode=null}
+function rafiqRitualLine(){
+ const st=calcStreak(),AR=LANG==='ar';
+ if(st>1)return AR?('سلسلتك '+st+' '+pd(st)+' — لا تكسرها اليوم. أنا معك.'):('Your streak is '+st+' '+pd(st)+' — do not break it today. I am with you.');
+ return AR?('مؤشر حياتك '+S.life+'/100 — وكل يوم موثق يرفعه.'):('Your life score is '+S.life+'/100 — every documented day lifts it.');
+}
+function renderRitual(){
+ const el=$('#ritual');if(!el)return;
+ const AR=LANG==='ar';
+ const name=S.profile.name||(AR?'صديقي':'friend');
+ if(ritualMode==='m'){
+  const intents=INTENTS[AR?'ar':'en'];
+  el.innerHTML='<div class="rt-mid">'+
+   '<svg class="rt-ic" width="66" height="66" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+   '<h1 class="rt-t">'+t('rt_m_t')+'<em>'+esc(name)+'</em></h1>'+
+   '<p class="rt-s">'+t('rt_m_s')+' · '+rafiqRitualLine()+'</p>'+
+   '<div class="rt-sec"><div class="rt-lab">'+t('rt_sleep')+'</div>'+
+   '<div class="rt-faces">'+[5,4,3,2,1].map(m=>'<button class="rt-face" data-rsl="'+m+'">'+faceSvg(m,34)+'<span>'+mw(m)+'</span></button>').join('')+'</div></div>'+
+   '<div class="rt-sec"><div class="rt-lab">'+t('rt_intent')+'</div>'+
+   '<div class="rt-chips">'+intents.map(x=>'<button class="rt-chip" data-rin="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div></div>'+
+   '<button class="rt-btn" id="rtGo">'+t('rt_go')+' ✦</button>'+
+   '<div class="rt-links"><button id="rtSkip">'+t('rt_skip')+'</button><button id="rtNever">'+t('rt_never')+'</button></div>'+
+   '</div>';
+  $$('#ritual [data-rsl]').forEach(b=>b.onclick=()=>{
+   ritualPick.sleep=+b.dataset.rsl;
+   $$('#ritual [data-rsl]').forEach(x=>x.classList.toggle('on',x===b));
+  });
+  $$('#ritual [data-rin]').forEach(b=>b.onclick=()=>{
+   ritualPick.intent=b.dataset.rin;
+   $$('#ritual [data-rin]').forEach(x=>x.classList.toggle('on',x===b));
+  });
+ }else{
+  const preds=smartPredictions(4);
+  const predHtml=preds.length
+   ?'<div class="rt-chips">'+preds.map(p=>'<button class="rt-chip" data-rcf="'+esc(p.text)+'">'+esc(p.text)+'</button>').join('')+'</div>'
+   :'<p class="rt-s" style="text-align:center">'+t('pred_none')+'</p>';
+  el.innerHTML='<div class="rt-mid">'+
+   '<svg class="rt-ic" width="66" height="66" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+   '<h1 class="rt-t">'+t('rt_e_t')+'<em> ·</em> '+fmtShort(Date.now())+'</h1>'+
+   '<p class="rt-s">'+t('rt_e_s')+'</p>'+
+   '<div class="rt-sec"><div class="rt-lab">'+t('pred_t')+'</div>'+predHtml+'</div>'+
+   '<div class="rt-sec"><div class="rt-lab">'+t('rt_mood2')+'</div>'+
+   '<div class="rt-faces">'+[5,4,3,2,1].map(m=>'<button class="rt-face" data-rm="'+m+'">'+faceSvg(m,34)+'<span>'+mw(m)+'</span></button>').join('')+'</div></div>'+
+   '<div class="rt-sec"><textarea class="rt-note" id="rtNote" placeholder="'+t('rt_note')+'"></textarea></div>'+
+   '<button class="rt-btn" id="rtGo">🌙 '+t('rt_close')+'</button>'+
+   '<div class="rt-links"><button id="rtSkip">'+t('rt_skip')+'</button><button id="rtNever">'+t('rt_never')+'</button></div>'+
+   '</div>';
+  $$('#ritual [data-rcf]').forEach(b=>b.onclick=()=>{
+   const tx=b.dataset.rcf;
+   const i=ritualPick.conf.indexOf(tx);
+   if(i>=0){ritualPick.conf.splice(i,1);b.classList.remove('on')}
+   else{ritualPick.conf.push(tx);b.classList.add('on')}
+  });
+  $$('#ritual [data-rm]').forEach(b=>b.onclick=()=>{
+   ritualPick.mood=+b.dataset.rm;
+   $$('#ritual [data-rm]').forEach(x=>x.classList.toggle('on',x===b));
+  });
+ }
+ const go=$('#rtGo');
+ if(go)go.onclick=finishRitual;
+ const sk=$('#rtSkip');
+ if(sk)sk.onclick=async()=>{
+  const iso=isoDate(Date.now());
+  if(ritualMode==='m')S.settings.ritualM=iso;else S.settings.ritualE=iso;
+  await saveMeta();closeRitual();
+ };
+ const nv=$('#rtNever');
+ if(nv)nv.onclick=()=>askConfirm(t('rt_never'),LANG==='ar'?'يمكنك إعادة تفعيل اللقاءات لاحقاً من قائمة «المزيد».':'You can re-enable check-ins later from “More”.',t('done'),async()=>{S.settings.ritualOff=true;await saveMeta();closeRitual()});
+}
+async function finishRitual(){
+ const iso=isoDate(Date.now());
+ const AR=LANG==='ar';
+ if(ritualMode==='m'){
+  if(ritualPick.sleep){
+   const ev={id:uid(),type:'mood',category:'mind',mood:ritualPick.sleep,polarity:ritualPick.sleep>=4?1:ritualPick.sleep<=2?-1:0,text:AR?'مزاج الصباح':'Morning mood',ts:Date.now()};
+   await DB.put('events',ev);S.events.push(ev);
+  }
+  if(ritualPick.intent)S.settings.intent={txt:ritualPick.intent,d:iso};
+  S.settings.ritualM=iso;
+  await saveMeta();closeRitual();refresh();
+  toast(t('rt_m_saved')+(S.profile.name||'')+t('rt_m_saved2'),'var(--acc)','sun2',null,null,3200);
+ }else{
+  for(let i=0;i<ritualPick.conf.length;i++){
+   const tx=ritualPick.conf[i];
+   const ev={id:uid(),text:tx,category:classify(tx)||'mind',polarity:sentiment(tx),mood:null,ts:Date.now()-i};
+   await DB.put('events',ev);S.events.push(ev);
+  }
+  const nEl=$('#rtNote');const note=nEl?nEl.value.trim():'';
+  if(note){
+   const ev={id:uid(),text:note,category:classify(note)||'mind',polarity:sentiment(note),mood:null,ts:Date.now()};
+   await DB.put('events',ev);S.events.push(ev);
+  }
+  if(ritualPick.mood){
+   const ev={id:uid(),type:'mood',category:'mind',mood:ritualPick.mood,polarity:ritualPick.mood>=4?1:ritualPick.mood<=2?-1:0,text:AR?'مزاج المساء':'Evening mood',ts:Date.now()};
+   await DB.put('events',ev);S.events.push(ev);
+  }
+  S.settings.ritualE=iso;
+  await saveMeta();closeRitual();refresh();
+  toast(t('rt_e_done'),'var(--c-mind)','moon',null,null,3200);
+ }
+}
 
 /* =============== الرئيسية =============== */
 function isIos(){return /(iPad|iPhone|iPod)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
@@ -1428,7 +1746,6 @@ function ringHtml(val){
 }
 function countUp(el,to,dur){dur=dur||950;const t0=performance.now();(function f(tm){const k=Math.min(1,(tm-t0)/dur);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)}
 function perfHtml(){
- const AR=LANG==='ar';
  const seg=['day','week','month'].map(r=>'<button class="chip '+(perfR===r?'on':'')+'" data-act="perfR" data-r="'+r+'">'+(r==='day'?t('pf_day'):r==='week'?t('pf_week'):t('pf_month'))+'</button>').join('');
  const p=perfStats(perfR);
  const bal=p.pos-p.neg;
@@ -1443,9 +1760,25 @@ function perfHtml(){
   '</div>';
 }
 function questHtml(){
- const q=dailyQuest(),AR=LANG==='ar';
+ const q=dailyQuest();
  if(q.done)return '<div class="quest done"><div class="quest-ic">'+ic('check',19)+'</div><div class="quest-b"><b>'+t('q_done_t')+'</b><p>'+esc(q.txt)+'</p></div><span class="quest-go">'+ic('check',15)+'</span></div>';
  return '<div class="quest"><div class="quest-ic">'+ic('spark',19)+'</div><div class="quest-b"><b>'+t('q_t')+'</b><p>'+esc(q.txt)+'</p></div><button class="quest-go" data-act="questGo">'+t('q_go')+'</button></div>';
+}
+function predHtml(){
+ const preds=smartPredictions(4);
+ if(!preds.length)return '<div class="pred-wrap"><p class="pred-empty">'+t('pred_none')+'</p></div>';
+ return '<div class="pred-wrap"><h3 class="sec-t" style="margin:16px 2px 8px">'+ic('spark',15)+' '+t('pred_t')+'</h3>'+
+  '<div class="pred-row">'+preds.map(p=>'<button class="pred-chip" data-pred="'+esc(p.text)+'">'+ic('plus',13)+' '+esc(p.text)+'</button>').join('')+'</div>'+
+  '<p class="pred-empty">'+t('pred_hint')+'</p></div>';
+}
+function otdHtml(){
+ const o=onThisDay();
+ if(!o)return '';
+ const cm=CAT_META[o.ev.category]||CAT_META.mind;
+ return '<div class="otd"><div class="otd-ic">'+ic('history',18)+'</div>'+
+  '<div class="otd-b"><b>'+t('otd_a')+t(o.key)+'…</b>'+
+  '<p>'+esc(o.ev.text)+'</p><span>'+fmtShort(o.ev.ts)+' · '+cm[LANG]+'</span></div>'+
+  '<button class="otd-x" data-act="otdX">'+ic('x',14)+'</button></div>';
 }
 function renderHome(){
  const v=$('#v-home');if(!v)return;
@@ -1457,9 +1790,11 @@ function renderHome(){
  const recent=[].slice.call(S.events).sort((a,b)=>b.ts-a.ts).slice(0,5);
  const showA2hs=isIos()&&!isStandalone()&&!S.settings.a2hsDone;
  const streak=calcStreak();
+ const iso=isoDate(Date.now());
+ const intent=(S.settings.intent&&S.settings.intent.d===iso)?S.settings.intent.txt:null;
  let memHtml='';
  if(recent.length){memHtml=recent.map(e=>{const cm=CAT_META[e.category]||CAT_META.mind;
-  return '<div class="ev"><div class="ev-ic" style="--rc:'+cm.color+'">'+ic(cm.icon,16)+'</div>'+
+  return '<div class="ev" data-mem="'+e.id+'"><div class="ev-ic" style="--rc:'+cm.color+'">'+ic(cm.icon,16)+'</div>'+
   '<div class="ev-b"><p>'+esc(e.text)+'</p><span>'+timeAgo(e.ts)+' · '+cn(e.category)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
   ((e.att&&e.att.length)?'<span class="ev-th"><img src="'+e.att[0]+'" data-att="'+e.id+':0" alt=""></span>':'')+
   (e.mood?'<span class="ev-face" style="color:'+(e.mood>=4?'var(--good)':e.mood<=2?'var(--bad)':'var(--ink3)')+'">'+faceSvg(e.mood,22)+'</span>':'')+
@@ -1468,14 +1803,17 @@ function renderHome(){
  const AR=LANG==='ar';
  v.innerHTML=
   '<div class="greet-t">'+greet+'، '+esc(S.profile.name||(AR?'صديقي':'friend'))+'<small>'+fmtDate(Date.now())+' · '+t('under_watch')+'</small></div>'+
-  '<span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak today'))+'</span>'+
+  '<div><span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak today'))+'</span>'+
+  (intent?'<span class="in-chip">'+ic('sun2',13)+' '+t('intent_today')+esc(intent)+'</span>':'')+'</div>'+
+  otdHtml()+
   questHtml()+
   '<div class="qbar"><input id="quickEv" placeholder="'+t('qa_ph')+'" autocomplete="off"><button class="qbtn" data-act="quickAdd">'+ic('plus',20)+'</button></div>'+
+  predHtml()+
   '<div class="qa-grid">'+
    '<button class="qa" data-act="openEvent">'+ic('edit',19)+'<span>'+t('qa_ev')+'</span></button>'+
    '<button class="qa" data-act="openPick">'+ic('phone',19)+'<span>'+t('qa_ct')+'</span></button>'+
    '<button class="qa" data-act="openDec">'+ic('dec',19)+'<span>'+t('qa_dec')+'</span></button>'+
-   '<button class="qa" data-act="goReport">'+ic('report',19)+'<span>'+t('qa_rep')+'</span></button>'+
+   '<button class="qa" data-act="openRitual">'+ic('sun2',19)+'<span>'+(AR?'لقاء':'Check-in')+'</span></button>'+
   '</div>'+
   '<section class="life-card" data-act="goLife">'+
    '<div class="lc-top"><span class="lc-live"><span class="pulse-dot"></span> '+t('life_watch')+'</span>'+trend+'</div>'+
@@ -1487,6 +1825,7 @@ function renderHome(){
    '<div class="mood-row">'+[5,4,3,2,1].map(m=>'<button class="mood-btn '+(moodToday&&moodToday.mood===m?'on':'')+'" data-act="mood" data-m="'+m+'">'+faceSvg(m,32)+'<span>'+mw(m)+'</span></button>').join('')+'</div>'+
   '</section>'+
   perfHtml()+
+  '<button class="story-btn" data-act="openStory"><span class="sb-ic">'+ic('book',20)+'</span><span style="flex:1;min-width:0"><b>'+t('story_open')+'</b><span>'+t('story_open_s')+'</span></span>'+ic('chev',16)+'</button>'+
   (showA2hs?'<div class="hint-card">'+t('a2hs')+'<br><button class="hint-x" data-act="a2hs">'+t('a2hs_ok')+'</button></div>':'')+
   '<h3 class="sec-t">'+ic('spark',15)+' '+t('recs_t')+'</h3>'+
   '<div id="recsWrap">'+(S.recs.length?S.recs.map((r,i)=>
@@ -1561,7 +1900,7 @@ function openDaySheet(ts){
  const future=ts>dayStart(Date.now());
  let items='';
  if(list.length){items=list.map(e=>{const cm=CAT_META[e.category]||CAT_META.mind;
-  return '<div class="day-ev"><span class="day-time">'+fmtTime(e.ts)+'</span>'+
+  return '<div class="day-ev" data-mem="'+e.id+'"><span class="day-time">'+fmtTime(e.ts)+'</span>'+
    '<div class="ev-ic" style="--rc:'+cm.color+';width:30px;height:30px">'+ic(cm.icon,15)+'</div>'+
    '<div class="ev-b"><p style="font-size:13px">'+esc(e.text)+'</p><span>'+cn(e.category)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
    ((e.att&&e.att.length)?'<span class="ev-th" style="width:34px;height:34px"><img src="'+e.att[0]+'" data-att="'+e.id+':0" alt=""></span>':'')+
@@ -1630,7 +1969,7 @@ function renderLife(){
 }
 
 /* =============== المحادثة =============== */
-const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','وش سجلت أمس؟','أفكر بشراء سيارة','أرسل تقريري على واتساب','ما أكثر شيء يفرحني؟']:['How am I this week?','What did I log yesterday?','I am thinking of buying a car','Send my report on WhatsApp','What makes me happiest?'];
+const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','حكاية أسبوعي','وش سجلت أمس؟','أفكر بشراء سيارة','ما أكثر شيء يفرحني؟']:['How am I this week?','My weekly story','What did I log yesterday?','I am thinking of buying a car','What makes me happiest?'];
 function renderChat(){
  const v=$('#v-chat');if(!v)return;
  v.innerHTML=
@@ -1639,7 +1978,7 @@ function renderChat(){
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
   '<div class="composer"><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
  const list=$('#chatList');if(!list)return;
- if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك.\nجرّبني الآن، أو اضغط أحد الأسئلة الجاهزة بالأسفل.'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions.\nTry me now, or tap a ready question below.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
+ if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو أحد الأسئلة بالأسفل.'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions — and I tell your memory.\nTry: “my weekly story” or a ready question below.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
  drawMsgs();
  const inp=$('#chatInp'),snd=$('#chatSend');
  if(snd)snd.onclick=()=>{if(!inp)return;const tx=inp.value.trim();if(!tx)return;inp.value='';sendChat(tx)};
@@ -1683,7 +2022,7 @@ function renderRelations(){
    '<div class="rel-b"><b>'+esc(r.name)+'</b><span>'+rt[LANG]+' · '+t('rel_last')+' '+dTxt+'</span>'+
     '<div class="rel-bar"><i style="width:'+pct+'%;background:'+col+'"></i></div></div>'+
    '<div class="rel-acts">'+
-    '<button class="icon-btn call" data-act="contact" data-id="'+r.id+'" title="'+t('call')+'">'+ic('phone',16)+'</button>'+
+    '<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>'+
     '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
    '</div></div>'+
    '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>';});
@@ -1731,15 +2070,13 @@ async function saveContactLog(){
   text:(AR?'تواصلت مع ':'Contacted ')+r.name+(csDur?' ('+csDur+' '+t('cs_min_s')+')':''),ts:Date.now()};
  await DB.put('events',ev);S.events.push(ev);
  dismissed.add('rel:'+csRelId);
- pendingUndo={evId:ev.id,relId:csRelId,prevLast:prevLast,prevCalls:prevCalls};
+ pendingUndo;
  closeSheets();
  toast(t('contact_toast')+r.name+t('contact_toast2'),'var(--c-relations)','phone',t('undo'),async()=>{
-  const pu=pendingUndo;if(!pu)return;
-  const rel=S.rels.find(x=>x.id===pu.relId);
-  if(rel){rel.lastContact=pu.prevLast;rel.calls=pu.prevCalls;await DB.put('rels',rel)}
-  await DB.del('events',pu.evId);
-  S.events=S.events.filter(x=>x.id!==pu.evId);
-  pendingUndo=null;
+  const rel=S.rels.find(x=>x.id===csRelId);
+  if(rel){rel.lastContact=prevLast;rel.calls=prevCalls;await DB.put('rels',rel)}
+  await DB.del('events',ev.id);
+  S.events=S.events.filter(x=>x.id!==ev.id);
   toast(t('undo_ok'),'var(--ink2)','x',null,null,2200);
   refresh();
  },7000);
@@ -1750,7 +2087,6 @@ function openRelStats(rid){
  if(!r.calls)r.calls={n:0,d:0};
  const sh=$('#shStats');if(!sh)return;
  const tmp={n:r.calls.n,d:r.calls.d};
- const AR=LANG==='ar';
  function draw(){
   sh.innerHTML=
    '<div class="sh-grip"></div><div class="sh-head"><b>'+t('st_t2')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
@@ -1968,6 +2304,8 @@ function renderSettings(){
     '<button class="sw '+(st.toggles.rel?'on':'')+'" data-tg="rel"><i></i></button></div>'+
    '<div class="set-row"><div><b>'+t('st_tg_hab')+'</b><p>'+t('st_tg_hab_p')+'</p></div>'+
     '<button class="sw '+(st.toggles.habits?'on':'')+'" data-tg="habits"><i></i></button></div>'+
+   '<div class="set-row" style="border-bottom:none"><div><b>'+(AR?'لقاء الصباح والمساء':'Morning & evening check-in')+'</b><p>'+(AR?'لقاء غامر بلمستين عند فتح رفيق صباحاً أو مساءً.':'An immersive two-tap ritual when you open Rafiq morning or evening.')+'</p></div>'+
+    '<button class="sw '+(!st.ritualOff?'on':'')+'" id="rtTgl"><i></i></button></div>'+
   '</div>'+
   '<h3 class="sec-t">'+ic('wa',15)+' '+t('st_wa')+'</h3>'+
   '<div class="set-card">'+
@@ -1999,12 +2337,13 @@ function renderSettings(){
  if(pt)pt.onclick=async()=>{
   S.settings.pinOn=!S.settings.pinOn;
   await saveMeta();renderSettings();
-  if(S.settings.pinOn)toast((AR?'سيعود القفل تلقائياً عند مغادرة التطبيق':'Lock returns automatically when you leave'),'var(--acc)','shield');
  };
  const pe=$('#pinEdit');
  if(pe)pe.onclick=()=>{pinEdit=true;renderSettings()};
  const pdel=$('#pinDel');
  if(pdel)pdel.onclick=()=>askConfirm(t('st_pin_remove_t'),t('st_pin_remove_p'),t('st_pin_remove'),async()=>{S.settings.pin='';S.settings.pinOn=false;await saveMeta();renderSettings();toast(t('st_pin_removed'),'var(--ink2)','x')});
+ const rt=$('#rtTgl');
+ if(rt)rt.onclick=async()=>{S.settings.ritualOff=!S.settings.ritualOff;await saveMeta();renderSettings()};
  const lk=$('#stLink');
  if(lk)lk.onclick=async()=>{
   const emEl=$('#stEmail');const em=emEl?emEl.value.trim():'';
@@ -2021,7 +2360,6 @@ function renderSettings(){
 }
 
 window.__rfStage='شاشات الإدخال';
-/* =============== شاشات الإدخال =============== */
 function fileToDataURL(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
 function fileToText(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsText(f)})}
 async function compressImage(dataURL,max,q){
@@ -2047,8 +2385,9 @@ function moodLgHtml(){
 function buildSheets(){
  const AR=LANG==='ar';
  put('#shEvent',
-  '<div class="sh-grip"></div><div class="sh-head"><b>'+t('ev_t')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="sh-grip"></div><div class="sh-head"><b id="evTitle">'+t('ev_t')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<textarea id="evText" placeholder="'+t('ev_ph')+'"></textarea>'+
+  '<div class="ev-tools"><button class="mic-btn" id="micBtn">'+ic('mic',19)+'</button><span class="mic-hint" id="micHint">'+t('voice')+' — '+(AR?'اضغط وتحدث':'tap and speak')+'</span></div>'+
   '<div class="sug-chips" id="evSugs"></div>'+
   '<div class="cat-hint">'+t('ev_cat')+': <b id="evCatName">—</b><span class="auto-tag" id="evAutoTag">'+t('ev_auto')+'</span><span id="evSensed" style="color:var(--acc);font-size:11.5px;font-weight:600"></span></div>'+
   '<div class="pick-grid" id="evCats">'+catCardsHtml()+'</div>'+
@@ -2119,7 +2458,30 @@ function buildSheets(){
  const rs=$('#relSave');if(rs)rs.onclick=saveRel;
  $$('#decKinds .pick-card').forEach(c=>c.onclick=()=>{$$('#decKinds .pick-card').forEach(x=>x.classList.toggle('on',x===c))});
  const ds=$('#decSave');if(ds)ds.onclick=saveDec;
+ const mb=$('#micBtn');
+ if(mb)mb.onclick=startVoice;
  renderEvAtts();
+}
+function startVoice(){
+ const evText=$('#evText');if(!evText)return;
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast(t('voice_bad'),'var(--acc)','mic');return}
+ const mb=$('#micBtn'),mh=$('#micHint');
+ try{
+  const r=new SR();
+  r.lang=LANG==='ar'?'ar-SA':'en-US';
+  r.interimResults=false;r.maxAlternatives=1;
+  if(mb)mb.classList.add('on');
+  if(mh)mh.textContent=t('voice_on');
+  r.onresult=e=>{
+   const tx=e.results[0][0].transcript;
+   evText.value=evText.value?(evText.value+' '+tx):tx;
+   evText.dispatchEvent(new Event('input'));
+  };
+  r.onend=()=>{if(mb)mb.classList.remove('on');if(mh)mh.textContent=t('voice')+' — '+(LANG==='ar'?'اضغط وتحدث':'tap and speak')};
+  r.onerror=()=>{if(mb)mb.classList.remove('on');if(mh)mh.textContent=t('voice_err')};
+  r.start();
+ }catch(err){toast(t('voice_bad'),'var(--acc)','mic')}
 }
 function setEvQuick(q){
  $$('#shEvent .dq').forEach(b=>b.classList.toggle('on',b.dataset.dq===q));
@@ -2142,15 +2504,28 @@ function setEvQuick(q){
  catch(err){toast(t('c_err'),'var(--bad)','x')}
  e.target.value='';
 });
-function openEventSheet(text,cat,dateTs){
+function openEventSheet(text,cat,dateTs,evId){
  if(!$('#evText'))buildSheets();
  const evText=$('#evText');
  if(!evText)return;
- evCatPick=cat||null;evMoodPick=null;evAuto=!cat;evAttsTemp=[];
+ evEditId=evId||null;
+ evAttsTemp=[];
+ if(evId){
+  const ev=S.events.find(x=>x.id===evId);
+  if(!ev){evEditId=null}
+  else{
+   text=ev.text;cat=ev.category;dateTs=ev.ts;
+   evMoodPick=ev.mood||null;
+   if(ev.att)evAttsTemp=[].concat(ev.att);
+  }
+ }else{evMoodPick=null}
+ const tt=$('#evTitle');if(tt)tt.textContent=evEditId?t('ev_edit_t'):t('ev_t');
+ const sb=$('#evSave');if(sb)sb.innerHTML=ic('check',16)+' '+(evEditId?t('ev_update'):t('ev_save'));
  evText.value=text||'';
- $$('#evMoodPick .mood-lg').forEach(x=>x.classList.remove('on'));
- const at=$('#evAutoTag');if(at)at.hidden=!!cat;
- if(!evCatPick)evCatPick=classify(evText.value)||'health';
+ evAuto=!cat;
+ $$('#evMoodPick .mood-lg').forEach(x=>x.classList.toggle('on',evMoodPick&&+x.dataset.m===evMoodPick));
+ const at=$('#evAutoTag');if(at)at.hidden=!!cat||!!evEditId;
+ if(!evCatPick||!evEditId)evCatPick=cat||classify(evText.value)||'health';
  $$('#evCats .pick-card').forEach(ch=>ch.classList.toggle('on',ch.dataset.cat===evCatPick));
  const nm=$('#evCatName');if(nm)nm.textContent=cn(evCatPick);
  const diff=Math.round((dayStart(Date.now())-(dateTs?dayStart(dateTs):dayStart(Date.now())))/DAY);
@@ -2174,6 +2549,16 @@ async function saveEvent(){
  const n=new Date();
  const ts=new Date(+parts[0],+parts[1]-1,+parts[2],n.getHours(),n.getMinutes()).getTime();
  if(ts>dayStart(Date.now())+DAY-1){toast(t('future'),'var(--acc)','cal');return}
+ if(evEditId){
+  const ex=S.events.find(x=>x.id===evEditId);
+  if(ex){
+   ex.text=text;ex.category=cat;ex.polarity=pol;ex.mood=mood||null;ex.ts=ts;
+   if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
+   await DB.put('events',ex);
+  }
+  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  refresh();return;
+ }
  const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,ts:ts};
  if(evAttsTemp.length)ev.att=[].concat(evAttsTemp);
  await DB.put('events',ev);S.events.push(ev);
@@ -2185,6 +2570,60 @@ async function saveEvent(){
  toast(react[0],react[1],react[2]);
  refresh();
 }
+
+/* =============== بطاقة الذكرى =============== */
+function openMemoryCard(id){
+ const ev=S.events.find(x=>x.id===id);if(!ev)return;
+ const sh=$('#shMem');if(!sh)return;
+ const cm=CAT_META[ev.category]||CAT_META.mind;
+ const photos=(ev.att&&ev.att.length)?('<div class="mem-photos">'+ev.att.map((s,i)=>'<div class="att-th"><img src="'+s+'" data-att="'+ev.id+':'+i+'" alt=""></div>').join('')+'</div>'):'';
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+esc(cm[LANG])+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="mem-hero" style="--rc:'+cm.color+'">'+
+   '<div class="mem-big">'+ic(cm.icon,26)+'</div>'+
+   (ev.mood?'<span style="color:'+(ev.mood>=4?'var(--good)':ev.mood<=2?'var(--bad)':'var(--ink3)')+'">'+faceSvg(ev.mood,44)+'</span>':'')+
+   '<div style="flex:1;min-width:0"><b style="font-size:15px;display:block">'+fmtDate(ev.ts)+'</b><span style="font-size:11.5px;color:var(--ink3)">'+fmtTime(ev.ts)+(ev.polarity>0?t('tag_pos'):ev.polarity<0?t('tag_neg'):'')+'</span></div>'+
+  '</div>'+
+  '<div class="mem-qt" style="--rc:'+cm.color+'">'+esc(ev.text)+'</div>'+
+  photos+
+  '<div style="display:flex;gap:9px;margin-top:14px">'+
+   '<button class="btn ghost" id="memEdit" style="flex:1">'+ic('edit',15)+' '+t('mem_edit')+'</button>'+
+   '<button class="btn ghost" id="memDel" style="flex:1;color:var(--bad)">'+ic('trash',15)+' '+t('mem_del')+'</button>'+
+  '</div>';
+ openSheet('#shMem');
+ const ed=$('#memEdit');
+ if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
+ const dl=$('#memDel');
+ if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
+  await DB.del('events',ev.id);
+  S.events=S.events.filter(x=>x.id!==ev.id);
+  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
+ });
+}
+
+/* =============== الحكايات (شيت) =============== */
+function openStorySheet(){
+ const sh=$('#shStory');if(!sh)return;
+ drawStory();
+ openSheet('#shStory');
+}
+function drawStory(){
+ const sh=$('#shStory');if(!sh)return;
+ const txt=buildStory(storyR);
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+ic('book',17)+' '+t('story_open')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="seg">'+
+   '<button data-sr="week" class="'+(storyR==='week'?'on':'')+'">'+t('story_range_w')+'</button>'+
+   '<button data-sr="month" class="'+(storyR==='month'?'on':'')+'">'+t('story_range_m')+'</button>'+
+  '</div>'+
+  (txt?'<div class="story-box">'+esc(txt)+'</div><button class="btn" id="storyWa" style="margin-top:14px">'+ic('wa',17)+' '+t('story_share')+'</button>'
+      :'<div class="empty">'+ic('book',26)+'<br>'+t('story_empty')+'</div>');
+ $$('#shStory [data-sr]').forEach(b=>b.onclick=()=>{storyR=b.dataset.sr;drawStory()});
+ const wa=$('#storyWa');
+ if(wa)wa.onclick=()=>{const x=buildStory(storyR);if(x)shareWa(x)};
+}
+
+/* =============== العلاقات/القرارات/Twin helpers ناقصة أعلاه موجودة =============== */
 async function saveRel(){
  const nEl=$('#relName');if(!nEl)return;
  const name=nEl.value.trim();
@@ -2229,6 +2668,8 @@ function buildMoreSheet(){
   '<div class="sh-grip"></div><div class="sh-head"><b>'+t('tab_more')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="more-hi">'+t('more_hi')+esc(S.profile.name||(LANG==='ar'?'بك':'there'))+'</div>'+
   '<div class="more-sub">'+t('more_sub')+'</div>'+
+  '<button class="more-item" data-more="story">'+ic('book',19)+'<span>'+t('m_story')+'</span><small>'+t('m_story_s')+'</small></button>'+
+  '<button class="more-item" data-more="ritual">'+ic('sun2',19)+'<span>'+t('m_ritual')+'</span><small>'+t('m_ritual_s')+'</small></button>'+
   '<button class="more-item" data-more="life">'+ic('hex',19)+'<span>'+t('m_life')+'</span><small>'+t('m_life_s')+'</small></button>'+
   '<button class="more-item" data-more="cal">'+ic('cal',19)+'<span>'+t('m_cal')+'</span><small>'+t('m_cal_s')+'</small></button>'+
   '<button class="more-item" data-more="twin">'+ic('twin',19)+'<span>'+t('m_twin')+'</span><small>'+t('m_twin_s')+'</small></button>'+
@@ -2244,7 +2685,6 @@ function buildMoreSheet(){
 }
 
 window.__rfStage='ربط الأفعال';
-/* =============== الأفعال =============== */
  $('#views').addEventListener('click',async e=>{
  const b=e.target.closest('[data-act]');if(!b)return;
  const act=b.dataset.act,id=b.dataset.id;
@@ -2257,10 +2697,13 @@ window.__rfStage='ربط الأفعال';
   refresh();
  }
  else if(act==='a2hs'){S.settings.a2hsDone=true;saveMeta();refresh()}
+ else if(act==='otdX'){b.closest('.otd').style.display='none'}
  else if(act==='goLife')go('life');
  else if(act==='goReport')go('report');
  else if(act==='openEvent')openEventSheet();
  else if(act==='openPick')openPickSheet();
+ else if(act==='openStory')openStorySheet();
+ else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
  else if(act==='questGo'){
   const q=dailyQuest();
@@ -2296,6 +2739,10 @@ window.__rfStage='ربط الأفعال';
  else if(act==='calPrev'){calM--;if(calM<0){calM=11;calY--}renderCal()}
  else if(act==='calNext'){calM++;if(calM>11){calM=0;calY++}renderCal()}
 });
+ $('#views').addEventListener('click',async e=>{
+ const pr=e.target.closest('[data-pred]');
+ if(pr){await quickSaveEvent(pr.dataset.pred);return}
+});
  $('#tabbar').addEventListener('click',e=>{
  if(e.target.closest('#fabAdd')){openEventSheet();return}
  const el=e.target.closest('.tab');if(!el)return;
@@ -2308,6 +2755,8 @@ window.__rfStage='ربط الأفعال';
  const m=it.dataset.more;
  closeSheets();
  if(['life','cal','twin','relations','decisions','report','settings'].indexOf(m)>=0)setTimeout(()=>go(m),60);
+ else if(m==='story')setTimeout(openStorySheet,140);
+ else if(m==='ritual')setTimeout(()=>openRitual(new Date().getHours()<12?'m':'e'),140);
  else if(m==='export')setTimeout(exportBackup,150);
  else if(m==='import')setTimeout(()=>$('#importFile').click(),150);
  else if(m==='wipeDemo')setTimeout(()=>askConfirm(t('wipe_t'),t('wipe_p'),t('del'),wipeDemo),150);
@@ -2321,16 +2770,17 @@ document.addEventListener('click',e=>{
   if(scope==='tmp')src=evAttsTemp[idx];
   else{const ev=S.events.find(x=>x.id===scope);if(ev&&ev.att)src=ev.att[idx]}
   const lb=$('#lightbox'),img=$('#lbImg');
-  if(src&&lb&&img){img.src=src;lb.classList.add('show')}}
+  if(src&&lb&&img){img.src=src;lb.classList.add('show');return}}
+ const mm=e.target.closest('[data-mem]');
+ if(mm){openMemoryCard(mm.dataset.mem);return}
 });
- $('#lkForgot')&&null;
 document.getElementById('lkForgot').onclick=()=>askConfirm(t('lk_forgot_t'),t('lk_forgot_p'),t('del'),async()=>{
  const sts=['events','rels','decisions','chat','meta'];
  for(let i=0;i<sts.length;i++)await DB.clear(sts[i]);
  location.reload();
 });
 async function exportBackup(){
- const data={app:'rafiq',version:4,exportedAt:new Date().toISOString(),
+ const data={app:'rafiq',version:5,exportedAt:new Date().toISOString(),
   events:S.events,rels:S.rels,decisions:S.decisions,chat:S.chat,
   meta:{profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings}};
  const txt=JSON.stringify(data,null,2);
@@ -2359,7 +2809,7 @@ async function exportBackup(){
   for(const d of (data.decisions||[]))await DB.put('decisions',d);
   for(const c of (data.chat||[]))await DB.put('chat',c);
   if(data.meta)await DB.put('meta',{key:'main',profile:data.meta.profile||{},reminders:data.meta.reminders||[],seeded:data.meta.seeded,settings:data.meta.settings});
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false},(data.meta&&data.meta.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},(data.meta&&data.meta.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -2383,7 +2833,6 @@ async function wipeAll(){
  location.reload();
 }
 
-/* =============== التشغيل =============== */
 window.__rfStage='فتح قاعدة البيانات';
 (async function init(){
  try{
@@ -2391,7 +2840,7 @@ window.__rfStage='فتح قاعدة البيانات';
   window.__rfStage='قراءة البيانات المحفوظة';
   let m=null;
   try{m=(await DB.all('meta')).find(x=>x.key==='main')}catch(e){}
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false},(m&&m.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},(m&&m.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -2404,8 +2853,13 @@ window.__rfStage='فتح قاعدة البيانات';
    await loadAll();computeAll();renderDot();enterApp(false);
   }else renderOb();
   if(S.settings.pin&&S.settings.pinOn)showLock();
-  if(DB.driver==='mem')setTimeout(()=>toast(t('storage_warn'),'var(--bad)','shield'),1600);
-  else if(DB.driver==='ls')setTimeout(()=>toast(t('storage_ls'),'var(--acc)','shield'),1600);
+  else{
+   const shown=showRitualIfNeeded();
+   if(!shown&&(DB.driver==='mem'||DB.driver==='ls')){
+    if(DB.driver==='mem')setTimeout(()=>toast(t('storage_warn'),'var(--bad)','shield'),1800);
+    else setTimeout(()=>toast(t('storage_ls'),'var(--acc)','shield'),1800);
+   }
+  }
  }catch(err){__rfErr((err&&err.message||err)+' @init')}
 })();
 function enterApp(seeded){
@@ -2413,7 +2867,8 @@ function enterApp(seeded){
  const ob=$('#ob');if(ob)ob.style.display='none';
  const app=$('#app');if(app)app.hidden=false;
  computeAll();renderDot();go('home');
- if(seeded)setTimeout(()=>toast(t('seed_ready')+(S.profile.name||'')+t('seed_ready2'),'var(--acc)','spark'),600);
+ if(seeded)setTimeout(()=>toast(t('seed_ready')+(S.profile.name||'')+t('seed_ready2'),'var(--acc)','spark'),700);
+ if(!locked)setTimeout(showRitualIfNeeded,900);
 }
 window.__rfBooted=true;
 </script>
