@@ -506,7 +506,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 <div class="stage">
   <div class="stage-cap" id="stageCap"></div>
   <div id="phone">
-    <div id="splash"><svg width="72" height="72" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="sp-t">رفيق · Rafiq</div><div class="sp-bar"><i></i></div></div>
+    <div id="splash"><svg width="72" height="72" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="sp-t">رفيق · Rafiq</div><div class="sp-bar"><i></i></div><div style="font-size:10.5px;color:#716750;margin-top:4px">© 2025 مراد الحاج · mouradalhaj@gmail.com</div></div>
     <div id="lock" hidden>
       <div class="lk-in">
         <svg width="64" height="64" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2464,22 +2464,41 @@ function buildSheets(){
 }
 function startVoice(){
  const evText=$('#evText');if(!evText)return;
+ const mb=$('#micBtn');
+ if(mb&&mb.classList.contains('on')){try{if(window.__rfRec)window.__rfRec.stop()}catch(e){}return}
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SR){toast(t('voice_bad'),'var(--acc)','mic');return}
- const mb=$('#micBtn'),mh=$('#micHint');
+ const mh=$('#micHint');
  try{
   const r=new SR();
+  window.__rfRec=r;
   r.lang=LANG==='ar'?'ar-SA':'en-US';
-  r.interimResults=false;r.maxAlternatives=1;
+  r.continuous=true;
+  r.interimResults=true;
+  r.maxAlternatives=1;
+  let base=evText.value.trim()?evText.value.trim()+' ':'';
   if(mb)mb.classList.add('on');
   if(mh)mh.textContent=t('voice_on');
   r.onresult=e=>{
-   const tx=e.results[0][0].transcript;
-   evText.value=evText.value?(evText.value+' '+tx):tx;
+   let fin='',inter='';
+   for(let i=e.resultIndex;i<e.results.length;i++){
+    if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';
+    else inter+=e.results[i][0].transcript;
+   }
+   if(fin)base+=fin;
+   evText.value=(base+inter).replace(/\s+/g,' ').trim();
    evText.dispatchEvent(new Event('input'));
   };
-  r.onend=()=>{if(mb)mb.classList.remove('on');if(mh)mh.textContent=t('voice')+' — '+(LANG==='ar'?'اضغط وتحدث':'tap and speak')};
-  r.onerror=()=>{if(mb)mb.classList.remove('on');if(mh)mh.textContent=t('voice_err')};
+  r.onend=()=>{
+   if(mb)mb.classList.remove('on');
+   if(mh)mh.textContent=t('voice')+' — '+(LANG==='ar'?'اضغط وتحدث':'tap and speak');
+   window.__rfRec=null;
+  };
+  r.onerror=()=>{
+   if(mb)mb.classList.remove('on');
+   if(mh)mh.textContent=t('voice_err');
+   window.__rfRec=null;
+  };
   r.start();
  }catch(err){toast(t('voice_bad'),'var(--acc)','mic')}
 }
