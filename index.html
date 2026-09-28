@@ -2807,7 +2807,7 @@ document.getElementById('lkForgot').onclick=()=>askConfirm(t('lk_forgot_t'),t('l
  location.reload();
 });
 async function exportBackup(){
- const data={app:'rafiq',version:5,exportedAt:new Date().toISOString(),
+ const data={app:'rafiq',version:5,owner:'مراد الحاج · mouradalhaj@gmail.com',exportedAt:new Date().toISOString(),
   events:S.events,rels:S.rels,decisions:S.decisions,chat:S.chat,
   meta:{profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings}};
  const txt=JSON.stringify(data,null,2);
