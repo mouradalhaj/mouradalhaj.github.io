@@ -1221,7 +1221,7 @@ const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
 let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null;
 let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
-let ritualMode=null,ritualPick=null,enteredOnce=false;
+let ritualMode=null,ritualPick=null,enteredOnce=false,ratePick={};;
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
 async function loadAll(){
  S.events=(await DB.all('events')).sort((a,b)=>a.ts-b.ts);
@@ -2064,6 +2064,13 @@ function rafiqRitualLine(){
  const st=calcStreak(),AR=LANG==='ar';
  if(st>1)return AR?('سلسلتك '+st+' '+pd(st)+' — لا تكسرها اليوم. أنا معك.'):('Your streak is '+st+' '+pd(st)+' — do not break it today.');
  return AR?('مؤشر حياتك '+S.life+'/100 — وكل يوم موثق يرفعه.'):('Your life score is '+S.life+'/100 — every documented day lifts it.');
+}
+ function genEveningPromises(){
+ const AR=LANG==='ar';
+ const preds=smartPredictions(2).map(p=>p.text);
+ const out=preds.slice();
+ if(!out.some(x=>x.indexOf(AR?'أتصل':'Call')>=0)&&S.staleRels.length)out.push(AR?('أتصل بـ'+S.staleRels[0].name):('Call '+S.staleRels[0].name));
+ return out.slice(0,3);
 }
 function renderRitual(){
  const el=$('#ritual');if(!el)return;
