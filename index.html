@@ -179,6 +179,16 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .int-txt{flex:1;min-width:0;font-size:13px;line-height:1.6}
 .int-item.did .int-txt{color:var(--ink3);text-decoration:line-through}
 .int-gen{font-size:9.5px;color:var(--ink3);padding:3px 8px;border:1px dashed var(--line2);border-radius:100px;flex:none}
+ .int-modal{position:absolute;top:0;left:0;right:0;bottom:0;z-index:85;background:rgba(8,6,3,.66);display:none;align-items:flex-end}
+.int-modal.show{display:flex}
+.int-box{width:100%;background:var(--panel);border-top:1px solid var(--line2);border-radius:24px 24px 0 0;padding:16px 20px calc(env(safe-area-inset-bottom) + 20px);animation:viewIn .3s ease}
+.int-box h4{font-family:var(--fd);font-size:16px;margin-bottom:4px}
+.int-box p{font-size:11.5px;color:var(--ink3);margin-bottom:13px;line-height:1.7}
+.int-quick{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.int-quick::-webkit-scrollbar{display:none}
+.int-quick button{flex:none;font-size:12px;padding:8px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);transition:.15s}
+.int-quick button:active{border-color:var(--acc);color:var(--acc)}
+.int-box textarea{min-height:64px}
 .int-learn{margin-top:10px;font-size:11.5px;color:var(--c-growth);background:rgba(222,154,102,.08);border:1px dashed var(--c-growth);border-radius:12px;padding:9px 12px;line-height:1.8}
 .int-learn b{color:var(--acc)}
 /* ====== التقييم القصير ====== */
@@ -622,6 +632,15 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div id="lightbox"><button class="sh-x" data-lb-close></button><img id="lbImg" alt=""></div>
     <div id="toast"></div>
     <div id="modal"></div>
+   <div class="int-modal" id="intModal">
+  <div class="int-box">
+    <h4 id="intMTitle">اهتمام جديد</h4>
+    <p id="intMSub">سأتابعه حتى يصير حقيقة — وكل تحقق يعلّمني فهمك أكثر</p>
+    <div class="int-quick" id="intQuick"></div>
+    <textarea id="intMText" placeholder="اكتب اهتمامك بكلماتك…"></textarea>
+    <button class="btn" id="intMSave" style="margin-top:12px">✓ أضف إلى اهتمامات اليوم</button>
+  </div>
+</div>
   </div>
 </div>
 <input type="file" id="importFile" accept=".json,application/json" hidden>
