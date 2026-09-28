@@ -1332,7 +1332,8 @@ function plantStage(){
  if(!S.events.some(e=>daysSince(e.ts)<=6))stage=Math.max(1,stage-2);
  return stage;
 }
-function plantSvg(stage){
+
+ function plantSvg(stage){
  const stem='#7FA05A',leaf='var(--acc)';
  const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
   '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
