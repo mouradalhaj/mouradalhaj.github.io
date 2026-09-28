@@ -251,6 +251,17 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .ev-th img{width:100%;height:100%;object-fit:cover;display:block}
 .empty{text-align:center;color:var(--ink3);font-size:13px;padding:26px 10px;line-height:2}
 .empty .ic{color:var(--line2);margin-bottom:6px}
+ .plant-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 10px 6px}
+.plant-stage{width:170px;height:190px;position:relative;cursor:pointer;margin:0 auto}
+.plant-stage:active{transform:scale(.97)}
+.plant-cap{text-align:center;font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.8}
+.plant-cap b{color:var(--acc)}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes bloom{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.p-leaf{transform-origin:50% 100%;animation:sway 3.2s ease-in-out infinite}
+.p-bloom{transform-origin:center;animation:bloom .8s ease both}
+.p-fruit{animation:rise .6s ease both}
 .plant-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 10px 6px}
 .plant-stage{width:170px;height:190px;position:relative;cursor:pointer;margin:0 auto}
 .plant-stage:active{transform:scale(.97)}
@@ -1306,6 +1317,40 @@ function dailyQuest(){
  if(!acts.some(e=>e.polarity>0))return {id:'pos',txt:t('q_pos'),act:'openEvent',done:false};
  return {id:'done',txt:t('q_done_s'),act:null,done:true};
 }
+/* النبتة الحية */
+function plantStage(){
+ const evs=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate');
+ const n=evs.length;
+ if(n===0)return 0;
+ const st=calcStreak();
+ let stage=1;
+ if(n>=3)stage=2;
+ if(n>=8)stage=3;
+ if(n>=18&&S.life>=50)stage=4;
+ if(n>=35&&S.life>=55)stage=5;
+ if(n>=60&&S.life>=62&&st>=3)stage=6;
+ if(!S.events.some(e=>daysSince(e.ts)<=6))stage=Math.max(1,stage-2);
+ return stage;
+}
+function plantSvg(stage){
+ const stem='#7FA05A',leaf='var(--acc)';
+ const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
+ if(stage===0)return '<svg width="170" height="190" viewBox="0 0 170 190">'+
+  '<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<text x="85" y="80" text-anchor="middle" font-size="11" fill="var(--ink3)">'+esc(t('plant_p0'))+'</text></svg>';
+ let body='';
+ if(stage>=1)body+='<path d="M85 132V96" stroke="'+stem+'" stroke-width="3.5" stroke-linecap="round"/>'+
+  '<path class="p-leaf" d="M85 108C72 104 66 94 68 84c10 0 17 8 17 24z" fill="'+leaf+'" opacity=".85"/>';
+ if(stage>=2)body+='<path class="p-leaf" style="animation-delay:.4s" d="M85 100c13-4 19-14 17-24-10 0-17 8-17 24z" fill="'+leaf+'"/>';
+ if(stage>=3)body+='<path d="M85 96c-8-10-8-20-4-28" stroke="'+stem+'" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+  '<path class="p-leaf" style="animation-delay:.8s" d="M81 74c-10-2-14-10-13-19 9 1 15 8 13 19z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=4)body+='<path class="p-leaf" style="animation-delay:1.1s" d="M85 88c10-3 15-11 14-21-9 1-15 9-14 21z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=5)body+='<g class="p-bloom"><circle cx="80" cy="52" r="6" fill="'+leaf+'"/><circle cx="90" cy="52" r="6" fill="'+leaf+'"/><circle cx="85" cy="46" r="6" fill="'+leaf+'"/><circle cx="85" cy="58" r="6" fill="'+leaf+'"/><circle cx="85" cy="52" r="5.5" fill="#FFF3D6"/></g>';
+ if(stage>=6)body+='<g class="p-fruit"><circle cx="70" cy="82" r="5" fill="#E4796B"/><circle cx="99" cy="70" r="5" fill="#84C88E"/><circle cx="76" cy="63" r="4.5" fill="#E2C063"/></g>';
+ return '<svg width="170" height="190" viewBox="0 0 170 190">'+pot+body+'</svg>';
+}
+function plantWord(s){return t('plant_p'+s)}
 
 function dailyQuestion(){
  const AR=LANG==='ar';
