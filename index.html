@@ -142,8 +142,9 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .qbar .qbtn:active{transform:scale(.93)}
 .pred-wrap{margin-top:10px}
 .pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
-.pred-row.dq-card{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
-.dq-card .dq-q{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink)}
+.pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
+.pred-row::-webkit-scrollbar{display:none}
+.dq-card{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px}.dq-card .dq-q{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink)}
 .dq-card .dq-sub{font-size:11px;color:var(--ink3);margin-top:4px}
 .dq-card textarea{min-height:52px;margin-top:9px;font-size:13.5px}.ch-card{margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
 .ch-top{display:flex;align-items:center;gap:10px}
@@ -151,7 +152,7 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .ch-top span{font-size:11.5px;color:var(--ink2);display:block;margin-top:2px}
 .ch-bar{height:8px;border-radius:100px;background:var(--card);overflow:hidden;margin-top:10px;border:1px solid var(--line)}
 .ch-bar i{display:block;height:100%;background:var(--acc);border-radius:100px;transition:width .6s ease}
-.ch-foot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px;color:var(--ink3)}::-webkit-scrollbar{display:none}
+.ch-foot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px;color:var(--ink3)}
 .pred-chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);font-size:12px;max-width:82%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s}
 .pred-chip .ic{color:var(--acc);flex:none}
 .pred-chip:active{transform:scale(.95);border-color:var(--acc);color:var(--acc)}
@@ -1182,7 +1183,7 @@ function badges(){
  const st=S.settings.challenge;
  if(st&&st.week===isoDate(Date.now()-new Date().getDay()*DAY)){
   const w=st.week;
-  const done=countChallenge(st.key);
+  const done=chProgress(st.key);
   return {key:st.key,target:st.target,done:done,week:w,accepted:true,label:st.label};
  }
  return null;
@@ -1966,6 +1967,7 @@ function renderHome(){
    '<button class="qa" data-act="openDec">'+ic('dec',19)+'<span>'+t('qa_dec')+'</span></button>'+
    '<button class="qa" data-act="openRitual">'+ic('sun2',19)+'<span>'+(AR?'لقاء':'Check-in')+'</span></button>'+
   '</div>'+
+    '<div class="card" style="margin-top:14px;text-align:center;padding:12px 10px 6px"><div class="plant-stage" id="plantTap" style="margin:0 auto">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
   '<section class="life-card" data-act="goLife">'+
    '<div class="lc-top"><span class="lc-live"><span class="pulse-dot"></span> '+t('life_watch')+'</span>'+trend+'</div>'+
    ringHtml(S.life)+
@@ -2376,8 +2378,7 @@ function renderTwin(){
   ?t('proj_up_a')+d.proj+t('proj_up_b')+(d.projD>0?'+'+d.projD:t('proj_st'))+t('proj_up_c')
   :t('proj_up_a')+d.proj+t('proj_dn_b')+d.projD+t('proj_dn_c');
  v.innerHTML=
-  '<div class="tw-top"><div class="plant-wrap"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+' · '+(LANG==='ar'?'اضغط النبتة لرفيقك الرقمي':'tap the plant for your digital twin')+'</p></div><p style="display:none">'+t('tw_p')+'</p></div>'+
-  '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
+  '<div class="tw-top">'+ringSvgMini(d.compl)+'<p>'+t('tw_p')+'</p></div>'+  '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
   '<div class="tw-line"><p style="font-size:12px;color:var(--ink2)">'+t('tw_week_a')+WD()[d.bestWd]+t('tw_week_b')+'<b style="color:var(--acc)">'+t('tw_gold')+'</b>'+t('tw_week_c')+'</p>'+
    '<div class="wd-bars">'+WD().map((n2,i)=>'<div class="wd-b"><div class="wd-track"><i class="'+(i===d.bestWd?'on':'')+'" style="height:'+Math.max(6,Math.round(d.wdPos[i]/maxW*100))+'%"></i></div><span>'+n2.slice(0,3)+'</span></div>').join('')+'</div></div>'+
   '<h3 class="sec-t">'+ic('flame',15)+' '+t('tw_pat_t')+'</h3>'+
