@@ -84,7 +84,6 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .rt-chip:active{transform:scale(.95)}
 .rt-btn{display:block;width:100%;background:var(--acc);color:var(--acc-ink);font-weight:800;font-size:15.5px;border-radius:15px;padding:15px;text-align:center;margin-top:26px;transition:.15s;font-family:var(--fd)}
 .rt-btn:active{transform:scale(.97)}
-.rt-ghost{display:block;width:100%;background:transparent;color:var(--ink2);font-size:12.5px;border-radius:13px;padding:11px;text-align:center;margin-top:9px}
 .rt-links{text-align:center;margin-top:16px}
 .rt-links button{font-size:11.5px;color:var(--ink3);text-decoration:underline;margin:0 8px}
 .rt-note{min-height:64px}
@@ -142,21 +141,30 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .qbar .qbtn:active{transform:scale(.93)}
 .pred-wrap{margin-top:10px}
 .pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
-.pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
 .pred-row::-webkit-scrollbar{display:none}
-.dq-card{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px}.dq-card .dq-q{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink)}
+.pred-chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);font-size:12px;max-width:82%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s}
+.pred-chip .ic{color:var(--acc);flex:none}
+.pred-chip:active{transform:scale(.95);border-color:var(--acc);color:var(--acc)}
+.pred-empty{font-size:11.5px;color:var(--ink3);padding:4px 2px;line-height:1.8}
+.dq-card{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
+.dq-card .dq-q{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink)}
 .dq-card .dq-sub{font-size:11px;color:var(--ink3);margin-top:4px}
-.dq-card textarea{min-height:52px;margin-top:9px;font-size:13.5px}.ch-card{margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
+.dq-card textarea{min-height:52px;margin-top:9px;font-size:13.5px}
+.ch-card{margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
 .ch-top{display:flex;align-items:center;gap:10px}
 .ch-top b{font-size:13.5px;display:block}
 .ch-top span{font-size:11.5px;color:var(--ink2);display:block;margin-top:2px}
 .ch-bar{height:8px;border-radius:100px;background:var(--card);overflow:hidden;margin-top:10px;border:1px solid var(--line)}
 .ch-bar i{display:block;height:100%;background:var(--acc);border-radius:100px;transition:width .6s ease}
 .ch-foot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px;color:var(--ink3)}
-.pred-chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);font-size:12px;max-width:82%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s}
-.pred-chip .ic{color:var(--acc);flex:none}
-.pred-chip:active{transform:scale(.95);border-color:var(--acc);color:var(--acc)}
-.pred-empty{font-size:11.5px;color:var(--ink3);padding:4px 2px;line-height:1.8}
+.sh-card{margin-top:14px;background:var(--card);border:1px solid var(--good);border-radius:16px;padding:13px 15px;display:flex;gap:11px;align-items:center}
+.spk-card{margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:14px 15px}
+.spk-top{display:flex;align-items:center;gap:10px}
+.spk-ic{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)}
+.spk-body{flex:1;min-width:0}
+.spk-body b{font-size:13.5px;display:block}
+.spk-body p{font-size:12.5px;color:var(--ink2);line-height:1.7;margin-top:3px}
+.spk-kind{font-size:9.5px;font-weight:700;border:1px solid var(--line2);border-radius:100px;padding:2px 8px;color:var(--ink3);flex:none}
 .qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .qa{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 2px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-size:10.5px;font-weight:500}
 .qa .ic{color:var(--acc)}
@@ -332,6 +340,12 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .rp-sec{margin-top:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px}
 .rp-sec h4{font-size:11.5px;color:var(--ink3);font-weight:500;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .rp-sec p{font-size:13.5px;line-height:1.8}
+.wk-bars{margin-top:10px}
+.wk-bar{display:flex;align-items:center;gap:9px;padding:5px 0}
+.wk-bar>span{width:60px;font-size:11.5px;color:var(--ink2);flex:none}
+.wk-track{flex:1;height:9px;border-radius:100px;background:var(--card2);overflow:hidden}
+.wk-track i{display:block;height:100%;border-radius:100px;width:0;transition:width .9s cubic-bezier(.3,.8,.3,1)}
+.wk-bar em{font-size:10.5px;color:var(--ink3);font-style:normal;width:28px;text-align:left;flex:none}
 .rp-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 11px;border-radius:100px;margin-left:6px;margin-bottom:6px;border:1px solid currentColor}
 .tw-top{margin-top:16px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 16px}
 .tw-top p{font-size:12.5px;color:var(--ink2);line-height:1.8;margin-top:10px}
@@ -508,7 +522,7 @@ html[dir="ltr"] .hint-x{float:right}
 html[dir="ltr"] .pick-card.on::after{left:auto;right:7px}
 html[dir="ltr"] .att-x{left:auto;right:3px}
 html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--acc))}
- .plant-wrap{display:flex;flex-direction:column;align-items:center;padding:18px 0 8px}
+.plant-wrap{display:flex;flex-direction:column;align-items:center;padding:18px 0 8px}
 .plant-stage{width:170px;height:190px;position:relative;cursor:pointer}
 .plant-stage:active{transform:scale(.97)}
 .plant-cap{text-align:center;font-size:12px;color:var(--ink2);margin-top:8px;line-height:1.8;max-width:280px}
@@ -613,9 +627,9 @@ const T={
  ti_cal:['التقويم','Calendar'],ti_life:['لوحة الحياة','Life Dashboard'],ti_relations:['العلاقات','Relationships'],ti_decisions:['مركز القرارات','Decision Center'],ti_report:['التقرير الأسبوعي','Weekly Report'],ti_twin:['التوأم الرقمي','Digital Twin'],ti_settings:['الإعدادات','Settings'],
  save:['حفظ','Save'],cancel:['إلغاء','Cancel'],del:['حذف','Delete'],done:['تم','Done'],next:['متابعة','Continue'],
  ob_h:['رفيق <em>·</em> شريك حياتك','Rafiq <em>·</em> your life companion'],
- ob_p:['ليس تطبيق مهام ولا دفتر ملاحظات. رفيقٌ يبدأ حوارك صباحاً ومساءً، يتوقع إيقاعك، ويحوّل ذاكرتك إلى حكايات.','Not a to-do app, not a notebook. Rafiq greets you morning and evening, predicts your rhythm, and turns your memory into stories.'],
- ob_f1b:['يستيقظ معك','Wakes with you'],ob_f1:[' — لقاء صباحي ومسائي بلمستين: نمتك؟ نيتك؟ أغلق يومك',' — a two-tap morning and evening ritual'],
- ob_f2b:['يتوقع','Predicts'],ob_f2:[' — يتذكر إيقاعك فيقترح يومك قبل أن تكتبه',' — learns your rhythm and suggests your day before you type it'],
+ ob_p:['ليس تطبيق مهام ولا دفتر ملاحظات. رفيقٌ يبدأ حوارك صباحاً ومساءً، يتوقع إيقاعك، يُلهِمك بشرارة يومية، ويحوّل ذاكرتك إلى حكايات.','Not a to-do app, not a notebook. Rafiq greets you morning and evening, predicts your rhythm, sparks your curiosity, and turns your memory into stories.'],
+ ob_f1b:['يستيقظ معك','Wakes with you'],ob_f1:[' — لقاء صباحي ومسائي بلمستين',' — a two-tap morning and evening ritual'],
+ ob_f2b:['يُلهِم','Sparks'],ob_f2:[' — كتاب وفكرة يليقان بك كل يوم، من إيقاعك أنت',' — a book and an idea tailored to you, daily'],
  ob_f3b:['يحكي','Tells stories'],ob_f3:[' — أسبوعك يتحول حكاية تُشارك بضغطة',' — your week becomes a story, shareable in one tap'],
  ob_start:['ابدأ الرحلة','Start the journey'],
  ob2_h:['كيف <em>نناديك</em>؟','What should <em>we call you</em>?'],
@@ -691,6 +705,7 @@ const T={
  rep_read:['قراءة رفيق','Rafiq reads your week'],
  rep_str:[' · أقوى جانب',' · strongest'],rep_weak:[' · يحتاج عناية',' · needs care'],
  rep_none:['لم يُسجل','not logged'],
+ rep_focus:['أين ذهب تركيزك هذا الأسبوع','Where your focus went'],
  rep_ach:['إنجاز يستحق شكرك','A win worth credit'],rep_warm:['لحظة إنسانية دافئة','A warm human moment'],
  rep_next:['توجهات الأسبوع القادم','Toward next week'],
  rep_next_none:['أنت متوازن — لا شيء يستدعي تدخلي هذا الأسبوع.','You are balanced — nothing needs my hand this week.'],
@@ -729,6 +744,7 @@ const T={
  dist_t:['توزيع اهتمامك','Where attention goes'],
  ident_t:['جملة هويتك الآن','Your identity line'],
  tw_share:['شارك بصمة التوأم على واتساب','Share twin fingerprint on WhatsApp'],
+ badges_t:['أوسمة رحلتك','Your journey badges'],
  life_hex_t:['سداسي حياتك','Your life hexagon'],life_ind_t:['المؤشرات التفصيلية','Detailed scores'],
  spark_t:['مسار حياتك','Your life path'],spark_s:['آخر 14 يوماً · اليوم ','Last 14 days · today '],
  cal_today:['اليوم','Today'],
@@ -771,11 +787,17 @@ const T={
  st_alerts:['التنبيهات الذكية','Smart nudges'],
  st_tg_rel:['تنبيهات العلاقات الهادئة','Quiet relationship alerts'],st_tg_rel_p:['أنبّهك حين يبرد التواصل مع شخص مهم أكثر من 10 أيام.','A nudge when contact with someone important cools past 10 days.'],
  st_tg_hab:['تنبيهات العادات','Habit nudges'],st_tg_hab_p:['أذكّرك حين يغيب جانب (صحة، ادخار، تعلم) عن أيامك.','A reminder when a side (health, saving, learning) goes missing.'],
+ st_ritual:['لقاء الصباح والمساء','Morning & evening check-in'],st_ritual_p:['لقاء غامر بلمستين عند فتح رفيق صباحاً أو مساءً.','An immersive two-tap ritual when you open Rafiq morning or evening.'],
+ st_brand_t:['عن رفيق · العلامة التجارية','About Rafiq · Brand'],
  st_wa:['مشاركة واتساب','WhatsApp sharing'],
  st_wa_r:['تقرير الأسبوع','Weekly report'],st_wa_r_p:['رسالة جاهزة تلخص مؤشراتك وإنجازك وتوصياتك.','A ready message with your scores, wins and tips.'],
  st_wa_t:['بصمة التوأم','Twin fingerprint'],st_wa_t_p:['ملخص شخصيتك الرقمية ومصادر طاقتك.','Your digital personality and energy sources.'],
  st_wa_note:['يفتح واتساب برسالة معبأة تختار محادثتها — من جهازك مباشرة دون خوادم وسيطة.','Opens WhatsApp with a pre-filled message you address — straight from your device.'],
- more_hi:['أهلاً ','Hi '],more_sub:['رفيق نسخة 2.5 · كل بياناتك على جهازك وحدك','Rafiq v2.5 · all data stays on your device'],
+ brand_name:['رفيق — شريك حياة رقمي','Rafiq — Life Companion'],
+ brand_by:['فكرة وتصميم وتطوير','Idea, design & development by'],
+ brand_owner:['مراد الحاج · Murad Alhaj','Murad Alhaj'],
+ brand_rights:['جميع الحقوق محفوظة © 2025','All rights reserved © 2025'],
+ more_hi:['أهلاً ','Hi '],more_sub:['رفيق نسخة 2.6 · كل بياناتك على جهازك وحدك','Rafiq v2.6 · all data stays on your device'],
  m_life:['لوحة الحياة','Life dashboard'],m_life_s:['سداسي المؤشرات','The six-sided view'],
  m_cal:['التقويم','Calendar'],m_cal_s:['ذكرياتك يوماً بيوم','Your days, one by one'],
  m_twin:['التوأم الرقمي','Digital twin'],m_twin_s:['أنماطك وتوقعاتك','Patterns and forecasts'],
@@ -819,7 +841,7 @@ const T={
  rec_rem_t:['تذكير منك لنفسك','A reminder from you to you'],
  rec_rem_done:['أُنجز التذكير — أحسنت','Reminder done — well played'],
  wa_rep_r:['إعادة الإرسال','Resend'],
- seed_ready:['مرحباً ','Welcome '],seed_ready2:[' — بيئة حية جاهزة. جرّب اللقاء والتنبؤ والحكايات',' — a living playground. Try the check-in, predictions and stories'],
+ seed_ready:['مرحباً ','Welcome '],seed_ready2:[' — بيئة حية جاهزة: نبتة وشرارة وحكايات. تنقّل بحرية',' — a living playground: plant, spark, stories. Explore freely'],
  prep:['أجهّز لك بيئة حية…','Preparing a living playground…'],
  q_t:['مهمة اليوم','Today quest'],
  q_log:['وثّق لحظة واحدة من يومك — سطر واحد يكفي','Document one moment of your day — one line is enough'],
@@ -866,7 +888,7 @@ const T={
  rt_go:['ابدأ يومي','Start my day'],
  rt_m_saved:['صباح مشرق يا ','A bright morning, '],rt_m_saved2:[' — نيتك مسجلة وسأذكّرك بها',' — your intention is set and I will hold you to it'],
  rt_e_t:['هيا نغلق اليوم','Let us close the day'],
- rt_e_s:['ما حدث من هذا؟ اضغط ما تحقق فعلاً — أو اكتب ملاحظة','What happened? Tap what actually did — or write a note'],
+ rt_e_s:['اضغط ما تحقق فعلاً — أو اكتب ملاحظة','Tap what actually did — or write a note'],
  rt_note:['ملاحظة عن يومك (اختيارية)','A note about your day (optional)'],
  rt_mood2:['مزاجك الآن','Your mood now'],
  rt_close:['أغلق يومي','Close my day'],
@@ -880,7 +902,7 @@ const T={
  pred_hint:['اضغط للتسجيل الفوري، وتراجع متاح بعد الحفظ','Tap to log instantly — undo available after'],
  story_t:['حكاية ','The story of '],
  story_week:['أسبوعك','your week'],story_month:['شهرَك','your month'],
- story_open:['حكايتي','My story'],story_open_s:['ذاكرتك تُروى لا تُسرد','Your memory, told not listed'],
+ story_open:['حكاياتي','My stories'],story_open_s:['ذاكرتك تُروى لا تُسرد','Your memory, told not listed'],
  story_empty:['لا ذكريات كافية في هذه الفترة بعد — سجّل لحظاتك وستتحول لحكاية','Not enough memories in this period yet — log moments and they become a story'],
  story_share:['شارك الحكاية على واتساب','Share the story on WhatsApp'],
  story_range_w:['أسبوع','Week'],story_range_m:['شهر','Month'],
@@ -894,7 +916,29 @@ const T={
  voice_err:['لم أسمعك جيداً — حاول مرة أخرى','I could not hear you — try again'],
  otd_a:['في هذا اليوم ','On this day '],
  otd_30:['قبل شهر','a month ago'],otd_90:['قبل 3 أشهر','3 months ago'],otd_180:['قبل 6 أشهر','6 months ago'],otd_365:['قبل سنة','a year ago'],
- voice:['صوت','Voice']
+ voice:['صوت','Voice'],
+ spk_t:['شرارة اليوم','Spark of the day'],
+ spk_book:['كتاب يليق بك','A book for you'],
+ spk_act:['فكرة قابلة للتنفيذ','An actionable idea'],
+ spk_applied:['طبّقت شرارة اليوم: ','Applied today spark: '],
+ shield_t:['درع الذاكرة: مرت أسبوع على آخر نسخة احتياطية','Memory shield: a week since your last backup'],
+ shield_go:['احمِ الآن','Protect now'],
+ wk_focus:['أين ذهب تركيزك هذا الأسبوع','Where your focus went'],
+ ch_week_t:['تحدي التوأم لهذا الأسبوع','This week twin challenge'],
+ ch_await:['تحدي التوأم ينتظرك','A twin challenge awaits'],
+ ch_accept:['أقبل','Accept'],
+ ch_done:['أنجزت!','Done!'],
+ ch_ok:['قبلت التحدي — سأراقبه معك ✓','Challenge accepted — I will watch it with you ✓'],
+ dq_sub:['سؤال رفيق اليوم — إجابتك تصير ذكرى مصنفة تلقائياً','Rafiq daily question — your answer becomes a classified memory'],
+ dq_ph:['سطر واحد يكفي…','one line is enough…'],
+ dq_saved:['أجبت رفيق — صارت ذكرى ✓','Answered — it is a memory now ✓'],
+ plant_p0:['ازرع أول ذكرى','Plant your first memory'],
+ plant_p1:['<b>بذرة</b> — بدأت حكايتك الخضراء','<b>A seed</b> — your green story begins'],
+ plant_p2:['<b>برعتان</b> — الذاكرة تسقي كل يوم','<b>Two sprouts</b> — memory waters it daily'],
+ plant_p3:['<b>ساق ناهضة</b> — نمطك يتشكل','<b>A rising stem</b> — your pattern takes shape'],
+ plant_p4:['<b>شجيرة واعدة</b> — توازنك يغذّي أوراقها','<b>A promising shrub</b> — your balance feeds its leaves'],
+ plant_p5:['<b>تزهّر</b> — الشغف ظهر بالفعل','<b>In bloom</b> — your passion is showing'],
+ plant_p6:['<b>أثمرت</b> — توأمك الرقمي حي ومكتمل','<b>Bearing fruit</b> — your digital twin is alive']
 };
 function t(k){const v=T[k];return v?(LANG==='ar'?v[0]:v[1]):k}
 
@@ -985,9 +1029,7 @@ const REL_T={
 function classify(tx){let best=null,bn=0;const s=' '+tx+' ';CATS.forEach(c=>{let n=0;KW[c].forEach(w=>{if(s.indexOf(w)>=0)n++});if(n>bn){bn=n;best=c}});return best}
 function sentiment(tx){let p=0,n=0;POS.forEach(w=>{if(tx.indexOf(w)>=0)p++});NEG.forEach(w=>{if(tx.indexOf(w)>=0)n++});return p>n?1:(n>p?-1:0)}
 function topKeyword(tx){
- const s=' '+tx+' ';let bk=null,bn=0;
- const list=(KW[classify(tx)||'mind']||[]);
- list.forEach(w=>{if(s.indexOf(w)>=0)bn++;});
+ const s=' '+tx+' ';const list=(KW[classify(tx)||'mind']||[]);let bk=null;
  list.forEach(w=>{if(s.indexOf(w)>=0&&!bk)bk=w;});
  return bk;
 }
@@ -1063,14 +1105,14 @@ function applyLang(){
 
 window.__rfStage='الحالة';
 const S={profile:{name:'',job:'',email:'',bday:'',goals:[]},
- settings:{lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},
+ settings:{lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null},
  events:[],rels:[],decisions:[],chat:[],reminders:[],
  ind:{},catDelta:{},life:50,delta:0,spark:[],recs:[],staleRels:[]};
 const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
 let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null;
 let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
-let ritualMode=null,ritualPick=null;
+let ritualMode=null,ritualPick=null,enteredOnce=false;
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
 async function loadAll(){
  S.events=(await DB.all('events')).sort((a,b)=>a.ts-b.ts);
@@ -1162,62 +1204,7 @@ function weeklyReport(off){
  return {start:start,end:end,ev:ev,days:days,avgMood:avgMood,strongest:strongest,strongestN:posBy[strongest],weakest:weakest,achieve:achieve,warm:warm};
 }
 
-function badges(){
- const evs=S.events.filter(e=>e.type!=='mood');
- const st=calcStreak();
- const contacts=S.rels.reduce((a,r)=>a+((r.calls&&r.calls.n)||0),0);
- const AR=LANG==='ar';
- const def=[
-  {id:'first',icon:'spark',ar:'أول ذكرى',en:'First memory',got:evs.length>=1},
-  {id:'streak3',icon:'flame',ar:'3 أيام سلسلة',en:'3-day streak',got:st>=3},
-  {id:'streak7',icon:'flame',ar:'أسبوع كامل',en:'Full week',got:st>=7},
-  {id:'streak30',icon:'flame',ar:'شهر من الوفاء',en:'A faithful month',got:st>=30},
-  {id:'c10',icon:'phone',ar:'10 تواصلات',en:'10 contacts',got:contacts>=10},
-  {id:'c50',icon:'users',ar:'حارس العلاقات',en:'Relationship keeper',got:contacts>=50},
-  {id:'ev25',icon:'hex',ar:'25 ذكرى',en:'25 memories',got:evs.length>=25},
-  {id:'ev100',icon:'twin',ar:'ذاكرة حية',en:'A living memory',got:evs.length>=100},
-  {id:'bal70',icon:'shield',ar:'متوازن 70+',en:'Balanced 70+',got:S.life>=70}];
- return def.map(x=>({id:x.id,icon:x.icon,name:AR?x.ar:x.en,got:x.got}));
-}
- function weeklyChallenge(){
- const st=S.settings.challenge;
- if(st&&st.week===isoDate(Date.now()-new Date().getDay()*DAY)){
-  const w=st.week;
-  const done=chProgress(st.key);
-  return {key:st.key,target:st.target,done:done,week:w,accepted:true,label:st.label};
- }
- return null;
-}
-function chProgress(key){
- const days=7,keyDow=new Date().getDay();
- const start=dayStart(Date.now())-keyDow*DAY;
- const evs=S.events.filter(e=>e.ts>=start);
- if(key==='contact')return evs.filter(e=>e.type==='contact').length;
- if(key==='health')return evs.filter(e=>e.category==='health'&&e.polarity>0).length;
- if(key==='growth')return evs.filter(e=>e.category==='growth'&&e.polarity>0).length;
- if(key==='pos')return evs.filter(e=>e.polarity>0).length;
- if(key==='mood')return evs.filter(e=>e.type==='mood').length;
- return 0;
-}
-function suggestChallenge(){
- const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0];
- const AR=LANG==='ar';
- const map={
-  relations:{key:'contact',target:3,label:AR?'ثلاثة تواصلات مع من تحب هذا الأسبوع':'Three contacts with loved ones this week'},
-  health:{key:'health',target:3,label:AR?'ثلاث لحظات صحية إيجابية هذا الأسبوع':'Three positive health moments this week'},
-  growth:{key:'growth',target:3,label:AR?'ثلاث لحظات نمو أو قراءة':'Three growth or reading moments'},
-  money:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'},
-  mind:{key:'mood',target:5,label:AR?'وثّق مزاجك خمسة أيام':'Log your mood five days'},
-  work:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'}};
- return map[weak]||map.mind;
-}
-async function acceptChallenge(){
- const c=suggestChallenge();
- S.settings.challenge={key:c.key,target:c.target,label:c.label,week:isoDate(Date.now()-new Date().getDay()*DAY)};
- await saveMeta();refresh();
- toast((LANG==='ar'?'قبلت التحدي — سأراقبه معك ✓':'Challenge accepted — I will watch it with you ✓'),'var(--acc)','flame');
-}
- function perfStats(range){
+function perfStats(range){
  const now=Date.now();
  const start=range==='day'?dayStart(now):range==='week'?dayStart(now)-6*DAY:dayStart(now)-29*DAY;
  const ev=S.events.filter(e=>e.ts>=start);
@@ -1227,6 +1214,25 @@ async function acceptChallenge(){
  const mood=moods.length?Math.round(moods.reduce((a,e)=>a+e.mood,0)/moods.length):null;
  const contacts=ev.filter(e=>e.type==='contact').length;
  return {n:acts.length,pos:pos,neg:neg,mood:mood,contacts:contacts};
+}
+
+function weekDist(){
+ const start=dayStart(Date.now())-6*DAY;
+ const evs=S.events.filter(e=>e.ts>=start&&e.type!=='mood');
+ const total=Math.max(1,evs.length);
+ return CATS.map(c=>({c:c,n:evs.filter(e=>e.category===c).length,pct:Math.round(evs.filter(e=>e.category===c).length/total*100)}));
+}
+
+function dailyQuest(){
+ const ds=dayStart(Date.now());
+ const today=S.events.filter(e=>dayStart(e.ts)===ds);
+ const acts=today.filter(e=>e.type!=='mood');
+ const moodE=today.find(e=>e.type==='mood');
+ if(!acts.length)return {id:'log',txt:t('q_log'),act:'openEvent',done:false};
+ if(!moodE)return {id:'mood',txt:t('q_mood'),act:'moodFocus',done:false};
+ if(S.staleRels.length)return {id:'rel',txt:t('q_rel')+S.staleRels[0].name+t('q_rel2'),act:'openPick',done:false};
+ if(!acts.some(e=>e.polarity>0))return {id:'pos',txt:t('q_pos'),act:'openEvent',done:false};
+ return {id:'done',txt:t('q_done_s'),act:null,done:true};
 }
 
 function dailyQuestion(){
@@ -1244,126 +1250,154 @@ function dailyQuestion(){
   ?['ما أصغر شيء ابتسمت له اليوم؟','ما لحظة كنت فيها نفسك الحقيقية آخر يومين؟','ما الذي تستحقه وتؤجله عن نفسك؟','لو صديقك عاش يومك بالضبط، ما نصحته به؟']
   :['What smallest thing made you smile today?','When were you truly yourself these two days?','What do you deserve that you keep postponing?','If a friend lived your exact day, what would you tell him?'];
  const pool=(weak&&S.ind[weak]<50)?bank[weak].concat(general):general;
- const idx=Math.abs(String(iso+ (S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0))%pool.length;
+ const idx=Math.abs(String(iso+(S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0))%pool.length;
  return pool[idx];
 }
-function todayAnswerQ(){
- const iso=isoDate(Date.now());
- return S.events.find(e=>e.tag==='qa'&&e.ts>=dayStart(Date.now()));
-}
- function dailyQuest(){
- const ds=dayStart(Date.now());
- const today=S.events.filter(e=>dayStart(e.ts)===ds);
- const acts=today.filter(e=>e.type!=='mood');
- const moodE=today.find(e=>e.type==='mood');
- if(!acts.length)return {id:'log',txt:t('q_log'),act:'openEvent',done:false};
- if(!moodE)return {id:'mood',txt:t('q_mood'),act:'moodFocus',done:false};
- if(S.staleRels.length)return {id:'rel',txt:t('q_rel')+S.staleRels[0].name+t('q_rel2'),act:'openPick',done:false};
- if(!acts.some(e=>e.polarity>0))return {id:'pos',txt:t('q_pos'),act:'openEvent',done:false};
- return {id:'done',txt:t('q_done_s'),act:null,done:true};
-}
 
-/* =============== التنبؤ الذكي =============== */
-function smartPredictions(n){
- n=n||4;
- const now=new Date(),dow=now.getDay(),hp=now.getHours();
- const part=hp<12?'m':hp<18?'a':'e';
- const acts=S.events.filter(e=>e.type!=='mood');
- if(acts.length<3)return [];
- const grp={};
- acts.forEach(e=>{
-  const kw=topKeyword(e.text);
-  const key=kw||('tx:'+e.text);
-  if(!grp[key])grp[key]={n:0,best:null,bestSc:-1};
-  const g=grp[key];g.n++;
-  let sc=1;const d=new Date(e.ts);
-  if(d.getDay()===dow)sc+=2;
-  const p=d.getHours()<12?'m':d.getHours()<18?'a':'e';
-  if(p===part)sc+=1.5;
-  if(daysSince(e.ts)<=14)sc+=1;
-  if(e.polarity>0)sc+=0.5;
-  if(sc>g.bestSc||!g.best){g.bestSc=sc;g.best=e}
- });
- return Object.keys(grp).map(k=>grp[k])
-  .filter(g=>g.n>=2||g.bestSc>=3.5)
-  .sort((a,b)=>(b.n*b.bestSc)-(a.n*a.bestSc))
-  .slice(0,n).map(g=>g.best);
+/* النبتة الحية */
+function plantStage(){
+ const evs=S.events.filter(e=>e.type!=='mood');
+ const n=evs.length;
+ if(n===0)return 0;
+ const st=calcStreak();
+ let stage=1;
+ if(n>=3)stage=2;
+ if(n>=8)stage=3;
+ if(n>=18&&S.life>=50)stage=4;
+ if(n>=35&&S.life>=55)stage=5;
+ if(n>=60&&S.life>=62&&st>=3)stage=6;
+ if(!S.events.some(e=>daysSince(e.ts)<=6))stage=Math.max(1,stage-2);
+ return stage;
 }
-async function quickSaveEvent(tx,ms){
- const cat=classify(tx)||'mind',pol=sentiment(tx);
- const ev={id:uid(),text:tx,category:cat,polarity:pol,mood:null,ts:Date.now()};
- await DB.put('events',ev);S.events.push(ev);
- toast(t('pred_saved')+cn(cat),'var(--acc)','check',t('undo'),async()=>{
-  await DB.del('events',ev.id);
-  S.events=S.events.filter(x=>x.id!==ev.id);
-  toast(t('undo_ok'),'var(--ink2)','x',null,null,2000);
-  refresh();
- },ms||6000);
- refresh();
+function plantSvg(stage){
+ const stem='#7FA05A',leaf='var(--acc)';
+ const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
+ if(stage===0)return '<svg width="170" height="190" viewBox="0 0 170 190">'+
+  '<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<text x="85" y="80" text-anchor="middle" font-size="11" fill="var(--ink3)">'+esc(t('plant_p0'))+'</text></svg>';
+ let body='';
+ if(stage>=1)body+='<path d="M85 132V96" stroke="'+stem+'" stroke-width="3.5" stroke-linecap="round"/>'+
+  '<path class="p-leaf" d="M85 108C72 104 66 94 68 84c10 0 17 8 17 24z" fill="'+leaf+'" opacity=".85"/>';
+ if(stage>=2)body+='<path class="p-leaf" style="animation-delay:.4s" d="M85 100c13-4 19-14 17-24-10 0-17 8-17 24z" fill="'+leaf+'"/>';
+ if(stage>=3)body+='<path d="M85 96c-8-10-8-20-4-28" stroke="'+stem+'" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+  '<path class="p-leaf" style="animation-delay:.8s" d="M81 74c-10-2-14-10-13-19 9 1 15 8 13 19z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=4)body+='<path class="p-leaf" style="animation-delay:1.1s" d="M85 88c10-3 15-11 14-21-9 1-15 9-14 21z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=5)body+='<g class="p-bloom"><circle cx="80" cy="52" r="6" fill="'+leaf+'"/><circle cx="90" cy="52" r="6" fill="'+leaf+'"/><circle cx="85" cy="46" r="6" fill="'+leaf+'"/><circle cx="85" cy="58" r="6" fill="'+leaf+'"/><circle cx="85" cy="52" r="5.5" fill="#FFF3D6"/></g>';
+ if(stage>=6)body+='<g class="p-fruit"><circle cx="70" cy="82" r="5" fill="#E4796B"/><circle cx="99" cy="70" r="5" fill="#84C88E"/><circle cx="76" cy="63" r="4.5" fill="#E2C063"/></g>';
+ return '<svg width="170" height="190" viewBox="0 0 170 190">'+pot+body+'</svg>';
 }
+function plantWord(s){return t('plant_p'+s)}
 
-/* =============== الحكايات =============== */
-function buildStory(range){
- const days=range==='week'?7:30;
- const start=dayStart(Date.now())-(days-1)*DAY;
- const evs=S.events.filter(e=>e.ts>=start&&e.type!=='mood').sort((a,b)=>a.ts-b.ts);
- const AR=LANG==='ar';
- if(evs.length<2)return null;
- const pos=evs.filter(e=>e.polarity>0);
- const neg=evs.filter(e=>e.polarity<0);
- const moods=S.events.filter(e=>e.type==='mood'&&e.ts>=start);
- const avg=moods.length?moods.reduce((a,e)=>a+e.mood,0)/moods.length:null;
- const best=pos.length?(pos.reduce((a,b)=>((b.mood||0)>(a.mood||0)?b:a))):null;
- const rel=pos.filter(e=>e.category==='relations');
- const human=rel.length?rel[rel.length-1]:null;
- const grw=pos.filter(e=>e.category==='growth');
- const grow=grw.length?grw[grw.length-1]:null;
- const name=S.profile.name||(AR?'صديقي':'friend');
- const period=range==='week'?t('story_week'):t('story_month');
- let s='';
- s+='«'+t('story_t')+period+'»\n\n';
- s+=(AR?('يا '+name+'، خُضت خلال هذه الفترة '+(evs.length)+' لحظة موثقة'):('Dear '+name+', you lived '+(evs.length)+' documented moments this period'));
- if(avg)s+=(AR?('، ومزاجك العام كان «'+mw(Math.round(avg))+'»'):(', your overall mood was "'+mw(Math.round(avg))+'"'));
- s+='.\n\n';
- if(best){
-  s+=(AR?('أجمل لحظة كانت حين «'+best.text+'» — يوم '+fmtShort(best.ts)+'.'):('The most beautiful moment: "'+best.text+'" on '+fmtShort(best.ts)+'.'))+'\n';
- }
- if(human&&(!best||human.id!==best.id)){
-  s+=(AR?('وقلبك كان في مكانه حين «'+human.text+'».\n'):('Your heart was in the right place when "'+human.text+'".\n'));
- }
- if(neg.length){
-  const heavy=neg[0];
-  s+=(AR?('وما يومٌ بلا ثقل: «'+heavy.text+'». لكنك عادت للضوء بعده — وهذه أجمل ما أعرفه عنك.\n'):('And no week without weight: "'+heavy.text+'". But you returned to the light after it — the finest thing I know about you.\n'));
- }
- if(grow&&(!best||grow.id!==best.id)){
-  s+=(AR?('ونموك لم يتوقف: «'+grow.text+'».\n'):('Your growth never paused: "'+grow.text+'".\n'));
- }
- s+='\n'+(AR?('الخلاصة: '+lifeWord(S.life)+' — مؤشر حياتك '+S.life+'/100.'):('In sum: '+lifeWord(S.life)+' — your life score '+S.life+'/100.'));
- if(S.recs[0])s+='\n'+(AR?('وتوصيتي لك: '+S.recs[0].title+'.'):('And my tip: '+S.recs[0].title+'.'));
- s+='\n\n'+t('story_sign');
- return s;
+/* التحدي الأسبوعي */
+function weekKey(){return isoDate(Date.now()-new Date().getDay()*DAY)}
+function chProgress(key){
+ const start=dayStart(Date.now())-new Date().getDay()*DAY;
+ const evs=S.events.filter(e=>e.ts>=start);
+ if(key==='contact')return evs.filter(e=>e.type==='contact').length;
+ if(key==='health')return evs.filter(e=>e.category==='health'&&e.polarity>0).length;
+ if(key==='growth')return evs.filter(e=>e.category==='growth'&&e.polarity>0).length;
+ if(key==='pos')return evs.filter(e=>e.polarity>0).length;
+ if(key==='mood')return evs.filter(e=>e.type==='mood').length;
+ return 0;
 }
-
-/* =============== في هذا اليوم =============== */
-function onThisDay(){
- const offs=[[30,'otd_30'],[90,'otd_90'],[180,'otd_180'],[365,'otd_365']];
- for(let i=0;i<offs.length;i++){
-  const off=offs[i][0],key=offs[i][1];
-  const target=new Date();target.setDate(target.getDate()-off);
-  const hits=S.events.filter(e=>{
-   const d=new Date(e.ts);
-   return d.getDate()===target.getDate()&&d.getMonth()===target.getMonth()&&e.type!=='mood';
-  });
-  if(hits.length){
-   const bestP=hits.filter(e=>e.polarity>0);
-   const ev=bestP.length?bestP[bestP.length-1]:hits[hits.length-1];
-   return {ev:ev,key:key,off:off};
-  }
- }
+function weeklyChallenge(){
+ const st=S.settings.challenge;
+ if(st&&st.week===weekKey())return {key:st.key,target:st.target,done:chProgress(st.key),week:st.week,label:st.label,accepted:true};
  return null;
 }
+function suggestChallenge(){
+ const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0];
+ const AR=LANG==='ar';
+ const map={
+  relations:{key:'contact',target:3,label:AR?'ثلاثة تواصلات مع من تحب هذا الأسبوع':'Three contacts with loved ones this week'},
+  health:{key:'health',target:3,label:AR?'ثلاث لحظات صحية إيجابية هذا الأسبوع':'Three positive health moments this week'},
+  growth:{key:'growth',target:3,label:AR?'ثلاث لحظات نمو أو قراءة':'Three growth or reading moments'},
+  money:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'},
+  mind:{key:'mood',target:5,label:AR?'وثّق مزاجك خمسة أيام':'Log your mood five days'},
+  work:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'}};
+ return map[weak]||map.mind;
+}
+async function acceptChallenge(){
+ const c=suggestChallenge();
+ S.settings.challenge={key:c.key,target:c.target,label:c.label,week:weekKey()};
+ await saveMeta();refresh();
+ toast(t('ch_ok'),'var(--acc)','flame');
+}
 
-/* =============== واتساب =============== */
+/* الأوسمة */
+function badges(){
+ const evs=S.events.filter(e=>e.type!=='mood');
+ const st=calcStreak();
+ const contacts=S.rels.reduce((a,r)=>a+((r.calls&&r.calls.n)||0),0);
+ const AR=LANG==='ar';
+ return [
+  {id:'first',icon:'spark',name:AR?'أول ذكرى':'First memory',got:evs.length>=1},
+  {id:'streak3',icon:'flame',name:AR?'3 أيام سلسلة':'3-day streak',got:st>=3},
+  {id:'streak7',icon:'flame',name:AR?'أسبوع كامل':'Full week',got:st>=7},
+  {id:'streak30',icon:'flame',name:AR?'شهر من الوفاء':'A faithful month',got:st>=30},
+  {id:'c10',icon:'phone',name:AR?'10 تواصلات':'10 contacts',got:contacts>=10},
+  {id:'c50',icon:'users',name:AR?'حارس العلاقات':'Relationship keeper',got:contacts>=50},
+  {id:'ev25',icon:'hex',name:AR?'25 ذكرى':'25 memories',got:evs.length>=25},
+  {id:'ev100',icon:'twin',name:AR?'ذاكرة حية':'A living memory',got:evs.length>=100},
+  {id:'bal70',icon:'shield',name:AR?'متوازن 70+':'Balanced 70+',got:S.life>=70}];
+}
+
+/* شرارة اليوم */
+const SPARKS={
+ health:{books:{ar:['العادات الذرية — جيمس كلير','لماذا ننام — ماثيو ووكر'],en:['Atomic Habits','Why We Sleep']},
+  acts:{ar:['امشِ بعد كل وجبة 10 دقائق — أرخص علاج','قاعدة الدقيقتين: ابدأ تمرينك بدقيقتين فقط','خمس دقائق تمدد قبل النوم الليلة'],en:['Walk 10 minutes after each meal','Start your workout with just 2 minutes','5 minutes of stretching before bed tonight']}},
+ growth:{books:{ar:['العمل العميق — كال نيوبورت','أيقظ العملاق الذي بداخلك'],en:['Deep Work','Awaken the Giant Within']},
+  acts:{ar:['اكتب اليوم ما تعلمته من آخر خطأ','استمع لفصل صوتي أثناء المشي','علّم شخصاً شيئاً تعلمته هذا الأسبوع'],en:['Write what you learned from your last mistake','One audiobook chapter on your walk','Teach someone something you learned this week']}},
+ relations:{books:{ar:['كيف تكسب الأصدقاء — ديل كارنيج','اللغات الخمس للحب'],en:['How to Win Friends','The 5 Love Languages']},
+  acts:{ar:['أرسل رسالة شكر لشخص لم تكافئه منذ سنوات','اسأل أمك عن قصة من طفولتها وسجلها هنا','قاعدة 5:1 — خمس لحظات إيجابية عن كل تصحيح'],en:['Send a thank-you to someone unthanked for years','Ask a parent a childhood story — log it here','Try the 5:1 positive ratio in your closest bond']}},
+ money:{books:{ar:['أغنى رجل في بابل','سيكولوجية المال'],en:['The Richest Man in Babylon','The Psychology of Money']},
+  acts:{ar:['قاعدة 24 ساعة لأي شراء غير ضروري','راجع 3 اشتراكات شهرية: هل استخدمتها آخر 30 يوماً؟','حدد مبلغاً صغيراً ينقل تلقائياً يوم الراتب'],en:['24-hour rule for any impulse buy','Audit 3 subscriptions: used in 30 days?','Auto-transfer a small amount on payday']}},
+ work:{books:{ar:['أشياء أساسية — غريغ ماكيون'],en:['Essentialism']},
+  acts:{ar:['90 دقيقة عمل عميق دون إشعارات على أهم مهمة','اطلب تقييماً صريحاً من زميل تثق به','اكتب مهامك ثم احتفظ بواحدة فقط'],en:['One 90-minute deep block, notifications off','Ask a trusted colleague for honest feedback','List tasks, keep only the essential one']}},
+ mind:{books:{ar:['قوة الآن — إيكهارت تول','هدوء الأنفاس'],en:['The Power of Now','Breath']},
+  acts:{ar:['اكتب ثلاثة أشياء ممتن لها الآن','تنفس 4-7-8 قبل النوم: خمس مرات','غداء بلا هاتف — تجربة واحدة هذا الأسبوع'],en:['Write three gratitudes now','Try 4-7-8 breathing before bed','One phone-free lunch this week']}}};
+function sparkOfTheDay(){
+ const AR=LANG==='ar';
+ const iso=isoDate(Date.now());
+ const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0]||'mind';
+ const pool=SPARKS[weak]||SPARKS.mind;
+ const ki=(Number(String(iso).split('-').join(''))%2===0)?'books':'acts';
+ const arr=pool[ki][AR?'ar':'en'];
+ const seed=String(iso+(S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+ const item=arr[seed%arr.length];
+ return {cat:weak,text:item,kind:ki==='books'?t('spk_book'):t('spk_act')};
+}
+function sparkCard(){
+ const s=sparkOfTheDay();
+ return '<div class="spk-card" data-act="sparkAct"><div class="spk-top"><span class="spk-ic">'+ic('spark',19)+'</span>'+
+  '<div class="spk-body"><b>'+t('spk_t')+' · '+cn(s.cat)+'</b><p>'+esc(s.text)+'</p></div>'+
+  '<span class="spk-kind">'+esc(s.kind)+'</span></div></div>';
+}
+
+/* درع الذاكرة */
+async function shieldLast(){
+ try{
+  const all=await DB.all('meta');
+  const back=all.find(x=>x.key==='backup-log');
+  return back?back.ts:0;
+ }catch(e){return 0}
+}
+async function shieldMaybe(){
+ if(enteredOnce)return;
+ enteredOnce=true;
+ if(S.events.filter(e=>e.type!=='mood').length<5)return;
+ const last=await shieldLast();
+ if(last&&(Date.now()-last)<7*DAY)return;
+ setTimeout(()=>{
+  toast(t('shield_t'),'var(--good)','shield',t('shield_go'),async()=>{
+   await exportBackup();
+   await DB.put('meta',{key:'backup-log',ts:Date.now()});
+  },9000);
+ },1800);
+}
+
+/* واتساب */
 function shareWa(text){
  const a=document.createElement('a');
  a.href='https://wa.me/?text='+encodeURIComponent(text);
@@ -1380,51 +1414,7 @@ function twinWaText(){
  return (AR?'بصمة توأمي الرقمي — رفيق':'My digital twin fingerprint — Rafiq')+'\n\n• '+(AR?'اكتمال التوأم: ':'Twin completeness: ')+d.compl+'%\n• '+(AR?'مصدر طاقتي: ':'Energy source: ')+cn(d.energy)+'\n• '+(AR?'سلسلة التوثيق: ':'Logging streak: ')+d.streak+' '+pd(d.streak)+'\n'+(AR?'• جملة هويتي: ':'• Identity line: ')+d.idPlain+'\n\n'+(AR?'أُرسل من رفيق — شريك حياة رقمي':'Sent from Rafiq — your life companion');
 }
 
-function plantStage(){
- const evs=S.events.filter(e=>e.type!=='mood');
- const n=evs.length;
- if(n===0)return 0;
- const st=calcStreak();
- const bal=S.life;
- let stage=1;
- if(n>=3)stage=2;
- if(n>=8)stage=3;
- if(n>=18&&bal>=50)stage=4;
- if(n>=35&&bal>=55)stage=5;
- if(n>=60&&bal>=62&&st>=3)stage=6;
- if(!S.events.some(e=>daysSince(e.ts)<=6))stage=Math.max(1,stage-2);
- return stage;
-}
-function plantSvg(stage){
- const stem='#7FA05A',leaf='var(--acc)';
- if(stage===0)return '<svg width="170" height="190" viewBox="0 0 170 190">'+
-  '<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
-  '<path d="M85 168c-3-14-1-24 2-32M85 168c4-16 8-22 14-28" stroke="#5A4A28" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5"/>'+
-  '<text x="85" y="70" text-anchor="middle" font-size="11" fill="var(--ink3)" font-family="inherit">'+(LANG==='ar'?'ازرع أول ذكرى':'Plant your first memory')+'</text></svg>';
- const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
-  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
- let body='';
- if(stage>=1)body+='<path d="M85 132V96" stroke="'+stem+'" stroke-width="3.5" stroke-linecap="round"/>'+
-  '<path class="p-leaf" d="M85 108C72 104 66 94 68 84c10 0 17 8 17 24z" fill="'+leaf+'" opacity=".85"/>';
- if(stage>=2)body+='<path class="p-leaf" style="animation-delay:.4s" d="M85 100c13-4 19-14 17-24-10 0-17 8-17 24z" fill="'+leaf+'"/>';
- if(stage>=3)body+='<path d="M85 96c-8-10-8-20-4-28" stroke="'+stem+'" stroke-width="3" fill="none" stroke-linecap="round"/>'+
-  '<path class="p-leaf" style="animation-delay:.8s" d="M81 74c-10-2-14-10-13-19 9 1 15 8 13 19z" fill="'+leaf+'" opacity=".8"/>';
- if(stage>=4)body+='<path class="p-leaf" style="animation-delay:1.1s" d="M85 88c10-3 15-11 14-21-9 1-15 9-14 21z" fill="'+leaf+'" opacity=".8"/>';
- if(stage>=5)body+='<g class="p-bloom"><circle cx="80" cy="52" r="6" fill="'+leaf+'"/><circle cx="90" cy="52" r="6" fill="'+leaf+'"/><circle cx="85" cy="46" r="6" fill="'+leaf+'"/><circle cx="85" cy="58" r="6" fill="'+leaf+'"/><circle cx="85" cy="52" r="5.5" fill="#FFF3D6"/></g>';
- if(stage>=6)body+='<g class="p-fruit"><circle cx="70" cy="82" r="5" fill="#E4796B"/><circle cx="99" cy="70" r="5" fill="#84C88E"/><circle cx="76" cy="63" r="4.5" fill="#E2C063"/></g>';
- return '<svg width="170" height="190" viewBox="0 0 170 190">'+pot+body+'</svg>';
-}
-function plantWord(s){
- const AR=LANG==='ar';
- if(s===0)return AR?'تراب صالح… تنتظر أول بذرة':'Fertile soil… waiting for the first seed';
- if(s===1)return AR?'<b>بذرة</b> — بدأت حكايتك الخضراء':'<b>A seed</b> — your green story begins';
- if(s===2)return AR?'<b>برعَتَان</b> — الذاكرة تسقي كل يوم':'<b>Two sprouts</b> — memory waters it daily';
- if(s===3)return AR?'<b>ساق ناهضة</b> — نمطك يتشكل':'<b>A rising stem</b> — your pattern takes shape';
- if(s===4)return AR?'<b>شجيرة واعدة</b> — توازنك يغذّي أوراقها':'<b>A promising shrub</b> — your balance feeds its leaves';
- if(s===5)return AR?'<b>تزهّر</b> — الشغف ظهر بالفعل':'<b>In bloom</b> — your passion is showing';
- return AR?'<b>أثمرت</b> — توأمك الرقمي حي ومكتمل':'<b>Bearing fruit</b> — your digital twin is alive';
-}
- function twinData(){
+function twinData(){
  const n=S.events.length,attN=S.events.filter(e=>e.att&&e.att.length).length;
  const compl=clamp(Math.round(n*1.6+S.rels.length*4+S.decisions.length*4+attN*3+S.chat.length*.5),4,100);
  const posBy={},negBy={};CATS.forEach(c=>{posBy[c]=0;negBy[c]=0});
@@ -1468,7 +1458,7 @@ function rafiqReply(tx){
   const h=new Date().getHours();
   const g=AR?(h<12?'صباح الخير':h<17?'طاب نهارك':'مساء الخير'):(h<12?'Good morning':h<17?'Good afternoon':'Good evening');
   const so=[].slice.call(CATS).sort((a,b)=>S.ind[b]-S.ind[a]);
-  return {text:g+(AR?' يا ':' ')+name+'. '+lifeLine()+'.\n'+(AR?'أقوى جوانبك اليوم: ':'Your strongest side today: ')+cn(so[0])+'.\n'+(AR?'وأهم ما أريدك له: ':'And what I want you for first: ')+'«'+(S.recs[0]?S.recs[0].title:(AR?'كل شيء تحت السيطرة':'all under control'))+'».'};
+  return {text:g+(AR?' يا ':' ')+name+'. '+lifeLine()+'.\n'+(AR?'أقوى جوانبك اليوم: ':'Your strongest side today: ')+cn(so[0])+'.\n'+(AR?'وميض اليوم من مكتبتك: ':'Today spark from your shelf: ')+'«'+sparkOfTheDay().text+'».'};
  }
  if(has(/كيف حالي|حالتي|وضعي|قيّم|قيم حالتي|كيف أنا|كيف انا|how am i|my status|analyze me|how.s my life/i)){
   const so=[].slice.call(CATS).sort((a,b)=>S.ind[b]-S.ind[a]);
@@ -1481,6 +1471,11 @@ function rafiqReply(tx){
   const m=S.ind.money,w=S.ind.work;
   return {text:(AR?'قرأتُ قرارك: ':'I read your decision: ')+'«'+subj+'».\n• '+(AR?'مؤشر مالك ':'Money ')+m+'/100 '+(m>=60?(AR?'— يسمح بقرار كبير بحذر':'— allows a big call with care'):(AR?'— دون المستوى الآمن لالتزام كبير':'— below the safe zone for a big commitment'))+'.\n• '+(AR?'مؤشر عملك ':'Work ')+w+'/100 '+(w>=55?(AR?'— شبكة أمانك مستقرة':'— your safety net is steady'):(AR?'— ثبّت دخلك أولاً':'— stabilize income first'))+'.\n'+(AR?'قاعدتي: مهلة 72 ساعة. إن بقيت الرغبة حية بعدُ دون تصاعد حماس، فالقرار صحي.\nوسؤال واحد يكشف الكثير: هل تريده لأنك تحتاجه، أم لأن يومك يحتاج معنى؟':'My rule: 72 hours. If the wish survives it without rising excitement, the decision is right.\nOne question reveals a lot: do you want it because you need it — or because your day needs meaning?'),
    actions:[{label:AR?'حلّله في مركز القرارات':'Analyze in Decision Center',run:()=>{openDecSheet(subj)}}]};
+ }
+ if(has(/كتاب|اقترح|اقتراح|أقرأ|اقرا|أفكار|أفكرة|كتب|book|suggest|recommend|spark/i)){
+  const sp=sparkOfTheDay();
+  return {text:(AR?'من رصد اهتماماتك (جانب '+cn(sp.cat)+' هو الأضعف حالياً)، اقتراحي اليوم:\n📚 ':'From your attention pattern ('+cn(sp.cat)+' needs care), today I offer:\n📚 ')+sp.text+'\n\n'+(AR?'تقبله؟ سجّل قراءتك أو تطبيقك وأرصد أثره على مؤشرك.':'Take it? Log it when done and I will track its effect.'),
+   actions:[{label:AR?'سجّلها كحدث':'Log it as event',run:()=>{openEventSheet(t('spk_applied')+sp.text,sp.cat)}}]};
  }
  if(has(/يسعدني|يفرحني|سعادتي|مصادر سعادتي|أكثر شيء يفرح|make(s)? me happy|my happiness|what lifts/i)){
   const cnt={};S.events.forEach(e=>{if(e.polarity>0&&e.type!=='mood')cnt[e.category]=(cnt[e.category]||0)+1});
@@ -1500,20 +1495,18 @@ function rafiqReply(tx){
   const ex=nn.length?nn[nn.length-1]:null;
   return {text:(AR?'مصدر ضغطك الأكثر تكراراً: ':'Your most frequent pressure source: ')+cn(top)+' — '+(AR?'ظهر سلبياً ':'negative ')+cnt[top]+(AR?' مرة.\nآخر مرة: «':' times.\nLast time: "')+(ex?esc(ex.text):'')+'».\n'+(AR?'هذه الأشياء لا تُحل بتفكير أطول بل بتقليص مساحتها: ما أصغر خطوة تقلص الضغط 20% هذا الأسبوع؟':'These are not solved by longer thinking but by shrinking their space: what smallest step cuts this pressure 20% this week?')};
  }
- if(has(/حكاية|حكايات|قصة|اقصي|story/i)){
-  const st=buildStory('week');
-  if(!st)return {text:t('story_empty')};
-  setTimeout(()=>openStorySheet(),400);
-  return {text:(AR?'جهّزت حكاية أسبوعك — ستفتح لك الآن، ويمكنك مشاركتها على واتساب.':'Your weekly story is ready — opening now, shareable on WhatsApp.')};
- }
  if(has(/تذكرني|ذكّرني|ذكرني|remind me/i)){
   const txt=s.replace(/.*(تذكرني بـ|تذكرني ب|تذكرني|ذكّرني بـ|ذكّرني ب|ذكّرني|ذكرني|remind me to|remind me)/i,'').trim();
   if(!txt)return {text:AR?'بكل سرور — أكمل الجملة: «ذكّرني بـ…»':'With pleasure — complete the sentence: “Remind me to…”'};
   S.reminders.push({id:uid(),text:txt});saveMeta();
   return {text:AR?'سجّلته في سجل التنبيهات. سأعرضه في صفحتك الرئيسية حتى تنجزه. لن أدعك تنساه.':'Added to your reminders. It will sit on your home page until done. I will not let you forget.'};
  }
+ if(has(/حكاية|حكايات|قصة|story/i)){
+  setTimeout(()=>openStorySheet(),400);
+  return {text:AR?'جهّزت حكاية أسبوعك — ستفتح لك الآن، ويمكنك مشاركتها على واتساب.':'Your weekly story is ready — opening now, shareable on WhatsApp.'};
+ }
  if(has(/واتساب|واتس|whatsapp|(share|send).*(report|week|story)/i)){
-  if(has(/حكاية|story/)){const st=buildStory('week');if(st){setTimeout(()=>shareWa(st),400);return {text:AR?'حكايته جاهزة على واتساب — شاركها مع من تحب.':'Your story is packed for WhatsApp — share it with someone you love.'}}}
+  if(has(/حكاية|story/)){const st2=buildStory('week');if(st2){setTimeout(()=>shareWa(st2),400);return {text:AR?'حكايته جاهزة على واتساب — شاركها مع من تحب.':'Your story is packed for WhatsApp — share it with someone you love.'}}}
   if(has(/تقرير|أسبوع|report|week/)){setTimeout(()=>shareWa(weeklyWaText()),400);
    return {text:AR?'جهّزت تقرير أسبوعك كرسالة واتساب — ستفتح الآن، اختر المحادثة واضغط إرسال.':'Your weekly report is packed as a WhatsApp message — opening now, pick the chat and hit send.',actions:[{label:t('wa_rep_r'),run:()=>shareWa(weeklyWaText())}]}}
   return {text:AR?'أستطيع تجهيز رسالة واتساب جاهزة: تقرير أسبوعي أو بصمة توأمك أو حكايتهم.':'I can pack a WhatsApp message: weekly report, twin fingerprint or your story.'};
@@ -1528,16 +1521,15 @@ function rafiqReply(tx){
   let out=(AR?'ذكريات ':'MEMORIES ')+label+':\n';
   list.forEach((e,i)=>out+=(i+1)+'. '+e.text+' — '+cn(e.category)+'\n');
   if(moodE)out+='\n'+(AR?'مزاجك ':'Your mood ')+label+': '+mw(moodE.mood)+'.';
-  if(!wantY&&list.length)out+=AR?'\n\nيوم موثق جيد — استمر، هكذا يكبر توأمك.':'\n\nWell documented — keep going, this is how your twin grows.';
   return {text:out.trim()};
  }
  if(has(/شكرا|شكرًا|مشكور|تسلم|thank|thx/i))return {text:AR?'على أتم الاستعداد دائماً. أنا لا أنجح إلا إذا نجحت أنت — وسجل يومك أولاً بأول.':'Always ready. I only succeed when you do — so log your day, first thing.'};
  if(has(/من أنت|من انت|ماذا تفعل|قدراتك|ساعدني|تساعدني|وش تقدر|who are you|what can you|help/i))
-  return {text:AR?'أنا رفيق — مدير حياتك الشخصي:\n• أبدأ يومك بلقاء صباحي وأنهيه بلقاء مسائي.\n• أتوقع إيقاعك فأقترح يومك قبل أن تكتبه.\n• أحوّل ذاكرتك حكايات تُشارك.\n• أراقب علاقاتك وأحلل قراراتك.\n• وأتذكر كل شيء — بالصور والصوت.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your personal life manager:\n• I greet your morning and close your evening.\n• I predict your rhythm and suggest your day.\n• I turn your memory into shareable stories.\n• I watch relationships and stress-test decisions.\n• And I remember everything — photos and voice.\nAll of it on your device — your data belongs to you alone.'};
+  return {text:AR?'أنا رفيق — مدير حياتك الشخصي:\n• أبدأ يومك بلقاء وأنهيه بلقاء.\n• أتوقع إيقاعك وأقترح يومك.\n• أُلهِمك بشرارة يومية: كتاب أو فكرة.\n• أحوّل ذاكرتك حكايات تُشارك.\n• أراقب علاقاتك وأحلل قراراتك.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your personal life manager:\n• I greet your morning and close your evening.\n• I predict your rhythm and suggest your day.\n• I spark you daily: a book or an idea.\n• I turn your memory into shareable stories.\n• I watch relationships and stress-test decisions.\nAll of it on your device — your data belongs to you alone.'};
  if(has(/حزين|تعبان|مرهق|مكتئب|depressed|exhausted/i))
   return {text:AR?'أنا معك. الأيام الثقيلة تمر أسرع حين تُكتب. ما الذي أثقل عليك تحديداً اليوم؟ سجّله وأنا أتصرف بالباقي — وحتى لو كان مجرد كلام، هنا مكانه الآمن.':'I am with you. Heavy days pass faster when written. What weighed on you today, exactly? Log it and I handle the rest — even if it is just words, this is their safe place.'};
- const fb=AR?['أسمعك تماماً. هل نحوّل ما قلته إلى حدث؟ اضغط (+) واكتبه — أو جرّب «حكاية أسبوعي».','جرّبني: «كيف حالي؟» أو «حكاية أسبوعي» أو «أفكر بـ…».','سأحتفظ بكلامك في ذاكرتي. بالمناسبة — هل أغلقنا يوم أمس بلقاء المساء؟']
- :['I hear you. Shall we turn this into an event? Tap (+) and write it — or try “my weekly story”.','Try me: “How am I?” or “my weekly story” or start with “I am thinking of…”','Your words stay in my memory. By the way — did we close yesterday with the evening check-in?'];
+ const fb=AR?['أسمعك تماماً. هل نحوّل ما قلته إلى حدث؟ اضغط (+) واكتبه — أو اسألني عن كتاب يناسبك اليوم.','جرّبني: «كيف حالي؟» أو «حكاية أسبوعي» أو «اقترح لي كتاباً».','سأحتفظ بكلامك في ذاكرتي. بالمناسبة — هل قبولت تحدي التوأم هذا الأسبوع؟']
+ :['I hear you. Shall we turn this into an event? Tap (+) and write it — or ask me for a book for today.','Try me: “How am I?” or “my weekly story” or “suggest a book”.','Your words stay in my memory. By the way — did you accept this week twin challenge?'];
  return {text:fb[Math.floor(Math.random()*fb.length)]};
 }
 
@@ -1609,7 +1601,7 @@ async function finalizeSeed(){
  d1.analysis=analyzeDecision(d1.title,d1.kind);await DB.put('decisions',d1);
  const d2={id:uid(),seed:true,title:AR?'الاستثمار في صندوق مؤشرات':'Index fund investing',kind:'invest',amount:AR?'≈ 500 ر.س شهرياً':'≈ SAR 500 monthly',status:'open',ts:Date.now()-1*DAY};
  d2.analysis=analyzeDecision(d2.title,d2.kind);await DB.put('decisions',d2);
- await DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:AR?('أهلاً بك يا '+(S.profile.name||'صديقي')+'. أنا رفيق — أبدأ صباحك، أتوقع يومك، وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «كيف حالي؟» أو شاركني قراراً يبدأ بـ «أفكر بـ…».'):(('Welcome, '+(S.profile.name||'friend'))+'. I am Rafiq — I open your morning, predict your day and tell your memory.\nTry: “my weekly story” or “How am I?” or share a decision starting with “I am thinking of…”.')});
+ await DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:AR?('أهلاً بك يا '+(S.profile.name||'صديقي')+'. أنا رفيق — أبدأ صباحك، أتوقع يومك، أُلهِمك بشرارة، وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً» أو شاركني قراراً.'):(('Welcome, '+(S.profile.name||'friend'))+'. I am Rafiq — I open your morning, predict your day, spark your curiosity and tell your memory.\nTry: “my weekly story” or “suggest a book” or share a decision.')});
  await saveMeta();
 }
 
@@ -1675,7 +1667,7 @@ window.__rfStage='بناء الواجهة';
 const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings'];
 const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings'};
 function buildShell(){
- put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.5 — يستيقظ ويحكي · لقاء + تنبؤ + حكايات + قفل':'Rafiq 2.5 — wakes & tells · check-in + predictions + stories + lock')+'</b>');
+ put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.6 — يُلهِم ويحكي · شرارة + درع الذاكرة + نبتة':'Rafiq 2.6 — sparks & stories · spark + memory shield + plant')+'</b>');
  put('#appHead','<div class="h-brand" id="hBrand">'+logoSvg(34)+'<b>'+t('tab_chat')+'</b></div>'+
   '<div class="h-title" id="hTitle" hidden></div>'+
   '<div class="h-date" id="hDate">'+fmtDate(Date.now())+'</div>');
@@ -1699,10 +1691,6 @@ function go(v){
  if(R[v]){try{R[v]()}catch(err){__rfErr((err&&err.message||err)+' @'+v)}}
 }
 function refresh(){computeAll();renderDot();go(currentView)}
- document.addEventListener('click',e=>{
- const pt=e.target.closest('#plantTap');
- if(pt)go('twin');
-},{once:false});
 function renderDot(){const d=$('#moreDot');if(d)d.classList.toggle('show',S.staleRels.length>0)}
 function setLang(l){
  LANG=l;S.settings.lang=l;
@@ -1712,7 +1700,7 @@ function setLang(l){
  buildShell();computeAll();renderDot();go(currentView);
 }
 
-/* =============== القفل =============== */
+/* القفل */
 let locked=false;
 function showLock(){
  const l=$('#lock');if(!l)return;
@@ -1731,6 +1719,7 @@ function tryUnlock(){
  const lk=$('#lock');
  if(hashPin(pinBuf)===S.settings.pin){
   if(lk)lk.hidden=true;locked=false;pinBuf='';
+  setTimeout(shieldMaybe,1800);
  }else{
   if(lk){lk.classList.add('shake');setTimeout(()=>lk.classList.remove('shake'),450)}
   toast(t('lk_wrong'),'var(--bad)','x',null,null,1800);
@@ -1758,7 +1747,7 @@ document.addEventListener('visibilitychange',()=>{
  if(document.hidden&&S.settings.pin&&S.settings.pinOn)showLock();
 });
 
-/* =============== اللقاء اليومي =============== */
+/* اللقاء اليومي */
 const INTENTS={ar:['طاقة كاملة','يوم هادئ','إنجاز كبير','لقاءات ودّية','تعلّم جديد'],en:['Full energy','A calm day','A big win','Warm gatherings','Learn something']};
 function showRitualIfNeeded(){
  if(S.settings.ritualOff)return;
@@ -1769,7 +1758,7 @@ function showRitualIfNeeded(){
 }
 function openRitual(mode){
  ritualMode=mode;
- ritualPick={sleep:null,intent:null,conf:[],mood:null,note:''};
+ ritualPick={sleep:null,intent:null,conf:[],mood:null};
  renderRitual();
  const r=$('#ritual');if(r){r.hidden=false;r.scrollTop=0}
 }
@@ -1875,7 +1864,99 @@ async function finishRitual(){
  }
 }
 
-/* =============== الرئيسية =============== */
+/* التنبؤ الذكي */
+function smartPredictions(n){
+ n=n||4;
+ const now=new Date(),dow=now.getDay(),hp=now.getHours();
+ const part=hp<12?'m':hp<18?'a':'e';
+ const acts=S.events.filter(e=>e.type!=='mood');
+ if(acts.length<3)return [];
+ const grp={};
+ acts.forEach(e=>{
+  const kw=topKeyword(e.text);
+  const key=kw||('tx:'+e.text);
+  if(!grp[key])grp[key]={n:0,best:null,bestSc:-1};
+  const g=grp[key];g.n++;
+  let sc=1;const d=new Date(e.ts);
+  if(d.getDay()===dow)sc+=2;
+  const p=d.getHours()<12?'m':d.getHours()<18?'a':'e';
+  if(p===part)sc+=1.5;
+  if(daysSince(e.ts)<=14)sc+=1;
+  if(e.polarity>0)sc+=0.5;
+  if(sc>g.bestSc||!g.best){g.bestSc=sc;g.best=e}
+ });
+ return Object.keys(grp).map(k=>grp[k])
+  .filter(g=>g.n>=2||g.bestSc>=3.5)
+  .sort((a,b)=>(b.n*b.bestSc)-(a.n*a.bestSc))
+  .slice(0,n).map(g=>g.best);
+}
+async function quickSaveEvent(tx,ms){
+ const cat=classify(tx)||'mind',pol=sentiment(tx);
+ const ev={id:uid(),text:tx,category:cat,polarity:pol,mood:null,ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);
+ toast(t('pred_saved')+cn(cat),'var(--acc)','check',t('undo'),async()=>{
+  await DB.del('events',ev.id);
+  S.events=S.events.filter(x=>x.id!==ev.id);
+  toast(t('undo_ok'),'var(--ink2)','x',null,null,2000);
+  refresh();
+ },ms||6000);
+ refresh();
+}
+
+/* الحكايات */
+function buildStory(range){
+ const days=range==='week'?7:30;
+ const start=dayStart(Date.now())-(days-1)*DAY;
+ const evs=S.events.filter(e=>e.ts>=start&&e.type!=='mood').sort((a,b)=>a.ts-b.ts);
+ const AR=LANG==='ar';
+ if(evs.length<2)return null;
+ const pos=evs.filter(e=>e.polarity>0);
+ const neg=evs.filter(e=>e.polarity<0);
+ const moods=S.events.filter(e=>e.type==='mood'&&e.ts>=start);
+ const avg=moods.length?moods.reduce((a,e)=>a+e.mood,0)/moods.length:null;
+ const best=pos.length?(pos.reduce((a,b)=>((b.mood||0)>(a.mood||0)?b:a))):null;
+ const rel=pos.filter(e=>e.category==='relations');
+ const human=rel.length?rel[rel.length-1]:null;
+ const grw=pos.filter(e=>e.category==='growth');
+ const grow=grw.length?grw[grw.length-1]:null;
+ const name=S.profile.name||(AR?'صديقي':'friend');
+ const period=range==='week'?t('story_week'):t('story_month');
+ let s='';
+ s+='«'+t('story_t')+period+'»\n\n';
+ s+=(AR?('يا '+name+'، خُضت خلال هذه الفترة '+(evs.length)+' لحظة موثقة'):('Dear '+name+', you lived '+(evs.length)+' documented moments this period'));
+ if(avg)s+=(AR?('، ومزاجك العام كان «'+mw(Math.round(avg))+'»'):(', your overall mood was "'+mw(Math.round(avg))+'"'));
+ s+='.\n\n';
+ if(best)s+=(AR?('أجمل لحظة كانت حين «'+best.text+'» — يوم '+fmtShort(best.ts)+'.'):('The most beautiful moment: "'+best.text+'" on '+fmtShort(best.ts)+'.'))+'\n';
+ if(human&&(!best||human.id!==best.id))s+=(AR?('وقلبك كان في مكانه حين «'+human.text+'».\n'):('Your heart was in the right place when "'+human.text+'".\n'));
+ if(neg.length){const heavy=neg[0];
+  s+=(AR?('وما يومٌ بلا ثقل: «'+heavy.text+'». لكنك عادت للضوء بعده — وهذه أجمل ما أعرفه عنك.\n'):('And no week without weight: "'+heavy.text+'". But you returned to the light after it — the finest thing I know about you.\n'));}
+ if(grow&&(!best||grow.id!==best.id))s+=(AR?('ونموك لم يتوقف: «'+grow.text+'».\n'):('Your growth never paused: "'+grow.text+'".\n'));
+ s+='\n'+(AR?('الخلاصة: '+lifeWord(S.life)+' — مؤشر حياتك '+S.life+'/100.'):('In sum: '+lifeWord(S.life)+' — your life score '+S.life+'/100.'));
+ if(S.recs[0])s+='\n'+(AR?('وتوصيتي لك: '+S.recs[0].title+'.'):('And my tip: '+S.recs[0].title+'.'));
+ s+='\n\n'+t('story_sign');
+ return s;
+}
+
+/* في هذا اليوم */
+function onThisDay(){
+ const offs=[[30,'otd_30'],[90,'otd_90'],[180,'otd_180'],[365,'otd_365']];
+ for(let i=0;i<offs.length;i++){
+  const off=offs[i][0],key=offs[i][1];
+  const target=new Date();target.setDate(target.getDate()-off);
+  const hits=S.events.filter(e=>{
+   const d=new Date(e.ts);
+   return d.getDate()===target.getDate()&&d.getMonth()===target.getMonth()&&e.type!=='mood';
+  });
+  if(hits.length){
+   const bestP=hits.filter(e=>e.polarity>0);
+   const ev=bestP.length?bestP[bestP.length-1]:hits[hits.length-1];
+   return {ev:ev,key:key,off:off};
+  }
+ }
+ return null;
+}
+
+/* الرئيسية */
 function isIos(){return /(iPad|iPhone|iPod)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
 function isStandalone(){return navigator.standalone===true||!!(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)}
 function ringHtml(val){
@@ -1909,6 +1990,13 @@ function questHtml(){
  const q=dailyQuest();
  if(q.done)return '<div class="quest done"><div class="quest-ic">'+ic('check',19)+'</div><div class="quest-b"><b>'+t('q_done_t')+'</b><p>'+esc(q.txt)+'</p></div><span class="quest-go">'+ic('check',15)+'</span></div>';
  return '<div class="quest"><div class="quest-ic">'+ic('spark',19)+'</div><div class="quest-b"><b>'+t('q_t')+'</b><p>'+esc(q.txt)+'</p></div><button class="quest-go" data-act="questGo">'+t('q_go')+'</button></div>';
+}
+function chCard(){
+ const c=weeklyChallenge();
+ if(c){const pct=Math.min(100,Math.round(c.done/c.target*100));
+  return '<div class="ch-card"><div class="ch-top"><span class="spk-ic">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+esc(c.label)+'</b><span>'+t('ch_week_t')+'</span></div></div><div class="ch-bar"><i style="width:'+pct+'%"></i></div><div class="ch-foot"><span>'+c.done+' / '+c.target+'</span>'+(pct>=100?'<b style="color:var(--good)">✓ '+t('ch_done')+'</b>':'<span></span>')+'</div></div>';}
+ const sc=suggestChallenge();
+ return '<div class="ch-card" data-act="acceptCh" style="cursor:pointer"><div class="ch-top"><span class="spk-ic">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+t('ch_await')+'</b><span>'+esc(sc.label)+'</span></div><button class="rec-btn">'+t('ch_accept')+'</button></div></div>';
 }
 function predHtml(){
  const preds=smartPredictions(4);
@@ -1953,12 +2041,6 @@ function renderHome(){
   (intent?'<span class="in-chip">'+ic('sun2',13)+' '+t('intent_today')+esc(intent)+'</span>':'')+'</div>'+
   otdHtml()+
   questHtml()+
-  (function(){const c=weeklyChallenge();
- if(c){const pct=Math.min(100,Math.round(c.done/c.target*100));
-  return '<div class="ch-card"><div class="ch-top"><span class="sb-ic" style="width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+esc(c.label)+'</b><span>'+(LANG==='ar'?'تحدي التوأم لهذا الأسبوع':'This week twin challenge')+'</span></div></div><div class="ch-bar"><i style="width:'+pct+'%"></i></div><div class="ch-foot"><span>'+c.done+' / '+c.target+'</span>'+(pct>=100?'<b style="color:var(--good)">✓ '+(LANG==='ar'?'أنجزت!':'Done!')+'</b>':'')+'</span></div></div>';}
- return '<div class="ch-card" style="cursor:pointer" data-act="acceptCh"><div class="ch-top"><span class="sb-ic" style="width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+(LANG==='ar'?'تحدي التوأم ينتظرك':'A twin challenge awaits')+'</b><span>'+esc(suggestChallenge().label)+'</span></div><button class="rec-btn">'+(LANG==='ar'?'أقبل':'Accept')+'</button></div></div>';
-})()+
-  '<div class="dq-card"><div class="dq-q">'+ic('spark',15)+' '+esc(dailyQuestion())+'</div><div class="dq-sub">'+(LANG==='ar'?'سؤال رفيق اليوم — إجابتك تصير ذكرى مصنفة تلقائياً':'Rafiq daily question — your answer becomes a classified memory')+'</div><textarea id="dqAnswer" placeholder="'+(LANG==='ar'?'سطر واحد يكفي…':'one line is enough…')+'"></textarea><button class="btn sm" id="dqSave" style="margin-top:9px">'+t('save')+'</button></div>'+
   '<div class="qbar"><input id="quickEv" placeholder="'+t('qa_ph')+'" autocomplete="off"><button class="qbtn" data-act="quickAdd">'+ic('plus',20)+'</button></div>'+
   predHtml()+
   '<div class="qa-grid">'+
@@ -1967,7 +2049,9 @@ function renderHome(){
    '<button class="qa" data-act="openDec">'+ic('dec',19)+'<span>'+t('qa_dec')+'</span></button>'+
    '<button class="qa" data-act="openRitual">'+ic('sun2',19)+'<span>'+(AR?'لقاء':'Check-in')+'</span></button>'+
   '</div>'+
-    '<div class="card" style="margin-top:14px;text-align:center;padding:12px 10px 6px"><div class="plant-stage" id="plantTap" style="margin:0 auto">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
+  '<div class="card" style="margin-top:14px;text-align:center;padding:12px 10px 6px"><div class="plant-stage" id="plantTap" style="margin:0 auto">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
+  sparkCard()+
+  chCard()+
   '<section class="life-card" data-act="goLife">'+
    '<div class="lc-top"><span class="lc-live"><span class="pulse-dot"></span> '+t('life_watch')+'</span>'+trend+'</div>'+
    ringHtml(S.life)+
@@ -1995,16 +2079,8 @@ function renderHome(){
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
  const qe=$('#quickEv');
  if(qe)qe.addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
-  const dq=$('#dqSave');
- if(dq)dq.onclick=saveDailyQ;
-}
- async function saveDailyQ(){
- const el=$('#dqAnswer');if(!el)return;
- const tx=el.value.trim();if(!tx)return;
- const ev={id:uid(),text:tx,category:classify(tx)||'mind',polarity:sentiment(tx),mood:null,tag:'qa',ts:Date.now()};
- await DB.put('events',ev);S.events.push(ev);el.value='';
- toast((LANG==='ar'?'أجبت رفيق — صارت ذكرى ✓':'Answered — it is a memory now ✓'),'var(--acc)','check');
- refresh();
+ const dq2=$('#dqSave');
+ if(dq2)dq2.onclick=saveDailyQ;
 }
 async function quickAdd(){
  const el=$('#quickEv');if(!el)return;
@@ -2015,8 +2091,16 @@ async function quickAdd(){
  toast(t('qa_saved')+cn(cat),pol>0?'var(--good)':pol<0?'var(--bad)':'var(--acc)','check');
  refresh();
 }
+async function saveDailyQ(){
+ const el=$('#dqAnswer');if(!el)return;
+ const tx=el.value.trim();if(!tx)return;
+ const ev={id:uid(),text:tx,category:classify(tx)||'mind',polarity:sentiment(tx),mood:null,tag:'qa',ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);el.value='';
+ toast(t('dq_saved'),'var(--acc)','check');
+ refresh();
+}
 
-/* =============== التقويم =============== */
+/* التقويم */
 function renderCal(){
  const v=$('#v-cal');if(!v)return;
  const first=new Date(calY,calM,1),offset=first.getDay(),dim=new Date(calY,calM+1,0).getDate();
@@ -2078,7 +2162,7 @@ function openDaySheet(ts){
  const da=$('#dayAdd');if(da)da.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,ts),120)};
 }
 
-/* =============== لوحة الحياة =============== */
+/* لوحة الحياة */
 let hexCur=null;
 function hexSvg(){
  const cx=160,cy=150,r=104;
@@ -2131,8 +2215,8 @@ function renderLife(){
  requestAnimationFrame(()=>$$('#v-life .bar-track i').forEach(i=>i.style.width=i.dataset.w+'%'));
 }
 
-/* =============== المحادثة =============== */
-const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','حكاية أسبوعي','وش سجلت أمس؟','أفكر بشراء سيارة','ما أكثر شيء يفرحني؟']:['How am I this week?','My weekly story','What did I log yesterday?','I am thinking of buying a car','What makes me happiest?'];
+/* المحادثة */
+const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','اقترح لي كتاباً','حكاية أسبوعي','وش سجلت أمس؟','أفكر بشراء سيارة']:['How am I this week?','Suggest a book','My weekly story','What did I log yesterday?','I am thinking of buying a car'];
 function renderChat(){
  const v=$('#v-chat');if(!v)return;
  v.innerHTML=
@@ -2141,7 +2225,7 @@ function renderChat(){
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
   '<div class="composer"><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
  const list=$('#chatList');if(!list)return;
- if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو أحد الأسئلة بالأسفل.'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions — and I tell your memory.\nTry: “my weekly story” or a ready question below.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
+ if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً» أو أحد الأسئلة بالأسفل.'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions — and I tell your memory.\nTry: “my weekly story” or “suggest a book” or a ready question below.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
  drawMsgs();
  const inp=$('#chatInp'),snd=$('#chatSend');
  if(snd)snd.onclick=()=>{if(!inp)return;const tx=inp.value.trim();if(!tx)return;inp.value='';sendChat(tx)};
@@ -2168,7 +2252,7 @@ function renderChat(){
  }
 }
 
-/* =============== العلاقات =============== */
+/* العلاقات */
 function renderRelations(){
  const v=$('#v-relations');if(!v)return;
  let rows='';
@@ -2197,7 +2281,7 @@ function renderRelations(){
   '<div style="height:16px"></div>';
 }
 
-/* =============== تواصل + تراجع + إحصاءات =============== */
+/* التواصل والإحصاءات */
 function openContactSheet(rid){
  const r=S.rels.find(x=>x.id===rid);if(!r)return;
  if(!r.calls)r.calls={n:0,d:0};
@@ -2233,7 +2317,6 @@ async function saveContactLog(){
   text:(AR?'تواصلت مع ':'Contacted ')+r.name+(csDur?' ('+csDur+' '+t('cs_min_s')+')':''),ts:Date.now()};
  await DB.put('events',ev);S.events.push(ev);
  dismissed.add('rel:'+csRelId);
- pendingUndo;
  closeSheets();
  toast(t('contact_toast')+r.name+t('contact_toast2'),'var(--c-relations)','phone',t('undo'),async()=>{
   const rel=S.rels.find(x=>x.id===csRelId);
@@ -2290,7 +2373,7 @@ function openPickSheet(){
  $$('#shPick [data-pick]').forEach(b=>b.onclick=()=>{closeSheets();setTimeout(()=>openContactSheet(b.dataset.pick),140)});
 }
 
-/* =============== القرارات =============== */
+/* القرارات */
 function renderDecisions(){
  const v=$('#v-decisions');if(!v)return;
  let rows='';
@@ -2323,7 +2406,7 @@ function renderDecisions(){
   '<div style="height:16px"></div>';
 }
 
-/* =============== التقرير =============== */
+/* التقرير */
 function renderReport(){
  const v=$('#v-report');if(!v)return;
  const rp=weeklyReport(reportWeek);
@@ -2347,6 +2430,9 @@ function renderReport(){
    '<span class="rp-pill" style="color:var(--bad)">'+cn(rp.weakest)+t('rep_weak')+'</span></p>'+
    '<p style="margin-top:6px;font-size:12.5px;color:var(--ink2)">'+(AR?('سجلت '+rp.strongestN+' لحظة إيجابية في '+cn(rp.strongest)+'، بينما كان '+cn(rp.weakest)+' غائباً عن أسبوعك تقريباً. التوازن لا يعني المساواة — لكنه يعني ألا يظل جانب بلا حياة أسبوعاً كاملاً.'):('You logged '+rp.strongestN+' positive moments in '+cn(rp.strongest)+' while '+cn(rp.weakest)+' was nearly absent. Balance is not equality — no side of your life should stay empty for a whole week.'))+'</p>'+
   '</div>'+
+  '<div class="rp-sec"><h4>'+ic('pulse',13)+' '+t('wk_focus')+'</h4><div class="wk-bars">'+
+   weekDist().map(x=>'<div class="wk-bar"><span>'+cn(x.c)+'</span><div class="wk-track"><i data-w="'+x.pct+'" style="background:'+CAT_META[x.c].color+'"></i></div><em>'+x.pct+'%</em></div>').join('')+
+  '</div></div>'+
   (rp.achieve?'<div class="rp-sec"><h4>'+ic('check',13)+' '+t('rep_ach')+'</h4><p>«'+esc(rp.achieve.text)+'»</p><p style="font-size:11px;color:var(--ink3);margin-top:4px">'+timeAgo(rp.achieve.ts)+'</p></div>':'')+
   (rp.warm?'<div class="rp-sec"><h4>'+ic('heart',13)+' '+t('rep_warm')+'</h4><p>«'+esc(rp.warm.text)+'»</p></div>':'')+
   '<div class="rp-sec"><h4>'+ic('spark',13)+' '+t('rep_next')+'</h4>'+
@@ -2354,9 +2440,10 @@ function renderReport(){
   '</div>'+
   '<div class="page-add"><button class="btn ghost" data-act="waReport">'+ic('wa',17)+' '+t('rep_share')+'</button></div>'+
   '<div style="height:16px"></div>';
+ requestAnimationFrame(()=>{$$('#v-report .wk-track i').forEach(i=>i.style.width=i.dataset.w+'%')});
 }
 
-/* =============== التوأم =============== */
+/* التوأم */
 function ringSvgMini(val){
  const R=46,C=2*Math.PI*R;
  return '<svg viewBox="0 0 110 110" style="width:120px;margin:auto"><circle cx="55" cy="55" r="'+R+'" fill="none" stroke="#282112" stroke-width="8" opacity=".6"/>'+
@@ -2378,7 +2465,8 @@ function renderTwin(){
   ?t('proj_up_a')+d.proj+t('proj_up_b')+(d.projD>0?'+'+d.projD:t('proj_st'))+t('proj_up_c')
   :t('proj_up_a')+d.proj+t('proj_dn_b')+d.projD+t('proj_dn_c');
  v.innerHTML=
-  '<div class="tw-top">'+ringSvgMini(d.compl)+'<p>'+t('tw_p')+'</p></div>'+  '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
+  '<div class="tw-top">'+ringSvgMini(d.compl)+'<p>'+t('tw_p')+'</p></div>'+
+  '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
   '<div class="tw-line"><p style="font-size:12px;color:var(--ink2)">'+t('tw_week_a')+WD()[d.bestWd]+t('tw_week_b')+'<b style="color:var(--acc)">'+t('tw_gold')+'</b>'+t('tw_week_c')+'</p>'+
    '<div class="wd-bars">'+WD().map((n2,i)=>'<div class="wd-b"><div class="wd-track"><i class="'+(i===d.bestWd?'on':'')+'" style="height:'+Math.max(6,Math.round(d.wdPos[i]/maxW*100))+'%"></i></div><span>'+n2.slice(0,3)+'</span></div>').join('')+'</div></div>'+
   '<h3 class="sec-t">'+ic('flame',15)+' '+t('tw_pat_t')+'</h3>'+
@@ -2389,18 +2477,18 @@ function renderTwin(){
   '<div class="tw-line"><h4>'+t('stress_t')+'</h4><p>'+(d.stressN?'<b style="color:'+CAT_META[d.stress].color+'">'+cn(d.stress)+'</b>'+t('stress_on')+d.stressN+t('stress_on2'):t('stress_off'))+'</p></div>'+
   '<div class="tw-line"><h4>'+t('hour_t')+'</h4><p>'+d.when+t('hour_s')+Math.round(d.avgH)+t('hour_s2')+'</p></div>'+
   '<div class="tw-line"><h4>'+t('proj_t')+'</h4><p>'+projTxt+'</p></div>'+
+  '<h3 class="sec-t">'+ic('flame',15)+' '+t('badges_t')+'</h3>'+
+  '<div class="qa-grid" style="grid-template-columns:repeat(3,1fr)">'+
+   badges().map(b2=>'<div class="qa" style="'+(b2.got?'border-color:var(--acc);color:var(--ink)':'opacity:.35')+'">'+ic(b2.icon,19)+'<span>'+esc(b2.name)+'</span></div>').join('')+
+  '</div>'+
   '<h3 class="sec-t">'+ic('eye',15)+' '+t('dist_t')+'</h3>'+
   '<div class="tw-line">'+d.dist.map(x=>'<div class="tw-bar" style="--rc:'+CAT_META[x.c].color+'"><span>'+cn(x.c)+'</span><div class="bar-track"><i style="width:'+x.pct+'%"></i></div><em>'+x.pct+'%</em></div>').join('')+'</div>'+
   '<div class="tw-line" style="border-right:3px solid var(--acc)"><h4>'+t('ident_t')+'</h4><p>'+esc(d.idPlain)+'</p></div>'+
-   '<h3 class="sec-t">'+ic('flame',15)+' '+(LANG==='ar'?'أوسمة رحلتك':'Your journey badges')+'</h3>'+
- '<div class="qa-grid" style="grid-template-columns:repeat(3,1fr)">'+
-  badges().map(b2=>'<div class="qa" style="'+(b2.got?'border-color:var(--acc);color:var(--ink)':'opacity:.35')+'">'+ic(b2.icon,19)+'<span>'+esc(b2.name)+'</span></div>').join('')+
- '</div>'+
   '<div class="page-add"><button class="btn ghost" data-act="waTwin">'+ic('wa',17)+' '+t('tw_share')+'</button></div>'+
   '<div style="height:16px"></div>';
 }
 
-/* =============== الإعدادات =============== */
+/* الإعدادات */
 function storageInfo(){
  const isFile=location.protocol==='file:';
  if(DB.driver==='idb')return {b:t('st_idb'),note:'',icon:'shield',col:'var(--good)'};
@@ -2470,7 +2558,7 @@ function renderSettings(){
     '<button class="sw '+(st.toggles.rel?'on':'')+'" data-tg="rel"><i></i></button></div>'+
    '<div class="set-row"><div><b>'+t('st_tg_hab')+'</b><p>'+t('st_tg_hab_p')+'</p></div>'+
     '<button class="sw '+(st.toggles.habits?'on':'')+'" data-tg="habits"><i></i></button></div>'+
-   '<div class="set-row" style="border-bottom:none"><div><b>'+(AR?'لقاء الصباح والمساء':'Morning & evening check-in')+'</b><p>'+(AR?'لقاء غامر بلمستين عند فتح رفيق صباحاً أو مساءً.':'An immersive two-tap ritual when you open Rafiq morning or evening.')+'</p></div>'+
+   '<div class="set-row" style="border-bottom:none"><div><b>'+t('st_ritual')+'</b><p>'+t('st_ritual_p')+'</p></div>'+
     '<button class="sw '+(!st.ritualOff?'on':'')+'" id="rtTgl"><i></i></button></div>'+
   '</div>'+
   '<h3 class="sec-t">'+ic('wa',15)+' '+t('st_wa')+'</h3>'+
@@ -2479,17 +2567,18 @@ function renderSettings(){
     '<button class="icon-btn" data-act="waReport">'+ic('send',15)+'</button></div>'+
    '<div class="set-row"><div><b>'+t('st_wa_t')+'</b><p>'+t('st_wa_t_p')+'</p></div>'+
     '<button class="icon-btn" data-act="waTwin">'+ic('send',15)+'</button></div>'+
-   '<div class="set-note">'+t('st_wa_note')+'</div>'+'</div>'+
-'<h3 class="sec-t">'+ic('shield',15)+' '+(LANG==='ar'?'عن رفيق · العلامة التجارية':'About Rafiq · Brand')+'</h3>'+
-'<div class="set-card">'+
- '<div style="text-align:center;padding:4px 0 2px">'+
- logoSvg(52)+
- '<b style="font-family:var(--fd);display:block;margin-top:8px;font-size:15.5px">'+(LANG==='ar'?'رفيق — شريك حياة رقمي':'Rafiq — Life Companion')+'</b>'+
- '<p style="font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.9">'+(LANG==='ar'?'فكرة وتصميم وتطوير':'Idea, design & development by')+'<br><b style="color:var(--acc)">مراد الحاج · Murad Alhaj</b><br>'+(LANG==='ar'?'جميع الحقوق محفوظة © 2025':'All rights reserved © 2025')+'</p>'+
- '<a href="mailto:mouradalhaj@gmail.com" style="display:inline-block;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:7px 15px;text-decoration:none" dir="ltr">mouradalhaj@gmail.com</a>'+
- '<p style="font-size:10px;color:var(--ink3);margin-top:9px">Rafiq™ · v2.5.1 · Made with love in the Arab world</p>'+
- '</div></div>'+
-'<div style="height:16px"></div>';
+   '<div class="set-note">'+t('st_wa_note')+'</div>'+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('shield',15)+' '+t('st_brand_t')+'</h3>'+
+  '<div class="set-card">'+
+   '<div style="text-align:center;padding:4px 0 2px">'+
+    logoSvg(52)+
+    '<b style="font-family:var(--fd);display:block;margin-top:8px;font-size:15.5px">'+t('brand_name')+'</b>'+
+    '<p style="font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.9">'+t('brand_by')+'<br><b style="color:var(--acc)">'+t('brand_owner')+'</b><br>'+t('brand_rights')+'</p>'+
+    '<a href="mailto:mouradalhaj@gmail.com" style="display:inline-block;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:7px 15px;text-decoration:none" dir="ltr">mouradalhaj@gmail.com</a>'+
+    '<p style="font-size:10px;color:var(--ink3);margin-top:9px">Rafiq™ · v2.6 · Made with love in the Arab world</p>'+
+   '</div></div>'+
+  '<div style="height:16px"></div>';
  const ps=$('#stProfileSave');
  if(ps)ps.onclick=async()=>{
   const nEl=$('#stName');const n=nEl?nEl.value.trim():'';
@@ -2508,10 +2597,7 @@ function renderSettings(){
   toast(t('st_pin_ok'),'var(--good)','shield');
  };
  const pt=$('#pinTgl');
- if(pt)pt.onclick=async()=>{
-  S.settings.pinOn=!S.settings.pinOn;
-  await saveMeta();renderSettings();
- };
+ if(pt)pt.onclick=async()=>{S.settings.pinOn=!S.settings.pinOn;await saveMeta();renderSettings()};
  const pe=$('#pinEdit');
  if(pe)pe.onclick=()=>{pinEdit=true;renderSettings()};
  const pdel=$('#pinDel');
@@ -2715,7 +2801,7 @@ function openEventSheet(text,cat,dateTs,evId){
  const tt=$('#evTitle');if(tt)tt.textContent=evEditId?t('ev_edit_t'):t('ev_t');
  const sb=$('#evSave');if(sb)sb.innerHTML=ic('check',16)+' '+(evEditId?t('ev_update'):t('ev_save'));
  evText.value=text||'';
- evAuto=!cat;
+ evAuto=!cat&&!evEditId;
  $$('#evMoodPick .mood-lg').forEach(x=>x.classList.toggle('on',evMoodPick&&+x.dataset.m===evMoodPick));
  const at=$('#evAutoTag');if(at)at.hidden=!!cat||!!evEditId;
  if(!evCatPick||!evEditId)evCatPick=cat||classify(evText.value)||'health';
@@ -2764,7 +2850,7 @@ async function saveEvent(){
  refresh();
 }
 
-/* =============== بطاقة الذكرى =============== */
+/* بطاقة الذكرى */
 function openMemoryCard(id){
  const ev=S.events.find(x=>x.id===id);if(!ev)return;
  const sh=$('#shMem');if(!sh)return;
@@ -2794,7 +2880,7 @@ function openMemoryCard(id){
  });
 }
 
-/* =============== الحكايات (شيت) =============== */
+/* الحكايات (شيت) */
 function openStorySheet(){
  const sh=$('#shStory');if(!sh)return;
  drawStory();
@@ -2816,7 +2902,6 @@ function drawStory(){
  if(wa)wa.onclick=()=>{const x=buildStory(storyR);if(x)shareWa(x)};
 }
 
-/* =============== العلاقات/القرارات/Twin helpers ناقصة أعلاه موجودة =============== */
 async function saveRel(){
  const nEl=$('#relName');if(!nEl)return;
  const name=nEl.value.trim();
@@ -2898,7 +2983,11 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openStory')openStorySheet();
  else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
-   else if(act==='acceptCh')acceptChallenge();
+ else if(act==='acceptCh')acceptChallenge();
+ else if(act==='sparkAct'){
+  const sp=sparkOfTheDay();
+  openEventSheet(t('spk_applied')+sp.text,sp.cat);
+ }
  else if(act==='questGo'){
   const q=dailyQuest();
   if(q.act==='moodFocus'){
@@ -2933,9 +3022,11 @@ window.__rfStage='ربط الأفعال';
  else if(act==='calPrev'){calM--;if(calM<0){calM=11;calY--}renderCal()}
  else if(act==='calNext'){calM++;if(calM>11){calM=0;calY++}renderCal()}
 });
- $('#views').addEventListener('click',async e=>{
+document.addEventListener('click',async e=>{
  const pr=e.target.closest('[data-pred]');
  if(pr){await quickSaveEvent(pr.dataset.pred);return}
+ const pt=e.target.closest('#plantTap');
+ if(pt){go('twin');return}
 });
  $('#tabbar').addEventListener('click',e=>{
  if(e.target.closest('#fabAdd')){openEventSheet();return}
@@ -2974,7 +3065,7 @@ document.getElementById('lkForgot').onclick=()=>askConfirm(t('lk_forgot_t'),t('l
  location.reload();
 });
 async function exportBackup(){
- const data={app:'rafiq',version:5,owner:'مراد الحاج · mouradalhaj@gmail.com',exportedAt:new Date().toISOString(),
+ const data={app:'rafiq',version:6,owner:'مراد الحاج · mouradalhaj@gmail.com',exportedAt:new Date().toISOString(),
   events:S.events,rels:S.rels,decisions:S.decisions,chat:S.chat,
   meta:{profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings}};
  const txt=JSON.stringify(data,null,2);
@@ -3003,7 +3094,7 @@ async function exportBackup(){
   for(const d of (data.decisions||[]))await DB.put('decisions',d);
   for(const c of (data.chat||[]))await DB.put('chat',c);
   if(data.meta)await DB.put('meta',{key:'main',profile:data.meta.profile||{},reminders:data.meta.reminders||[],seeded:data.meta.seeded,settings:data.meta.settings});
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},(data.meta&&data.meta.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null},(data.meta&&data.meta.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -3034,7 +3125,7 @@ window.__rfStage='فتح قاعدة البيانات';
   window.__rfStage='قراءة البيانات المحفوظة';
   let m=null;
   try{m=(await DB.all('meta')).find(x=>x.key==='main')}catch(e){}
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null},(m&&m.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null},(m&&m.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -3049,9 +3140,10 @@ window.__rfStage='فتح قاعدة البيانات';
   if(S.settings.pin&&S.settings.pinOn)showLock();
   else{
    const shown=showRitualIfNeeded();
-   if(!shown&&(DB.driver==='mem'||DB.driver==='ls')){
+   if(!shown){
     if(DB.driver==='mem')setTimeout(()=>toast(t('storage_warn'),'var(--bad)','shield'),1800);
-    else setTimeout(()=>toast(t('storage_ls'),'var(--acc)','shield'),1800);
+    else if(DB.driver==='ls')setTimeout(()=>toast(t('storage_ls'),'var(--acc)','shield'),1800);
+    setTimeout(shieldMaybe,2600);
    }
   }
  }catch(err){__rfErr((err&&err.message||err)+' @init')}
@@ -3065,13 +3157,6 @@ function enterApp(seeded){
  if(!locked)setTimeout(showRitualIfNeeded,900);
 }
 window.__rfBooted=true;
-</script>
-<script>
-if('serviceWorker' in navigator&&location.protocol==='https:'){
- window.addEventListener('load',function(){
-  navigator.serviceWorker.register('sw.js').catch(function(){});
- });
-}
 </script>
 </body>
 </html>
