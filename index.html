@@ -2137,7 +2137,7 @@ function renderHome(){
    '<button class="qa" data-act="openDec">'+ic('dec',19)+'<span>'+t('qa_dec')+'</span></button>'+
    '<button class="qa" data-act="openRitual">'+ic('sun2',19)+'<span>'+(AR?'لقاء':'Check-in')+'</span></button>'+
   '</div>'+
-  '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
+  '<div class="plant-card"><div class="plant-stage" id="plantTap">'+(typeof plantSvg==='function'?plantSvg(plantStage()):'<div style="padding:60px 0;font-size:13px;color:var(--ink3)">🌱</div>')+'</div><p class="plant-cap">'+(typeof plantWord==='function'?plantWord(plantStage()):'')+'</p></div>'+
   sparkCard()+
   chCard()+
   '<section class="life-card" data-act="goLife">'+
