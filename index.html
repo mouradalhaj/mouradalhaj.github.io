@@ -142,7 +142,16 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .qbar .qbtn:active{transform:scale(.93)}
 .pred-wrap{margin-top:10px}
 .pred-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
-.pred-row::-webkit-scrollbar{display:none}
+.pred-row.dq-card{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
+.dq-card .dq-q{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink)}
+.dq-card .dq-sub{font-size:11px;color:var(--ink3);margin-top:4px}
+.dq-card textarea{min-height:52px;margin-top:9px;font-size:13.5px}.ch-card{margin-top:14px;background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:16px;padding:13px 15px}
+.ch-top{display:flex;align-items:center;gap:10px}
+.ch-top b{font-size:13.5px;display:block}
+.ch-top span{font-size:11.5px;color:var(--ink2);display:block;margin-top:2px}
+.ch-bar{height:8px;border-radius:100px;background:var(--card);overflow:hidden;margin-top:10px;border:1px solid var(--line)}
+.ch-bar i{display:block;height:100%;background:var(--acc);border-radius:100px;transition:width .6s ease}
+.ch-foot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:10.5px;color:var(--ink3)}::-webkit-scrollbar{display:none}
 .pred-chip{flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:100px;border:1.5px dashed var(--line2);color:var(--ink2);font-size:12px;max-width:82%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.15s}
 .pred-chip .ic{color:var(--acc);flex:none}
 .pred-chip:active{transform:scale(.95);border-color:var(--acc);color:var(--acc)}
@@ -1152,7 +1161,62 @@ function weeklyReport(off){
  return {start:start,end:end,ev:ev,days:days,avgMood:avgMood,strongest:strongest,strongestN:posBy[strongest],weakest:weakest,achieve:achieve,warm:warm};
 }
 
-function perfStats(range){
+function badges(){
+ const evs=S.events.filter(e=>e.type!=='mood');
+ const st=calcStreak();
+ const contacts=S.rels.reduce((a,r)=>a+((r.calls&&r.calls.n)||0),0);
+ const AR=LANG==='ar';
+ const def=[
+  {id:'first',icon:'spark',ar:'أول ذكرى',en:'First memory',got:evs.length>=1},
+  {id:'streak3',icon:'flame',ar:'3 أيام سلسلة',en:'3-day streak',got:st>=3},
+  {id:'streak7',icon:'flame',ar:'أسبوع كامل',en:'Full week',got:st>=7},
+  {id:'streak30',icon:'flame',ar:'شهر من الوفاء',en:'A faithful month',got:st>=30},
+  {id:'c10',icon:'phone',ar:'10 تواصلات',en:'10 contacts',got:contacts>=10},
+  {id:'c50',icon:'users',ar:'حارس العلاقات',en:'Relationship keeper',got:contacts>=50},
+  {id:'ev25',icon:'hex',ar:'25 ذكرى',en:'25 memories',got:evs.length>=25},
+  {id:'ev100',icon:'twin',ar:'ذاكرة حية',en:'A living memory',got:evs.length>=100},
+  {id:'bal70',icon:'shield',ar:'متوازن 70+',en:'Balanced 70+',got:S.life>=70}];
+ return def.map(x=>({id:x.id,icon:x.icon,name:AR?x.ar:x.en,got:x.got}));
+}
+ function weeklyChallenge(){
+ const st=S.settings.challenge;
+ if(st&&st.week===isoDate(Date.now()-new Date().getDay()*DAY)){
+  const w=st.week;
+  const done=countChallenge(st.key);
+  return {key:st.key,target:st.target,done:done,week:w,accepted:true,label:st.label};
+ }
+ return null;
+}
+function chProgress(key){
+ const days=7,keyDow=new Date().getDay();
+ const start=dayStart(Date.now())-keyDow*DAY;
+ const evs=S.events.filter(e=>e.ts>=start);
+ if(key==='contact')return evs.filter(e=>e.type==='contact').length;
+ if(key==='health')return evs.filter(e=>e.category==='health'&&e.polarity>0).length;
+ if(key==='growth')return evs.filter(e=>e.category==='growth'&&e.polarity>0).length;
+ if(key==='pos')return evs.filter(e=>e.polarity>0).length;
+ if(key==='mood')return evs.filter(e=>e.type==='mood').length;
+ return 0;
+}
+function suggestChallenge(){
+ const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0];
+ const AR=LANG==='ar';
+ const map={
+  relations:{key:'contact',target:3,label:AR?'ثلاثة تواصلات مع من تحب هذا الأسبوع':'Three contacts with loved ones this week'},
+  health:{key:'health',target:3,label:AR?'ثلاث لحظات صحية إيجابية هذا الأسبوع':'Three positive health moments this week'},
+  growth:{key:'growth',target:3,label:AR?'ثلاث لحظات نمو أو قراءة':'Three growth or reading moments'},
+  money:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'},
+  mind:{key:'mood',target:5,label:AR?'وثّق مزاجك خمسة أيام':'Log your mood five days'},
+  work:{key:'pos',target:4,label:AR?'أربع لحظات إيجابية أي جانب':'Four positive moments any side'}};
+ return map[weak]||map.mind;
+}
+async function acceptChallenge(){
+ const c=suggestChallenge();
+ S.settings.challenge={key:c.key,target:c.target,label:c.label,week:isoDate(Date.now()-new Date().getDay()*DAY)};
+ await saveMeta();refresh();
+ toast((LANG==='ar'?'قبلت التحدي — سأراقبه معك ✓':'Challenge accepted — I will watch it with you ✓'),'var(--acc)','flame');
+}
+ function perfStats(range){
  const now=Date.now();
  const start=range==='day'?dayStart(now):range==='week'?dayStart(now)-6*DAY:dayStart(now)-29*DAY;
  const ev=S.events.filter(e=>e.ts>=start);
@@ -1164,7 +1228,29 @@ function perfStats(range){
  return {n:acts.length,pos:pos,neg:neg,mood:mood,contacts:contacts};
 }
 
-function dailyQuest(){
+function dailyQuestion(){
+ const AR=LANG==='ar';
+ const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0];
+ const iso=isoDate(Date.now());
+ const bank={
+  health:[AR?'ما أصغر خطوة صحية تستطيعها في العشر دقائق القادمة؟':'What smallest health step can you take in the next ten minutes?'],
+  relations:[AR?'من شخص واحد ظلّ في بالك آخر أيام ولم تتواصل معه؟':'Who is one person on your mind lately you have not contacted?'],
+  money:[AR?'ما قرار مالي صغير أجّلته أكثر من أسبوعين؟':'What small money decision have you postponed over two weeks?'],
+  work:[AR?'لو أنجزت شيئاً واحداً فقط في عملك اليوم، فماذا كان؟':'If you could finish one work thing today, what would it be?'],
+  mind:[AR?'ما الذي يسرق صفاءك هذه الأيام — ومتى بدأ؟':'What is stealing your calm lately — and since when?'],
+  growth:[AR?'ما آخر شيء تعلمته طوعاً — ومتى كان؟':'What did you last learn by choice — and when?']};
+ const general=AR
+  ?['ما أصغر شيء ابتسمت له اليوم؟','ما لحظة كنت فيها نفسك الحقيقية آخر يومين؟','ما الذي تستحقه وتؤجله عن نفسك؟','لو صديقك عاش يومك بالضبط، ما نصحته به؟']
+  :['What smallest thing made you smile today?','When were you truly yourself these two days?','What do you deserve that you keep postponing?','If a friend lived your exact day, what would you tell him?'];
+ const pool=(weak&&S.ind[weak]<50)?bank[weak].concat(general):general;
+ const idx=Math.abs(String(iso+ (S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0))%pool.length;
+ return pool[idx];
+}
+function todayAnswerQ(){
+ const iso=isoDate(Date.now());
+ return S.events.find(e=>e.tag==='qa'&&e.ts>=dayStart(Date.now()));
+}
+ function dailyQuest(){
  const ds=dayStart(Date.now());
  const today=S.events.filter(e=>dayStart(e.ts)===ds);
  const acts=today.filter(e=>e.type!=='mood');
@@ -1866,6 +1952,12 @@ function renderHome(){
   (intent?'<span class="in-chip">'+ic('sun2',13)+' '+t('intent_today')+esc(intent)+'</span>':'')+'</div>'+
   otdHtml()+
   questHtml()+
+  (function(){const c=weeklyChallenge();
+ if(c){const pct=Math.min(100,Math.round(c.done/c.target*100));
+  return '<div class="ch-card"><div class="ch-top"><span class="sb-ic" style="width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+esc(c.label)+'</b><span>'+(LANG==='ar'?'تحدي التوأم لهذا الأسبوع':'This week twin challenge')+'</span></div></div><div class="ch-bar"><i style="width:'+pct+'%"></i></div><div class="ch-foot"><span>'+c.done+' / '+c.target+'</span>'+(pct>=100?'<b style="color:var(--good)">✓ '+(LANG==='ar'?'أنجزت!':'Done!')+'</b>':'')+'</span></div></div>';}
+ return '<div class="ch-card" style="cursor:pointer" data-act="acceptCh"><div class="ch-top"><span class="sb-ic" style="width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc)">'+ic('flame',18)+'</span><div style="flex:1;min-width:0"><b>'+(LANG==='ar'?'تحدي التوأم ينتظرك':'A twin challenge awaits')+'</b><span>'+esc(suggestChallenge().label)+'</span></div><button class="rec-btn">'+(LANG==='ar'?'أقبل':'Accept')+'</button></div></div>';
+})()+
+  '<div class="dq-card"><div class="dq-q">'+ic('spark',15)+' '+esc(dailyQuestion())+'</div><div class="dq-sub">'+(LANG==='ar'?'سؤال رفيق اليوم — إجابتك تصير ذكرى مصنفة تلقائياً':'Rafiq daily question — your answer becomes a classified memory')+'</div><textarea id="dqAnswer" placeholder="'+(LANG==='ar'?'سطر واحد يكفي…':'one line is enough…')+'"></textarea><button class="btn sm" id="dqSave" style="margin-top:9px">'+t('save')+'</button></div>'+
   '<div class="qbar"><input id="quickEv" placeholder="'+t('qa_ph')+'" autocomplete="off"><button class="qbtn" data-act="quickAdd">'+ic('plus',20)+'</button></div>'+
   predHtml()+
   '<div class="qa-grid">'+
@@ -1901,6 +1993,16 @@ function renderHome(){
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
  const qe=$('#quickEv');
  if(qe)qe.addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
+  const dq=$('#dqSave');
+ if(dq)dq.onclick=saveDailyQ;
+}
+ async function saveDailyQ(){
+ const el=$('#dqAnswer');if(!el)return;
+ const tx=el.value.trim();if(!tx)return;
+ const ev={id:uid(),text:tx,category:classify(tx)||'mind',polarity:sentiment(tx),mood:null,tag:'qa',ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);el.value='';
+ toast((LANG==='ar'?'أجبت رفيق — صارت ذكرى ✓':'Answered — it is a memory now ✓'),'var(--acc)','check');
+ refresh();
 }
 async function quickAdd(){
  const el=$('#quickEv');if(!el)return;
@@ -2289,6 +2391,10 @@ function renderTwin(){
   '<h3 class="sec-t">'+ic('eye',15)+' '+t('dist_t')+'</h3>'+
   '<div class="tw-line">'+d.dist.map(x=>'<div class="tw-bar" style="--rc:'+CAT_META[x.c].color+'"><span>'+cn(x.c)+'</span><div class="bar-track"><i style="width:'+x.pct+'%"></i></div><em>'+x.pct+'%</em></div>').join('')+'</div>'+
   '<div class="tw-line" style="border-right:3px solid var(--acc)"><h4>'+t('ident_t')+'</h4><p>'+esc(d.idPlain)+'</p></div>'+
+   '<h3 class="sec-t">'+ic('flame',15)+' '+(LANG==='ar'?'أوسمة رحلتك':'Your journey badges')+'</h3>'+
+ '<div class="qa-grid" style="grid-template-columns:repeat(3,1fr)">'+
+  badges().map(b2=>'<div class="qa" style="'+(b2.got?'border-color:var(--acc);color:var(--ink)':'opacity:.35')+'">'+ic(b2.icon,19)+'<span>'+esc(b2.name)+'</span></div>').join('')+
+ '</div>'+
   '<div class="page-add"><button class="btn ghost" data-act="waTwin">'+ic('wa',17)+' '+t('tw_share')+'</button></div>'+
   '<div style="height:16px"></div>';
 }
@@ -2791,6 +2897,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openStory')openStorySheet();
  else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
+   else if(act==='acceptCh')acceptChallenge();
  else if(act==='questGo'){
   const q=dailyQuest();
   if(q.act==='moodFocus'){
