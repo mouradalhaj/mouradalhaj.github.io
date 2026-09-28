@@ -2313,9 +2313,17 @@ function renderSettings(){
     '<button class="icon-btn" data-act="waReport">'+ic('send',15)+'</button></div>'+
    '<div class="set-row"><div><b>'+t('st_wa_t')+'</b><p>'+t('st_wa_t_p')+'</p></div>'+
     '<button class="icon-btn" data-act="waTwin">'+ic('send',15)+'</button></div>'+
-   '<div class="set-note">'+t('st_wa_note')+'</div>'+
-  '</div>'+
-  '<div style="height:16px"></div>';
+   '<div class="set-note">'+t('st_wa_note')+'</div>'+'</div>'+
+'<h3 class="sec-t">'+ic('shield',15)+' '+(LANG==='ar'?'عن رفيق · العلامة التجارية':'About Rafiq · Brand')+'</h3>'+
+'<div class="set-card">'+
+ '<div style="text-align:center;padding:4px 0 2px">'+
+ logoSvg(52)+
+ '<b style="font-family:var(--fd);display:block;margin-top:8px;font-size:15.5px">'+(LANG==='ar'?'رفيق — شريك حياة رقمي':'Rafiq — Life Companion')+'</b>'+
+ '<p style="font-size:12px;color:var(--ink2);margin-top:5px;line-height:1.9">'+(LANG==='ar'?'فكرة وتصميم وتطوير':'Idea, design & development by')+'<br><b style="color:var(--acc)">مراد الحاج · Murad Alhaj</b><br>'+(LANG==='ar'?'جميع الحقوق محفوظة © 2025':'All rights reserved © 2025')+'</p>'+
+ '<a href="mailto:mouradalhaj@gmail.com" style="display:inline-block;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:7px 15px;text-decoration:none" dir="ltr">mouradalhaj@gmail.com</a>'+
+ '<p style="font-size:10px;color:var(--ink3);margin-top:9px">Rafiq™ · v2.5.1 · Made with love in the Arab world</p>'+
+ '</div></div>'+
+'<div style="height:16px"></div>';
  const ps=$('#stProfileSave');
  if(ps)ps.onclick=async()=>{
   const nEl=$('#stName');const n=nEl?nEl.value.trim():'';
