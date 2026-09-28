@@ -2376,7 +2376,7 @@ function renderTwin(){
   ?t('proj_up_a')+d.proj+t('proj_up_b')+(d.projD>0?'+'+d.projD:t('proj_st'))+t('proj_up_c')
   :t('proj_up_a')+d.proj+t('proj_dn_b')+d.projD+t('proj_dn_c');
  v.innerHTML=
-  '<div class="tw-top"><div class="plant-wrap"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+' · '+(LANG==='ar'?'اضغط النبتة لفؤوسمك الرقمي':'tap the plant for your digital twin')+'</p></div><p style="display:none">'+t('tw_p')+'</p></div>'+
+  '<div class="tw-top"><div class="plant-wrap"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+' · '+(LANG==='ar'?'اضغط النبتة لرفيقك الرقمي':'tap the plant for your digital twin')+'</p></div><p style="display:none">'+t('tw_p')+'</p></div>'+
   '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
   '<div class="tw-line"><p style="font-size:12px;color:var(--ink2)">'+t('tw_week_a')+WD()[d.bestWd]+t('tw_week_b')+'<b style="color:var(--acc)">'+t('tw_gold')+'</b>'+t('tw_week_c')+'</p>'+
    '<div class="wd-bars">'+WD().map((n2,i)=>'<div class="wd-b"><div class="wd-track"><i class="'+(i===d.bestWd?'on':'')+'" style="height:'+Math.max(6,Math.round(d.wdPos[i]/maxW*100))+'%"></i></div><span>'+n2.slice(0,3)+'</span></div>').join('')+'</div></div>'+
