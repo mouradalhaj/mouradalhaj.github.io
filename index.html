@@ -1608,6 +1608,10 @@ function todayInterests(){
  const ds=dayStart(Date.now());
  return S.events.filter(e=>e.type==='interest'&&dayStart(e.ts)===ds);
 }
+ function weekPromiseCount(){
+ const start=dayStart(Date.now())-new Date().getDay()*DAY;
+ return S.events.filter(e=>(e.type==='promise'||e.type==='interest')&&e.done&&e.doneTs>=start).length;
+}
 function interestAccuracy(){
  const start=dayStart(Date.now())-new Date().getDay()*DAY;
  const all=S.events.filter(e=>e.type==='interest'&&e.ts>=start);
