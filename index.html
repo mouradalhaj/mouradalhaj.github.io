@@ -498,6 +498,17 @@ html[dir="ltr"] .hint-x{float:right}
 html[dir="ltr"] .pick-card.on::after{left:auto;right:7px}
 html[dir="ltr"] .att-x{left:auto;right:3px}
 html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--acc))}
+ .plant-wrap{display:flex;flex-direction:column;align-items:center;padding:18px 0 8px}
+.plant-stage{width:170px;height:190px;position:relative;cursor:pointer}
+.plant-stage:active{transform:scale(.97)}
+.plant-cap{text-align:center;font-size:12px;color:var(--ink2);margin-top:8px;line-height:1.8;max-width:280px}
+.plant-cap b{color:var(--acc)}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes bloom{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.p-leaf{transform-origin:50% 100%;animation:sway 3.2s ease-in-out infinite}
+.p-bloom{transform-origin:center;animation:bloom .8s ease both}
+.p-fruit{animation:rise .6s ease both}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
 </style>
@@ -1282,7 +1293,51 @@ function twinWaText(){
  return (AR?'بصمة توأمي الرقمي — رفيق':'My digital twin fingerprint — Rafiq')+'\n\n• '+(AR?'اكتمال التوأم: ':'Twin completeness: ')+d.compl+'%\n• '+(AR?'مصدر طاقتي: ':'Energy source: ')+cn(d.energy)+'\n• '+(AR?'سلسلة التوثيق: ':'Logging streak: ')+d.streak+' '+pd(d.streak)+'\n'+(AR?'• جملة هويتي: ':'• Identity line: ')+d.idPlain+'\n\n'+(AR?'أُرسل من رفيق — شريك حياة رقمي':'Sent from Rafiq — your life companion');
 }
 
-function twinData(){
+function plantStage(){
+ const evs=S.events.filter(e=>e.type!=='mood');
+ const n=evs.length;
+ if(n===0)return 0;
+ const st=calcStreak();
+ const bal=S.life;
+ let stage=1;
+ if(n>=3)stage=2;
+ if(n>=8)stage=3;
+ if(n>=18&&bal>=50)stage=4;
+ if(n>=35&&bal>=55)stage=5;
+ if(n>=60&&bal>=62&&st>=3)stage=6;
+ if(!S.events.some(e=>daysSince(e.ts)<=6))stage=Math.max(1,stage-2);
+ return stage;
+}
+function plantSvg(stage){
+ const stem='#7FA05A',leaf='var(--acc)';
+ if(stage===0)return '<svg width="170" height="190" viewBox="0 0 170 190">'+
+  '<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<path d="M85 168c-3-14-1-24 2-32M85 168c4-16 8-22 14-28" stroke="#5A4A28" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5"/>'+
+  '<text x="85" y="70" text-anchor="middle" font-size="11" fill="var(--ink3)" font-family="inherit">'+(LANG==='ar'?'ازرع أول ذكرى':'Plant your first memory')+'</text></svg>';
+ const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
+  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
+ let body='';
+ if(stage>=1)body+='<path d="M85 132V96" stroke="'+stem+'" stroke-width="3.5" stroke-linecap="round"/>'+
+  '<path class="p-leaf" d="M85 108C72 104 66 94 68 84c10 0 17 8 17 24z" fill="'+leaf+'" opacity=".85"/>';
+ if(stage>=2)body+='<path class="p-leaf" style="animation-delay:.4s" d="M85 100c13-4 19-14 17-24-10 0-17 8-17 24z" fill="'+leaf+'"/>';
+ if(stage>=3)body+='<path d="M85 96c-8-10-8-20-4-28" stroke="'+stem+'" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+  '<path class="p-leaf" style="animation-delay:.8s" d="M81 74c-10-2-14-10-13-19 9 1 15 8 13 19z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=4)body+='<path class="p-leaf" style="animation-delay:1.1s" d="M85 88c10-3 15-11 14-21-9 1-15 9-14 21z" fill="'+leaf+'" opacity=".8"/>';
+ if(stage>=5)body+='<g class="p-bloom"><circle cx="80" cy="52" r="6" fill="'+leaf+'"/><circle cx="90" cy="52" r="6" fill="'+leaf+'"/><circle cx="85" cy="46" r="6" fill="'+leaf+'"/><circle cx="85" cy="58" r="6" fill="'+leaf+'"/><circle cx="85" cy="52" r="5.5" fill="#FFF3D6"/></g>';
+ if(stage>=6)body+='<g class="p-fruit"><circle cx="70" cy="82" r="5" fill="#E4796B"/><circle cx="99" cy="70" r="5" fill="#84C88E"/><circle cx="76" cy="63" r="4.5" fill="#E2C063"/></g>';
+ return '<svg width="170" height="190" viewBox="0 0 170 190">'+pot+body+'</svg>';
+}
+function plantWord(s){
+ const AR=LANG==='ar';
+ if(s===0)return AR?'تراب صالح… تنتظر أول بذرة':'Fertile soil… waiting for the first seed';
+ if(s===1)return AR?'<b>بذرة</b> — بدأت حكايتك الخضراء':'<b>A seed</b> — your green story begins';
+ if(s===2)return AR?'<b>برعَتَان</b> — الذاكرة تسقي كل يوم':'<b>Two sprouts</b> — memory waters it daily';
+ if(s===3)return AR?'<b>ساق ناهضة</b> — نمطك يتشكل':'<b>A rising stem</b> — your pattern takes shape';
+ if(s===4)return AR?'<b>شجيرة واعدة</b> — توازنك يغذّي أوراقها':'<b>A promising shrub</b> — your balance feeds its leaves';
+ if(s===5)return AR?'<b>تزهّر</b> — الشغف ظهر بالفعل':'<b>In bloom</b> — your passion is showing';
+ return AR?'<b>أثمرت</b> — توأمك الرقمي حي ومكتمل':'<b>Bearing fruit</b> — your digital twin is alive';
+}
+ function twinData(){
  const n=S.events.length,attN=S.events.filter(e=>e.att&&e.att.length).length;
  const compl=clamp(Math.round(n*1.6+S.rels.length*4+S.decisions.length*4+attN*3+S.chat.length*.5),4,100);
  const posBy={},negBy={};CATS.forEach(c=>{posBy[c]=0;negBy[c]=0});
@@ -1557,6 +1612,10 @@ function go(v){
  if(R[v]){try{R[v]()}catch(err){__rfErr((err&&err.message||err)+' @'+v)}}
 }
 function refresh(){computeAll();renderDot();go(currentView)}
+ document.addEventListener('click',e=>{
+ const pt=e.target.closest('#plantTap');
+ if(pt)go('twin');
+},{once:false});
 function renderDot(){const d=$('#moreDot');if(d)d.classList.toggle('show',S.staleRels.length>0)}
 function setLang(l){
  LANG=l;S.settings.lang=l;
@@ -2215,7 +2274,7 @@ function renderTwin(){
   ?t('proj_up_a')+d.proj+t('proj_up_b')+(d.projD>0?'+'+d.projD:t('proj_st'))+t('proj_up_c')
   :t('proj_up_a')+d.proj+t('proj_dn_b')+d.projD+t('proj_dn_c');
  v.innerHTML=
-  '<div class="tw-top">'+ringSvgMini(d.compl)+'<p>'+t('tw_p')+'</p></div>'+
+  '<div class="tw-top"><div class="plant-wrap"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+' · '+(LANG==='ar'?'اضغط النبتة لفؤوسمك الرقمي':'tap the plant for your digital twin')+'</p></div><p style="display:none">'+t('tw_p')+'</p></div>'+
   '<h3 class="sec-t">'+ic('cal',15)+' '+t('tw_week_t')+'</h3>'+
   '<div class="tw-line"><p style="font-size:12px;color:var(--ink2)">'+t('tw_week_a')+WD()[d.bestWd]+t('tw_week_b')+'<b style="color:var(--acc)">'+t('tw_gold')+'</b>'+t('tw_week_c')+'</p>'+
    '<div class="wd-bars">'+WD().map((n2,i)=>'<div class="wd-b"><div class="wd-track"><i class="'+(i===d.bestWd?'on':'')+'" style="height:'+Math.max(6,Math.round(d.wdPos[i]/maxW*100))+'%"></i></div><span>'+n2.slice(0,3)+'</span></div>').join('')+'</div></div>'+
