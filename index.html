@@ -1182,13 +1182,13 @@ function dailyQuestion(){
  const AR=LANG==='ar';
  const weak=[].slice.call(CATS).sort((a,b)=>S.ind[a]-S.ind[b])[0];
  const iso=isoDate(Date.now());
- const bank={
+  const bank={
   health:[AR?'ما أصغر خطوة صحية الآن؟':'Smallest health step now?'],
   relations:[AR?'من في بالك ولم تتواصل معه؟':'On your mind, uncontacted?'],
   money:[AR?'ما القرار المالي المؤجَّل؟':'Postponed money call?'],
   work:[AR?'شيء واحد لتنجزه اليوم؟':'One thing to finish?'],
   mind:[AR?'ما الذي يسرق صفاءك؟':'Stealing your calm?'],
-  growth:[AR?'آخر شيء تعلمته طوعاً؟','Last learned by choice?']};
+  growth:[AR?'آخر شيء تعلمته طوعاً؟':'Last learned by choice?']};
  const general=AR
   ?['ما أصغر شيء ابتسمت له اليوم؟','متى كنت نفسك الحقيقية آخر يومين؟','ما الذي تستحقه وتؤجله؟','لو صديقك عاش يومك — ما نصحته؟']
   :['Smallest smile today?','Truly yourself these two days?','What you deserve but postpone?','A friend lived your day — your advice?'];
