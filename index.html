@@ -1422,14 +1422,8 @@ function fpRadarSvg(stats){
  const spokes=FP_DIMS.map((d,i)=>{const a=(-90+i*45)*Math.PI/180;
   return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" class="fp-radar-grid"/>'}).join('');
  const labels=FP_DIMS.map((d,i)=>{const a=(-90+i*45)*Math.PI/180;
-  return '<text x="'+(cx+(r+17)*Math.cos(a)).toFixed(1)+'" y="'+(cy+(r+17)*Math.sinت الخلل بدقة — وهذا **خطأي أنا** في الجزء الأول، أعتذر عنه: سطرا `depthLine` و`empathLine` فيهما اقتباس مكسور (النص العربي أُغلق بـ `')` بدل `')`). الأقواس الناقصة كسرت الدالة.  ## الإصلاح — استبدال دالة `fpNarrative` كاملة  **ابحث عن الدالة** (تبدأ بـ `function fpNarrative(stats){`) — **حددها كاملة من أولها حتى قوس الإغلاق `}` الذي قبل سطر التعليق التالي، وامسحها، وألصق مكانها** هذه النسخة المُصححة:  ```js function fpNarrative(stats){  const AR=LANG==='ar';  const sorted=[].slice.call(FP_DIMS).sort((a,b)=>Math.abs(stats[b.id].score-50)-Math.abs(stats[a.id].score-50));  const top=sorted[0],second=sorted[1];  const nm=stats[top.id].score>50?(AR?top.ar.split(' ↔')[0]:top.en.split(' ↔')[0]):(AR?top.ar.split(' ↔')[1]:top.en.split(' ↔')[1]);  const nm2=stats[second.id].score>50?(AR?second.ar.split(' ↔')[0]:second.en.split(' ↔')[0]):(AR?second.ar.split(' ↔')[1]:second.en.split(' ↔')[1]);  const intro=AR?('بصمة شخصيتك الرقمية تبلورت من '+S.events.length+' ذكرى موثقة. أقوى محورين في شخصيتك:'):('Your digital fingerprint crystallized from '+S.events.length+' memories. Your two strongest axes:');  const line1=AR?('<b>'+nm+'</b> — سمتك الأولى البارزة'):('<b>'+nm+'</b> — your first dominant trait');  const line2=AR?('<b>'+nm2+'</b> — سمتك الثانية المميزة'):('<b>'+nm2+'</b> — your second distinct trait');  const depthLine=stats.depth.score>60?(AR?'عمقك الفكري ملحوظ — تبحث عن المعاني لا الأسطح، وهذه صفة نادرة.':('Your intellectual depth is notable — you seek meaning, not surfaces. A rare trait.')):null;  const empathLine=stats.empath.score>60?(AR?'تعاطفك مع الآخرين يظهر في كل سطر كتبته — هذا ما يجعل الناس مرتاحين حولك.':('Your empathy shows in every line you wrote — this is what makes people comfortable around you.')):null;  return intro+'
-
-• '+line1+'
-• '+line2+(depthLine?'
-
-'+depthLine:'')+(empathLine?'
-
-'+empathLine:''); }
+  return '<text x="'+(cx+(r+17)*Math.cos(a)).toFixed(1)+'" y="'+(cy+(r+17)*Math.sin(a)+3).toFixed(1)+'" class="fp-radar-lab" fill="'+d.col||'var(--acc)'+'">'+(LANG==='ar'?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0])+'</text>'}).join('');
+}
  const val=pts.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
  const dots=pts.map(p=>'<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3.5" fill="var(--acc)"/>').join('');
  return '<svg viewBox="0 0 240 240" class="fp-radar">'+grid+spokes+
