@@ -280,6 +280,8 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .ev-th img{width:100%;height:100%;object-fit:cover;display:block}
 .empty{text-align:center;color:var(--ink3);font-size:13px;padding:26px 10px;line-height:2}
 .empty .ic{color:var(--line2);margin-bottom:6px}
+ .live-greet{margin-top:10px;background:var(--acc-soft);border:1px dashed var(--acc);border-radius:14px;padding:10px 13px;font-size:12.5px;line-height:1.8;color:var(--ink)}
+.live-greet .ic{color:var(--acc);vertical-align:middle}
 .plant-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 10px 6px}
 .plant-stage{width:170px;height:190px;position:relative;cursor:pointer;margin:0 auto}
 .plant-stage:active{transform:scale(.97)}
@@ -1240,7 +1242,7 @@ const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
 let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null;
 let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
-let ritualMode=null,ritualPick=null,enteredOnce=false,ratePick={};;
+let ritualMode=null,ritualPick=null,enteredOnce=false,ratePick={},homeGreetStamp='';
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
 async function loadAll(){
  S.events=(await DB.all('events')).sort((a,b)=>a.ts-b.ts);
@@ -1973,6 +1975,7 @@ function buildShell(){
 }
 function go(v){
  currentView=v;
+  const gv=$('#v-'+v);if(gv)gv.scrollTop=0;
  $$('#views .view').forEach(x=>x.classList.toggle('on',x.dataset.view===v));
  $$('#tabbar .tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===v));
  const hb=$('#hBrand'),ht=$('#hTitle'),hd=$('#hDate');
@@ -2378,7 +2381,7 @@ function renderHome(){
  const AR=LANG==='ar';
  const r=todayRate();
  v.innerHTML=
-  '<div class="greet-t">'+greet+'، '+esc(S.profile.name||(AR?'صديقي':'friend'))+'<small>'+fmtDate(Date.now())+' · '+t('under_watch')+'</small></div>'+
+  '<div class="greet-t">'+greet+'، '+esc(S.profile.name||(AR?'صديقي':'friend'))+'<small>'+fmtDate(Date.now())+' · '+t('under_watch')+'</small></div>'+   (function(){const iso=isoDate(Date.now());const h=new Date().getHours();const heavy=S.events.some(e=>e.type==='mood'&&e.ts>=dayStart(Date.now())&&e.mood<=3);    if(S.settings.greetStamp===iso)return '';    if(h>=5&&h<12)return '<div class="live-greet">'+ic('sun2',14)+' '+(AR?'صباحك يبدأ من هنا يا ':'Your morning starts here, ')+esc(S.profile.name||'')+' — '+(AR?'ما الذي سيسجّله يومك اليوم؟':'what will today record?')+'</div>';    if(h>=17&&heavy)return '<div class="live-greet" style="border-color:var(--c-mind)">'+ic('heart',14)+' '+(AR?'يومك كان ثقيلاً… هنا أنت آمن. احكِ ما شئت، أو لا تكتب شيئاً — أنا معك في الحالين.':'Your day was heavy… you are safe here. Tell me anything, or nothing — I am with you either way.')+'</div>';    if(h>=17)return '<div class="live-greet">'+ic('moon',14)+' '+(AR?'يومك يغلق الآن — حكِ ما تبقى من قصته بكلماتك:':'Your day closes now — tell its last words:')+'</div>';    return '';})()+
   '<div><span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak'))+'</span>'+
   (intent?'<span class="in-chip">'+ic('sun2',13)+' '+t('intent_today')+esc(intent)+'</span>':'')+'</div>'+
   rateCard()+
@@ -2424,6 +2427,7 @@ function renderHome(){
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
  const qe=$('#quickEv');
  if(qe)qe.addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
+  (function(){const gEl=$('#v-home');if(gEl)gEl.scrollTop=0;if(S.settings.greetStamp!==isoDate(Date.now())){S.settings.greetStamp=isoDate(Date.now());saveMeta();}})();
 }
 async function quickAdd(){
  const el=$('#quickEv');if(!el)return;
