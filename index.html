@@ -1582,7 +1582,9 @@ function rateScore(ev){
  return Math.round(vals.reduce((a,b)=>a+b,0)/7);
 }
 function rateGapInfo(){
- const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
+  const r=todayRate();
+ let hrNow=new Date().getHours();
+ if(!r&&hrNow<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
  const sc=rateScore(r);
  const ds=dayStart(Date.now());
  const acts=S.events.filter(e=>e.ts>=ds&&e.type!=='mood'&&e.type!=='selfrate'&&e.type!=='promise'&&e.type!=='interest');
