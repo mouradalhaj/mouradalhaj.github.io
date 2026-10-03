@@ -1355,6 +1355,34 @@ function weekDist(){
  return CATS.map(c=>({c:c,n:evs.filter(e=>e.category===c).length,pct:Math.round(evs.filter(e=>e.category===c).length/total*100)}));
 }
 
+ const QUEST_BANK={
+ ar:['ساعدتُ محتاجاً اليوم ولو بصدق صغير','تصدقتُ لعمل خيري','تواصلتُ مع صديق قديم افتقدته','جلسة عائلية كاملة بلا هواتف','سامحتُ شخصاً أجرى عليّ','علّمتُ شخصاً شيئاً أعرفه','شكرتُ أمي/أبي على شيء محدد','زرتُ مريضاً أو مسناً'],
+ en:['Helped someone in need today','Gave charity to a cause','Reached out to an old friend','Full family time without phones','Forgave someone who hurt me','Taught someone a skill','Thanked a parent for something specific','Visited a sick or elderly person']};
+function questBank(){
+ return QUEST_BANK[LANG]||QUEST_BANK.ar;
+}
+function renderQuestPick(){
+ const el=$('#modal');
+ if(!el)return;
+ el.innerHTML='<div class="md-box"><b>'+(LANG==='ar'?'اختر مهمة يومك الإنسانية':'Pick your human quest')+'</b><p>'+(LANG==='ar'?'أعمال ترفعك وترفع الآخرين — أو اكتب موعدك/واجبك الخاص:':'Deeds that lift you and others — or write your own duty:')+'</p>'+
+  '<div class="chips" style="flex-direction:column;align-items:stretch">'+questBank().map(q=>'<button class="chip" data-qpick="'+esc(q)+'" style="text-align:right">'+esc(q)+'</button>').join('')+'</div>'+
+  '<div style="height:12px"></div><input id="qCustom" placeholder="'+(LANG==='ar'?'مواعيدي وواجباتي المطلوبة مني…':'My own appointments & duties…')+'">'+
+  '<button class="btn" id="qCustomGo" style="margin-top:10px">'+t('save')+'</button>'+
+  '<button class="btn ghost" id="qClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
+ el.classList.add('show');
+ $$('#modal [data-qpick]').forEach(b=>b.onclick=()=>{el.classList.remove('show');applyQuestPick(b.dataset.qpick)});
+ $('#qClose').onclick=()=>el.classList.remove('show');
+ $('#qCustomGo').onclick=()=>{
+  const v=$('#qCustom').value.trim();if(!v)return;
+  el.classList.remove('show');applyQuestPick(v);
+ };
+}
+async function applyQuestPick(txt){
+ const ev={id:uid(),type:'interest',category:'growth',polarity:1,text:txt,done:false,gen:'ready',ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);
+ refresh();
+ toast((LANG==='ar'?'مهمة اليوم انضمت لاهتماماتك — أنتظر أن تتحقق':'Your quest joined your interests — awaiting your truth'),'var(--good)','star');
+}
 function dailyQuest(){
  const ds=dayStart(Date.now());
  const today=S.events.filter(e=>dayStart(e.ts)===ds);
@@ -1554,7 +1582,7 @@ function rateScore(ev){
  return Math.round(vals.reduce((a,b)=>a+b,0)/7);
 }
 function rateGapInfo(){
- const r=todayRate();
+ const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
  const sc=rateScore(r);
  const ds=dayStart(Date.now());
  const acts=S.events.filter(e=>e.ts>=ds&&e.type!=='mood'&&e.type!=='selfrate'&&e.type!=='promise'&&e.type!=='interest');
@@ -1671,7 +1699,8 @@ function interestsCard(){
  }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+t('int_empty')+'</p>';
  return '<div class="int-card"><div class="int-head"><b>'+ic('target',15)+' '+t('int_t')+'</b>'+
   '<span class="int-acc">'+doneN+t('pd_cnt')+'</span></div>'+items+learnLine()+
-  '<button class="btn ghost" data-act="addInt" style="margin-top:9px;padding:9px;font-size:12.5px">'+ic('plus',14)+' '+t('int_add')+'</button></div>';
+    '<div style="font-size:11.5px;color:var(--ink2);margin-top:9px;padding:0 2px">'+(LANG==='ar'?'أدخل اهتماماتك التي ترغب في إجازتها ↓':'Enter the interests you want to commit to ↓')+'</div>'+
+  '<button class="btn ghost" data-act="addInt" style="margin-top:6px;padding:9px;font-size:12.5px">'+ic('plus',14)+' '+t('int_add')+'</button></div>';
 }
 async function addInterest(text){
  const tx=(text||'').trim();if(!tx)return;
@@ -2292,7 +2321,7 @@ function perfHtml(){
   '</div>';
 }
 function rateCard(){
- const r=todayRate();
+ const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
  const sc=rateScore(r);
  if(sc!==null){
   const gi=rateGapInfo();
@@ -2304,6 +2333,28 @@ function rateCard(){
   return '<div class="rate-card"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_done_t')+'</b><span class="rate-hint">'+t('ps_hint')+'</span></div>'+
    '<div class="rate-done"><b>'+sc+'/100</b>'+gapHtml+'</div></div>';
  }
+ function countdownClock(){
+ const now=new Date(),h=now.getHours();
+ if(h<19)return '';
+ const end=new Date(now);end.setHours(24,0,0,0);
+ const left=end-now;
+ const hh=Math.floor(left/36e5),mm=Math.floor((left%36e5)/6e4),ss=Math.floor((left%6e4)/1e3);
+ const AR=LANG==='ar';
+ const t2=(n2)=>(n2<10?'0':'')+n2;
+ return '<div class="rate-card" style="border-style:dashed"><div class="rate-head"><b>'+ic('clock',15)+' '+(AR?'يومك يقترب من إغلاقه':'Your day is closing')+'</b><span class="rate-hint">'+(AR?'قيّم نفسك قبل منتصف الليل':'rate before midnight')+'</span></div>'+
+  '<div class="rate-live"><div class="rate-live-num" id="cdClock">'+hh+':'+t2(mm)+':'+t2(ss)+'</div><div class="rate-live-sub">'+(AR?'ساعة التقييم تعمل — لا تدع يومك يرحل بلا شهادة':'the rating clock is ticking — do not let your day go unwitnessed')+'</div></div>'+
+  '<button class="rate-btn" data-act="openRate">'+(AR?'قيّم نفسي قبل الإغلاق':'Rate before it closes')+' ⭐</button></div>';
+}
+setInterval(function(){
+ const el=document.getElementById('cdClock');
+ if(!el)return;
+ const now=new Date(),end=new Date(now);end.setHours(24,0,0,0);
+ const left=end-now;if(left<0)return;
+ const hh=Math.floor(left/36e5),mm=Math.floor((left%36e5)/6e4),ss=Math.floor((left%6e4)/1e3);
+ const t2=(n2)=>(n2<10?'0':'')+n2;
+ el.textContent=hh+':'+t2(mm)+':'+t2(ss);
+},1000);
+function rateCard(){
  return '<div class="rate-card"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b><span class="rate-hint">'+t('ps_hint')+'</span></div>'+
   '<div class="rate-live"><div class="rate-live-num">—</div><div class="rate-live-sub">'+(LANG==='ar'?'سبعة أبعاد علمية — يفضل مع إغلاق اليوم':'7 science dims — best at day close')+'</div></div>'+
   '<button class="rate-btn" data-act="openRate">'+t('ps_btn')+' ⭐</button></div>';
@@ -2335,7 +2386,7 @@ function interestsCard(){
 function questHtml(){
  const q=dailyQuest();
  if(q.done)return '<div class="quest done"><div class="quest-ic">'+ic('check',19)+'</div><div class="quest-b"><b>'+t('q_done_t')+'</b><p>'+esc(q.txt)+'</p></div><span class="quest-go">'+ic('check',15)+'</span></div>';
- return '<div class="quest"><div class="quest-ic">'+ic('spark',19)+'</div><div class="quest-b"><b>'+t('q_t')+'</b><p>'+esc(q.txt)+'</p></div><button class="quest-go" data-act="questGo">'+t('q_go')+'</button></div>';
+ return '<div class="quest"><div class="quest-ic">'+ic('spark',19)+'</div><div class="quest-b"><b>'+t('q_t')+'</b><p>'+(LANG==='ar'?'اختر عملاً إنسانياً عظيماً — أو اكتب واجبك الخاص':'Pick a great human deed — or write your own duty')+'</p></div><button class="quest-go" data-act="questGo">'+t('q_go')+'</button></div>';
 }
 function chCard(){
  const c=weeklyChallenge();
@@ -2379,7 +2430,7 @@ function renderHome(){
   '</div>'}).join('');}
  else{memHtml='<div class="empty">'+ic('moon',26)+'<br>'+t('mem_empty')+'<br><button class="btn sm ghost" style="margin-top:10px" data-act="openEvent">'+t('mem_first')+'</button></div>';}
  const AR=LANG==='ar';
- const r=todayRate();
+ const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
  v.innerHTML=
   '<div class="greet-t">'+greet+'، '+esc(S.profile.name||(AR?'صديقي':'friend'))+'<small>'+fmtDate(Date.now())+' · '+t('under_watch')+'</small></div>'+   (function(){const iso=isoDate(Date.now());const h=new Date().getHours();const heavy=S.events.some(e=>e.type==='mood'&&e.ts>=dayStart(Date.now())&&e.mood<=3);    if(S.settings.greetStamp===iso)return '';    if(h>=5&&h<12)return '<div class="live-greet">'+ic('sun2',14)+' '+(AR?'صباحك يبدأ من هنا يا ':'Your morning starts here, ')+esc(S.profile.name||'')+' — '+(AR?'ما الذي سيسجّله يومك اليوم؟':'what will today record?')+'</div>';    if(h>=17&&heavy)return '<div class="live-greet" style="border-color:var(--c-mind)">'+ic('heart',14)+' '+(AR?'يومك كان ثقيلاً… هنا أنت آمن. احكِ ما شئت، أو لا تكتب شيئاً — أنا معك في الحالين.':'Your day was heavy… you are safe here. Tell me anything, or nothing — I am with you either way.')+'</div>';    if(h>=17)return '<div class="live-greet">'+ic('moon',14)+' '+(AR?'يومك يغلق الآن — حكِ ما تبقى من قصته بكلماتك:':'Your day closes now — tell its last words:')+'</div>';    return '';})()+
   '<div><span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak'))+'</span>'+
@@ -3327,7 +3378,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openRate')openRateFlow();
  else if(act==='toggleIn')toggleInterest(id);
  else if(act==='addInt'){
-  const tx=window.prompt(LANG==='ar'?'اهتمامك اليوم — سأتابعه وأتعلم من فهمي لك:':'Your interest — I will track and learn:');
+    const tx=window.prompt(LANG==='ar'?'أدخل اهتماماتك التي ترغب في إجازتها — وسأتابعها معك حتى تتحقق:':'Enter the interests you want to commit to — I will track them with you:');
   if(tx&&tx.trim())await addInterest(tx);
  }
  else if(act==='joyX')closeJoy();
@@ -3344,14 +3395,7 @@ window.__rfStage='ربط الأفعال';
   const sp=sparkOfTheDay();
   openEventSheet(t('spk_applied')+sp.text,sp.cat);
  }
- else if(act==='questGo'){
-  const q=dailyQuest();
-  if(q.act==='moodFocus'){
-   const mc=$('#moodCard');
-   if(mc){mc.scrollIntoView({behavior:'smooth',block:'center'});mc.classList.add('flash');setTimeout(()=>mc.classList.remove('flash'),2200)}
-  }
-  else if(q.act==='openPick')openPickSheet();
-  else openEventSheet();
+  else if(act==='questGo'){renderQuestPick();}
  }
  else if(act==='perfR'){perfR=b.dataset.r;go('home')}
  else if(act==='recGo'){const r=S.recs[+b.dataset.i];if(!r)return;
