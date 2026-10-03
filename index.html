@@ -2659,7 +2659,7 @@ function renderRelations(){
     '<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>'+
     '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
    '</div></div>'+
-   '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>';});
+    '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>'+    (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
  v.innerHTML=
   '<h3 class="sec-t" style="margin-top:14px">'+ic('users',15)+' '+t('rel_view_t')+'</h3>'+
   '<div class="rel-sum">'+(S.rels.length?t('rel_sum_a')+'<b>'+S.rels.length+'</b>'+t('rel_sum_n')+(S.staleRels.length?'<b style="color:var(--bad)">'+S.staleRels.length+'</b>'+t('rel_stale'):t('rel_good')):t('rel_empty'))+'</div>'+
@@ -2880,6 +2880,27 @@ function renderTwin(){
   '<div style="height:16px"></div>';
 }
 /* ====== صفحة بصمة الشخصية 3.1 ====== */
+ /* vitality — محرك حيوية العلاقة من سلوكك الفعلي 3.1 */
+function relVitality(r){
+ const AR=LANG==='ar';
+ let pct=30;
+ const reg=daysSince(r.lastContact);
+ if(reg<=3)pct+=25;else if(reg<=7)pct+=18;else if(reg<=14)pct+=8;
+ const posT=S.events.filter(e=>e.type==='contact'&&e.category==='relations'&&e.polarity>0&&e.text.indexOf(r.name)>=0).length;
+ const negT=S.events.filter(e=>e.type==='contact'&&e.category==='relations'&&e.polarity<0&&e.text.indexOf(r.name)>=0).length;
+ const toneTot=posT+negT;
+ if(toneTot>0)pct+=Math.round(posT/toneTot*20);
+ if(r.meetups)pct+=Math.min(15,r.meetups*3);
+ const moodWith=S.events.filter(e=>e.type==='mood'&&e.polarity>0&&e.text.indexOf(r.name)>=0).length;
+ if(moodWith>0)pct+=8;
+ pct=clamp(pct,8,98);
+ const feelTxt=r.feel==='great'?(AR?'تقييمك: مميزة':'Your feel: great'):r.feel==='good'?(AR?'تقييمك: جيدة':'Your feel: good'):r.feel==='needs'?(AR?'تقييمك: تحتاج اهتماماً':'Needs care'):(AR?'تقييمك: متوترة':'Your feel: tense');
+ let desc='';
+ if(pct>=75)desc=(AR?'حية ومتينة — ':'Alive & strong — ')+(r.meetups?(r.meetups+' '+(AR?'لقاء مشترك':'meetups')+' · '):'')+(r.calls&&r.calls.n?('×'+r.calls.n+' تواصل · '):'')+feelTxt:(AR?'حية ومتينة — ')+(r.meetups?r.meetups+' meetups · ':'')+(r.calls&&r.calls.n?'×'+r.calls.n+' · ':'')+feelTxt;
+ else if(pct>=50)desc=(AR?'جيدة لكن تحتاج ريّاً — ':'Good but thirsty — ')+(reg>7?(AR?'انقطاع '+reg+' يوم':'silent '+reg+'d · '):'')+(r.meetups?(AR?(r.meetups+' لقاء — فكر بلقاء جديد'):r.meetups+' meetups — plan one'):''):(AR?'Consider a meetup'):'')+feelTxt;
+ else desc=(AR?'تبرد — ':'' )+(reg>10?(AR?(reg+' يوم بلا تواصل'):reg+' days silent')+' · ':'')+(AR?'مكالمة دقيقة توقظها':'One call revives it');
+ return {pct:pct,desc:desc};
+}
 function renderFingerprint(){
  const v=$('#v-fingerprint');if(!v)return;
  const AR=LANG==='ar';
@@ -2887,14 +2908,14 @@ function renderFingerprint(){
  const total=fpTotal(stats);
  const name=S.profile.name||(AR?'صديقي':'friend');
  let compatRows='';
- S.rels.slice(0,5).forEach(r=>{
-  const seed=String(r.name).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
-  const pct=62+(seed%33);
-  const gap=seed%3;
-  const gapTxt=gap===0?(AR?'توافق متناغم — تساندان طبيعياً':'Harmonious — natural support'):gap===1?(AR?'اختلاف في محور المجازفة — قد يسبب احتكاكاً في القرارات':'Risk-axis gap — may cause friction in decisions'):(AR?'تفاوت في الإيقاع — بالتفاهم يصبح تكاملاً':'Rhythm gap — with understanding, becomes synergy');
-  const col=pct>=80?'var(--good)':pct>=65?'var(--acc)':'var(--bad)';
-  compatRows+='<div class="fp-compat-row"><div class="fp-compat-av">'+esc(r.name[0])+'</div><div class="fp-compat-b"><b>'+esc(r.name)+'</b><span>'+gapTxt+'</span></div><span class="fp-compat-pct" style="color:'+col+'">'+pct+'%</span></div>';
+ S.rels.slice(0,6).forEach(r=>{
+  if(!r.calls)r.calls={n:0,d:0};
+  const AR=LANG==='ar';
+  const vitality=relVitality(r);
+  const col=vitality.pct>=75?'var(--good)':vitality.pct>=50?'var(--acc)':'var(--bad)';
+  compatRows+='<div class="fp-compat-row"><div class="fp-compat-av">'+esc(r.name[0])+'</div><div class="fp-compat-b"><b>'+esc(r.name)+'</b><span>'+vitality.desc+'</span></div><span class="fp-compat-pct" style="color:'+col+'">'+vitality.pct+'%</span></div>';
  });
+ if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first')+'</div>';
  if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل حساب التوافق':'Add relationships first for compatibility')+'</div>';
  const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
  v.innerHTML=
@@ -3159,6 +3180,17 @@ function buildSheets(){
    '<button class="dq" data-dq2="custom">'+t('rel_custom')+'</button>'+
   '</div>'+
   '<div id="relDateWrap"><input type="date" id="relDate"></div>'+
+  '<div style="height:14px"></div>'+
+  '<label class="lab">'+(LANG==='ar'?'تقييمك للعلاقة حالياً':'Your current feel')+'</label>'+
+  '<div class="dq-row" id="relFeel">'+
+   '<button class="dq" data-feel="great">'+(LANG==='ar'?'مميزة':'Great')+'</button>'+
+   '<button class="dq on" data-feel="good">'+(LANG==='ar'?'جيدة':'Good')+'</button>'+
+   '<button class="dq" data-feel="needs">'+(LANG==='ar'?'تحتاج اهتماماً':'Needs care')+'</button>'+
+   '<button class="dq" data-feel="tense">'+(LANG==='ar'?'متوترة':'Tense')+'</button>'+
+  '</div>'+
+  '<div style="height:14px"></div>'+
+  '<label class="lab">'+(LANG==='ar'?'عدد اللقاءات المشتركة (وجهاً لوجه، تقريبي)':'Shared in-person meetups (approx)')+'</label>'+
+  '<div class="stp" style="justify-content:center"><button id="meetMinus">−</button><b id="meetCount">0</b><button id="meetPlus">+</button></div>'+
   '<div style="height:16px"></div>'+
   '<button class="btn" id="relSave">'+ic('check',16)+' '+t('rel_add_btn')+'</button>');
  put('#shDec',
@@ -3194,6 +3226,12 @@ function buildSheets(){
   if(w){if(c.dataset.dq2==='custom'){w.classList.add('open');try{const rd=$('#relDate');if(rd)rd.focus()}catch(e){}}
   else{w.classList.remove('open');const rd=$('#relDate');if(rd)rd.value=''}}});
  const rs=$('#relSave');if(rs)rs.onclick=saveRel;
+ let meetN=0;
+ const mC=$('#meetCount');
+ $$('#shRel [data-feel]').forEach(b=>b.onclick=()=>{$$('#shRel [data-feel]').forEach(x=>x.classList.toggle('on',x===b))});
+ const mP=$('#meetPlus'),mM=$('#meetMinus');
+ if(mP)mP.onclick=()=>{meetN++;if(mC)mC.textContent=meetN};
+ if(mM)mM.onclick=()=>{if(meetN>0)meetN--;if(mC)mC.textContent=meetN};
  $$('#decKinds .pick-card').forEach(c=>c.onclick=()=>{$$('#decKinds .pick-card').forEach(x=>x.classList.toggle('on',x===c))});
  const ds=$('#decSave');if(ds)ds.onclick=saveDec;
  const mb=$('#micBtn');
@@ -3391,7 +3429,11 @@ async function saveRel(){
  const rdEl=$('#relDate');const rd=rdEl?rdEl.value:'';
  if(rd){const p=rd.split('-');lc=new Date(+p[0],+p[1]-1,+p[2],12).getTime()}
  else if(q!==undefined)lc=Date.now()-(+q)*DAY;
- const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0}};
+ const feelEl=$('#relFeel .dq.on');
+ const feel=feelEl?feelEl.dataset.feel:'good';
+ const mcEl=$('#meetCount');
+ const meetups=mcEl?parseInt(mcEl.textContent)||0:0;
+ const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0},feel:feel,meetups:meetups};
  await DB.put('rels',nr);S.rels.push(nr);
  S.rels.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
  closeSheets();toast(name+t('rel_joined'),'var(--c-relations)','users');
