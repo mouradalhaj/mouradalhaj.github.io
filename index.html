@@ -565,6 +565,37 @@ html[dir="ltr"] .hint-x{float:right}
 html[dir="ltr"] .pick-card.on::after{left:auto;right:7px}
 html[dir="ltr"] .att-x{left:auto;right:3px}
 html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--acc))}
+ .fp-hero{margin-top:16px;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:20px;padding:20px 16px;text-align:center;position:relative;overflow:hidden}
+.fp-hero::before{content:'';position:absolute;top:-40px;left:-40px;width:120px;height:120px;border-radius:50%;background:var(--acc-soft);filter:blur(30px)}
+.fp-radar{width:240px;height:240px;margin:10px auto 0;display:block}
+.fp-radar-grid{fill:none;stroke:var(--line);stroke-width:1}
+.fp-radar-val{fill:rgba(229,168,62,.18);stroke:var(--acc);stroke-width:2;stroke-linejoin:round}
+.fp-radar-lab{font-size:10px;text-anchor:middle;font-family:var(--fb);font-weight:600}
+.fp-score{font-family:var(--fd);font-size:30px;font-weight:800;color:var(--acc)}
+.fp-line{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px}
+.fp-line h4{font-size:11.5px;color:var(--ink3);font-weight:500;margin-bottom:6px}
+.fp-line p{font-size:13.5px;line-height:1.9}
+.fp-line p b{color:var(--acc)}
+.fp-traits{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.fp-trait{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fp-trait b{font-size:12px;display:block;color:var(--ink)}
+.fp-trait .fp-tbar{height:5px;border-radius:100px;background:var(--card2);margin-top:7px;overflow:hidden}
+.fp-trait .fp-tbar i{display:block;height:100%;border-radius:100px;background:var(--acc);transition:width 1s cubic-bezier(.3,.8,.3,1)}
+.fp-trait small{font-size:9.5px;color:var(--ink3);display:block;margin-top:5px}
+.fp-compat{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 15px}
+.fp-compat-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line)}
+.fp-compat-row:last-child{border-bottom:none}
+.fp-compat-av{width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-weight:700;color:var(--acc);background:var(--card2);border:1.5px solid var(--acc)}
+.fp-compat-b{flex:1;min-width:0}
+.fp-compat-b b{font-size:13.5px;display:block}
+.fp-compat-b span{font-size:10.5px;color:var(--ink3);display:block;margin-top:2px;line-height:1.5}
+.fp-compat-pct{font-family:var(--fd);font-size:17px;font-weight:800;flex:none}
+.lab-dev{position:absolute;top:calc(env(safe-area-inset-top) + 16px);left:18px;font-size:10px;font-weight:700;color:var(--c-growth);border:1px dashed var(--c-growth);border-radius:100px;padding:4px 11px}
+.evolve-line{display:flex;align-items:center;gap:9px;padding:7px 0}
+.evolve-line .ic{flex:none;color:var(--acc)}
+.evolve-line span{flex:1;font-size:12.5px;line-height:1.7}
+.evolve-line b.up{color:var(--good)}
+.evolve-line b.dn{color:var(--bad)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
 </style>
@@ -1337,6 +1368,81 @@ function dailyQuestion(){
  return pool[idx];
 }
 
+ /* fingerprint-engine — محرك بصمة الشخصية الثمانية 3.1 */
+const FP_DIMS=[
+ {id:'social',ar:'اجتماعي ↔ انطوائي',en:'Social ↔ Introvert',pos:['زيارة','عائلة','ضيوف','حفلة','قعدة','جلسنا','أصدقاء','party','family','friends'],neg:['هدوء','تأمل','وحدي','أفرد','بمفردي']},
+ {id:'emot',ar:'عاطفي ↔ عقلاني',en:'Emotional ↔ Rational',pos:['حزين','سعيد','مشاعر','قلبي','أحببت','ضحكنا','بكيت','حزن','فرح','love','cried','laughed'],neg:['قرار','تحليل','خطة','منطق','خطط','قرارات','planned','analysis']},
+ {id:'ambit',ar:'طموح ↔ قانع',en:'Ambitious ↔ Content',pos:['مشروع','إنجاز','هدف','طموح','ترقية','أنجزت','نجحت','دورة','تعلمت','achieved','promotion'],neg:['راحة','استرخاء','قنوع','هدوء','كفى']},
+ {id:'organ',ar:'منظم ↔ طليعي',en:'Organized ↔ Spontaneous',pos:['خطة','جدول','نظمت','رتبت','مواعيد','قائمة','دور','ترتيب','planned','organized'],neg:['فجأة','عفوية','قررت فجأة','مفاجأة','مفاجىء']},
+ {id:'risk',ar:'مجازف ↔ متحفظ',en:'Risk-taker ↔ Cautious',pos:['مجازفة','قرار كبير','استثمر','خطر','تحدي','جرأت','سافرت فجأة','invested','venture'],neg:['حذر','تأكد','تدبر','قلق','خفت','فكرت طويلاً']},
+ {id:'empath',ar:'متعاطف ↔ موضوعي',en:'Empathetic ↔ Objective',pos:['ساعدتُ','ساعدت','مساعدة','أنصحت','دعمتُ','واساه','تعاطفت','معانقة','حضنت','helped','supported'],neg:['حقيقة','موضوعي','تحليلي','منطق','نقد','بصريح']},
+ {id:'patience',ar:'صبور ↔ متهور',en:'Patient ↔ Impulsive',pos:['صبر','انتظرت','تدرجت','استمرت','واصلت','رويدك','صبراً','waited','patient'],neg:['فوراً','حالاً','متهور','عاجل','الآن مباشرة','ضغط','استعجلت']},
+ {id:'depth',ar:'عميق ↔ سطحي',en:'Deep ↔ Surface',pos:['قرأت','تأمل','تعمقت','بحثت','فلسفة','معنى','تأملت','كتاب','فكرة عميقة','deep','philosophy'],neg:['سريع','سطحي','عابر','خفيف','خفيفة']}];
+function fpCompute(){
+ const stats={};FP_DIMS.forEach(d=>stats[d.id]={pos:0,neg:0});
+ const evs=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
+ evs.forEach(e=>{
+  const s=' '+e.text+' ';
+  const w=daysSince(e.ts)<30?2:1;
+  FP_DIMS.forEach(d=>{
+   d.pos.forEach(k=>{if(s.indexOf(k)>=0)stats[d.id].pos+=w});
+   d.neg.forEach(k=>{if(s.indexOf(k)>=0)stats[d.id].neg+=w});
+  });
+ });
+ const moods=S.events.filter(e=>e.type==='mood');
+ moods.forEach(e=>{if(e.mood>=5)stats.emot.pos+=1;else if(e.mood<=2)stats.emot.neg+=1});
+ const rates=S.events.filter(e=>e.type==='selfrate');
+ rates.forEach(e=>{if(e.ps){if(e.ps.joy>=4)stats.emot.pos+=1;if(e.ps.anger>=4||e.ps.anx>=4)stats.emot.neg+=1;if(e.ps.helped>=4)stats.empath.pos+=2;if(e.ps.mind>=4)stats.depth.pos+=1}});
+ FP_DIMS.forEach(d=>{
+  const tot=stats[d.id].pos+stats[d.id].neg;
+  stats[d.id].score=tot===0?50:Math.round(stats[d.id].pos/tot*100);
+ });
+ return stats;
+}
+function fpTotal(stats){
+ let sum=0;FP_DIMS.forEach(d=>sum+=Math.abs(stats[d.id].score-50)*2);
+ return Math.min(100,Math.round(sum/FP_DIMS.length*2.2)+25);
+}
+function fpEvolve(){
+ const now=fpCompute();
+ const old=[];FP_DIMS.forEach(d=>old.push({id:d.id,score:d.inv?100-now[d.id].score:now[d.id].score}));
+ return now;
+}
+function fpRadarSvg(stats){
+ const cx=120,cy=120,r=86;
+ const pts=FP_DIMS.map((d,i)=>{
+  const a=(-90+i*45)*Math.PI/180;
+  const v=stats[d.id].score/100;
+  return {x:cx+r*v*Math.cos(a),y:cy+r*v*Math.sin(a),a:a,d:d};
+ });
+ const grid=[1,.75,.5,.25].map(k=>{
+  const ring=FP_DIMS.map((d,i)=>{const a=(-90+i*45)*Math.PI/180;return (cx+r*k*Math.cos(a)).toFixed(1)+','+(cy+r*k*Math.sin(a)).toFixed(1)}).join(' ');
+  return '<polygon points="'+ring+'" class="fp-radar-grid"/>';
+ }).join('');
+ const spokes=FP_DIMS.map((d,i)=>{const a=(-90+i*45)*Math.PI/180;
+  return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" class="fp-radar-grid"/>'}).join('');
+ const labels=FP_DIMS.map((d,i)=>{const a=(-90+i*45)*Math.PI/180;
+  return '<text x="'+(cx+(r+17)*Math.cos(a)).toFixed(1)+'" y="'+(cy+(r+17)*Math.sin(a)+3).toFixed(1)+'" class="fp-radar-lab" fill="'+d.col||'var(--acc)'+'">'+(LANG==='ar'?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0])+'</text>'}).join('');
+ const val=pts.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+ const dots=pts.map(p=>'<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3.5" fill="var(--acc)"/>').join('');
+ return '<svg viewBox="0 0 240 240" class="fp-radar">'+grid+spokes+
+  '<polygon points="'+val+'" class="fp-radar-val"/>'+dots+labels+'</svg>';
+}
+function fpNarrative(stats){
+ const AR=LANG==='ar';
+ const sorted=[].slice.call(FP_DIMS).sort((a,b)=>Math.abs(stats[b.id].score-50)-Math.abs(stats[a.id].score-50));
+ const top=sorted[0],second=sorted[1];
+ const nm=stats[top.id].score>50?(AR?top.ar.split(' ↔')[0]:top.en.split(' ↔')[0]):(AR?top.ar.split(' ↔')[1]:top.en.split(' ↔')[1]);
+ const nm2=stats[second.id].score>50?(AR?second.ar.split(' ↔')[0]:second.en.split(' ↔')[0]):(AR?second.ar.split(' ↔')[1]:second.en.split(' ↔')[1]);
+ const total=fpTotal(stats);
+ const intro=AR?('بصمة شخصيتك الرقمية تبلورت من '+S.events.length+' ذكرى موثقة. أقوى محورين في شخصيتك:'):
+  ('Your digital fingerprint crystallized from '+S.events.length+' memories. Your two strongest axes:');
+ const line1=AR?('<b>'+nm+'</b> — سمتك الأولى البارزة'):('<b>'+nm+'</b> — your first dominant trait');
+ const line2=AR?('<b>'+nm2+'</b> — سمتك الثانية المميزة'):('<b>'+nm2+'</b> — your second distinct trait');
+ const depthLine=stats.depth.score>60?(AR?'عمقك الفكري ملحوظ — تبحث عن المعاني لا الأسطح، وهذه صفة نادرة.':'):'');
+ const empathLine=stats.empath.score>60?(AR?'تعاطفك مع الآخرين يظهر في كل سطر كتبته — هذا ما يجعل الناس مرتاحين حولك.':'));
+ return intro+'\n\n• '+line1+'\n• '+line2+(depthLine?'\n\n'+depthLine:'')+(empathLine?'\n\n'+empathLine:'');
+}
 /* ====== النبتة الحية ====== */
 function plantStage(){
  const evs=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
