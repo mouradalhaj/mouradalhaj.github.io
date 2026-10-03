@@ -692,6 +692,15 @@ function daysSince(ts){return Math.floor((Date.now()-ts)/DAY)}
 function pd(n){return LANG==='ar'?(n===1?'يوم':'أيام'):(n===1?'day':'days')}
 function calcAge(b){if(!b)return null;const d=new Date(b),n=new Date();let a=n.getFullYear()-d.getFullYear();if(n<new Date(n.getFullYear(),d.getMonth(),d.getDate()))a--;return a}
 const hashPin=p=>'r'+String(p).split('').reduce((a,c)=>((a*31+c.charCodeAt(0))|0),7).toString(36);
+const FP_DIMS=[
+ {id:'social',ar:'اجتماعي ↔ انطوائي',en:'Social ↔ Introvert',pos:['زيارة','عائلة','ضيوف','حفلة','قعدة','جلسنا','أصدقاء','party','family','friends'],neg:['هدوء','تأمل','وحدي','أفرد','بمفردي']},
+ {id:'emot',ar:'عاطفي ↔ عقلاني',en:'Emotional ↔ Rational',pos:['حزين','سعيد','مشاعر','قلبي','أحببت','ضحكنا','بكيت','حزن','فرح','love','cried','laughed'],neg:['قرار','تحليل','خطة','منطق','خطط','قرارات','planned','analysis']},
+ {id:'ambit',ar:'طموح ↔ قانع',en:'Ambitious ↔ Content',pos:['مشروع','إنجاز','هدف','طموح','ترقية','أنجزت','نجحت','دورة','تعلمت','achieved','promotion'],neg:['راحة','استرخاء','قنوع','هدوء','كفى']},
+ {id:'organ',ar:'منظم ↔ طليعي',en:'Organized ↔ Spontaneous',pos:['خطة','جدول','نظمت','رتبت','مواعيد','قائمة','دور','ترتيب','planned','organized'],neg:['فجأة','عفوية','قررت فجأة','مفاجأة','مفاجىء']},
+ {id:'risk',ar:'مجازف ↔ متحفظ',en:'Risk-taker ↔ Cautious',pos:['مجازفة','قرار كبير','استثمر','خطر','تحدي','جرأت','سافرت فجأة','invested','venture'],neg:['حذر','تأكد','تدبر','قلق','خفت','فكرت طويلاً']},
+ {id:'empath',ar:'متعاطف ↔ موضوعي',en:'Empathetic ↔ Objective',pos:['ساعدتُ','ساعدت','مساعدة','أنصحت','دعمتُ','واساه','تعاطفت','معانقة','حضنت','helped','supported'],neg:['حقيقة','موضوعي','تحليلي','منطق','نقد','بصريح']},
+ {id:'patience',ar:'صبور ↔ متهور',en:'Patient ↔ Impulsive',pos:['صبر','انتظرت','تدرجت','استمرت','واصلت','رويدك','صبراً','waited','patient'],neg:['فوراً','حالاً','متهور','عاجل','الآن مباشرة','ضغط','استعجلت']},
+ {id:'depth',ar:'عميق ↔ سطحي',en:'Deep ↔ Surface',pos:['قرأت','تأمل','تعمقت','بحثت','فلسفة','معنى','تأملت','كتاب','فكرة عميقة','deep','philosophy'],neg:['سريع','سطحي','عابر','خفيف','خفيفة']}];
 
 let LANG='ar';
 const T={
@@ -1369,15 +1378,6 @@ function dailyQuestion(){
 }
 
  /* fingerprint-engine — محرك بصمة الشخصية الثمانية 3.1 */
-const FP_DIMS=[
- {id:'social',ar:'اجتماعي ↔ انطوائي',en:'Social ↔ Introvert',pos:['زيارة','عائلة','ضيوف','حفلة','قعدة','جلسنا','أصدقاء','party','family','friends'],neg:['هدوء','تأمل','وحدي','أفرد','بمفردي']},
- {id:'emot',ar:'عاطفي ↔ عقلاني',en:'Emotional ↔ Rational',pos:['حزين','سعيد','مشاعر','قلبي','أحببت','ضحكنا','بكيت','حزن','فرح','love','cried','laughed'],neg:['قرار','تحليل','خطة','منطق','خطط','قرارات','planned','analysis']},
- {id:'ambit',ar:'طموح ↔ قانع',en:'Ambitious ↔ Content',pos:['مشروع','إنجاز','هدف','طموح','ترقية','أنجزت','نجحت','دورة','تعلمت','achieved','promotion'],neg:['راحة','استرخاء','قنوع','هدوء','كفى']},
- {id:'organ',ar:'منظم ↔ طليعي',en:'Organized ↔ Spontaneous',pos:['خطة','جدول','نظمت','رتبت','مواعيد','قائمة','دور','ترتيب','planned','organized'],neg:['فجأة','عفوية','قررت فجأة','مفاجأة','مفاجىء']},
- {id:'risk',ar:'مجازف ↔ متحفظ',en:'Risk-taker ↔ Cautious',pos:['مجازفة','قرار كبير','استثمر','خطر','تحدي','جرأت','سافرت فجأة','invested','venture'],neg:['حذر','تأكد','تدبر','قلق','خفت','فكرت طويلاً']},
- {id:'empath',ar:'متعاطف ↔ موضوعي',en:'Empathetic ↔ Objective',pos:['ساعدتُ','ساعدت','مساعدة','أنصحت','دعمتُ','واساه','تعاطفت','معانقة','حضنت','helped','supported'],neg:['حقيقة','موضوعي','تحليلي','منطق','نقد','بصريح']},
- {id:'patience',ar:'صبور ↔ متهور',en:'Patient ↔ Impulsive',pos:['صبر','انتظرت','تدرجت','استمرت','واصلت','رويدك','صبراً','waited','patient'],neg:['فوراً','حالاً','متهور','عاجل','الآن مباشرة','ضغط','استعجلت']},
- {id:'depth',ar:'عميق ↔ سطحي',en:'Deep ↔ Surface',pos:['قرأت','تأمل','تعمقت','بحثت','فلسفة','معنى','تأملت','كتاب','فكرة عميقة','deep','philosophy'],neg:['سريع','سطحي','عابر','خفيف','خفيفة']}];
 function fpCompute(){
  const stats={};FP_DIMS.forEach(d=>stats[d.id]={pos:0,neg:0});
  const evs=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
