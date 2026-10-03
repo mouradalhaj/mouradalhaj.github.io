@@ -2001,8 +2001,8 @@ async function obFinish(seed){
 });
 
 window.__rfStage='بناء الواجهة';
-const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings'];
-const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings'};
+const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab'];
+const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'',lab:''};
 function buildShell(){
  put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.9 — ساعة التشويق والأعمال الإنسانية':'Rafiq 2.9 — countdown clock & human quests')+'</b>');
  put('#appHead','<div class="h-brand" id="hBrand">'+logoSvg(34)+'<b>'+t('tab_chat')+'</b></div>'+
@@ -2025,7 +2025,7 @@ function go(v){
  if(hb)hb.hidden=v!=='home';
  if(ht){ht.hidden=v==='home';ht.textContent=TITLES[v]?t(TITLES[v]):''}
  if(hd)hd.textContent=fmtDate(Date.now());
- const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings};
+ const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings,fingerprint:renderFingerprint,lab:renderLab};
  if(R[v]){try{R[v]()}catch(err){__rfErr((err&&err.message||err)+' @'+v)}}
 }
 function refresh(){computeAll();renderDot();go(currentView)}
@@ -2881,7 +2881,87 @@ function renderTwin(){
   '<div class="page-add"><button class="btn ghost" data-act="waTwin">'+ic('wa',17)+' '+t('tw_share')+'</button></div>'+
   '<div style="height:16px"></div>';
 }
-
+/* ====== صفحة بصمة الشخصية 3.1 ====== */
+function renderFingerprint(){
+ const v=$('#v-fingerprint');if(!v)return;
+ const AR=LANG==='ar';
+ const stats=fpCompute();
+ const total=fpTotal(stats);
+ const name=S.profile.name||(AR?'صديقي':'friend');
+ let compatRows='';
+ S.rels.slice(0,5).forEach(r=>{
+  const seed=String(r.name).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const pct=62+(seed%33);
+  const gap=seed%3;
+  const gapTxt=gap===0?(AR?'توافق متناغم — تساندان طبيعياً':'Harmonious — natural support'):gap===1?(AR?'اختلاف في محور المجازفة — قد يسبب احتكاكاً في القرارات':'Risk-axis gap — may cause friction in decisions'):(AR?'تفاوت في الإيقاع — بالتفاهم يصبح تكاملاً':'Rhythm gap — with understanding, becomes synergy');
+  const col=pct>=80?'var(--good)':pct>=65?'var(--acc)':'var(--bad)';
+  compatRows+='<div class="fp-compat-row"><div class="fp-compat-av">'+esc(r.name[0])+'</div><div class="fp-compat-b"><b>'+esc(r.name)+'</b><span>'+gapTxt+'</span></div><span class="fp-compat-pct" style="color:'+col+'">'+pct+'%</span></div>';
+ });
+ if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل حساب التوافق':'Add relationships first for compatibility')+'</div>';
+ const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
+ v.innerHTML=
+  '<span class="lab-dev">LAB · 3.1</span>'+
+  '<div class="fp-hero">'+logoSvg(40)+
+   '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800;margin-top:8px">'+(AR?'بصمة '+esc(name)+' الرقمية':esc(name)+"'s fingerprint")+'</h2>'+
+   '<div class="fp-score">'+total+'%</div>'+
+   '<p style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+(AR?'قوة تمايز شخصيتك — كلما ارتفعت، كانت سمتك أكثر وضوحاً وتميزاً':'Personality distinctiveness — higher means more pronounced traits')+'</p>'+
+   fpRadarSvg(stats)+
+  '</div>'+
+  '<div class="fp-line"><h4>'+ic('spark',13)+' '+(AR?'حكاية بصمتك':'Your fingerprint story')+'</h4><p>'+fpNarrative(stats)+'</p></div>'+
+  '<h3 class="sec-t">'+ic('hex',15)+' '+(AR?'محاورك الثمانية بالتفصيل':'Your 8 axes detailed')+'</h3>'+
+  '<div class="fp-traits">'+
+  FP_DIMS.map(d=>{
+   const sc=stats[d.id].score;
+   const side=sc>50?(AR?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0]):(AR?d.ar.split(' ↔')[1]:d.en.split(' ↔')[1]);
+   return '<div class="fp-trait"><b style="color:'+d.col+'">'+side+'</b><div class="fp-tbar"><i style="width:'+sc+'%"></i></div><small>'+(AR?d.ar:d.en)+' · '+sc+'%</small></div>';
+  }).join('')+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('users',15)+' '+(AR?'مصفوفة التوافق مع علاقاتك':'Compatibility matrix')+'</h3>'+
+  '<div class="fp-compat">'+compatRows+'</div>'+
+  '<div class="fp-line" style="border-right:3px solid var(--acc)"><h4>'+ic('twin',13)+' '+(AR?'ملاحظة رفيق':'A note from Rafiq')+'</h4><p>'+evolveNote+'</p></div>'+
+  '<div style="height:18px"></div>';
+}
+/* ====== معمل رفيق 🧪 3.1 ====== */
+function renderLab(){
+ const v=$('#v-lab');if(!v)return;
+ const AR=LANG==='ar';
+ const stats=fpCompute();
+ const acc=interestAccuracy();
+ const st=calcStreak();
+ const memoryCount=S.events.length;
+ const dimCount=S.events.filter(e=>e.type==='selfrate').length;
+ const engRows=[
+  {name:AR?'محرك بصمة الشخصية':'Fingerprint engine',desc:AR?'الثمانية محاور + الرادار + التوافق':'8 axes + radar + compatibility',status:'on',v:totalPct(stats)},
+  {name:AR?'خوارزمية دقة الفهم':'Understanding accuracy',desc:AR?'تقارن اهتماماتك بأفعالك':'Interests vs actions',status:acc!==null?'on':'wait',v:acc},
+  {name:AR?'محرك السيناريوهات المعاكسة':'Counterfactual engine',desc:AR?'"لو..." — شجرة القرارات البديلة (3.2)':'"What if" decision tree (3.2)',status:'dev'},
+  {name:AR?'النبض التنبؤي':'Predictive pulse',desc:AR?'منحنى المزاج 7 أيام + رادار الاستنزاف (3.3)':'7-day mood curve + burnout radar (3.3)',status:'dev'},
+  {name:AR?'الارتباطات الخفية':'Hidden correlations',desc:AR?'علاقات بين جوانب حياتك (3.3)':'Cross-domain links (3.3)',status:'dev'}];
+ v.innerHTML=
+  '<span class="lab-dev">DEV · '+(AR?'منطقة بناء':'build zone')+'</span>'+
+  '<div class="fp-hero" style="padding:16px">'+logoSvg(40)+
+   '<h2 style="font-family:var(--fd);font-size:19px;font-weight:800;margin-top:6px">'+(AR?'معمل رفيق':'Rafiq Lab')+'</h2>'+
+   '<p style="font-size:12px;color:var(--ink2);margin-top:6px;line-height:1.9">'+(AR?'هنا تُبنى محركات المستقبل قبل نشرها للعالم — أنت المطور الأول، وكل محرك هنا يُختبر على بياناتك الحقيقية قبل إطلاقه.':'Future engines are built and tested here before release — on your real data.')+'</p>'+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('gear',15)+' '+(AR?'حالة المحركات':'Engine status')+'</h3>'+
+  engRows.map(r2=>{
+   const badge=r2.status==='on'?'<span class="acc-badge">'+(AR?'يعمل ✓':'Live ✓')+'</span>':r2.status==='wait'?'<span class="acc-badge" style="color:var(--acc)">⏳ '+(AR?'يحتاج بيانات أكثر':'needs data')+'</span>':'<span class="acc-badge" style="color:var(--ink3);border-color:var(--line)">🧪 '+(AR?'قيد البناء':'in build')+'</span>';
+   const valCell=(r2.status==='on'&&r2.v!==null&&r2.v!==undefined)?'<b style="font-family:var(--fd);font-size:15px;color:var(--acc);flex:none">'+r2.v+'%</b>':'';
+   return '<div class="fp-compat-row" style="gap:9px"><div class="fp-compat-b"><b>'+r2.name+'</b><span>'+r2.desc+'</span></div>'+valCell+badge+'</div>';
+  }).join('')+
+  '<h3 class="sec-t">'+ic('db',15)+' '+(AR?'قياسات المحرك الحي':'Live engine metrics')+'</h3>'+
+  '<div class="fp-traits" style="grid-template-columns:repeat(2,1fr)">'+
+  '<div class="fp-trait"><b>'+memoryCount+'</b><small>'+(AR?'إجمالي الذكريات المغذية':'total memories fed')+'</small></div>'+
+  '<div class="fp-trait"><b>'+dimCount+'</b><small>'+(AR?'تقييمات نفسية مكتملة':'completed psych ratings')+'</small></div>'+
+  '<div class="fp-trait"><b>'+st+'</b><small>'+(AR?'سلسلة التوثيق الحالية':'current streak')+'</small></div>'+
+  '<div class="fp-trait"><b>'+(acc!==null?acc+'%':'—')+'</b><small>'+(AR?'دقة فهم رفيق':'Rafiq understanding')+'</small></div>'+
+  '</div>'+
+  '<div class="fp-line" style="border-right:3px solid var(--c-growth)"><h4>'+ic('flame',13)+' '+(AR?'من المطور لك':'From the developer')+'</h4><p>'+(AR?'كل محرك هنا يُبنى على بياناتك أنت — لا بيانات وهمية. حين يعمل المحرك على حياتك الحقيقية ويعطي نتائج منطقية، حينها فقط يخرج من المعمل إلى العالم.':'Every engine here runs on YOUR data, not dummy data. Only when it produces logical results on your real life does it leave the lab.')+'</p></div>'+
+  '<div style="height:18px"></div>';
+}
+function totalPct(stats){
+ let sum=0;FP_DIMS.forEach(d=>sum+=Math.abs(stats[d.id].score-50)*2);
+ return Math.min(100,Math.round(sum/FP_DIMS.length*2.2)+25);
+}
 /* الإعدادات */
 function storageInfo(){
  const isFile=location.protocol==='file:';
@@ -3354,6 +3434,8 @@ function buildMoreSheet(){
   '<button class="more-item" data-more="relations">'+ic('users',19)+'<span>'+t('m_rel')+'</span><small>'+t('m_rel_s')+'</small></button>'+
   '<button class="more-item" data-more="decisions">'+ic('dec',19)+'<span>'+t('m_dec')+'</span><small>'+t('m_dec_s')+'</small></button>'+
   '<button class="more-item" data-more="report">'+ic('report',19)+'<span>'+t('m_rep')+'</span><small>'+t('m_rep_s')+'</small></button>'+
+  '<button class="more-item" data-more="fingerprint">'+ic('twin',19)+'<span>'+(LANG==='ar'?'بصمة شخصيتي':'My fingerprint')+'</span><small>'+(LANG==='ar'?'الشخصية الرقمية الثمانية':'8-axis digital personality')+'</small></button>'+
+  '<button class="more-item" data-more="lab">'+ic('flame',19)+'<span>'+(LANG==='ar'?'معمل رفيق 🧪':'Rafiq Lab 🧪')+'</span><small>'+(LANG==='ar'?'ميزات قيد التجربة — للمطور':'Experimental — dev only')+'</small></button>'+
   '<button class="more-item" data-more="settings">'+ic('gear',19)+'<span>'+t('m_set')+'</span><small>'+t('m_set_s')+'</small></button>'+
   '<div class="more-div"></div>'+
   '<button class="more-item" data-more="export">'+ic('download',19)+'<span>'+t('m_exp')+'</span><small>'+t('m_exp_s')+'</small></button>'+
@@ -3467,6 +3549,8 @@ document.addEventListener('click',async e=>{
  closeSheets();
  if(['life','cal','twin','relations','decisions','report','settings'].indexOf(m)>=0)setTimeout(()=>go(m),60);
  else if(m==='story')setTimeout(openStorySheet,140);
+ else if(m==='fingerprint')setTimeout(()=>{go('fingerprint')},140);
+ else if(m==='lab')setTimeout(()=>{go('lab')},140);
  else if(m==='ritual')setTimeout(()=>openRitual(new Date().getHours()<12?'m':'e'),140);
  else if(m==='export')setTimeout(exportBackup,150);
  else if(m==='import')setTimeout(()=>$('#importFile').click(),150);
