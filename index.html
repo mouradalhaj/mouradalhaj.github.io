@@ -2322,9 +2322,9 @@ function perfHtml(){
    '<div class="pf-box"><b style="color:'+(bal>0?'var(--good)':bal<0?'var(--bad)':'var(--ink2)')+'">'+(bal>0?'+'+bal:bal)+'</b><span>'+t('pf_bal')+'</span></div>'+
   '</div>';
 }
-function rateCard(){
- const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
- const sc=rateScore(r);
+function rateCard(){ const r=todayRate();
+ let hrNow=new Date().getHours();
+ if(!r&&hrNow<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>'; const sc=rateScore(r);
  if(sc!==null){
   const gi=rateGapInfo();
   let gapHtml='';
@@ -2432,7 +2432,9 @@ function renderHome(){
   '</div>'}).join('');}
  else{memHtml='<div class="empty">'+ic('moon',26)+'<br>'+t('mem_empty')+'<br><button class="btn sm ghost" style="margin-top:10px" data-act="openEvent">'+t('mem_first')+'</button></div>';}
  const AR=LANG==='ar';
- const r=todayRate();  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';  const nowH=new Date().getHours();  if(!r&&nowH<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
+ const r=todayRate();
+ let hrNow=new Date().getHours();
+ if(!r&&hrNow<19)return '<div class="rate-card" style="opacity:.55"><div class="rate-head"><b>'+ic('star',15)+' '+t('ps_t')+'</b></div><div class="rate-live" style="padding:10px 0"><div class="rate-live-sub">'+(LANG==='ar'?'⏳ ستظهر ساعة التقييم عند الساعة 19:00 — اليوم ليس في نهايته بعد':'⏳ The rating clock appears at 19:00 — your day is not ending yet')+'</div></div></div>';
  v.innerHTML=
   '<div class="greet-t">'+greet+'، '+esc(S.profile.name||(AR?'صديقي':'friend'))+'<small>'+fmtDate(Date.now())+' · '+t('under_watch')+'</small></div>'+   (function(){const iso=isoDate(Date.now());const h=new Date().getHours();const heavy=S.events.some(e=>e.type==='mood'&&e.ts>=dayStart(Date.now())&&e.mood<=3);    if(S.settings.greetStamp===iso)return '';    if(h>=5&&h<12)return '<div class="live-greet">'+ic('sun2',14)+' '+(AR?'صباحك يبدأ من هنا يا ':'Your morning starts here, ')+esc(S.profile.name||'')+' — '+(AR?'ما الذي سيسجّله يومك اليوم؟':'what will today record?')+'</div>';    if(h>=17&&heavy)return '<div class="live-greet" style="border-color:var(--c-mind)">'+ic('heart',14)+' '+(AR?'يومك كان ثقيلاً… هنا أنت آمن. احكِ ما شئت، أو لا تكتب شيئاً — أنا معك في الحالين.':'Your day was heavy… you are safe here. Tell me anything, or nothing — I am with you either way.')+'</div>';    if(h>=17)return '<div class="live-greet">'+ic('moon',14)+' '+(AR?'يومك يغلق الآن — حكِ ما تبقى من قصته بكلماتك:':'Your day closes now — tell its last words:')+'</div>';    return '';})()+
   '<div><span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak'))+'</span>'+
