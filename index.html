@@ -2486,7 +2486,6 @@ function renderHome(){
     const pct=d2.inv?(6-raw)*20:raw*20;
     return '<div style="display:flex;align-items:center;gap:9px;padding:4px 0"><span style="width:60px;font-size:11px;color:'+d2.col+';flex:none">'+t(d2.k)+'</span><div style="flex:1;height:8px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:'+d2.col+'"></i></div><em style="font-size:10.5px;font-style:normal;width:36px;text-align:left;color:var(--ink2);flex:none">'+pct+'%</em></div>';
    }).join('')+'</div>';})():'')+
-  interestsCard()+
   joySection()+
   questHtml()+
   '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
