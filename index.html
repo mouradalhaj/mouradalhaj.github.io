@@ -2880,7 +2880,7 @@ function renderTwin(){
   '<div style="height:16px"></div>';
 }
 /* ====== صفحة بصمة الشخصية 3.1 ====== */
- /* vitality — محرك حيوية العلاقة من سلوكك الفعلي 3.1 */
+/* vitality — محرك حيوية العلاقة من سلوكك الفعلي 3.1 */
 function relVitality(r){
  const AR=LANG==='ar';
  let pct=30;
@@ -2896,12 +2896,24 @@ function relVitality(r){
  pct=clamp(pct,8,98);
  const feelTxt=r.feel==='great'?(AR?'تقييمك: مميزة':'Your feel: great'):r.feel==='good'?(AR?'تقييمك: جيدة':'Your feel: good'):r.feel==='needs'?(AR?'تقييمك: تحتاج اهتماماً':'Needs care'):(AR?'تقييمك: متوترة':'Your feel: tense');
  let desc='';
- if(pct>=75)desc=(AR?'حية ومتينة — ':'Alive & strong — ')+(r.meetups?(r.meetups+' '+(AR?'لقاء مشترك':'meetups')+' · '):'')+(r.calls&&r.calls.n?('×'+r.calls.n+' تواصل · '):'')+feelTxt:(AR?'حية ومتينة — ')+(r.meetups?r.meetups+' meetups · ':'')+(r.calls&&r.calls.n?'×'+r.calls.n+' · ':'')+feelTxt;
- else if(pct>=50)desc=(AR?'جيدة لكن تحتاج ريّاً — ':'Good but thirsty — ')+(reg>7?(AR?'انقطاع '+reg+' يوم':'silent '+reg+'d · '):'')+(r.meetups?(AR?(r.meetups+' لقاء — فكر بلقاء جديد'):r.meetups+' meetups — plan one'):''):(AR?'Consider a meetup'):'')+feelTxt;
- else desc=(AR?'تبرد — ':'' )+(reg>10?(AR?(reg+' يوم بلا تواصل'):reg+' days silent')+' · ':'')+(AR?'مكالمة دقيقة توقظها':'One call revives it');
+ if(pct>=75){
+  desc=AR?'حية ومتينة — ':'Alive & strong — ';
+  if(r.meetups)desc+=r.meetups+' '+(AR?'لقاء مشترك':'meetup(s)')+' · ';
+  if(r.calls&&r.calls.n)desc+='×'+r.calls.n+' '+(AR?'تواصل':'contacts')+' · ';
+  desc+=feelTxt;
+ }else if(pct>=50){
+  desc=AR?'جيدة لكن تحتاج ريّاً — ':'Good but thirsty — ';
+  if(reg>7)desc+=(AR?('انقطاع '+reg+' يوم'):('silent '+reg+'d'))+' · ';
+  if(r.meetups)desc+=(AR?(r.meetups+' لقاء — فكر بلقاء جديد'):(r.meetups+' meetups — plan one'))+' · ';
+  desc+=feelTxt;
+ }else{
+  desc=AR?'تبرد — ':'Cooling — ';
+  if(reg>10)desc+=(AR?(reg+' يوم بلا تواصل'):(reg+' days silent'))+' · ';
+  desc+=(AR?'مكالمة دقيقة توقظها':'One call revives it');
+ }
  return {pct:pct,desc:desc};
 }
-function renderFingerprint(){
+ function renderFingerprint(){
  const v=$('#v-fingerprint');if(!v)return;
  const AR=LANG==='ar';
  const stats=fpCompute();
