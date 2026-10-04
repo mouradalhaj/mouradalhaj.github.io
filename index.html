@@ -261,6 +261,36 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .ev-th img{width:100%;height:100%;object-fit:cover;display:block}
 .empty{text-align:center;color:var(--ink3);font-size:13px;padding:26px 10px;line-height:2}
 .empty .ic{color:var(--line2);margin-bottom:6px}
+.news-ticker{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;overflow:hidden;position:relative}
+.news-ticker-head{display:flex;align-items:center;gap:8px;padding:9px 14px 6px;border-bottom:1px solid var(--line)}
+.news-ticker-head b{font-size:11.5px;color:var(--acc)}
+.news-ticker-head span{font-size:9.5px;color:var(--ink3)}
+.news-lane{overflow:hidden;padding:10px 0;position:relative}
+.news-track{display:inline-flex;gap:10px;white-space:nowrap;animation:newsSlide 40s linear infinite;padding:0 10px}
+.news-lane:hover .news-track,.news-lane:active .news-track{animation-play-state:paused}
+@keyframes newsSlide{from{transform:translateX(0)}to{transform:translateX(50%)}}
+html[dir="ltr"] .news-track{animation-name:newsSlideL}
+@keyframes newsSlideL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.news-chip{display:inline-flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:11.5px;cursor:pointer;flex:none;max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.news-chip .ic{flex:none}
+.news-chip b{font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.news-chip span{color:var(--ink3);font-size:9.5px;flex:none}
+.news-chip:active{transform:scale(.96)}
+.news-ticker{margin-top:14px;background:var(--card);border:1px solid var(--acc);border-radius:16px;overflow:hidden;position:relative}
+.news-ticker-head{display:flex;align-items:center;gap:8px;padding:9px 14px 6px;border-bottom:1px solid var(--line)}
+.news-ticker-head b{font-size:11.5px;color:var(--acc)}
+.news-ticker-head span{font-size:9.5px;color:var(--ink3)}
+.news-lane{overflow:hidden;padding:10px 0;position:relative}
+.news-track{display:inline-flex;gap:10px;white-space:nowrap;animation:newsSlide 40s linear infinite;padding:0 10px}
+.news-lane:hover .news-track,.news-lane:active .news-track{animation-play-state:paused}
+@keyframes newsSlide{from{transform:translateX(0)}to{transform:translateX(50%)}}
+html[dir="ltr"] .news-track{animation-name:newsSlideL}
+@keyframes newsSlideL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.news-chip{display:inline-flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--line);border-radius:100px;padding:7px 14px;font-size:11.5px;cursor:pointer;flex:none;max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.news-chip .ic{flex:none}
+.news-chip b{font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.news-chip span{color:var(--ink3);font-size:9.5px;flex:none}
+.news-chip:active{transform:scale(.96)}
 .plant-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 10px 6px}
 .plant-stage{width:170px;height:190px;position:relative;cursor:pointer;margin:0 auto}
 .plant-stage:active{transform:scale(.97)}
@@ -1346,16 +1376,12 @@ function weekDist(){
  return CATS.map(c=>({c:c,n:evs.filter(e=>e.category===c).length,pct:Math.round(evs.filter(e=>e.category===c).length/total*100)}));
 }
 
-function dailyQuest(){
+/* unifiedQuest — مربع مهمات اليوم الموحد 3.2 */
+function unifiedQuest(){
  const ds=dayStart(Date.now());
- const today=S.events.filter(e=>dayStart(e.ts)===ds);
- const acts=today.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
- const moodE=today.find(e=>e.type==='mood');
- if(!acts.length)return {id:'log',txt:t('q_log')||t('qa_ev'),act:'openEvent',done:false};
- if(!moodE)return {id:'mood',txt:t('q_mood'),act:'moodFocus',done:false};
- if(S.staleRels.length)return {id:'rel',txt:t('q_rel')+S.staleRels[0].name+t('q_rel2'),act:'openPick',done:false};
- if(!acts.some(e=>e.polarity>0))return {id:'pos',txt:t('q_pos'),act:'openEvent',done:false};
- return {id:'done',txt:t('q_done_s'),act:null,done:true};
+ const human=S.events.find(e=>e.type==='interest'&&dayStart(e.ts)===ds&&e.gen==='human');
+ if(!human)return {done:false,part:'human'};
+ return {done:true,part:'done'};
 }
 
 function dailyQuestion(){
@@ -2382,9 +2408,28 @@ function interestsCard(){
   '<button class="btn ghost" data-act="addInt" style="margin-top:6px;padding:9px;font-size:12.5px">'+ic('plus',14)+' '+t('int_add')+'</button></div>';
 }
 function questHtml(){
- const q=dailyQuest();
- if(q.done)return '<div class="quest done"><div class="quest-ic">'+ic('check',19)+'</div><div class="quest-b"><b>'+t('q_done_t')+'</b><p>'+esc(q.txt)+'</p></div><span class="quest-go">'+ic('check',15)+'</span></div>';
- return '<div class="quest"><div class="quest-ic">'+ic('spark',19)+'</div><div class="quest-b"><b>'+t('q_t')+'</b><p>'+(LANG==='ar'?'اختر عملاً إنسانياً عظيماً — أو اكتب واجبك الخاص':'Pick a great human deed — or write your own duty')+'</p></div><button class="quest-go" data-act="questGo">'+t('q_go')+'</button></div>';
+ const AR=LANG==='ar';
+ const its=todayInterests();
+ const humanDone=its.some(p=>p.gen==='human');
+ const pend=its.filter(p=>!p.done);
+ const doneN=its.filter(p=>p.done).length;
+ let items='';
+ if(its.length){
+  items=its.map(p=>'<div class="int-item '+(p.done?'did':'')+'">'+
+   '<button class="int-check '+(p.done?'on':'')+'" data-act="toggleIn" data-id="'+p.id+'">'+ic('check',14)+'</button>'+
+   '<div class="int-txt">'+esc(p.text)+'</div>'+
+   '<span class="int-gen">'+(p.gen==='human'?(AR?'إنسانية':'human'):p.gen==='mine'?(AR?'من إيقاعك':'rhythm'):t('int_ready'))+'</span></div>').join('');
+ }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+(AR?'اختر مهمتك الإنسانية، أو أضف مواعيدك والتزاماتك واهتماماتك — وكل تأشير يُوثَّق في أحداثك تلقائياً':'Pick your human quest, or add duties & interests — every check-in becomes a documented event')+'</p>';
+ const pct=its.length?Math.round(doneN/its.length*100):0;
+ return '<div class="quest '+(humanDone&&pend.length===0?'done':'')+'" style="display:block">'+
+  '<div style="display:flex;align-items:center;gap:11px">'+
+   '<div class="quest-ic">'+ic(humanDone?'check':'spark',19)+'</div>'+
+   '<div class="quest-b"><b>'+t('q_t')+'</b><p>'+(humanDone?t('q_done_s'):(AR?'ابدأ بعمل إنساني عظيم — ثم أضف مواعيدك والتزاماتك':'Start with a great human deed — then add your duties'))+'</p></div>'+
+   '<button class="quest-go" data-act="questGo">'+t('q_go')+'</button>'+
+  '</div>'+
+  (its.length?'<div style="margin-top:11px;height:6px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:var(--good);transition:width .5s"></i></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-top:4px"><span>'+doneN+' / '+its.length+'</span><span>'+pct+'%</span></div>':'')+
+  '<div style="margin-top:10px">'+items+'</div>'+
+  '<button class="btn ghost" data-act="addInt" style="margin-top:9px;padding:9px;font-size:12.5px">'+ic('plus',14)+' '+(AR?'أضف موعداً أو التزاماً أو اهتماماً':'Add appointment, duty or interest')+'</button></div>';
 }
 function chCard(){
  const c=weeklyChallenge();
@@ -2444,8 +2489,6 @@ function renderHome(){
   interestsCard()+
   joySection()+
   questHtml()+
-  '<div class="qbar"><input id="quickEv" placeholder="'+t('qa_ph')+'" autocomplete="off"><button class="qbtn" data-act="quickAdd">'+ic('plus',20)+'</button></div>'+
-  predHtml()+
   '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
   sparkCard()+
   chCard()+
@@ -2469,13 +2512,14 @@ function renderHome(){
     (r2.action?'<button class="rec-btn" data-act="recGo" data-i="'+i+'">'+esc(r2.action)+'</button>':'')+
     '<button class="rec-btn rec-off" data-act="recOff" data-i="'+i+'">'+ic('x',13)+'</button>'+
    '</div>').join(''):'<div class="empty">'+ic('check',26)+'<br>'+t('recs_empty')+'</div>')+'</div>'+
-  '<h3 class="sec-t">'+ic('clock',15)+' '+t('mem_t')+'</h3>'+
-  '<div>'+memHtml+'</div>'+
+  (function(){const tick=recent.slice(0,8);if(!tick.length)return '';
+   const chip=e=>{const cm=CAT_META[e.category]||CAT_META.mind;
+    return '<button class="news-chip" data-mem="'+e.id+'">'+ic(cm.icon,14)+'<b>'+esc(e.text)+'</b><span>'+timeAgo(e.ts)+'</span></button>'};
+   const row=tick.map(chip).join('');
+   return '<div class="news-ticker"><div class="news-ticker-head">'+ic('history',14)+'<b>'+t('mem_t')+'</b><span>'+(AR?'يتمرّر تلقائياً — المس للإيقاف':'auto-scrolls — touch to pause')+'</span></div><div class="news-lane"><div class="news-track">'+row+row+'</div></div></div>';})()+
   '<div style="height:18px"></div>';
  const arc=$('#ringArc'),num=$('#ringNum');
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
- const qe=$('#quickEv');
- if(qe)qe.addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
 }
 async function quickAdd(){
  const el=$('#quickEv');if(!el)return;
@@ -3577,7 +3621,7 @@ function renderQuestPick(){
  };
 }
 async function applyQuestPick(txt){
- const ev={id:uid(),type:'interest',category:'growth',polarity:1,text:txt,done:false,gen:'ready',ts:Date.now()};
+ const ev={id:uid(),type:'interest',category:'growth',polarity:1,text:txt,done:false,gen:'human',ts:Date.now()};
  await DB.put('events',ev);S.events.push(ev);
  refresh();
  toast((LANG==='ar'?'مهمة اليوم انضمت لاهتماماتك — أنتظر أن تتحقق':'Your quest joined your interests'),'var(--good)','star');
