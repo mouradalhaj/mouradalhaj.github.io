@@ -626,6 +626,25 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .evolve-line span{flex:1;font-size:12.5px;line-height:1.7}
 .evolve-line b.up{color:var(--good)}
 .evolve-line b.dn{color:var(--bad)}
+.assess-entry{display:block;width:100%;margin-top:9px;background:var(--acc-soft);border:1px dashed var(--acc);border-radius:14px;padding:11px 14px;font-size:13px;font-weight:600;color:var(--acc);text-align:center;transition:.15s}
+.assess-entry:active{transform:scale(.98)}
+.assess-hero{margin-top:16px;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--acc);border-radius:20px;padding:20px 16px;text-align:center}
+.assess-qcard{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px}
+.assess-qnum{font-size:10.5px;color:var(--ink3);margin-bottom:6px}
+.assess-qtext{font-size:15px;font-weight:600;line-height:1.9;color:var(--ink)}
+.assess-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}
+.assess-opt{padding:10px 2px;border-radius:11px;border:1.5px solid var(--line);color:var(--ink3);font-size:9.5px;font-weight:600;text-align:center;transition:.15s}
+.assess-opt.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.assess-opt:active{transform:scale(.95)}
+.assess-prog{height:6px;border-radius:100px;background:var(--card2);overflow:hidden;margin-top:14px}
+.assess-prog i{display:block;height:100%;border-radius:100px;background:var(--acc);transition:width .4s}
+.assess-result{margin-top:14px;background:var(--card);border:1.5px solid var(--acc);border-radius:18px;padding:18px 16px;text-align:center;animation:viewIn .5s ease}
+.assess-score{font-family:var(--fd);font-size:42px;font-weight:800}
+.assess-class{font-size:15px;font-weight:700;margin-top:4px}
+.assess-sub{font-size:11px;color:var(--ink3);margin-top:3px}
+.assess-act{margin-top:12px;background:var(--card2);border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.9;color:var(--ink2);text-align:right}
+.assess-act b{color:var(--acc)}
+.assess-care{margin-top:10px;font-size:10px;color:var(--ink3);line-height:1.8;border-top:1px dashed var(--line2);padding-top:9px}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
 </style>
@@ -1697,6 +1716,65 @@ async function saveRate(){
  toast(t('ps_saved'),'var(--acc)','star',null,null,3600);
 }
 
+ /* ====== ASSESS_BANK — بنك المقاييس النفسية المعيارية 3.2 ====== */
+const ASSESS_BANK={
+ gad7:{ar:'مقياس القلق GAD-7',en:'GAD-7 Anxiety',src:'WHO · PHQ Module',icon:'brain',col:'#B7A6DC',
+  qs:[
+  {ar:'شعرت بالتوتر أو القلق أو الانزعاج',en:'Feeling nervous, anxious or on edge'},
+  {ar:'لم تستطع التوقف عن القلق أو السيطرة عليه',en:'Not being able to stop worrying'},
+  {ar:'قلقك بشأن أشياء كثيرة ومختلفة',en:'Worrying too much about different things'},
+  {ar:'صعوبة الاسترخاء',en:'Trouble relaxing'},
+  {ar:'كان قلقك شديداً حتى لا تستقر في مكانك',en:'Being so restless you cannot sit still'},
+  {ar:'صرت منزعجاً أو سريع الانفعال',en:'Becoming easily annoyed or irritable'},
+  {ar:'شعرت بالخوف وكأن شيئاً مرعباً قد يحدث',en:'Feeling afraid something awful might happen'}]},
+ phq9:{ar:'مقياس المزاج PHQ-9',en:'PHQ-9 Mood',src:'Pfizer Initiative',icon:'heart',col:'#E4796B',
+  qs:[
+  {ar:'قليل الاهتمام أو المتعة في الأمور',en:'Little interest in doing things'},
+  {ar:'شعور بالحزن أو الاكتئاب أو اليأس',en:'Feeling down, depressed or hopeless'},
+  {ar:'صعوبة النوم أو كثرة النوم',en:'Trouble sleeping or sleeping too much'},
+  {ar:'شعور بالتعب أو قلة الطاقة',en:'Feeling tired or low energy'},
+  {ar:'قليل الشهية أو الإفراط في الأكل',en:'Poor appetite or overeating'},
+  {ar:'سوء النظر إلى الذات — شعور بالفشل أو خيبة',en:'Feeling bad about yourself or a failure'},
+  {ar:'صعوبة التركيز على أمور كالقراءة أو التلفاز',en:'Trouble concentrating on things'},
+  {ar:'حركة أو كلام بطيء لدرجة يلاحظها الآخرون — أو العكس: تململ',en:'Moving slowly or being fidgety'},
+  {ar:'أفكار بأنك تكون أفضل حالاً بمغادرة الحياة أو إيذاء نفسك',en:'Thoughts of being better off away from life'}]},
+ bp:{ar:'مقياس الغضب Buss-Perry',en:'Buss-Perry Anger',src:'Buss & Perry 1992',icon:'flame',col:'#E08A76',
+  qs:[
+  {ar:'أفقد أعصابي بسهولة',en:'I lose my temper easily'},
+  {ar:'أشعر برغبة في ضرب من يجعلني غاضباً',en:'I feel like hitting someone who irritates me'},
+  {ar:'أشعل النار من حولي بسبب انفعالي',en:'I flare up quickly but get over it quickly'},
+  {ar:'أشعر بضيق شديد حين أتذكّر أفعال من غضبوني',en:'I get irritated when people wrong me'},
+  {ar:'أجد نفسي أحسد من يحظون بشيء لم أناله',en:'I feel envious of what others have'},
+  {ar:'أستفزني بعض الناس حتى أشعر برغبة في المواجهة',en:'Some people provoke me to the point of confrontation'},
+  {ar:'أصرخ أو أعبّر بعنف حين أغضب',en:'I shout or express anger openly'},
+  {ar:'أشعر أن بعض الناس تتصرف بطريقة تجعل حياتي أصعب عن قصد',en:'Some people act to make my life harder on purpose'}]},
+ psso:{ar:'مقياس التوتر المدرك PSS-4',en:'PSS-4 Perceived Stress',src:'Cohen 1983',icon:'pulse',col:'#8FBFCB',
+  qs:[
+  {ar:'تعاملت مع أمور حياتك المزعجة بشكل مفاجئ',en:'Handled unexpected difficulties'},
+  {ar:'شعرت بالسيطرة على الأمور المهمة',en:'Felt in control of important things'},
+  {ar:'شعرت بالتوتر والضغط',en:'Felt nervous and stressed'},
+  {ar:'شعرت بالثقة في قدرتك على حل مشكلاتك الشخصية',en:'Felt confident in solving personal problems'}]}};
+const ASSESS_SCALE={ar:['أبداً','يوم واحد','أيام عدة','أكثر من نصف الأيام','تقريباً كل يوم'],en:['Not at all','Several days','More than half','Nearly every day','Almost always']};
+const ASSESS_CUTS=[
+ {max:4,ar:'مؤشر طبيعي',en:'Normal range',col:'#84C88E',
+  act_ar:'أنت في نطاق آمن — واصل الاهتمام بنفسك بنفس الاهتمام اليومي.',act_en:'Safe range — keep caring for yourself daily.'},
+ {max:9,ar:'مؤشر خفيف',en:'Mild range',col:'#E2C063',
+  act_ar:'مؤشرات خفيفة — جرّب تمارين التنفس والتدوين اليومي لمدة أسبوع وراقب التغير.',act_en:'Mild signals — try breathing exercises and daily journaling for a week.'},
+ {max:14,ar:'مؤشر متوسط',en:'Moderate range',col:'#E08A76',
+  act_ar:'مؤشرات تستحق انتباهك — تحدث مع شخص تثق به، واستمر في تتبّعك اليومي في رفيق.',act_en:'Worth attention — talk to someone you trust, keep tracking daily.'},
+ {max:99,ar:'مؤشر مرتفع',en:'High range',col:'#E4796B',
+  act_ar:'مؤشرات مرتفعة — أرغب أن تتحدث مع مختص نفسي قريباً. هذا ليس ضعفاً — إنه أقوى قرار يمكنك أخذه لنفسك الآن.',act_en:'High signals — please consider seeing a professional soon. It is not weakness — it is the strongest decision you can make.'}];
+function assessCut(score){
+ if(score<=4)return ASSESS_CUTS[0];
+ if(score<=9)return ASSESS_CUTS[1];
+ if(score<=14)return ASSESS_CUTS[2];
+ return ASSESS_CUTS[3];
+}
+async function saveAssessment(code,subject,score,answers){
+ const ev={id:uid(),type:'assessment',category:'mind',assess:code,subject:subject,score:score,answers:answers,ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);
+ return ev;
+}
 /* ====== اهتمامات اليوم — الخوارزمية المتعلمة ====== */
 function todayInterests(){
  const ds=dayStart(Date.now());
@@ -2658,6 +2736,7 @@ function renderChat(){
   '<div class="chat-head"><div class="chat-av">'+ic('pulse',20)+'</div><div><b>'+t('tab_chat')+'</b><span>'+t('chat_sub')+'</span></div></div>'+
   '<div id="chatList"></div>'+
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
+  '<button class="assess-entry" data-act="openAssess">'+ic('star',16)+' '+(LANG==='ar'?'قيّم نفسك أو شخصاً تحب 🧠':'Rate yourself or someone 🧠')+'</button>'+
   '<div class="composer"><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
  const list=$('#chatList');if(!list)return;
  if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً».'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions.\nTry: “my weekly story” or “suggest a book”.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
@@ -3456,6 +3535,110 @@ function openMemoryCard(id){
  });
 }
 
+ /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
+let asState=null;
+function openAssessPick(){
+ const el=$('#modal');if(!el)return;
+ const AR=LANG==='ar';
+ el.innerHTML='<div class="md-box"><b>'+(AR?'🧠 عيادة رفيق النفسية':'🧠 Rafiq Mind Clinic')+'</b><p>'+(AR?'مقاييس معيارية عالمية مُعتمدة — أجب بصدق عن كيفية شعورك خلال آخر أسبوعين، وسأحلل إجاباتك بدقة وأعطيك مؤشرك الشخصي.':'Global validated scales — answer honestly about the last two weeks, and I will analyze precisely.')+'</p>'+
+  '<div class="chips" style="flex-direction:column;align-items:stretch">'+Object.keys(ASSESS_BANK).map(code=>{
+   const a=ASSESS_BANK[code];
+   return '<button class="chip" data-aspick="'+code+'" style="text-align:right;display:flex;align-items:center;gap:10px">'+ic(a.icon,17)+'<span style="flex:1">'+(AR?a.ar:a.en)+'<br><small style="color:var(--ink3)">'+a.src+' · '+a.qs.length+' '+(AR?'أسئلة':'questions')+'</small></span><span style="color:'+a.col+'">›</span></button>';
+  }).join('')+'</div>'+
+  '<div style="height:12px"></div><button class="btn ghost" id="asPickClose">'+t('cancel')+'</button></div>';
+ el.classList.add('show');
+ $$('#modal [data-aspick]').forEach(b=>b.onclick=()=>{el.classList.remove('show');openAssessFlow(b.dataset.aspick)});
+ $('#asPickClose').onclick=()=>el.classList.remove('show');
+}
+function openAssessFlow(code){
+ asState={code:code,subject:'self',answers:[],idx:0};
+ const a=ASSESS_BANK[code];
+ const el=$('#modal');if(!el)return;
+ const AR=LANG==='ar';
+ el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
+  '<div class="chips" style="flex-direction:column;align-items:stretch">'+
+  '<button class="chip" data-for="self" style="text-align:center">'+(AR?'💪 لنفسك':'For myself')+'</button>'+
+  '<button class="chip" data-for="other" style="text-align:center">'+(AR?'👤 لشخص آخر أهتم به':'For someone I care about')+'</button>'+
+  '</div><div id="asOtherWrap" style="display:none;margin-top:10px"><input id="asOtherName" maxlength="20" placeholder="'+(AR?'اسم الشخص (أبي، أخي، زميلي…)':'Name (dad, brother, colleague…)')+'"></div>'+
+  '<button class="btn" id="asForGo" style="margin-top:14px">'+t('next')+'</button>'+
+  '<button class="btn ghost" id="asForClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
+ el.classList.add('show');
+ $$('#modal [data-for]').forEach(b=>b.onclick=()=>{
+  asState.subject=b.dataset.for;
+  $$('#modal [data-for]').forEach(x=>x.classList.toggle('on',x===b));
+  const w=$('#asOtherWrap');if(w)w.style.display=asState.subject==='other'?'block':'none';
+ });
+ $('#asForGo').onclick=()=>{
+  if(asState.subject==='other'){
+   const nm=$('#asOtherName')?$('#asOtherName').value.trim():'';
+   if(!nm){toast(AR?'اكتب اسم الشخص':'Write the name','var(--acc)','edit');return}
+   asState.otherName=nm;
+  }
+  el.classList.remove('show');
+  renderAssessQ();
+ };
+ $('#asForClose').onclick=()=>el.classList.remove('show');
+}
+function renderAssessQ(){
+ const a=ASSESS_BANK[asState.code];
+ const el=$('#ritual');if(!el)return;
+ const AR=LANG==='ar';
+ const i=asState.idx;
+ const q=a.qs[i];
+ const lvls=ASSESS_SCALE[AR?'ar':'en'];
+ el.innerHTML='<div class="rt-mid">'+
+  '<h1 class="rt-t" style="font-size:18px">'+(AR?a.ar:a.en)+'</h1>'+
+  '<p class="rt-s">'+(asState.subject==='self'?(AR?'لنفسك':'For yourself'):(AR?'لـ '+esc(asState.otherName||'شخص عزيز'):'For '+esc(asState.otherName||'someone')))+' · '+(i+1)+' / '+a.qs.length+'</p>'+
+  '<div class="assess-prog"><i style="width:'+Math.round((i)/a.qs.length*100)+'%"></i></div>'+
+  '<div class="assess-qcard" style="margin-top:22px">'+
+   '<div class="assess-qnum">'+(AR?'السؤال':'Question')+' '+(i+1)+' '+t('of100').replace('من','/')+'</div>'+
+   '<div class="assess-qtext">'+(AR?q.ar:q.en)+'</div>'+
+   '<div class="assess-scale">'+[5,4,3,2,1].map(m=>'<button class="assess-opt" data-aval="'+m+'">'+lvls[m-1]+'</button>').join('')+'</div>'+
+  '</div>'+
+  '<div class="rt-links"><button id="asQuit">'+t('cancel')+'</button></div>'+
+  '</div>';
+ el.hidden=false;el.scrollTop=0;
+ $$('#ritual [data-aval]').forEach(b=>b.onclick=()=>{
+  asState.answers.push(+b.dataset.aval);
+  asState.idx++;
+  if(asState.idx<a.qs.length)renderAssessQ();
+  else finishAssessment();
+ });
+ $('#asQuit').onclick=()=>{el.hidden=true;asState=null};
+}
+async function finishAssessment(){
+ const a=ASSESS_BANK[asState.code];
+ const score=asState.answers.reduce((x,y)=>x+y,0);
+ const cut=assessCut(score);
+ const AR=LANG==='ar';
+ const subject=asState.subject==='self'?(AR?'نفسك':'yourself'):(asState.otherName||'');
+ const ev={id:uid(),type:'assessment',category:'mind',assess:asState.code,subject:subject,score:score,answers:[].concat(asState.answers),ts:Date.now()};
+ await DB.put('events',ev);S.events.push(ev);
+ const el=$('#ritual');if(!el)return;
+ el.innerHTML='<div class="rt-mid">'+
+  '<h1 class="rt-t">'+(AR?'نتيجتك — ':'Your result — ')+(AR?a.ar:a.en)+'</h1>'+
+  '<p class="rt-s">'+(asState.subject==='self'?(AR?'هذا مؤشر من إجاباتك الصادقة — وأنا معك في كل خطوة تالية':'This is your indicator — I am with you in every next step'):(AR?'مؤشر لـ '+esc(subject)+' — احتفظ به وراقب تطوره مع الوقت':'An indicator for '+esc(subject)+' — track it over time'))+'</p>'+
+  '<div class="assess-result">'+
+   '<div class="assess-score" style="color:'+cut.col+'">'+score+'</div>'+
+   '<div class="assess-class" style="color:'+cut.col+'">'+(AR?cut.ar:cut.en)+'</div>'+
+   '<div class="assess-sub">'+(AR?'من أصل 27 (أو 36 لـ Buss-Perry) — مقياس '+a.src:'out of max — scale '+a.src)+'</div>'+
+   '<div class="assess-act"><b>'+(AR?'توصية رفيق':'Rafiq recommendation')+'</b><br>'+(AR?cut.act_ar:cut.act_en)+'</div>'+
+   '<div class="assess-care">'+(AR?'⚕️ رفيق أداة وعي ذاتي وليست بديلاً عن الاستشارة النفسية المتخصصة. عند استمرار المؤشرات المرتفعة، استشارة مختص أقوى قرار.':'⚕️ Rafiq is a self-awareness tool, not a substitute for professional care.')+'</div>'+
+  '</div>'+
+  '<button class="rt-btn" id="asShare">'+ic('wa',17)+' '+(AR?'احفظها في محادثتنا':'Save to our chat')+'</button>'+
+  '<div class="rt-links"><button id="asDone">'+t('done')+'</button></div>'+
+  '</div>';
+ el.hidden=false;el.scrollTop=0;
+ $('#asShare').onclick=async()=>{
+  el.hidden=true;
+  const AR2=LANG==='ar';
+  const o={id:uid(),role:'rf',ts:Date.now(),text:(AR2?('🧠 نتيجة '+a.ar+' — '+(subject==='نفسك'||subject==='yourself'?'لنفسك':'لـ '+subject)+':'):(AR2?'🧠 '+a.en+' result:':'Result:'))+'\n'+score+'/max — '+(AR2?cut.ar:cut.en)+'\n\n'+(AR2?cut.act_ar:cut.act_en)};
+  await DB.put('chat',o);S.chat.push(o);
+  toast(AR2?'حُفظت النتيجة في محادثتنا':'Saved to our chat','var(--good)','star');
+  refresh();
+ };
+ $('#asDone').onclick=()=>{el.hidden=true;refresh()};
+}
 /* الحكايات */
 function openStorySheet(){
  const sh=$('#shStory');if(!sh)return;
