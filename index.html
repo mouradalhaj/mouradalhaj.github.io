@@ -3611,7 +3611,7 @@ function openAssessDisclaimer(code){
  const AR=LANG==='ar';
  el.innerHTML='<div class="md-box"><b>'+(AR?'مهم — قبل أن نبدأ':'Important — before we start')+'</b><p style="color:var(--ink2);font-weight:500">'+(AR?'هذه الاختبارات أداة للتثقيف الذاتي وليست تشخيصية أو علاجية، ولا تحل محل استشارة الطبيب أو المختص النفسي.':'These assessments are self-education tools — not diagnostic or therapeutic, and do not replace professional consultation.')+'</p><button class="btn" id="asDisGo">'+(AR?'فهمت — لنبدأ':'I understand — start')+'</button><button class="btn ghost" id="asDisNo" style="margin-top:8px">'+t('cancel')+'</button></div>';
  el.classList.add('show');
- $('#asDisGo').onclick=()=>{el.classList.remove('show');openAssessFlow(code)};
+ $('#asDisGo').onclick=()=>{el.classList.remove('show');asState={code:code,subject:asState.subject,answers:[],idx:0};renderAssessQ();};
  $('#asDisNo').onclick=()=>el.classList.remove('show');
 }
 function openAssessFlow(code){
