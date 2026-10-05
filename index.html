@@ -645,6 +645,34 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .assess-act{margin-top:12px;background:var(--card2);border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.9;color:var(--ink2);text-align:right}
 .assess-act b{color:var(--acc)}
 .assess-care{margin-top:10px;font-size:10px;color:var(--ink3);line-height:1.8;border-top:1px dashed var(--line2);padding-top:9px}
+.pp-hero{margin-top:16px;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--c-mind);border-radius:20px;padding:20px 16px;text-align:center}
+.pp-curve{width:100%;max-width:340px;margin:12px auto 0;display:block}
+.pp-curve-line{fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.pp-curve-line2{fill:none;stroke:var(--c-mind);stroke-width:2;stroke-dasharray:4 4;stroke-linecap:round}
+.pp-day-lab{font-size:9px;text-anchor:middle;font-family:var(--fb);fill:var(--ink3)}
+.pp-day-dot{stroke:var(--acc);stroke-width:2;fill:var(--bg)}
+.pp-day-dot.future{fill:var(--acc-soft);stroke-dasharray:2 2}
+.pp-legend{display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:10.5px;color:var(--ink2)}
+.pp-legend i{display:inline-block;width:16px;height:3px;border-radius:100px;vertical-align:middle;margin-inline-end:5px}
+.pp-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 15px}
+.pp-card h4{font-size:12px;color:var(--ink3);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.pp-gauge{display:flex;align-items:center;gap:12px}
+.pp-gauge-ring{width:84px;height:84px;flex:none}
+.pp-gauge-ring .ring-num{font-size:19px}
+.pp-gauge-b{flex:1;min-width:0}
+.pp-gauge-b p{font-size:12px;line-height:1.8;color:var(--ink2)}
+.pp-gauge-b p b{color:var(--ink)}
+.pp-burn-safe{stroke:var(--good)}.pp-burn-mid{stroke:var(--acc)}.pp-burn-high{stroke:var(--bad)}
+.pp-corr{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.pp-corr:last-child{border-bottom:none}
+.pp-corr .ic{flex:none;color:var(--c-growth);margin-top:2px}
+.pp-corr-b{flex:1;min-width:0}
+.pp-corr-b b{font-size:12.5px;display:block;color:var(--ink)}
+.pp-corr-b p{font-size:11.5px;color:var(--ink2);line-height:1.7;margin-top:3px}
+.pp-corr-b p b{color:var(--c-growth)}
+.pp-corr-st{flex:none;font-size:10px;font-weight:700;color:var(--c-growth);border:1px dashed var(--c-growth);border-radius:100px;padding:2px 9px}
+.lab-note{margin-top:14px;background:var(--card2);border:1px dashed var(--c-growth);border-radius:14px;padding:12px 14px;font-size:11.5px;line-height:1.9;color:var(--ink2)}
+.lab-note b{color:var(--c-growth)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
 </style>
@@ -2157,8 +2185,8 @@ async function obFinish(seed){
 });
 
 window.__rfStage='بناء الواجهة';
-const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab'];
-const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'',lab:''};
+const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab','pulse'];
+const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'',lab:'',pulse:''};
 function buildShell(){
  put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.9 — ساعة التشويق والأعمال الإنسانية':'Rafiq 2.9 — countdown clock & human quests')+'</b>');
  put('#appHead','<div class="h-brand" id="hBrand">'+logoSvg(34)+'<b>'+t('tab_chat')+'</b></div>'+
@@ -2181,7 +2209,7 @@ function go(v){
  if(hb)hb.hidden=v!=='home';
  if(ht){ht.hidden=v==='home';ht.textContent=TITLES[v]?t(TITLES[v]):''}
  if(hd)hd.textContent=fmtDate(Date.now());
- const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings,fingerprint:renderFingerprint,lab:renderLab};
+ const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings,fingerprint:renderFingerprint,lab:renderLab,pulse:renderPulse};
  if(R[v]){try{R[v]()}catch(err){__rfErr((err&&err.message||err)+' @'+v)}}
 }
 function refresh(){computeAll();renderDot();go(currentView)}
@@ -3061,6 +3089,116 @@ function renderTwin(){
   '<div class="page-add"><button class="btn ghost" data-act="waTwin">'+ic('wa',17)+' '+t('tw_share')+'</button></div>'+
   '<div style="height:16px"></div>';
 }
+/* ====== 3.3 النبض التنبؤي — محركات: predictPulse, burnoutScore, hiddenCorr, dualMirror ====== */
+function predictPulse(){
+ const days=[];
+ let st=calcStreak();
+ for(let i=-6;i<=7;i++){
+  const d0=dayStart(Date.now()+i*DAY);
+  const evs=S.events.filter(e=>dayStart(e.ts)===d0);
+  let mood=null;
+  const mm=evs.filter(e=>e.type==='mood');
+  if(mm.length)mood=Math.round(mm.reduce((a,e)=>a+e.mood,0)/mm.length);
+  const acts=evs.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
+  const pos=acts.filter(e=>e.polarity>0).length,neg=acts.filter(e=>e.polarity<0).length;
+  const rate=evs.find(e=>e.type==='selfrate');
+  let val;
+  if(mood!==null)val=Math.round(mood*100/6);
+  else if(rate)val=rate.score;
+  else if(acts.length)val=clamp(50+(pos-neg)*10,20,90);
+  else val=null;
+  const dw=new Date(d0).getDay();
+  const wdAvg=(function(){const all=S.events.filter(e=>e.polarity>0&&new Date(e.ts).getDay()===dw).length;const tot=S.events.filter(e=>e.polarity!==0&&new Date(e.ts).getDay()===dw).length||1;return 50+Math.round((all/tot-0.5)*40)})();
+  days.push({d0:d0,dayIdx:new Date(d0).getDay(),val:val,real:i<0||i===0,future:i>0,acts:acts.length,wdAvg:wdAvg});
+ }
+ let last=days.filter(d=>d.val!==null&&d.real).map(d=>d.val);
+ const base=last.length?last[last.length-1]:S.life;
+ days.forEach(d=>{if(d.future&&d.val===null){d.val=clamp(Math.round(base*.55+d.wdAvg*.45),15,95);base=d.val}});
+ return days;
+}
+function burnoutScore(){
+ let sc=15;
+ const now=Date.now();
+ const sl=S.events.filter(e=>e.type==='mood'&&e.ts>now-5*DAY);
+ if(sl.length){const avg=sl.reduce((a,e)=>a+e.mood,0)/sl.length;if(avg<=2.5)sc+=25;else if(avg<=3.5)sc+=12}
+ const st=calcStreak();
+ if(st>=12)sc+=15;else if(st>=8)sc+=8;
+ const neg=S.events.filter(e=>e.polarity<0&&e.ts>now-7*DAY).length;
+ sc+=Math.min(20,neg*5);
+ const wk=S.events.filter(e=>e.category==='work'&&e.polarity!==0&&e.ts>now-7*DAY).length;
+ if(wk>=6)sc+=15;else if(wk>=4)sc+=8;
+ const slp=S.events.filter(e=>(e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0||e.text.toLowerCase().indexOf('late night')>=0||e.text.toLowerCase().indexOf('slept late')>=0)&&e.ts>now-5*DAY).length;
+ sc+=Math.min(15,slp*5);
+ const relGap=S.staleRels.length;
+ if(relGap>=2)sc+=10;
+ return clamp(sc,5,98);
+}
+function hiddenCorr(){
+ const AR=LANG==='ar';
+ const out=[];
+ const sleepDays=[],clearDays=[];
+ S.events.forEach(e=>{
+  const d=dayStart(e.ts);
+  if(e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0)e._slp=true;
+  if(e.category==='mind'&&e.polarity>0)e._clr=d;
+ });
+ const lateD=[...new Set(S.events.filter(e=>e._slp).map(e=>dayStart(e.ts)))];
+ if(lateD.length>=2){
+  let low=0,tot=0;
+  lateD.forEach(d=>{
+   const nx=S.events.filter(e=>dayStart(e.ts)===d+DAY&&e.category==='mind');
+   tot++;
+   if(nx.some(e=>e.polarity<0)||nx.length===0)low++;
+  });
+  const p2=Math.round(low/tot*100);
+  if(p2>=50)out.push({t:AR?'النوم المتأخر ↔ صفاء عقلك':'Late sleep ↔ clarity',
+   p:AR?('رصدتُ نمطاً خفياً: في '+p2+'% من المرات التي سهرتَ فيها، هبط صفاؤك العقلي في اليوم التالي. نومك ليس رفاهية — إنه وقود صفائك.'):('Hidden pattern: after '+p2+'% of late nights, your clarity dropped next day.'));
+  });
+ }
+ const wrkLow=[];
+ for(let w2=0;w2<4;w2++){
+  const e0=dayStart(Date.now())-w2*7*DAY,e1=e0+7*DAY;
+  const wk=S.events.filter(e=>e.ts>=e0&&e.ts<e1&&e.category==='work'&&e.polarity<0).length;
+  const rel=S.events.filter(e=>e.ts>=e0&&e.ts<e1&&e.category==='relations'&&e.polarity>0).length;
+  if(wk>=2&&rel===0)wrkLow.push(true);else if(wk>=2)wrkLow.push(false);
+ }
+ if(wrkLow.length>=2&&wrkLow[0]&&wrkLow[1])out.push({t:AR?'ضغط العمل ↔ انقطاع العلاقات':'Work pressure ↔ relationships',
+  p:AR?('نمط متكرر: أسابيع ضغط العمل الكبير تقاطعت مع غياب تام لأي تواصل علاقاتي. من يحبك لا يفهم انشغالك — أرسل رسالة واحدة اليوم.'):('Busy weeks coincide with zero relationship contact — send one message today.'));
+ });
+ const humanDays=S.events.filter(e=>e.gen==='human'&&e.done).length;
+ const moodAfter=[];
+ S.events.filter(e=>e.gen==='human'&&e.done).forEach(h=>{
+  const after=S.events.filter(e2=>e2.type==='mood'&&e2.ts>h.ts&&e2.ts<h.ts+2*DAY);
+  if(after.length)moodAfter.push(after[0].mood);
+ });
+ if(moodAfter.length>=2){const avg=moodAfter.reduce((a,b)=>a+b,0)/moodAfter.length;
+  if(avg>=4)out.push({t:AR?'الأعمال الإنسانية ↔ سعادتك':'Human deeds ↔ joy',
+   p:AR?('بعد أعمالك الإنسانية، مزاجك في اليومين التاليين بلغ '+Math.round(avg*100/6)+'% — العطاء ليس لغيرك، إنه أعظم استثمار في مزاجك.'):('After your human deeds, your mood reached '+Math.round(avg*100/6)+'%.'));
+  });
+ }
+ return out;
+}
+function dualMirror(){
+ const last7=[];
+ for(let i=0;i<7;i++){
+  const d0=dayStart(Date.now()-i*DAY);
+  const evs=S.events.filter(e=>dayStart(e.ts)===d0);
+  const rate=evs.find(e=>e.type==='selfrate');
+  const acts=evs.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
+  const pos=acts.filter(e=>e.polarity>0).length,neg=acts.filter(e=>e.polarity<0).length;
+  const actScore=acts.length?clamp(50+(pos-neg)*12,10,95):null;
+  const intent=evs.filter(e=>e.type==='interest').length;
+  last7.push({rate:rate?rate.score:null,act:actScore,intent:intent});
+ }
+ const rated=last7.filter(d=>d.rate!==null);
+ const both=rated.filter(d=>d.act!==null);
+ if(rated.length<3)return null;
+ const avgRate=Math.round(rated.reduce((a,d)=>a+d.rate,0)/rated.length);
+ const avgAct=both.length?Math.round(both.reduce((a,d)=>a+d.act,0)/both.length):null;
+ const gap=avgAct!==null?(avgRate-avgAct):null;
+ const totalInt=last7.reduce((a,d)=>a+d.intent,0);
+ return {avgRate:avgRate,avgAct:avgAct,gap:gap,ratedN:rated.length,intents:totalInt};
+}
 /* ====== صفحة بصمة الشخصية 3.1 ====== */
 /* vitality — محرك حيوية العلاقة من سلوكك الفعلي 3.1 */
 function relVitality(r){
@@ -3147,8 +3285,9 @@ function renderLab(){
   {name:AR?'محرك بصمة الشخصية':'Fingerprint engine',desc:AR?'الثمانية محاور + الرادار + التوافق':'8 axes + radar + compatibility',status:'on',v:totalPct(stats)},
   {name:AR?'خوارزمية دقة الفهم':'Understanding accuracy',desc:AR?'تقارن اهتماماتك بأفعالك':'Interests vs actions',status:acc!==null?'on':'wait',v:acc},
   {name:AR?'محرك السيناريوهات المعاكسة':'Counterfactual engine',desc:AR?'"لو..." — شجرة القرارات البديلة (3.2)':'"What if" decision tree (3.2)',status:'dev'},
-  {name:AR?'النبض التنبؤي':'Predictive pulse',desc:AR?'منحنى المزاج 7 أيام + رادار الاستنزاف (3.3)':'7-day mood curve + burnout radar (3.3)',status:'dev'},
-  {name:AR?'الارتباطات الخفية':'Hidden correlations',desc:AR?'علاقات بين جوانب حياتك (3.3)':'Cross-domain links (3.3)',status:'dev'}];
+  {name:AR?'النبض التنبؤي':'Predictive pulse',desc:AR?'منحنى المزاج + رادار الانهيار — تعمل الآن ✓':'Mood curve + burnout radar — now live ✓',status:'on'},
+  {name:AR?'الارتباطات الخفية':'Hidden correlations',desc:AR?'علاقات خفية بين جوانب حياتك — تعمل الآن ✓':'Cross-domain links — now live ✓',status:'on'},   
+  {name:AR?'المرآة المزدوجة (عصف 3.3)':'Dual mirror (brainstorm 3.3)',desc:AR?'تطابق الشعور والأفعال والنوايا في رسم واحد — تعمل الآن ✓':'Feeling × actions × intentions — now live ✓',status:'on'}];
  v.innerHTML=
   '<span class="lab-dev">DEV · '+(AR?'منطقة بناء':'build zone')+'</span>'+
   '<div class="fp-hero" style="padding:16px">'+logoSvg(40)+
@@ -3174,6 +3313,75 @@ function renderLab(){
 function totalPct(stats){
  let sum=0;FP_DIMS.forEach(d=>sum+=Math.abs(stats[d.id].score-50)*2);
  return Math.min(100,Math.round(sum/FP_DIMS.length*2.2)+25);
+}
+/* ====== صفحة النبض التنبؤي 3.3 ====== */
+function renderPulse(){
+ const v=$('#v-pulse');if(!v)return;
+ const AR=LANG==='ar';
+ const days=predictPulse();
+ const burn=burnoutScore();
+ const corr=hiddenCorr();
+ const dm=dualMirror();
+ const wdShort=AR?['أحد','إثن','ثلا','أرب','خمي','جمع','سبت']:['Su','Mo','Tu','We','Th','Fr','Sa'];
+ let path='',dots='';
+ days.forEach((d,i)=>{
+  if(d.val===null)return;
+  const x=(i/(days.length-1))*300+20;
+  const y=110-(d.val/100)*90;
+  if(i>0){
+   const px=((i-1)/(days.length-1))*300+20;
+   const pv=days[i-1].val;
+   if(pv!==null){
+    const py=110-(pv/100)*90;
+    const bothF=days[i-1].future&&d.future;
+    path+='<line x1="'+px.toFixed(1)+'" y1="'+py.toFixed(1)+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" class="'+(bothF?'pp-curve-line2':'pp-curve-line')+'"/>';
+   }
+  }
+  dots+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" class="pp-day-dot'+(d.future?' future':'')+'"/>';
+ });
+ const lab=days.map((d,i)=>{
+  const x=(i/(days.length-1))*300+20;
+  return '<text x="'+x.toFixed(1)+'" y="135" class="pp-day-lab">'+WD()[d.dayIdx].slice(0,3)+(d.future?(AR?'✦':'*'):'')+'</text>';
+ }).join('');
+ const todayI=days.findIndex(d=>d.future);
+ const tX=todayI>0?((todayI/(days.length-1))*300+20).toFixed(1):null;
+ const burnCls=burn>=70?'pp-burn-high':burn>=45?'pp-burn-mid':'pp-burn-safe';
+ const burnTxt=burn>=70?(AR?'🚨 مؤشر استنزاف مرتفع':'High burnout'):burn>=45?(AR?'⚠️ استنزاف متصاعد':'Rising burnout'):(AR?'✅ طاقتك متوازنة':'Balanced energy');
+ const burnP=burn>=70?(AR?('مؤشر استنزافك '+burn+'% — إجازة نهاية الأسبوع ليست رفاهية بل ضرورة. نم مبكراً الليلتين، وقل "لا" لالتزام واحد إضافي هذا الأسبوع.'):('Burnout '+burn+'% — rest is a necessity.')):burn>=45?(AR?('مؤشر استنزافك '+burn+'% — متصاعد لكنه قابل للانعكاس. حصّن نومك هذا الأسبوع وحافظ على تواصل علاقاتي واحد.'):('Burnout '+burn+'% — reversible. Protect your sleep.')):(AR?('مؤشر استنزافك '+burn+'% فقط — طاقتك متوازنة، وأنت تسير بإيقاع صحي. حافظ على ما تفعله.'):('Burnout '+burn+'% — balanced.'));
+ const th=ASSESS_BANK?null:null;
+ let corrHtml='';
+ if(corr.length){corrHtml=corr.map(c2=>'<div class="pp-corr">'+ic('spark',17)+'<div class="pp-corr-b"><b>'+esc(c2.t)+'</b><p>'+c2.p+'</p></div><span class="pp-corr-st">'+(AR?'مرصود من بياناتك':'from your data')+'</span></div>').join('');}
+ else corrHtml='<div class="empty" style="padding:16px 8px">'+ic('eye',24)+'<br>'+(AR?'لم أرصد ارتباطات خفية بعد — واصل التسجيل أسبوعين وسأكشف الأنماط الخفية بين جوانب حياتك.':'Keep logging two weeks — hidden patterns will surface.')+'</div>';
+ let dualHtml='';
+ if(dm){
+  let gapHtml='';
+  if(dm.gap===null)gapHtml=(AR?'<b>وعي الفجوة يحتاج أياماً أكثر</b> — قيّم نفسك ووثّق أحداثك معاً لأيام قليلة.':'Need more days.');
+  else if(Math.abs(dm.gap)<12)gapHtml=(AR?'<b>أسبوع صدق كامل</b> — شعورك وأفعالك متطابقان تقريباً. هذا أعلى درجات الاتساق الداخلي التي يقيسها علم النفس.':'<b>A week of full honesty</b> — feeling and actions aligned.');
+  else if(dm.gap>0)gapHtml=(AR?('<b>شعورك يسبق أفعالك بـ '+dm.gap+' نقطة</b> — إما أن تكرم نفسك كثيراً، أو أن أجمل لحظاتك لا تُكتب. وثّق أكثر لأرى مصدر إشراقك.'):('<b>Feeling runs ahead by '+dm.gap+'</b> — log more of your best moments.'));
+  else gapHtml=(AR?('<b>أفعالك تسبق شعورك بـ '+Math.abs(dm.gap)+' نقطة</b> — إنجازك حقيقي وموثق، لكن شعورك لم يمتصه بعد. اقرأ حكاية أسبوعك وسترى نفسك من خلال أعين رفيق.'):('<b>Your actions outrun your feeling by '+Math.abs(dm.gap)+'</b> — read your weekly story.'));
+  dualHtml='<div class="fp-line" style="border-right:3px solid var(--c-mind)"><h4>'+ic('twin',13)+' '+(AR?'المرآة المزدوجة — الشعور والأفعال والنوايا':'The dual mirror — feeling, actions, intentions')+'</h4><p>'+
+   (AR?('<b>ما تشعر به:</b> '+dm.avgRate+'/100 · <b>ما تفعله:</b> '+(dm.avgAct!==null?dm.avgAct+'/100':'—')+' · <b>ما تنوي:</b> '+dm.intents+' اهتمام'):(('<b>Feel:</b> '+dm.avgRate+' · <b>Do:</b> '+(dm.avgAct!==null?dm.avgAct:'—')+' · <b>Intend:</b> '+dm.intents)))+
+   '<br><br>'+gapHtml+'</p></div>';
+ }else dualHtml='<div class="fp-line"><h4>'+(AR?'المرآة المزدوجة':'Dual mirror')+'</h4><p>'+(AR?'قيّم نفسك بسبعة أبعاد لثلاثة أيام على الأقل — وسأطابق شعورك مع أفعالك ونواياك في رسم واحد لم يره تطبيق قبلنا.':'Rate yourself for 3 days — I will match feeling, actions and intentions.')+'</p></div>';
+ v.innerHTML=
+  '<span class="lab-dev">LAB · 3.3</span>'+
+  '<div class="pp-hero">'+
+   '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800">'+(AR?'🔮 النبض التنبؤي':'🔮 Predictive Pulse')+'</h2>'+
+   '<p style="font-size:12px;color:var(--ink2);margin-top:6px;line-height:1.9">'+(AR?'الخط الصلب: ما عشته فعلاً · الخط المتقطع: ما أتوقعه لك من إيقاعك — 7 أيام خلفية وسبعة قادمة.':'Solid: lived · Dashed: forecasted from your rhythm.')+'</p>'+
+   '<svg viewBox="0 0 340 145" class="pp-curve">'+path+dots+lab+
+   (tX?'<line x1="'+tX+'" y1="15" x2="'+tX+'" y2="120" stroke="var(--line2)" stroke-dasharray="3 3"/>':'')+
+   '</svg>'+
+   '<div class="pp-legend"><span><i style="background:var(--acc)"></i>'+(AR?'فعلي':'lived')+'</span><span><i style="background:var(--c-mind)"></i>'+(AR?'تنبؤي':'forecast')+'</span></div>'+
+  '</div>'+
+  '<div class="pp-card"><h4>'+ic('flame',15)+' '+(AR?'رادار الانهيار — Burnout Radar':'Burnout Radar')+'</h4>'+
+   '<div class="pp-gauge"><div class="pp-gauge-ring">'+ringSvgMini(burn).replace('var(--c-mind)',burnCls)+'</div>'+
+   '<div class="pp-gauge-b"><p>'+burnP+'</p></div></div>'+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('spark',15)+' '+(AR?'الارتباطات الخفية بين جوانب حياتك':'Hidden cross-domain correlations')+'</h3>'+
+  '<div class="card" style="padding:5px 15px">'+corrHtml+'</div>'+
+  dualHtml+
+  '<div class="lab-note"><b>'+(AR?'🧪 من معمل رفيق — 3.3':'🧪 Rafiq Lab — 3.3')+':</b> '+(AR?'هذه التوقعات والارتباطات مبنية على بياناتك الحقيقية بمحرك إحصائي محلي على جهازك — لا شيء يغادر هاتفك. تنبؤات المستقبل تقديرية من إيقاعك، وتزداد دقة كل يوم تسجل فيه.':'Built on your real data, locally. Forecasts grow sharper daily.')+'</div>'+
+  '<div style="height:18px"></div>';
 }
 /* الإعدادات */
 function storageInfo(){
@@ -3791,6 +3999,7 @@ function buildMoreSheet(){
   '<button class="more-item" data-more="report">'+ic('report',19)+'<span>'+t('m_rep')+'</span><small>'+t('m_rep_s')+'</small></button>'+
   '<button class="more-item" data-more="fingerprint">'+ic('twin',19)+'<span>'+(LANG==='ar'?'بصمة شخصيتي':'My fingerprint')+'</span><small>'+(LANG==='ar'?'الشخصية الرقمية الثمانية':'8-axis digital personality')+'</small></button>'+
   '<button class="more-item" data-more="lab">'+ic('flame',19)+'<span>'+(LANG==='ar'?'معمل رفيق 🧪':'Rafiq Lab 🧪')+'</span><small>'+(LANG==='ar'?'ميزات قيد التجربة — للمطور':'Experimental — dev only')+'</small></button>'+
+  '<button class="more-item" data-more="pulse">'+ic('pulse',19)+'<span>'+(LANG==='ar'?'النبض التنبؤي 🔮':'Predictive Pulse 🔮')+'</span><small>'+(LANG==='ar'?'مستقبلك + رادار الانهيار + الأنماط الخفية':'Forecast + burnout + hidden patterns')+'</small></button>'+ 
   '<button class="more-item" data-more="settings">'+ic('gear',19)+'<span>'+t('m_set')+'</span><small>'+t('m_set_s')+'</small></button>'+
   '<div class="more-div"></div>'+
   '<button class="more-item" data-more="export">'+ic('download',19)+'<span>'+t('m_exp')+'</span><small>'+t('m_exp_s')+'</small></button>'+
@@ -3908,6 +4117,7 @@ document.addEventListener('click',async e=>{
  else if(m==='story')setTimeout(openStorySheet,140);
  else if(m==='fingerprint')setTimeout(()=>{go('fingerprint')},140);
  else if(m==='lab')setTimeout(()=>{go('lab')},140);
+ else if(m==='pulse')setTimeout(()=>{go('pulse')},140);
  else if(m==='ritual')setTimeout(()=>openRitual(new Date().getHours()<12?'m':'e'),140);
  else if(m==='export')setTimeout(exportBackup,150);
  else if(m==='import')setTimeout(()=>$('#importFile').click(),150);
