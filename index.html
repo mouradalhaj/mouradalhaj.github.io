@@ -1958,7 +1958,7 @@ function memAnswer(query){
  if(hits.length===1){
   out=(AR?('في '+fmtDate(target.ts)+' سجلتَ: «'+hits[0].text+'» — '+cn(hits[0].category)):(hits[0].text+' on '+fmtDate(target.ts)+' — '+cn(hits[0].category)));
  }else{
-  out=(AR?('وجدتُ '+hits.length+' ذكريات مرتبطة — أهمها:'):(I found '+hits.length+' memories:'))+'\n';
+  out=(AR?('وجدتُ '+hits.length+' ذكريات مرتبطة — أهمها:'):('I found '+hits.length+' related memories:'))+'\n';
   hits.slice(0,4).forEach((e,i)=>out+=(i+1)+'. '+e.text+' — '+(AR?'قبل ':'')+daysSince(e.ts)+' '+pd(daysSince(e.ts))+' · '+cn(e.category)+'\n');
  }
  const moodNear=S.events.filter(e=>e.type==='mood'&&Math.abs(dayStart(e.ts)-dayStart(target.ts))<3*DAY);
