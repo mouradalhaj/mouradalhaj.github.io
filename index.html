@@ -1754,7 +1754,7 @@ const ASSESS_BANK={
   {ar:'شعرت بالسيطرة على الأمور المهمة',en:'Felt in control of important things'},
   {ar:'شعرت بالتوتر والضغط',en:'Felt nervous and stressed'},
   {ar:'شعرت بالثقة في قدرتك على حل مشكلاتك الشخصية',en:'Felt confident in solving personal problems'}]}};
-const ASSESS_SCALE={ar:['أبداً','يوم واحد','أيام عدة','أكثر من نصف الأيام','تقريباً كل يوم'],en:['Not at all','Several days','More than half','Nearly every day','Almost always']};
+const ASSESS_SCALE={ar:['أبداً','نادراً','أحياناً','غالباً','دائماً'],en:['Never','Rarely','Sometimes','Often','Always']};
 const ASSESS_CUTS=[
  {max:4,ar:'مؤشر طبيعي',en:'Normal range',col:'#84C88E',
   act_ar:'أنت في نطاق آمن — واصل الاهتمام بنفسك بنفس الاهتمام اليومي.',act_en:'Safe range — keep caring for yourself daily.'},
@@ -1921,6 +1921,50 @@ function twinData(){
  return {compl:compl,energy:energy,energyN:posBy[energy],stress:stress,stressN:negBy[stress],when:when,idPlain:idPlain,dist:dist,avgH:avgH,wdPos:wdPos,bestWd:bestWd,streak:streak,topW:topW,rec:rec,proj:proj,projD:projD};
 }
 
+/* memSearch — محرك ذاكرة رفيق: يقرأ أحداثك فيجيب من سجلاتك 3.2 */
+function memSearch(query){
+ const s=query.trim();
+ const AR=LANG==='ar';
+ const now=new Date();
+ let days=[];
+ const dm=s.match(/(\d+)\s*(يوم|days?)/);
+ const dayNames=[['اليوم','today',0],['أمس','yesterday',1],['اول امس','today-2',2]];
+ let target=null;
+ if(/اليوم|today/i.test(s))target=dayStart(Date.now());
+ else if(/أمس|امس|البارحة|yesterday/i.test(s))target=dayStart(Date.now()-DAY);
+ else if(dm){const n2=parseInt(dm[1]);target=dayStart(Date.now()-n2*DAY)}
+ else{for(const[w,en,off]of dayNames){if(s.indexOf(w)>=0||s.toLowerCase().indexOf(en)>=0){target=dayStart(Date.now()-off*DAY);break}}}
+ if(target){const ds=dayStart(target);
+  return S.events.filter(e=>dayStart(e.ts)===ds).sort((a,b)=>a.ts-b.ts);}
+ const kw=classify(s)||null;
+ const posW=POS.filter(w=>s.indexOf(w)>=0).length;
+ const negW=NEG.filter(w=>s.indexOf(w)>=0).length;
+ let hits=S.events.filter(e=>{
+  if(e.type==='promise'||e.type==='interest')return false;
+  if(kw&&e.category!==kw)return false;
+  if(e.text&&s.split(' ').some(w=>w.length>3&&e.text.indexOf(w)>=0))return true;
+  return false;
+ }).sort((a,b)=>b.ts-a.ts).slice(0,6);
+ if(!hits.length&&posW>0)hits=S.events.filter(e=>e.polarity>0).sort((a,b)=>b.ts-a.ts).slice(0,5);
+ if(!hits.length&&negW>0)hits=S.events.filter(e=>e.polarity<0).sort((a,b)=>b.ts-a.ts).slice(0,5);
+ return hits;
+}
+function memAnswer(query){
+ const hits=memSearch(query);
+ const AR=LANG==='ar';
+ if(!hits.length)return null;
+ const target=hits[0];
+ let out='';
+ if(hits.length===1){
+  out=(AR?('في '+fmtDate(target.ts)+' سجلتَ: «'+hits[0].text+'» — '+cn(hits[0].category)):(hits[0].text+' on '+fmtDate(target.ts)+' — '+cn(hits[0].category)));
+ }else{
+  out=(AR?('وجدتُ '+hits.length+' ذكريات مرتبطة — أهمها:'):(I found '+hits.length+' memories:'))+'\n';
+  hits.slice(0,4).forEach((e,i)=>out+=(i+1)+'. '+e.text+' — '+(AR?'قبل ':'')+daysSince(e.ts)+' '+pd(daysSince(e.ts))+' · '+cn(e.category)+'\n');
+ }
+ const moodNear=S.events.filter(e=>e.type==='mood'&&Math.abs(dayStart(e.ts)-dayStart(target.ts))<3*DAY);
+ if(moodNear.length)out+='\n'+(AR?('مزاجك في تلك الفترة: '+mw(moodNear[0].mood)):('Your mood then: '+mw(moodNear[0].mood)));
+ return out;
+}
 function lifeLine(){const d=S.delta,AR=LANG==='ar';
  return (AR?'مؤشر حياتك الآن ':'Your life score is now ')+S.life+'/100 '+(d>0?(AR?'وصاعد بـ'+d+' نقاط':'and up '+d):d<0?(AR?'ونازل بـ'+Math.abs(d)+' نقطة':'and down '+Math.abs(d)):(AR?'ومستقر':'and steady'));}
 function rafiqReply(tx){
@@ -1936,7 +1980,17 @@ function rafiqReply(tx){
   else if(gi.kind==='dn')out+='\n'+t('gap_dn');
   const acc=interestAccuracy();
   if(acc!==null)out+='\n• '+(AR?'دقة فهمي لك: ':'My understanding: ')+acc+'%';
+  const lastAss=S.events.filter(e=>e.type==='assessment').sort((a,b)=>b.ts-a.ts)[0];
+  if(lastAss){
+   const aName=ASSESS_BANK[lastAss.assess]?ASSESS_BANK[lastAss.assess][LANG]:lastAss.assess;
+   out+='\n• '+(AR?'آخر تقييم نفسي: ':'Last assessment: ')+aName+' — '+lastAss.score+' '+(AR?'من':'of')+' '+(ASSESS_BANK[lastAss.assess]?ASSESS_BANK[lastAss.assess].qs.length*4:27)+' · '+timeAgo(lastAss.ts);
+  }
   return {text:out};
+ }
+ if(has(/وش سويت|وش فعلت|ماذا فعلت|ماذا سجلت|يومياتي|سجلات|أحداث|حدث|أمس|البارحة|قبل يوم|قبل يومين|قبل أسبوع|yesterday|what did i (do|log)|my day|remember|تذكر/i)){
+  const mem=memAnswer(s);
+  if(mem)return {text:mem};
+  return {text:(AR?'لا شيء موثق في الفترة التي سألت عنها بعد — سجّل لحظتك وأسرد لك تاريخها متى سألت.':'Nothing documented for that period yet — log it and I will narrate it later.')};
  }
  if(has(/أفكر|انوي|أنوي|قرار|شراء|اشتري|استثمر|وظيفة|مشروع|decision|job offer/i)){
   let subj=s.replace(/.*(أفكر في|أفكر بـ|أفكر ب|انوي|أنوي|قرار|بشراء|شراء|اشتري)/,'').replace(/[؟?.!]/g,'').trim()||(AR?'قرار جديد':'A new decision');
@@ -1966,9 +2020,9 @@ function rafiqReply(tx){
  }
  if(has(/شكرا|شكرًا|مشكور|تسلم|thank/i))return {text:AR?'على أتم الاستعداد دائماً.':'Always ready.'};
  if(has(/من أنت|من انت|who are you|help/i))
-  return {text:AR?'أنا رفيق — مرآتك الذكية:\n• أقيس رفاهك بسبعة أبعاد علمية (سعادتك، غضبك، قلقك، طاقتك، ساعدتَ؟، رضاك، صفاء عقلك).\n• أتوقع اهتماماتك ويتعلم فهمي لك كل يوم.\n• أفتح لك خزان سعادتك في أيامك الثقيلة.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your smart mirror:\n• 7 science dims: joy, anger, anxiety, energy, helped?, satisfaction, clarity.\n• I predict your interests and learn daily.\n• I open your joy reservoir on heavy days.\nAll on your device — your data is yours.'};
- const fb=AR?['أسمعك. هل قيّمت يومك النفسي اليوم؟ سبعة أبعاد، دقيقة واحدة.','جرّبني: «كيف حالي؟» أو «اقترح لي كتاباً» أو «حكاية أسبوعي».','أتذكر كل شيء. وعندما يثقل يومك، افتح خزان سعادتك — سأكون هناك.']
- :['I hear you. Have you rated your psych day?','Try me: “How am I?” or “suggest a book”.','I remember everything. On heavy days, open your joy reservoir.'];
+  return {text:AR?'أنا رفيق — مرآتك الذكية:\n• أقيس رفاهك بسبعة أبعاد علمية (سعادتك، غضبك، قلقك، طاقتك، ساعدتَ؟، رضاك، صفاء عقلك).\n• أتوقع اهتماماتك ويتعلم فهمي لك كل يوم.\n• أقرأ ذاكرتك — اسألني: «وش سويت قبل يومين؟»\n• أفتح لك خزان سعادتك في أيامك الثقيلة.\nكل ذلك على جهازك — بياناتك ملكك وحدك.':'I am Rafiq — your smart mirror:\n• 7 science dims.\n• I predict your interests and learn daily.\n• I read your memory — ask: “What did I do 2 days ago?”\n• I open your joy reservoir on heavy days.\nAll on your device.'};
+ const fb=AR?['أسمعك. هل قيّمت يومك النفسي اليوم؟ سبعة أبعاد، دقيقة واحدة.','جرّبني: «كيف حالي؟» أو «وش سويت قبل يومين؟» أو «حكاية أسبوعي».','أتذكر كل شيء. وعندما يثقل يومك، افتح خزان سعادتك — سأكون هناك.']
+ :['I hear you. Have you rated your psych day?','Try me: “How am I?” or “What did I do 2 days ago?” or “my weekly story”.','I remember everything. On heavy days, open your joy reservoir.'];
  return {text:fb[Math.floor(Math.random()*fb.length)]};
 }
 
@@ -2737,6 +2791,7 @@ function renderChat(){
   '<div id="chatList"></div>'+
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
   '<button class="assess-entry" data-act="openAssess">'+ic('star',16)+' '+(LANG==='ar'?'قيّم نفسك أو شخصاً تحب 🧠':'Rate yourself or someone 🧠')+'</button>'+
+  '<button class="assess-entry" data-act="wipeChat" style="border-color:var(--line);color:var(--ink2)">'+ic('trash',14)+' '+(LANG==='ar'?'مسح الدردشات':'Clear chats')+'</button>'+
   '<div class="composer"><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
  const list=$('#chatList');if(!list)return;
  if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً».'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions.\nTry: “my weekly story” or “suggest a book”.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
@@ -3555,6 +3610,15 @@ function openAssessFlow(code){
  const a=ASSESS_BANK[code];
  const el=$('#modal');if(!el)return;
  const AR=LANG==='ar';
+ function openAssessDisclaimer(code){
+ const a=ASSESS_BANK[code];
+ const el=$('#modal');if(!el)return;
+ const AR=LANG==='ar';
+ el.innerHTML='<div class="md-box"><b>'+(AR?('@/ مهم — قبل أن نبدأ':'@ Important — before we start'))+'</b><p style="color:var(--ink2);font-weight:500">'+(AR?'هذه الاختبارات أداة للتثقيف الذاتي وليست تشخيصية أو علاجية، ولا تحل محل استشارة الطبيب أو المختص النفسي.':'These assessments are self-education tools — not diagnostic or therapeutic, and do not replace professional consultation.')+'</p><button class="btn" id="asDisGo">'+(AR?'فهمت — لنبدأ':'I understand — start')+'</button><button class="btn ghost" id="asDisNo" style="margin-top:8px">'+t('cancel')+'</button></div>';
+ el.classList.add('show');
+ $('#asDisGo').onclick=()=>{el.classList.remove('show');openAssessFlow(code)};
+ $('#asDisNo').onclick=()=>el.classList.remove('show');
+}
  el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
   '<div class="chips" style="flex-direction:column;align-items:stretch">'+
   '<button class="chip" data-for="self" style="text-align:center">'+(AR?'💪 لنفسك':'For myself')+'</button>'+
@@ -3575,7 +3639,7 @@ function openAssessFlow(code){
    asState.otherName=nm;
   }
   el.classList.remove('show');
-  renderAssessQ();
+  openAssessDisclaimer(asState.code);
  };
  $('#asForClose').onclick=()=>el.classList.remove('show');
 }
@@ -3622,6 +3686,14 @@ async function finishAssessment(){
    '<div class="assess-score" style="color:'+cut.col+'">'+score+'</div>'+
    '<div class="assess-class" style="color:'+cut.col+'">'+(AR?cut.ar:cut.en)+'</div>'+
    '<div class="assess-sub">'+(AR?'من أصل 27 (أو 36 لـ Buss-Perry) — مقياس '+a.src:'out of max — scale '+a.src)+'</div>'+
+   '<div style="margin-top:12px;text-align:right;background:var(--card2);border-radius:12px;padding:10px 12px">'+
+   (AR?'<div style="font-size:10.5px;color:var(--ink3);margin-bottom:6px">سلّم الدرجات المعتمد لهذا المقياس — موقعك مميز بسهم:</div>':'<div style="font-size:10.5px;color:var(--ink3);margin-bottom:6px">Validated score ranges — your position marked:</div>')+
+   [4,9,14,99].map((mx,ri)=>{
+    const lo=ri===0?0:ASSESS_CUTS[ri-1].max+1;
+    const hit=score<=mx&&(ri===0?score<=4:score>ASSESS_CUTS[ri-1].max&&score<=mx);
+    const arrow=hit?' ◄':'';
+    return '<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 4px;border-radius:7px;background:'+(hit?'var(--acc-soft)':'transparent')+';font-weight:'+(hit?'700':'400')+';color:'+(hit?cut.col:'var(--ink2)')+'"><span>'+(AR?ASSESS_CUTS[ri].ar:ASSESS_CUTS[ri].en)+'</span><span dir="ltr">'+lo+'–'+(mx===99?(a.qs.length*4):mx)+arrow+'</span></div>';
+   }).join('')+'</div>'+
    '<div class="assess-act"><b>'+(AR?'توصية رفيق':'Rafiq recommendation')+'</b><br>'+(AR?cut.act_ar:cut.act_en)+'</div>'+
    '<div class="assess-care">'+(AR?'⚕️ رفيق أداة وعي ذاتي وليست بديلاً عن الاستشارة النفسية المتخصصة. عند استمرار المؤشرات المرتفعة، استشارة مختص أقوى قرار.':'⚕️ Rafiq is a self-awareness tool, not a substitute for professional care.')+'</div>'+
   '</div>'+
@@ -3741,6 +3813,7 @@ window.__rfStage='ربط الأفعال';
  }
  else if(act==='openRate')openRateFlow();
  else if(act==='openAssess')openAssessPick();
+ else if(act==='wipeChat')askConfirm(LANG==='ar'?'مسح كل الدردشات؟':'Clear all chats?',LANG==='ar'?'ستُمحى كل رسائل المحادثة نهائياً — بياناتك وأحداثك لا تُلمس.':'All chat messages will be erased — your events and data are untouched.',LANG==='ar'?'مسح':'Clear',async()=>{await DB.clear('chat');S.chat=[];go('chat');toast(LANG==='ar'?'مُسحت الدردشات':'Chats cleared','var(--ink2)','trash')});
  else if(act==='toggleIn')toggleInterest(id);
  else if(act==='addInt'){
   const tx=window.prompt(LANG==='ar'?'أدخل اهتماماتك التي ترغب في إجازتها — وسأتابعها معك حتى تتحقق:':'Enter the interests you want to commit to:');
