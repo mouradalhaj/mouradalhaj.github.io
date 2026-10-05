@@ -3619,35 +3619,11 @@ function openAssessFlow(code){
  const a=ASSESS_BANK[code];
  const el=$('#modal');if(!el)return;
  const AR=LANG==='ar';
- el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
+ el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this for?')+'</p>'+
   '<div class="chips" style="flex-direction:column;align-items:stretch">'+
-  '<button class="chip" data-for="self" style="text-align:center">'+(AR?'💪 لنفسك':'For myself')+'</button>'+
-  '<button class="chip" data-for="other" style="text-align:center">'+(AR?'👤 لشخص آخر أهتم به':'For someone I care about')+'</button>'+
-  '</div><div id="asOtherWrap" style="display:none;margin-top:10px"><input id="asOtherName" maxlength="20" placeholder="'+(AR?'اسم الشخص (أبي، أخي، زميلي…)':'Name (dad, brother, colleague…)')+'"></div>'+
-  '<button class="btn" id="asForGo" style="margin-top:14px">'+t('next')+'</button>'+
-  '<button class="btn ghost" id="asForClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
- el.classList.add('show');
- $$('#modal [data-for]').forEach(b=>b.onclick=()=>{
-  asState.subject=b.dataset.for;
-  $$('#modal [data-for]').forEach(x=>x.classList.toggle('on',x===b));
-  const w=$('#asOtherWrap');if(w)w.style.display=asState.subject==='other'?'block':'none';
- });
- $('#asForGo').onclick=()=>{
-  if(asState.subject==='other'){
-   const nm=$('#asOtherName')?$('#asOtherName').value.trim():'';
-   if(!nm){toast(AR?'اكتب اسم الشخص':'Write the name','var(--acc)','edit');return}
-   asState.otherName=nm;
-  }
-  el.classList.remove('show');
-  openAssessDisclaimer(asState.code);
- };
- $('#asForClose').onclick=()=>el.classList.remove('show');
-}
- el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
-  '<div class="chips" style="flex-direction:column;align-items:stretch">'+
-  '<button class="chip" data-for="self" style="text-align:center">'+(AR?'💪 لنفسك':'For myself')+'</button>'+
-  '<button class="chip" data-for="other" style="text-align:center">'+(AR?'👤 لشخص آخر أهتم به':'For someone I care about')+'</button>'+
-  '</div><div id="asOtherWrap" style="display:none;margin-top:10px"><input id="asOtherName" maxlength="20" placeholder="'+(AR?'اسم الشخص (أبي، أخي، زميلي…)':'Name (dad, brother, colleague…)')+'"></div>'+
+  '<button class="chip" data-for="self" style="text-align:center">'+(AR?'لنفسك':'For myself')+'</button>'+
+  '<button class="chip" data-for="other" style="text-align:center">'+(AR?'لشخص آخر أهتم به':'For someone I care about')+'</button>'+
+  '</div><div id="asOtherWrap" style="display:none;margin-top:10px"><input id="asOtherName" maxlength="20" placeholder="'+(AR?'اسم الشخص…':'Name…')+'"></div>'+
   '<button class="btn" id="asForGo" style="margin-top:14px">'+t('next')+'</button>'+
   '<button class="btn ghost" id="asForClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
  el.classList.add('show');
@@ -3676,10 +3652,10 @@ function renderAssessQ(){
  const lvls=ASSESS_SCALE[AR?'ar':'en'];
  el.innerHTML='<div class="rt-mid">'+
   '<h1 class="rt-t" style="font-size:18px">'+(AR?a.ar:a.en)+'</h1>'+
-  '<p class="rt-s">'+(asState.subject==='self'?(AR?'لنفسك':'For yourself'):(AR?'لـ '+esc(asState.otherName||'شخص عزيز'):'For '+esc(asState.otherName||'someone')))+' · '+(i+1)+' / '+a.qs.length+'</p>'+
+  '<p class="rt-s">'+(asState.subject==='self'?(AR?'لنفسك':'For yourself'):(AR?'لـ '+esc(asState.otherName||''):'For '+esc(asState.otherName||'')))+' · '+(i+1)+' / '+a.qs.length+'</p>'+
   '<div class="assess-prog"><i style="width:'+Math.round((i)/a.qs.length*100)+'%"></i></div>'+
   '<div class="assess-qcard" style="margin-top:22px">'+
-   '<div class="assess-qnum">'+(AR?'السؤال':'Question')+' '+(i+1)+' '+t('of100').replace('من','/')+'</div>'+
+   '<div class="assess-qnum">'+(AR?'السؤال':'Question')+' '+(i+1)+'</div>'+
    '<div class="assess-qtext">'+(AR?q.ar:q.en)+'</div>'+
    '<div class="assess-scale">'+[5,4,3,2,1].map(m=>'<button class="assess-opt" data-aval="'+m+'">'+lvls[m-1]+'</button>').join('')+'</div>'+
   '</div>'+
@@ -3692,7 +3668,8 @@ function renderAssessQ(){
   if(asState.idx<a.qs.length)renderAssessQ();
   else finishAssessment();
  });
- $('#asQuit').onclick=()=>{el.hidden=true;asState=null};
+ const q2=$('#asQuit');
+ if(q2)q2.onclick=()=>{el.hidden=true;asState=null};
 }
 async function finishAssessment(){
  const a=ASSESS_BANK[asState.code];
@@ -3704,38 +3681,37 @@ async function finishAssessment(){
  await DB.put('events',ev);S.events.push(ev);
  const el=$('#ritual');if(!el)return;
  el.innerHTML='<div class="rt-mid">'+
-  '<h1 class="rt-t">'+(AR?'نتيجتك — ':'Your result — ')+(AR?a.ar:a.en)+'</h1>'+
-  '<p class="rt-s">'+(asState.subject==='self'?(AR?'هذا مؤشر من إجاباتك الصادقة — وأنا معك في كل خطوة تالية':'This is your indicator — I am with you in every next step'):(AR?'مؤشر لـ '+esc(subject)+' — احتفظ به وراقب تطوره مع الوقت':'An indicator for '+esc(subject)+' — track it over time'))+'</p>'+
+  '<h1 class="rt-t" style="font-size:20px">'+(AR?a.ar:a.en)+'</h1>'+
+  '<p class="rt-s">'+(asState.subject==='self'?(AR?'هذا مؤشر من إجاباتك الصادقة':'Your honest indicator'):(AR?'مؤشر لـ '+esc(subject):'Indicator for '+esc(subject)))+'</p>'+
   '<div class="assess-result">'+
    '<div class="assess-score" style="color:'+cut.col+'">'+score+'</div>'+
    '<div class="assess-class" style="color:'+cut.col+'">'+(AR?cut.ar:cut.en)+'</div>'+
-   '<div class="assess-sub">'+(AR?'من أصل 27 (أو 36 لـ Buss-Perry) — مقياس '+a.src:'out of max — scale '+a.src)+'</div>'+
    '<div style="margin-top:12px;text-align:right;background:var(--card2);border-radius:12px;padding:10px 12px">'+
-   (AR?'<div style="font-size:10.5px;color:var(--ink3);margin-bottom:6px">سلّم الدرجات المعتمد لهذا المقياس — موقعك مميز بسهم:</div>':'<div style="font-size:10.5px;color:var(--ink3);margin-bottom:6px">Validated score ranges — your position marked:</div>')+
-   [4,9,14,99].map((mx,ri)=>{
-    const lo=ri===0?0:ASSESS_CUTS[ri-1].max+1;
-    const hit=score<=mx&&(ri===0?score<=4:score>ASSESS_CUTS[ri-1].max&&score<=mx);
-    const arrow=hit?' ◄':'';
-    return '<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 4px;border-radius:7px;background:'+(hit?'var(--acc-soft)':'transparent')+';font-weight:'+(hit?'700':'400')+';color:'+(hit?cut.col:'var(--ink2)')+'"><span>'+(AR?ASSESS_CUTS[ri].ar:ASSESS_CUTS[ri].en)+'</span><span dir="ltr">'+lo+'–'+(mx===99?(a.qs.length*4):mx)+arrow+'</span></div>';
+   (AR?'<div style="font-size:10.5px;color:var(--ink3);margin-bottom:6px">سلّم الدرجات المعتمد — موقعك بسهم:</div>':'<div style="font-size:10.5px;color:var(--ink3)">Validated ranges — your position:</div>')+
+   [[0,4],[5,9],[10,14],[15,a.qs.length*4]].map(function(rg,ri){
+    const hit=score>=rg[0]&&score<=rg[1];
+    const cc=ASSESS_CUTS[ri];
+    return '<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 4px;border-radius:7px;background:'+(hit?'var(--acc-soft)':'transparent')+';font-weight:'+(hit?'700':'400')+';color:'+(hit?cc.col:'var(--ink2)')+'"><span>'+(AR?cc.ar:cc.en)+(hit?' ◄':'')+'</span><span dir="ltr">'+rg[0]+'–'+rg[1]+'</span></div>';
    }).join('')+'</div>'+
-   '<div class="assess-act"><b>'+(AR?'توصية رفيق':'Rafiq recommendation')+'</b><br>'+(AR?cut.act_ar:cut.act_en)+'</div>'+
+   '<div class="assess-act"><b>'+(AR?'توصية رفيق':'Recommendation')+'</b><br>'+(AR?cut.act_ar:cut.act_en)+'</div>'+
    '<div class="assess-care">'+(AR?'⚕️ رفيق أداة وعي ذاتي وليست بديلاً عن الاستشارة النفسية المتخصصة. عند استمرار المؤشرات المرتفعة، استشارة مختص أقوى قرار.':'⚕️ Rafiq is a self-awareness tool, not a substitute for professional care.')+'</div>'+
   '</div>'+
   '<button class="rt-btn" id="asShare">'+ic('wa',17)+' '+(AR?'احفظها في محادثتنا':'Save to our chat')+'</button>'+
   '<div class="rt-links"><button id="asDone">'+t('done')+'</button></div>'+
   '</div>';
  el.hidden=false;el.scrollTop=0;
- $('#asShare').onclick=async()=>{
+ const sh=$('#asShare');
+ if(sh)sh.onclick=async()=>{
   el.hidden=true;
-  const AR2=LANG==='ar';
-  const o={id:uid(),role:'rf',ts:Date.now(),text:(AR2?('🧠 نتيجة '+a.ar+' — '+(subject==='نفسك'||subject==='yourself'?'لنفسك':'لـ '+subject)+':'):(AR2?'🧠 '+a.en+' result:':'Result:'))+'\n'+score+'/max — '+(AR2?cut.ar:cut.en)+'\n\n'+(AR2?cut.act_ar:cut.act_en)};
+  const o={id:uid(),role:'rf',ts:Date.now(),text:(AR?('🧠 نتيجة '+a.ar+' — '+(asState.subject==='self'?'لنفسك':'لـ '+subject)+':'):(AR?'🧠 '+a.en+' result:':'Result:'))+'\n'+score+' — '+(AR?cut.ar:cut.en)+'\n\n'+(AR?cut.act_ar:cut.act_en)};
   await DB.put('chat',o);S.chat.push(o);
-  toast(AR2?'حُفظت النتيجة في محادثتنا':'Saved to our chat','var(--good)','star');
+  toast(AR?'حُفظت النتيجة في محادثتنا':'Saved to our chat','var(--good)','star');
   refresh();
  };
- $('#asDone').onclick=()=>{el.hidden=true;refresh()};
+ const dn=$('#asDone');
+ if(dn)dn.onclick=()=>{el.hidden=true;refresh()};
 }
-/* الحكايات */
+ /* الحكايات */
 function openStorySheet(){
  const sh=$('#shStory');if(!sh)return;
  drawStory();
