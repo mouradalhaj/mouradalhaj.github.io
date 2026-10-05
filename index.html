@@ -3605,19 +3605,43 @@ function openAssessPick(){
  $$('#modal [data-aspick]').forEach(b=>b.onclick=()=>{el.classList.remove('show');openAssessFlow(b.dataset.aspick)});
  $('#asPickClose').onclick=()=>el.classList.remove('show');
 }
+function openAssessDisclaimer(code){
+ const a=ASSESS_BANK[code];
+ const el=$('#modal');if(!el)return;
+ const AR=LANG==='ar';
+ el.innerHTML='<div class="md-box"><b>'+(AR?'مهم — قبل أن نبدأ':'Important — before we start')+'</b><p style="color:var(--ink2);font-weight:500">'+(AR?'هذه الاختبارات أداة للتثقيف الذاتي وليست تشخيصية أو علاجية، ولا تحل محل استشارة الطبيب أو المختص النفسي.':'These assessments are self-education tools — not diagnostic or therapeutic, and do not replace professional consultation.')+'</p><button class="btn" id="asDisGo">'+(AR?'فهمت — لنبدأ':'I understand — start')+'</button><button class="btn ghost" id="asDisNo" style="margin-top:8px">'+t('cancel')+'</button></div>';
+ el.classList.add('show');
+ $('#asDisGo').onclick=()=>{el.classList.remove('show');openAssessFlow(code)};
+ $('#asDisNo').onclick=()=>el.classList.remove('show');
+}
 function openAssessFlow(code){
  asState={code:code,subject:'self',answers:[],idx:0};
  const a=ASSESS_BANK[code];
  const el=$('#modal');if(!el)return;
  const AR=LANG==='ar';
- function openAssessDisclaimer(code){
- const a=ASSESS_BANK[code];
- const el=$('#modal');if(!el)return;
- const AR=LANG==='ar';
- el.innerHTML='<div class="md-box"><b>'+(AR?('@/ مهم — قبل أن نبدأ':'@ Important — before we start'))+'</b><p style="color:var(--ink2);font-weight:500">'+(AR?'هذه الاختبارات أداة للتثقيف الذاتي وليست تشخيصية أو علاجية، ولا تحل محل استشارة الطبيب أو المختص النفسي.':'These assessments are self-education tools — not diagnostic or therapeutic, and do not replace professional consultation.')+'</p><button class="btn" id="asDisGo">'+(AR?'فهمت — لنبدأ':'I understand — start')+'</button><button class="btn ghost" id="asDisNo" style="margin-top:8px">'+t('cancel')+'</button></div>';
+ el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
+  '<div class="chips" style="flex-direction:column;align-items:stretch">'+
+  '<button class="chip" data-for="self" style="text-align:center">'+(AR?'💪 لنفسك':'For myself')+'</button>'+
+  '<button class="chip" data-for="other" style="text-align:center">'+(AR?'👤 لشخص آخر أهتم به':'For someone I care about')+'</button>'+
+  '</div><div id="asOtherWrap" style="display:none;margin-top:10px"><input id="asOtherName" maxlength="20" placeholder="'+(AR?'اسم الشخص (أبي، أخي، زميلي…)':'Name (dad, brother, colleague…)')+'"></div>'+
+  '<button class="btn" id="asForGo" style="margin-top:14px">'+t('next')+'</button>'+
+  '<button class="btn ghost" id="asForClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
  el.classList.add('show');
- $('#asDisGo').onclick=()=>{el.classList.remove('show');openAssessFlow(code)};
- $('#asDisNo').onclick=()=>el.classList.remove('show');
+ $$('#modal [data-for]').forEach(b=>b.onclick=()=>{
+  asState.subject=b.dataset.for;
+  $$('#modal [data-for]').forEach(x=>x.classList.toggle('on',x===b));
+  const w=$('#asOtherWrap');if(w)w.style.display=asState.subject==='other'?'block':'none';
+ });
+ $('#asForGo').onclick=()=>{
+  if(asState.subject==='other'){
+   const nm=$('#asOtherName')?$('#asOtherName').value.trim():'';
+   if(!nm){toast(AR?'اكتب اسم الشخص':'Write the name','var(--acc)','edit');return}
+   asState.otherName=nm;
+  }
+  el.classList.remove('show');
+  openAssessDisclaimer(asState.code);
+ };
+ $('#asForClose').onclick=()=>el.classList.remove('show');
 }
  el.innerHTML='<div class="md-box"><b>'+(AR?a.ar:a.en)+'</b><p>'+(AR?'هذا التقييم لمن؟':'Who is this assessment for?')+'</p>'+
   '<div class="chips" style="flex-direction:column;align-items:stretch">'+
