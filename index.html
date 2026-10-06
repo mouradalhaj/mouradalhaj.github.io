@@ -3167,7 +3167,8 @@ function hiddenCorr(){
  });
  if(moodAfter.length>=2){const avg=moodAfter.reduce((a,b)=>a+b,0)/moodAfter.length;
   if(avg>=4)out.push({t:AR?'الأعمال الإنسانية ↔ سعادتك':'Human deeds ↔ joy',
-   p:AR?('بعد أعمالك الإنسانية، مزاجك في اليومين التاليين بلغ '+Math.round(avg*100/6)+'% — العطاء ليس لغيرك، إنه أعظم استثمار في مزاجك.'):('After your human deeds, your mood reached '+Math.round(avg*100/6)+'%.')});
+   p:AR?('بعد أعمالك الإنسانية، مزاجك في اليومين التاليين بلغ '+Math.round(avg*100/6)+'% — العطاء ليس لغيرك، إنه أعظم استثمار في مزاجك.'):('After your human deeds, your mood reached '+Math.round(avg*100/6)+'%.'))
+ });
  }
  return out;
 }
