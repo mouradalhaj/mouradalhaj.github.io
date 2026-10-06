@@ -3147,8 +3147,9 @@ function hiddenCorr(){
   });
   const p2=Math.round(low/tot*100);
   if(p2>=50)out.push({t:AR?'النوم المتأخر ↔ صفاء عقلك':'Late sleep ↔ clarity',
-  p:AR?('رصدتُ نمطاً خفياً: في '+p2+'% من المرات التي سهرتَ فيها، هبط صفاؤك العقلي في اليوم التالي. نومك ليس رفاهية — إنه وقود صفائك.'):('Hidden pattern: after '+p2+'% of late nights, your clarity dropped next day.'))});
- const wrkLow=[];
+  p:AR?('رصدتُ نمطاً خفياً: في '+p2+'% من المرات التي سهرتَ فيها، هبط صفاؤك العقلي في اليوم التالي. نومك ليس رفاهية — إنه وقود صفائك.'):('Hidden pattern: after '+p2+'% of late nights, your clarity dropped next day.')});
+ }
+  const wrkLow=[];
  for(let w2=0;w2<4;w2++){
   const e0=dayStart(Date.now())-w2*7*DAY,e1=e0+7*DAY;
   const wk=S.events.filter(e=>e.ts>=e0&&e.ts<e1&&e.category==='work'&&e.polarity<0).length;
@@ -3156,8 +3157,8 @@ function hiddenCorr(){
   if(wk>=2&&rel===0)wrkLow.push(true);else if(wk>=2)wrkLow.push(false);
  }
  if(wrkLow.length>=2&&wrkLow[0]&&wrkLow[1])out.push({t:AR?'ضغط العمل ↔ انقطاع العلاقات':'Work pressure ↔ relationships',
-  p:AR?('نمط متكرر: أسابيع ضغط العمل الكبير تقاطعت مع غياب تام لأي تواصل علاقاتي. من يحبك لا يفهم انشغالك — أرسل رسالة واحدة اليوم.'):('Busy weeks coincide with zero relationship contact — send one message today.'));
- });
+  p:AR?('نمط متكرر: أسابيع ضغط العمل الكبير تقاطعت مع غياب تام لأي تواصل علاقاتي. من يحبك لا يفهم انشغالك — أرسل رسالة واحدة اليوم.'):('Busy weeks coincide with zero relationship contact — send one message today.')});
+ }
  const humanDays=S.events.filter(e=>e.gen==='human'&&e.done).length;
  const moodAfter=[];
  S.events.filter(e=>e.gen==='human'&&e.done).forEach(h=>{
