@@ -2676,11 +2676,6 @@ function renderHome(){
     (r2.action?'<button class="rec-btn" data-act="recGo" data-i="'+i+'">'+esc(r2.action)+'</button>':'')+
     '<button class="rec-btn rec-off" data-act="recOff" data-i="'+i+'">'+ic('x',13)+'</button>'+
    '</div>').join(''):'<div class="empty">'+ic('check',26)+'<br>'+t('recs_empty')+'</div>')+'</div>'+
-  (function(){const tick=recent.slice(0,8);if(!tick.length)return '';
-   const chip=e=>{const cm=CAT_META[e.category]||CAT_META.mind;
-    return '<button class="news-chip" data-mem="'+e.id+'">'+ic(cm.icon,14)+'<b>'+esc(e.text)+'</b><span>'+timeAgo(e.ts)+'</span></button>'};
-   const row=tick.map(chip).join('');
-   return '<div class="news-ticker"><div class="news-ticker-head">'+ic('history',14)+'<b>'+t('mem_t')+'</b><span>'+(AR?'يتمرّر تلقائياً — المس للإيقاف':'auto-scrolls — touch to pause')+'</span></div><div class="news-lane"><div class="news-track">'+row+row+'</div></div></div>';})()+
   '<div style="height:18px"></div>';
  const arc=$('#ringArc'),num=$('#ringNum');
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
