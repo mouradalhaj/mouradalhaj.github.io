@@ -3122,7 +3122,7 @@ function burnoutScore(){
  sc+=Math.min(20,neg*5);
  const wk=S.events.filter(e=>e.category==='work'&&e.polarity!==0&&e.ts>now-7*DAY).length;
  if(wk>=6)sc+=15;else if(wk>=4)sc+=8;
- const slp=S.events.filter(e=>(e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0||e.text.toLowerCase().indexOf('late night')>=0||e.text.toLowerCase().indexOf('slept late')>=0)&&e.ts>now-5*DAY).length;
+ const slp=S.events.filter(e=>(((e.text||'').indexOf('نوم متأخر')>=0||(e.text||'').indexOf('سهرت')>=0||(e.text||'').toLowerCase().indexOf('late night')>=0||(e.text||'').toLowerCase().indexOf('slept late')>=0))&&e.ts>now-5*DAY).length;
  sc+=Math.min(15,slp*5);
  const relGap=S.staleRels.length;
  if(relGap>=2)sc+=10;
@@ -3132,7 +3132,7 @@ function hiddenCorr(){
  const AR=LANG==='ar';
  const out=[];
  const lateD=[...new Set(S.events
-  .filter(e=>e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0)
+  .filter(e=>(e.text||'').indexOf('نوم متأخر')>=0||(e.text||'').indexOf('سهرت')>=0)
   .map(e=>dayStart(e.ts)))];
  if(lateD.length>=2){
   let low=0,tot=0;
