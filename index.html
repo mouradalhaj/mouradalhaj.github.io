@@ -3107,7 +3107,7 @@ function predictPulse(){
   days.push({d0:d0,dayIdx:new Date(d0).getDay(),val:val,real:i<0||i===0,future:i>0,acts:acts.length,wdAvg:wdAvg});
  }
  let last=days.filter(d=>d.val!==null&&d.real).map(d=>d.val);
- const base=last.length?last[last.length-1]:S.life;
+ let base=last.length?last[last.length-1]:S.life;
  days.forEach(d=>{if(d.future&&d.val===null){d.val=clamp(Math.round(base*.55+d.wdAvg*.45),15,95);base=d.val}});
  return days;
 }
@@ -3131,13 +3131,9 @@ function burnoutScore(){
 function hiddenCorr(){
  const AR=LANG==='ar';
  const out=[];
- const sleepDays=[],clearDays=[];
- S.events.forEach(e=>{
-  const d=dayStart(e.ts);
-  if(e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0)e._slp=true;
-  if(e.category==='mind'&&e.polarity>0)e._clr=d;
- });
- const lateD=[...new Set(S.events.filter(e=>e._slp).map(e=>dayStart(e.ts)))];
+ const lateD=[...new Set(S.events
+  .filter(e=>e.text.indexOf('نوم متأخر')>=0||e.text.indexOf('سهرت')>=0)
+  .map(e=>dayStart(e.ts)))];
  if(lateD.length>=2){
   let low=0,tot=0;
   lateD.forEach(d=>{
