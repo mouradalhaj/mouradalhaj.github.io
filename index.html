@@ -718,6 +718,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shPick"></div>
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
+    <div class="sheet" id="shBody"></div>
     <div id="lightbox"><button class="sh-x" data-lb-close></button><img id="lbImg" alt=""></div>
     <div id="toast"></div>
     <div id="modal"></div>
@@ -2637,6 +2638,89 @@ function joySection(){
  if(!hasHeavyMood)return '';
  return joyCard();
 }
+/* ====== بوابة الجسد — اعتني بجسدك 3.3 ====== */
+function bodyEntry(){
+ const AR=LANG==='ar';
+ return '<button class="story-btn" data-act="openBody" style="margin-top:14px">'+
+  '<span class="sb-ic">'+ic('heart',20)+'</span>'+
+  '<span style="flex:1;min-width:0"><b>'+(AR?'اعتني بجسدك':'Care for your body')+'</b>'+
+  '<span>'+(AR?'تكاملُ الجسد حصنٌ يجب الاعتناء به — تمرين، ماء، خطوات، نوم':'Your body is a fortress — breathing, water, steps, sleep')+'</span></span>'+
+  ic('chev',16)+'</button>';
+}
+function todayBodyKey(){return isoDate(Date.now())}
+function bodyToday(){
+ const ds=dayStart(Date.now());
+ const evs=S.events.filter(e=>e.type==='body'&&e.ts>=ds);
+ const o={breath:0,water:0,steps:0};
+ evs.forEach(e=>{
+  if(e.bodyKind==='breath')o.breath+=e.count||0;
+  else if(e.bodyKind==='water')o.water+=e.count||0;
+  else if(e.bodyKind==='steps')o.steps+=e.count||0;
+ });
+ return o;
+}
+async function bodyLog(kind,count,extra){
+ const ev=Object.assign({id:uid(),type:'body',category:'health',bodyKind:kind,count:count,text:LANG==='ar'?'رعاية الجسد':'Body care',ts:Date.now()},extra||{});
+ await DB.put('events',ev);S.events.push(ev);
+ refresh();
+}
+function openBodySheet(){
+ const sh=$('#shBody');if(!sh)return;
+ const b=bodyToday(),AR=LANG==='ar';
+ const targetW=8,targetS=8000;
+ const wPct=Math.min(100,Math.round(b.water/targetW*100));
+ const sPct=Math.min(100,Math.round(b.steps/targetS*100));
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'🫀 اعتني بجسدك':'🫀 Body care')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="rel-sum" style="margin-top:0">'+(AR?'تكاملُ الجسد حصنٌ يجب الاعتناء به. كل قطرة وخطوة وشهيق يُبنى بها الحصن.':'A fortress is built drop by drop, step by step, breath by breath.')+'</div>'+
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'🌬️ تمرين التنفس 4-7-8':'🌬️ 4-7-8 breathing')+'</h4>'+
+  '<div class="set-card" style="text-align:center">'+
+   '<div id="brNum" style="font-family:var(--fd);font-size:34px;font-weight:800;color:var(--acc);min-height:44px">'+(AR?'جاهز؟':'Ready?')+'</div>'+
+   '<div id="brPhase" style="font-size:13px;color:var(--ink2);min-height:20px">'+(AR?'أربع دورات فقط':'Four cycles only')+'</div>'+
+   '<button class="btn" id="brGo" style="margin-top:10px">'+(AR?'ابدأ الجلسة':'Start session')+'</button>'+
+  '</div>'+
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'💧 الماء — '+b.water+' من '+targetW+' أكواب':'💧 Water — '+b.water+' of '+targetW)+'</h4>'+
+  '<div class="ch-bar"><i id="wBar" style="width:'+wPct+'%"></i></div>'+
+  '<div class="dq-row" style="margin-top:9px">'+
+   '<button class="dq" data-wa="1">+1</button>'+
+   '<button class="dq" data-wa="2">+2</button>'+
+   '<button class="dq" data-wa="-1">−1</button>'+
+  '</div>'+
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'👣 الخطوات — '+b.steps.toLocaleString(LOC())+' من '+targetS.toLocaleString(LOC()):'👣 Steps — '+b.steps.toLocaleString(LOC())+' of '+targetS.toLocaleString(LOC()))+'</h4>'+
+  '<div class="ch-bar"><i id="sBar" style="width:'+sPct+'%"></i></div>'+
+  '<div class="dq-row" style="margin-top:9px">'+
+   '<button class="dq" data-st="500">+500</button>'+
+   '<button class="dq" data-st="1000">+1000</button>'+
+   '<button class="dq" data-st="2000">+2000</button>'+
+  '</div>'+
+  '<div class="set-note" style="margin-top:14px">'+(AR?'🌙 ساعات النوم ورياضة اليوم ونصيحة الجسد — تُفتح في التحديث المباشر القادم.':'Sleep, workout and daily tip — coming next update.')+'</div>';
+ openSheet('#shBody');
+ let bt=null;
+ const go2=$('#brGo');
+ if(go2)go2.onclick=()=>{
+  if(bt){clearTimeout(bt);bt=null;if(brT)brT=null;$('#brNum').textContent=AR?'جاهز؟':'Ready?';$('#brPhase').textContent=AR?'أربع دورات فقط':'Four cycles';return}
+  const phases=[[AR?'شهيق':'Inhale',4],[AR?'احبس':'Hold',7],[AR?'زفير':'Exhale',8]];
+  let cyc=0,pi=0,sec=0;
+  const tick=()=>{
+   const ph=phases[pi];
+   $('#brNum').textContent=(4-sec);
+   $('#brPhase').textContent=ph[0]+' — '+(AR?('دورة '+(cyc+1)+' من 4'):('cycle '+(cyc+1)+'/4'));
+   sec++;
+   if(sec>=ph[1]){sec=0;pi++;if(pi>=phases.length){pi=0;cyc++}}
+   if(cyc>=4){
+    $('#brNum').textContent='✓';
+    $('#brPhase').textContent=AR?'أتممت الجلسة — صفاؤك يزداد':'Session complete';
+    bodyLog('breath',1);
+    toast(AR?'تم تسجيل تمرين التنفس — أحسنت':'Breathing logged','var(--good)','heart');
+    bt=null;return;
+   }
+   bt=setTimeout(tick,1000);
+  };
+  tick();
+ };
+ $$('#shBody [data-wa]').forEach(b2=>b2.onclick=()=>{bodyLog('water',+b2.dataset.wa);closeSheets()});
+ $$('#shBody [data-st]').forEach(b2=>b2.onclick=()=>{bodyLog('steps',+b2.dataset.st);closeSheets()});
+}
 function renderHome(){
  const v=$('#v-home');if(!v)return;
  const h=new Date().getHours();
@@ -2677,6 +2761,7 @@ function renderHome(){
     return '<button class="news-chip" data-mem="'+e.id+'">'+ic(cm.icon,14)+'<b>'+esc(e.text)+'</b><span>'+timeAgo(e.ts)+'</span></button>'};
    const row=tick.map(chip).join('');
    return '<div class="news-ticker"><div class="news-ticker-head">'+ic('history',14)+'<b>'+t('mem_t')+'</b><span>'+(AR?'يتمرّر تلقائياً — المس للإيقاف':'auto-scrolls — touch to pause')+'</span></div><div class="news-lane"><div class="news-track">'+row+row+'</div></div></div>';})()+
+  bodyEntry()+
   questHtml()+
   '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
   sparkCard()+
@@ -4050,6 +4135,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openEvent')openEventSheet();
  else if(act==='openPick')openPickSheet();
  else if(act==='openStory')openStorySheet();
+ else if(act==='openBody')openBodySheet();
  else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
  else if(act==='acceptCh')acceptChallenge();
