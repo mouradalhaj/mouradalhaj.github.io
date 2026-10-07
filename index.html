@@ -2293,6 +2293,31 @@ document.addEventListener('visibilitychange',()=>{
 
 /* اللقاء اليومي */
 const INTENTS={ar:['طاقة كاملة','يوم هادئ','إنجاز كبير','لقاءات ودّية','تعلّم جديد'],en:['Full energy','A calm day','A big win','Warm gatherings','Learn something']};
+ /* بوابة الافتتاح — رسالة عتبة صباحية/مسائية 3.3 */
+async function thresholdGate(){
+ if(S.settings.gateSeen&&Date.now()-S.settings.gateSeen<12*60*60*1000)return;
+ const h=new Date().getHours();
+ const isMorning=h>=5&&h<12, isEvening=h>=17&&h<24;
+ if(!isMorning&&!isEvening)return;
+ const AR=LANG==='ar', name=S.profile.name||(AR?'صديقي':'friend');
+ const BODY=AR
+  ?'رفيق هو شريكك الرقمي في رحلة النجاح والتوازن الشخصي، يساعدك على تقييم يومك، وترتيب أولوياتك، والاحتفاء بلحظاتك الإيجابية. لأن الإنجازات الكبرى تبدأ بقرارات صغيرة تتكرر كل يوم، صُمم رفيق ليمنحك تقدماً مستمراً وحياة أكثر انسجاماً.'
+  :'Rafiq is your digital partner in the journey of success and personal balance — helping you reflect on your day, set priorities, and celebrate your good moments. Big achievements begin with small daily decisions.';
+ const HI=AR?(isMorning?'صباح الخير يا ':'مساء الخير يا '):(isMorning?'Good morning, ':'Good evening, ');
+ const m=$('#modal');if(!m)return;
+ m.innerHTML='<div class="md-box" style="text-align:center">'+
+  logoSvg(46)+
+  '<b style="font-family:var(--fd);font-size:18px;margin-top:10px">'+HI+esc(name)+'</b>'+
+  '<p style="font-size:13px;line-height:2;color:var(--ink2);margin-top:8px">'+BODY+'</p>'+
+  '<button class="btn" id="gateGo" style="margin-top:14px">'+(AR?'معاً نستطيع 💪':'Together we can 💪')+'</button>'+
+  '</div>';
+ m.classList.add('show');
+ $('#gateGo').onclick=async()=>{
+  m.classList.remove('show');
+  S.settings.gateSeen=Date.now();
+  await saveMeta();
+ };
+}
 function showRitualIfNeeded(){
  if(S.settings.ritualOff)return;
  const now=new Date(),h=now.getHours(),iso=isoDate(Date.now());
@@ -4222,6 +4247,7 @@ function enterApp(seeded){
  const ob=$('#ob');if(ob)ob.style.display='none';
  const app=$('#app');if(app)app.hidden=false;
  computeAll();renderDot();go('home');
+ setTimeout(thresholdGate,650);
  if(seeded)setTimeout(()=>toast(t('seed_ready')+(S.profile.name||'')+t('seed_ready2'),'var(--acc)','spark'),700);
  if(!locked)setTimeout(showRitualIfNeeded,900);
 }
