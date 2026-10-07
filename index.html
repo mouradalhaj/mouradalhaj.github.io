@@ -3042,12 +3042,12 @@ function renderReport(){
 }
 
 /* التوأم */
-function ringSvgMini(val){
+function ringSvgMini(val,label){
  const R=46,C=2*Math.PI*R;
  return '<svg viewBox="0 0 110 110" style="width:120px;margin:auto"><circle cx="55" cy="55" r="'+R+'" fill="none" stroke="#282112" stroke-width="8" opacity=".6"/>'+
  '<circle cx="55" cy="55" r="'+R+'" fill="none" stroke="var(--c-mind)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-val/100)).toFixed(1)+'" transform="rotate(-90 55 55)"/>'+
  '<text x="55" y="60" text-anchor="middle" class="ring-num" style="font-size:24px">'+val+'%</text>'+
- '<text x="55" y="76" text-anchor="middle" class="ring-sub">'+t('tw_ring')+'</text></svg>';
+ '<text x="55" y="76" text-anchor="middle" class="ring-sub">'+(label||t('tw_ring'))+'</text></svg>';
 }
 function renderTwin(){
  const v=$('#v-twin');if(!v)return;
@@ -3364,7 +3364,7 @@ function renderPulse(){
    '<div class="pp-legend"><span><i style="background:var(--acc)"></i>'+(AR?'فعلي':'lived')+'</span><span><i style="background:var(--c-mind)"></i>'+(AR?'تنبؤي':'forecast')+'</span></div>'+
   '</div>'+
   '<div class="pp-card"><h4>'+ic('flame',15)+' '+(AR?'رادار الانهيار — Burnout Radar':'Burnout Radar')+'</h4>'+
-   '<div class="pp-gauge"><div class="pp-gauge-ring">'+ringSvgMini(burn).replace('var(--c-mind)',burnCol)+'</div>'+
+   '<div class="pp-gauge"><div class="pp-gauge-ring">'+ringSvgMini(burn,AR?'الاستنزاف':'burnout').replace('var(--c-mind)',burnCol).replace('width:120px','width:100%')+'</div>'+
    '<div class="pp-gauge-b"><p>'+burnP+'</p></div></div>'+
   '</div>'+
   '<h3 class="sec-t">'+ic('spark',15)+' '+(AR?'الارتباطات الخفية بين جوانب حياتك':'Hidden cross-domain correlations')+'</h3>'+
