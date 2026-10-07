@@ -2711,14 +2711,14 @@ function openBodySheet(){
    '<div id="brPhase" style="font-size:13px;color:var(--ink2);min-height:20px">'+(AR?'أربع دورات فقط':'Four cycles only')+'</div>'+
    '<button class="btn" id="brGo" style="margin-top:10px">'+(AR?'ابدأ الجلسة':'Start session')+'</button>'+
   '</div>'+
-  '<h4 class="lab" style="margin-top:14px">'+(AR?'💧 الماء — '+b.water+' من '+targetW+' أكواب':'💧 Water — '+b.water+' of '+targetW)+'</h4>'+
+  '<h4 class="lab" id="wTitle" style="margin-top:14px">'+(AR?'💧 الماء — '+b.water+' من '+targetW+' أكواب':'💧 Water — '+b.water+' of '+targetW)+'</h4>'+
   '<div class="ch-bar"><i id="wBar" style="width:'+wPct+'%"></i></div>'+
   '<div class="dq-row" style="margin-top:9px">'+
    '<button class="dq" data-wa="1">+1</button>'+
    '<button class="dq" data-wa="2">+2</button>'+
    '<button class="dq" data-wa="-1">−1</button>'+
   '</div>'+
-  '<h4 class="lab" style="margin-top:14px">'+(AR?'👣 الخطوات — '+b.steps.toLocaleString(LOC())+' من '+targetS.toLocaleString(LOC()):'👣 Steps — '+b.steps.toLocaleString(LOC())+' of '+targetS.toLocaleString(LOC()))+'</h4>'+
+  '<h4 class="lab" id="sTitle" style="margin-top:14px">'+(AR?'👣 الخطوات — '+b.steps.toLocaleString(LOC())+' من '+targetS.toLocaleString(LOC()):'👣 Steps — '+b.steps.toLocaleString(LOC())+' of '+targetS.toLocaleString(LOC()))+'</h4>'+
   '<div class="ch-bar"><i id="sBar" style="width:'+sPct+'%"></i></div>'+
   '<div class="dq-row" style="margin-top:9px">'+
    '<button class="dq" data-st="500">+500</button>'+
@@ -2761,8 +2761,18 @@ function openBodySheet(){
   };
   tick();
  };
- $$('#shBody [data-wa]').forEach(b2=>b2.onclick=()=>{bodyLog('water',+b2.dataset.wa);closeSheets()});
- $$('#shBody [data-st]').forEach(b2=>b2.onclick=()=>{bodyLog('steps',+b2.dataset.st);closeSheets()});
+  $$('#shBody [data-wa]').forEach(b2=>b2.onclick=async()=>{
+  await bodyLog('water',+b2.dataset.wa);
+  const n2=bodyToday();
+  const wb=$('#wBar');if(wb)wb.style.width=Math.min(100,Math.round(n2.water/8*100))+'%';
+  const wt=$('#wTitle');if(wt)wt.textContent=(LANG==='ar'?'💧 الماء — '+n2.water+' من 8 أكواب':'💧 Water — '+n2.water+' of 8');
+ });
+ $$('#shBody [data-st]').forEach(b2=>b2.onclick=async()=>{
+  await bodyLog('steps',+b2.dataset.st);
+  const n2=bodyToday();
+  const sb=$('#sBar');if(sb)sb.style.width=Math.min(100,Math.round(n2.steps/8000*100))+'%';
+  const st2=$('#sTitle');if(st2)st2.textContent=(LANG==='ar'?'👣 الخطوات — '+n2.steps.toLocaleString(LOC())+' من 8,000':'👣 Steps — '+n2.steps.toLocaleString(LOC())+' of 8,000');
+ });
  const slM=$('#slMinus'),slP=$('#slPlus'),slN=$('#slNum');
  if(slM)slM.onclick=()=>{b.sleep=Math.max(0,(b.sleep||0)-0.5);slN.textContent=b.sleep.toFixed(1)};
  if(slP)slP.onclick=()=>{b.sleep=Math.min(16,(b.sleep||0)+0.5);slN.textContent=b.sleep.toFixed(1)};
