@@ -3099,7 +3099,7 @@ function predictPulse(){
   const rate=evs.find(e=>e.type==='selfrate');
   let val;
   if(mood!==null)val=Math.round(mood*100/6);
-  else if(rate)val=rate.score;
+  else if(rate)val=(typeof rate.rate==='number')?rate.rate:rateScore(rate);
   else if(acts.length)val=clamp(50+(pos-neg)*10,20,90);
   else val=null;
   const dw=new Date(d0).getDay();
@@ -3173,13 +3173,14 @@ function dualMirror(){
   const d0=dayStart(Date.now()-i*DAY);
   const evs=S.events.filter(e=>dayStart(e.ts)===d0);
   const rate=evs.find(e=>e.type==='selfrate');
+  const rVal=rate?(typeof rate.rate==='number'?rate.rate:rateScore(rate)):null;
   const acts=evs.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
   const pos=acts.filter(e=>e.polarity>0).length,neg=acts.filter(e=>e.polarity<0).length;
   const actScore=acts.length?clamp(50+(pos-neg)*12,10,95):null;
   const intent=evs.filter(e=>e.type==='interest').length;
-  last7.push({rate:rate?rate.score:null,act:actScore,intent:intent});
+  last7.push({rate:rVal,act:actScore,intent:intent});
  }
- const rated=last7.filter(d=>d.rate!==null);
+ const rated=last7.filter(d=>typeof d.rate==='number'&&isFinite(d.rate));
  const both=rated.filter(d=>d.act!==null);
  if(rated.length<3)return null;
  const avgRate=Math.round(rated.reduce((a,d)=>a+d.rate,0)/rated.length);
@@ -3334,7 +3335,7 @@ function renderPulse(){
  }).join('');
  const todayI=days.findIndex(d=>d.future);
  const tX=todayI>0?((todayI/(days.length-1))*300+20).toFixed(1):null;
- const burnCls=burn>=70?'pp-burn-high':burn>=45?'pp-burn-mid':'pp-burn-safe';
+ const burnCol=burn>=70?'var(--bad)':burn>=45?'var(--acc)':'var(--good)';
  const burnTxt=burn>=70?(AR?'🚨 مؤشر استنزاف مرتفع':'High burnout'):burn>=45?(AR?'⚠️ استنزاف متصاعد':'Rising burnout'):(AR?'✅ طاقتك متوازنة':'Balanced energy');
  const burnP=burn>=70?(AR?('مؤشر استنزافك '+burn+'% — إجازة نهاية الأسبوع ليست رفاهية بل ضرورة. نم مبكراً الليلتين، وقل "لا" لالتزام واحد إضافي هذا الأسبوع.'):('Burnout '+burn+'% — rest is a necessity.')):burn>=45?(AR?('مؤشر استنزافك '+burn+'% — متصاعد لكنه قابل للانعكاس. حصّن نومك هذا الأسبوع وحافظ على تواصل علاقاتي واحد.'):('Burnout '+burn+'% — reversible. Protect your sleep.')):(AR?('مؤشر استنزافك '+burn+'% فقط — طاقتك متوازنة، وأنت تسير بإيقاع صحي. حافظ على ما تفعله.'):('Burnout '+burn+'% — balanced.'));
  const th=ASSESS_BANK?null:null;
@@ -3354,7 +3355,7 @@ function renderPulse(){
  }else dualHtml='<div class="fp-line"><h4>'+(AR?'المرآة المزدوجة':'Dual mirror')+'</h4><p>'+(AR?'قيّم نفسك بسبعة أبعاد لثلاثة أيام على الأقل — وسأطابق شعورك مع أفعالك ونواياك في رسم واحد لم يره تطبيق قبلنا.':'Rate yourself for 3 days — I will match feeling, actions and intentions.')+'</p></div>';
  v.innerHTML=
   '<span class="lab-dev">LAB · 3.3</span>'+
-  '<div class="pp-hero">'+
+  '<div class="pp-hero" style="padding-top:40px">'+
    '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800">'+(AR?'🔮 النبض التنبؤي':'🔮 Predictive Pulse')+'</h2>'+
    '<p style="font-size:12px;color:var(--ink2);margin-top:6px;line-height:1.9">'+(AR?'الخط الصلب: ما عشته فعلاً · الخط المتقطع: ما أتوقعه لك من إيقاعك — 7 أيام خلفية وسبعة قادمة.':'Solid: lived · Dashed: forecasted from your rhythm.')+'</p>'+
    '<svg viewBox="0 0 340 145" class="pp-curve">'+path+dots+lab+
@@ -3363,7 +3364,7 @@ function renderPulse(){
    '<div class="pp-legend"><span><i style="background:var(--acc)"></i>'+(AR?'فعلي':'lived')+'</span><span><i style="background:var(--c-mind)"></i>'+(AR?'تنبؤي':'forecast')+'</span></div>'+
   '</div>'+
   '<div class="pp-card"><h4>'+ic('flame',15)+' '+(AR?'رادار الانهيار — Burnout Radar':'Burnout Radar')+'</h4>'+
-   '<div class="pp-gauge"><div class="pp-gauge-ring">'+ringSvgMini(burn).replace('var(--c-mind)',burnCls)+'</div>'+
+   '<div class="pp-gauge"><div class="pp-gauge-ring">'+ringSvgMini(burn).replace('var(--c-mind)',burnCol)+'</div>'+
    '<div class="pp-gauge-b"><p>'+burnP+'</p></div></div>'+
   '</div>'+
   '<h3 class="sec-t">'+ic('spark',15)+' '+(AR?'الارتباطات الخفية بين جوانب حياتك':'Hidden cross-domain correlations')+'</h3>'+
