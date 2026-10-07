@@ -2651,11 +2651,12 @@ function todayBodyKey(){return isoDate(Date.now())}
 function bodyToday(){
  const ds=dayStart(Date.now());
  const evs=S.events.filter(e=>e.type==='body'&&e.ts>=ds);
- const o={breath:0,water:0,steps:0};
+ const o={breath:0,water:0,steps:0,sleep:0};
  evs.forEach(e=>{
   if(e.bodyKind==='breath')o.breath+=e.count||0;
   else if(e.bodyKind==='water')o.water+=e.count||0;
   else if(e.bodyKind==='steps')o.steps+=e.count||0;
+  else if(e.bodyKind==='sleep')o.sleep=Math.max(o.sleep,e.hours||0);
  });
  return o;
 }
@@ -2664,9 +2665,40 @@ async function bodyLog(kind,count,extra){
  await DB.put('events',ev);S.events.push(ev);
  refresh();
 }
+/* بنك نصائح الجسد — أعشاب ونباتات وشمس وحركة 3.3 */
+const BODY_TIPS={
+ ar:[
+  {t:'زيت الزيتون',p:'ملعقة صغيرة على الريق تغذي القلب والشرايين — وهو سر الأطباء الأوائل في بلادنا.'},
+  {t:'الشاي الأخضر',p:'كوب بعد الغداء يسرّع الحرق ويلطف الالتهابات — اشربه دون سكر ليصير دوماً.'},
+  {t:'الشمس صباحاً',p:'ربع ساعة شمس قبل العاشرة — يُبنى بها فيتامين د وتُنظم بها ساعتك البيولوجية للنوم.'},
+  {t:'المشي بعد الأكل',p:'عشر دقائق مشي بعد وجبة الرئيسة تخفض سكر الدم وتحسن الهضم — أثبتها العلم وأثبتها الأجداد.'},
+  {t:'الكركم مع الفلفل',p:'نصف ملعقة كركم مع رشة فلفل أسود وحليب دافئ — مضاد التهابات طبيعي لا يُستهان به.'},
+  {t:'التمر بلا حبوب',p:'ثلاث حبات تمر تمنحك طاقة هادئة ومغنيسيوم يهدئ عضلاتك — خير القوت في رمضان وغيره.'},
+  {t:'النعناع للتركيز',p:'كوب نعناع مغلي يصفي الرأس ويفتح التنفس — شراب الصفاء الذي لا كافيين فيه.'},
+  {t:'الحمضيات',p:'ليمون أو برتقالة مع قشرها حين أمكن — في القشر فيتامينات تُعمّر المناعة.'},
+  {t:'الجوز بلا مقارنة',p:'سبع حبات جوز تحوي أوميغا 3 يغذي الدماغ — غذاء العقل قبل الغذاء العام.'},
+  {t:'الماء أولاً',p:'كوب ماء قبل القهوة بربع ساعة — يوقظ جسدك بلطف قبل أن يوقظه الصباح.'}],
+ en:[
+  {t:'Olive oil',p:'A teaspoon before breakfast nourishes heart and arteries.'},
+  {t:'Green tea',p:'A cup after lunch boosts metabolism and calms inflammation.'},
+  {t:'Morning sun',p:'Fifteen minutes before 10 AM builds vitamin D and sets your sleep clock.'},
+  {t:'Post-meal walk',p:'Ten minutes after your main meal lowers blood sugar gently.'},
+  {t:'Turmeric + pepper',p:'Half a teaspoon with warm milk — a natural anti-inflammatory.'},
+  {t:'Dates',p:'Three dates give calm energy and magnesium for your muscles.'},
+  {t:'Mint for focus',p:'Hot mint tea clears the head — caffeine-free clarity.'},
+  {t:'Citrus',p:'Lemon or orange with peel when possible — immunity lives in the peel.'},
+  {t:'Walnuts',p:'Seven walnuts carry omega-3 that feeds the brain.'},
+  {t:'Water first',p:'A glass of water 15 minutes before coffee wakes the body gently.'}]};
+function bodyTipOfTheDay(){
+ const AR=LANG==='ar';
+ const pool=BODY_TIPS[AR?'ar':'en'];
+ const seed=String(isoDate(Date.now())+(S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+ return pool[seed%pool.length];
+}
 function openBodySheet(){
  const sh=$('#shBody');if(!sh)return;
  const b=bodyToday(),AR=LANG==='ar';
+ const tip=bodyTipOfTheDay();
  const targetW=8,targetS=8000;
  const wPct=Math.min(100,Math.round(b.water/targetW*100));
  const sPct=Math.min(100,Math.round(b.steps/targetS*100));
@@ -2693,8 +2725,19 @@ function openBodySheet(){
    '<button class="dq" data-st="1000">+1000</button>'+
    '<button class="dq" data-st="2000">+2000</button>'+
   '</div>'+
-  '<div class="set-note" style="margin-top:14px">'+(AR?'🌙 ساعات النوم ورياضة اليوم ونصيحة الجسد — تُفتح في التحديث المباشر القادم.':'Sleep, workout and daily tip — coming next update.')+'</div>';
- openSheet('#shBody');
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'😴 ساعات النوم الليلة الماضية':'😴 Sleep last night')+'</h4>'+
+  '<div class="set-card"><div class="stp" style="justify-content:center">'+
+   '<button id="slMinus">−</button><b id="slNum">'+(b.sleep||0).toFixed(1)+'</b><button id="slPlus">+</button></div>'+
+   '<div class="set-note" style="text-align:center">'+(AR?'بزيادات نصف ساعة — الصحة 7 إلى 9':'In half-hour steps — healthy 7 to 9')+'</div></div>'+
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'🏃 رياضة اليوم':'🏃 Today workout')+'</h4>'+
+  '<div class="set-card">'+
+   '<div class="chips" style="margin-bottom:10px">'+[AR?'مشي':'Walk',AR?'جري':'Run',AR?'سباحة':'Swim',AR?'حديد':'Gym',AR?'يوغا':'Yoga',AR?'كرة':'Ball'].map(sp=>'<button class="chip" data-sp="'+sp+'">'+sp+'</button>').join('')+'</div>'+
+   '<input id="woMin" type="number" inputmode="numeric" placeholder="'+(AR?'الدقائق… (مثال 30)':'Minutes… e.g. 30')+'" style="margin-bottom:10px">'+
+   '<button class="btn ghost" id="woGo">'+ic('check',15)+' '+(AR?'سجّل الرياضة':'Log workout')+'</button></div>'+
+  '<h4 class="lab" style="margin-top:14px">'+(AR?'🌿 نصيحة الجسد لليوم':'🌿 Body tip of the day')+'</h4>'+
+  '<div class="rel-sum" style="border-right:3px solid var(--c-health)"><b style="color:var(--c-health)">'+esc(tip.t)+'</b> — '+esc(tip.p)+
+   '<div style="margin-top:9px"><button class="btn ghost sm" id="tipDone">'+ic('check',14)+' '+(AR?'طبّقتها اليوم':'Applied today')+'</button></div></div>';
+  openSheet('#shBody');
  let bt=null;
  const go2=$('#brGo');
  if(go2)go2.onclick=()=>{
@@ -2720,6 +2763,38 @@ function openBodySheet(){
  };
  $$('#shBody [data-wa]').forEach(b2=>b2.onclick=()=>{bodyLog('water',+b2.dataset.wa);closeSheets()});
  $$('#shBody [data-st]').forEach(b2=>b2.onclick=()=>{bodyLog('steps',+b2.dataset.st);closeSheets()});
+ const slM=$('#slMinus'),slP=$('#slPlus'),slN=$('#slNum');
+ if(slM)slM.onclick=()=>{b.sleep=Math.max(0,(b.sleep||0)-0.5);slN.textContent=b.sleep.toFixed(1)};
+ if(slP)slP.onclick=()=>{b.sleep=Math.min(16,(b.sleep||0)+0.5);slN.textContent=b.sleep.toFixed(1)};
+ let slTimer=null;
+ function armSleep(){
+  clearTimeout(slTimer);
+  slTimer=setTimeout(async()=>{
+   if(b.sleep>0){await bodyLog('sleep',1,{hours:b.sleep});toast((AR?'سُجّل نومك: ':'Sleep logged: ')+b.sleep.toFixed(1)+(AR?' ساعة':'h'),'var(--c-health)','moon')}
+  },1400);
+ }
+ if(slM)slM.onclick=(function(orig){return function(){orig();armSleep()}})(slM.onclick);
+ if(slP)slP.onclick=(function(orig){return function(){orig();armSleep()}})(slP.onclick);
+ $$('#shBody [data-sp]').forEach(c=>c.onclick=()=>{
+  $$('#shBody [data-sp]').forEach(x=>x.classList.toggle('on',x===c));
+  woPick=c.dataset.sp;
+ });
+ let woPick=null;
+ const woGo=$('#woGo');
+ if(woGo)woGo.onclick=async()=>{
+  const mn=parseInt(($('#woMin')?$('#woMin').value:''),10);
+  if(!woPick){toast(AR?'اختر نوع الرياضة أولاً':'Pick a workout type first','var(--acc)','flame');return}
+  if(!mn||mn<=0){toast(AR?'اكتب الدقائق أولاً':'Write the minutes first','var(--acc)','clock');return}
+  await bodyLog('workout',1,{sport:woPick,minutes:mn});
+  toast((AR?'سُجّلت ':'Logged: ')+woPick+' · '+mn+(AR?' دقيقة':' min'),'var(--good)','check');
+  $('#woMin').value='';
+ };
+ const tipDone=$('#tipDone');
+ if(tipDone)tipDone.onclick=async()=>{
+  await bodyLog('tip',1,{tipTitle:tip.t});
+  toast(AR?'أحسنت — عُدت غداً لنصيحة جديدة':'Well done — a new tip tomorrow','var(--good)','sprout');
+  tipDone.disabled=true;tipDone.style.opacity=.45;
+ };
 }
 function renderHome(){
  const v=$('#v-home');if(!v)return;
