@@ -1800,7 +1800,8 @@ function assessCut(score){
  return ASSESS_CUTS[3];
 }
 async function saveAssessment(code,subject,score,answers){
- const ev={id:uid(),type:'assessment',category:'mind',assess:code,subject:subject,score:score,answers:answers,ts:Date.now()};
+ const nm=ASSESS_BANK[code]?(ASSESS_BANK[code][LANG==='ar'?'ar':'en']||code):code;
+ const ev={id:uid(),type:'assessment',category:'mind',assess:code,subject:subject,score:score,answers:answers,text:nm+' — '+score,ts:Date.now()};
  await DB.put('events',ev);S.events.push(ev);
  return ev;
 }
@@ -1830,7 +1831,7 @@ function interestBank(){
   AR?'أمدح شخصاً بصدق':'Give honest praise',AR?'أتأمل وأهدأ نفسي':'Meditate and calm'];
 }
 function genTodayInterests(){
- const preds=smartPredictions(3).map(p=>p.text);
+ const preds=smartPredictions(3).map(p=>p.text).filter(Boolean);
  const bank=interestBank();
  const iso=isoDate(Date.now());
  const seed=String(iso+(S.profile.name||'x')).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
@@ -2434,7 +2435,7 @@ async function finishRitual(){
 }
 function genEveningPromises(){
  const AR=LANG==='ar';
- const preds=smartPredictions(2).map(p=>p.text);
+ const preds=smartPredictions(2).map(p=>p.text).filter(Boolean);
  const out=preds.slice();
  if(!out.some(x=>x.indexOf(AR?'أتصل':'Call')>=0)&&S.staleRels.length)out.push(AR?('أتصل بـ'+S.staleRels[0].name):('Call '+S.staleRels[0].name));
  return out.slice(0,3);
@@ -2445,7 +2446,7 @@ function smartPredictions(n){
  n=n||4;
  const now=new Date(),dow=now.getDay(),hp=now.getHours();
  const part=hp<12?'m':hp<18?'a':'e';
- const acts=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
+ const acts=S.events.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest'&&e.type!=='assessment'&&(e.text||'').length>0);
  if(acts.length<3)return [];
  const grp={};
  acts.forEach(e=>{
@@ -4113,7 +4114,7 @@ async function finishAssessment(){
  const cut=assessCut(score);
  const AR=LANG==='ar';
  const subject=asState.subject==='self'?(AR?'نفسك':'yourself'):(asState.otherName||'');
- const ev={id:uid(),type:'assessment',category:'mind',assess:asState.code,subject:subject,score:score,answers:[].concat(asState.answers),ts:Date.now()};
+ const ev={id:uid(),type:'assessment',category:'mind',assess:asState.code,subject:subject,score:score,answers:[].concat(asState.answers),text:(AR?a.ar:a.en)+' — '+score,ts:Date.now()};
  await DB.put('events',ev);S.events.push(ev);
  const el=$('#ritual');if(!el)return;
  el.innerHTML='<div class="rt-mid">'+
