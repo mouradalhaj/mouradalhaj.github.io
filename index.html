@@ -99,7 +99,7 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .ps-dim b{font-size:13px;display:block}
 .ps-dim span{font-size:9px;color:var(--ink3);display:block;margin-top:1px}
 .ps-track{flex:1;display:flex;gap:4px}
-.ps-opt{flex:1;height:36px;border-radius:9px;border:1.5px solid var(--line);color:var(--ink3);font-size:9px;font-weight:600;display:grid;place-items:center;transition:.15s;padding:0 2px;text-align:center}
+.ps-opt{flex:1;height:36px;border-radius:9px;border:1.5px solid var(--line2);color:var(--ink2);font-size:10px;font-weight:600;display:grid;place-items:center;transition:.15s;padding:0 2px;text-align:center;line-height:1.4}
 .ps-opt.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
 .ps-opt:active{transform:scale(.94)}
 #app{display:flex;flex-direction:column;height:100%}
@@ -633,7 +633,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .assess-qnum{font-size:10.5px;color:var(--ink3);margin-bottom:6px}
 .assess-qtext{font-size:15px;font-weight:600;line-height:1.9;color:var(--ink)}
 .assess-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}
-.assess-opt{padding:10px 2px;border-radius:11px;border:1.5px solid var(--line);color:var(--ink3);font-size:9.5px;font-weight:600;text-align:center;transition:.15s}
+.assess-opt{padding:10px 2px;border-radius:11px;border:1.5px solid var(--line2);color:var(--ink2);font-size:10.5px;font-weight:600;text-align:center;transition:.15s;line-height:1.5}
 .assess-opt.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
 .assess-opt:active{transform:scale(.95)}
 .assess-prog{height:6px;border-radius:100px;background:var(--card2);overflow:hidden;margin-top:14px}
@@ -2660,10 +2660,53 @@ function bodyToday(){
  });
  return o;
 }
+function bodyTextFor(kind,cnt,ex){
+ const AR=LANG==='ar';ex=ex||{};
+ if(kind==='water'){const c2=cnt||0;
+  return AR?(c2===1?'شربتُ كوب ماء واحد':c2===2?'شربتُ كوبين ماء':c2<=10?('شربتُ '+c2+' أكواب ماء'):('شربتُ '+c2+' كوباً من الماء')):('Drank '+c2+' cup(s) of water')}
+ if(kind==='steps')return AR?('خطوات اليوم: '+(cnt||0).toLocaleString(LOC())):('Steps today: '+(cnt||0).toLocaleString(LOC()));
+ if(kind==='breath')return AR?(cnt>1?('جلسة تنفس 4-7-8 ×'+cnt):'جلسة تنفس 4-7-8'):('4-7-8 breathing'+(cnt>1?' ×'+cnt:''));
+ if(kind==='sleep'){const h2=Number(ex.hours||0);
+  return AR?(h2===0.5?'نوم نصف ساعة':h2===1?'نوم ساعة واحدة':h2===2?'نوم ساعتين':('نوم '+h2.toFixed(1)+' ساعة')):('Sleep '+h2.toFixed(1)+'h')}
+ if(kind==='workout')return AR?('رياضة: '+(ex.sport||'')+' — '+(ex.minutes||0)+' دقيقة'):('Workout: '+(ex.sport||'')+' — '+(ex.minutes||0)+' min');
+ if(kind==='tip')return AR?('طبّقتُ نصيحة الجسد: '+(ex.tipTitle||'')):('Applied body tip: '+(ex.tipTitle||''));
+ return AR?'رعاية الجسد':'Body care';
+}
 async function bodyLog(kind,count,extra){
- const ev=Object.assign({id:uid(),type:'body',category:'health',bodyKind:kind,count:count,text:LANG==='ar'?'رعاية الجسد':'Body care',ts:Date.now()},extra||{});
+ extra=extra||{};
+ const ds=dayStart(Date.now());
+ const old=S.events.find(e2=>e2.type==='body'&&e2.bodyKind===kind&&dayStart(e2.ts)===ds&&(kind!=='workout'||e2.sport===extra.sport));
+ if(old){
+  old.count=(old.count||0)+count;
+  if(kind==='sleep')old.hours=Math.max(old.hours||0,extra.hours||0);
+  if(kind==='workout')old.minutes=(old.minutes||0)+(extra.minutes||0);
+  old.text=bodyTextFor(kind,old.count,old);
+  await DB.put('events',old);
+  refresh();
+  return old;
+ }
+ const ev=Object.assign({id:uid(),type:'body',category:'health',bodyKind:kind,count:count,text:bodyTextFor(kind,count,extra),ts:Date.now()},extra);
  await DB.put('events',ev);S.events.push(ev);
  refresh();
+ return ev;
+}
+async function bodyCleanupOnce(){
+ if(S.settings.bodyCleaned)return;
+ const byKey={};const dups=[];
+ S.events.filter(e=>e.type==='body').forEach(e=>{
+  const k=e.bodyKind+':'+dayStart(e.ts)+(e.bodyKind==='workout'&&e.sport?':'+e.sport:'');
+  if(byKey[k]){
+   const t=byKey[k];
+   t.count=(t.count||0)+(e.count||0);
+   if(t.bodyKind==='workout')t.minutes=(t.minutes||0)+(e.minutes||0);
+   if(t.bodyKind==='sleep')t.hours=Math.max(t.hours||0,e.hours||0);
+   dups.push(e);
+  }else byKey[k]=e;
+ });
+ for(const k in byKey){const t=byKey[k];t.text=bodyTextFor(t.bodyKind,t.count,t);await DB.put('events',t)}
+ for(const e of dups){await DB.del('events',e.id)}
+ if(dups.length)S.events=S.events.filter(x=>!dups.some(d=>d.id===x.id));
+ S.settings.bodyCleaned=true;await saveMeta();
 }
 /* بنك نصائح الجسد — أعشاب ونباتات وشمس وحركة 3.3 */
 const BODY_TIPS={
@@ -4400,7 +4443,7 @@ window.__rfStage='فتح قاعدة البيانات';
   if(m&&m.profile){
    S.profile=Object.assign(S.profile,m.profile||{});
    S.reminders=(m&&m.reminders)||[];
-   await loadAll();computeAll();renderDot();enterApp(false);
+   await loadAll();try{await bodyCleanupOnce()}catch(e){}computeAll();renderDot();enterApp(false);
   }else renderOb();
   if(S.settings.pin&&S.settings.pinOn)showLock();
   else{
