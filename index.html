@@ -719,6 +719,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
     <div class="sheet" id="shBody"></div>
+    <div class="sheet" id="shCatLog"></div>
     <div id="lightbox"><button class="sh-x" data-lb-close></button><img id="lbImg" alt=""></div>
     <div id="toast"></div>
     <div id="modal"></div>
@@ -3021,11 +3022,70 @@ function sparkSvg(arr){
  const pts=arr.map((v2,i)=>xs(i).toFixed(1)+','+ys(v2).toFixed(1));
  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%"><polygon points="'+pad+','+(h-pad)+' '+pts.join(' ')+' '+(w-pad)+','+(h-pad)+'" fill="var(--acc-soft)"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="var(--acc)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+xs(arr.length-1).toFixed(1)+'" cy="'+ys(arr[arr.length-1]).toFixed(1)+'" r="4" fill="var(--acc)"/></svg>';
 }
+/* ====== سجل المؤشر + إرشاده — الموجة ب 3.3 ====== */
+const CAT_COACH={
+ health:{ar:'امشِ عشرين دقيقة اليوم — الحصن يُبنى بخطوات لا بقفزات.',en:'Walk 20 minutes today — step by step.'},
+ relations:{ar:'اتصل بشخص واحد لم تتواصل معه منذ أسبوع — العلاقات تُروى بالمبادرة.',en:'Call one person you have not reached this week.'},
+ money:{ar:'سجّل مصروفات اليوم وادّخر مبلغاً صغيراً — الأمان يبدأ بقرار صغير.',en:'Log spending and save a small amount today.'},
+ work:{ar:'حدد أهم مهمة وأنجزها قبل الظهر بتسعين دقيقة تركيز كامل.',en:'Top task before noon in one 90-minute block.'},
+ mind:{ar:'جلسة تنفس 4-7-8 وعشر دقائق تأمل — صفاؤك وقود كل أبعادك.',en:'One 4-7-8 session plus ten minutes of stillness.'},
+ growth:{ar:'اقرأ عشر صفحات أو استمع لفصل واحد — النموّ عُشر صفحات يومياً.',en:'Ten pages or one chapter — growth is daily pages.'}};
+let catLogCat=null,catLogRange='all';
+function openCatLog(cat){
+ catLogCat=cat;catLogRange='all';
+ drawCatLog();
+ openSheet('#shCatLog');
+}
+function drawCatLog(){
+ const sh=$('#shCatLog');if(!sh||!catLogCat)return;
+ const AR=LANG==='ar',c=catLogCat,cm=CAT_META[c];
+ const now=Date.now();
+ const from=catLogRange==='day'?dayStart(now):catLogRange==='week'?dayStart(now)-6*DAY:catLogRange==='month'?dayStart(now)-29*DAY:0;
+ const evs=S.events.filter(e=>e.category===c&&e.ts>=from).sort((a,b)=>b.ts-a.ts);
+ const pos=evs.filter(e=>e.polarity>0).length,neg=evs.filter(e=>e.polarity<0).length;
+ const moods=evs.filter(e=>e.type==='mood');
+ const avg=moods.length?Math.round(moods.reduce((a,e)=>a+e.mood,0)/moods.length):null;
+ const score=S.ind[c];
+ let coach='';
+ if(score<55){
+  const tip=CAT_COACH[c];
+  coach='<div class="rel-sum" style="border-right:3px solid '+cm.color+'"><b style="color:'+cm.color+'">'+(AR?'إرشاد رفيق:':'Coach:')+'</b> '+esc(AR?tip.ar:tip.en)+
+   '<div style="margin-top:9px"><button class="btn ghost sm" id="catCoachGo">'+ic('plus',14)+' '+(AR?'حوّلها لمهمة اليوم':'Turn into today quest')+'</button></div></div>';
+ }
+ const ranges=[['day',AR?'اليوم':'Day'],['week',AR?'أسبوع':'Week'],['month',AR?'شهر':'Month'],['all',AR?'الكل':'All']];
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b style="color:'+cm.color+'">'+ic(cm.icon,18)+' '+(AR?'سجل ':'Log of ')+cn(c)+' · '+score+'/100</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="chips" style="margin-bottom:12px">'+ranges.map(r2=>'<button class="chip '+(catLogRange===r2[0]?'on':'')+'" data-crange="'+r2[0]+'">'+r2[1]+'</button>').join('')+'</div>'+
+  '<div class="rp-grid">'+
+   '<div class="rp-box"><b>'+evs.filter(e=>e.type!=='mood').length+'</b><span>'+(AR?'حدث':'events')+'</span></div>'+
+   '<div class="rp-box"><b style="color:var(--good)">+'+pos+'</b><span>'+(AR?'إيجابي':'positive')+'</span></div>'+
+   '<div class="rp-box"><b style="color:var(--bad)">−'+neg+'</b><span>'+(AR?'سلبي':'negative')+'</span></div>'+
+  '</div>'+
+  (avg?'<div class="rel-sum" style="margin-top:10px">'+(AR?'متوسط مزاجك في هذه الفترة: ':'Avg mood: ')+'<b>'+mw(avg)+'</b></div>':'')+
+  (coach?'<div style="margin-top:10px">'+coach+'</div>':'')+
+  '<div style="margin-top:10px">'+
+  (evs.length?evs.map(e=>{
+    return '<div class="day-ev" data-mem="'+e.id+'"><span class="day-time">'+fmtShort(e.ts)+'</span>'+
+     '<div class="ev-ic" style="--rc:'+cm.color+';width:30px;height:30px">'+ic(cm.icon,15)+'</div>'+
+     '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
+     (e.mood?'<span class="ev-face" style="color:'+(e.mood>=5?'var(--good)':e.mood<=3?'var(--bad)':'var(--ink3)')+'">'+faceSvg(e.mood,20)+'</span>':'')+
+    '</div>'}).join('')
+   :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
+  '</div>';
+ $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
+ const cg=$('#catCoachGo');
+ if(cg)cg.onclick=async()=>{
+  const tip=CAT_COACH[catLogCat];
+  await addInterest(AR?tip.ar:tip.en);
+  closeSheets();
+  toast(AR?'انضمت لمهماتك — أتحقق معك':'Added to your quests','var(--good)','target');
+ };
+}
 function renderLife(){
  const v=$('#v-life');if(!v)return;
  let bars='';
  CATS.forEach(c=>{const val=S.ind[c],d=S.catDelta[c];
-  bars+='<div class="bar-row" style="--rc:'+CAT_META[c].color+'">'+
+  bars+='<div class="bar-row" style="--rc:'+CAT_META[c].color+';cursor:pointer" data-act="catLog" data-c="'+c+'">'+
    '<span class="bar-ic">'+ic(CAT_META[c].icon,15)+'</span>'+
    '<span class="bar-name">'+cn(c)+'</span>'+
    '<div class="bar-track"><i data-w="'+val+'"></i></div>'+
@@ -4264,6 +4324,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openEvent')openEventSheet();
  else if(act==='openPick')openPickSheet();
  else if(act==='openStory')openStorySheet();
+ else if(act==='catLog')openCatLog(b.dataset.c);
  else if(act==='openBody')openBodySheet();
  else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
