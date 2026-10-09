@@ -307,6 +307,11 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 .hex-grid{fill:none;stroke:var(--line);stroke-width:1}
 .hex-val{fill:var(--acc-soft);stroke:var(--acc);stroke-width:2;stroke-linejoin:round;transition:all .2s}
 .hex-lab{font-size:11.5px;text-anchor:middle;font-family:var(--fb);font-weight:600}
+@keyframes hexBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+@keyframes hexFlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hex-ring{animation:hexBreath 4.8s ease-in-out infinite;transform-origin:160px 150px}
+.hex-ring2{animation-delay:.35s}.hex-ring3{animation-delay:.7s}
+.hex-aura{animation:hexFlow 26s linear infinite;transform-origin:160px 150px}
 .bar-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
 .bar-row:last-child{border-bottom:none}
 .bar-ic{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;color:var(--rc);background:var(--card);border:1px solid var(--line)}
@@ -2996,12 +3001,19 @@ function openDaySheet(ts){
 let hexCur=null;
 function hexSvg(){
  const cx=160,cy=150,r=104;
- const ring=k=>CATS.map((c,i)=>{const a=(-90+i*60)*Math.PI/180;return (cx+r*k*Math.cos(a)).toFixed(1)+','+(cy+r*k*Math.sin(a)).toFixed(1)}).join(' ');
- const spokes=CATS.map((c,i)=>{const a=(-90+i*60)*Math.PI/180;return '<line x1="160" y1="150" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" class="hex-grid"/>'}).join('');
+ const ringPts=k=>CATS.map((c,i)=>{const a=(-90+i*60)*Math.PI/180;return (cx+r*k*Math.cos(a)).toFixed(1)+','+(cy+r*k*Math.sin(a)).toFixed(1)}).join(' ');
+ const best=CATS.reduce((a,c)=>S.ind[c]>S.ind[a]?c:a,'health');
+ const worst=CATS.reduce((a,c)=>S.ind[c]<S.ind[a]?c:a,'health');
+ const cA=CAT_META[best].color,cB=CAT_META[worst].color;
+ const aura='<defs><radialGradient id="hexAuraG" cx="35%" cy="35%" r="75%">'+
+  '<stop offset="0%" stop-color="'+cA+'" stop-opacity=".16"/>'+
+  '<stop offset="55%" stop-color="'+cB+'" stop-opacity=".10"/>'+
+  '<stop offset="100%" stop-color="'+cB+'" stop-opacity=".03"/></radialGradient></defs>'+
+  '<polygon class="hex-aura" points="'+ringPts(1.02)+'" fill="url(#hexAuraG)" stroke="none"/>';
+ const rings=[1,.66,.33].map((k,i)=>'<polygon class="hex-ring hex-ring'+(i+1)+'" points="'+ringPts(k)+'" fill="none" stroke="var(--line)" stroke-width="1"/>').join('');
  const labels=CATS.map((c,i)=>{const a=(-90+i*60)*Math.PI/180;return '<text x="'+(cx+(r+21)*Math.cos(a)).toFixed(1)+'" y="'+(cy+(r+21)*Math.sin(a)+4).toFixed(1)+'" fill="'+CAT_META[c].color+'" class="hex-lab">'+cn(c)+'</text>'}).join('');
- return '<svg viewBox="0 0 320 300" class="hex">'+
-  '<polygon points="'+ring(1)+'" class="hex-grid"/><polygon points="'+ring(.66)+'" class="hex-grid"/><polygon points="'+ring(.33)+'" class="hex-grid"/>'+
-  spokes+'<polygon id="hexPoly" class="hex-val"/>'+
+ return '<svg viewBox="0 0 320 300" class="hex">'+aura+rings+
+  '<polygon id="hexPoly" class="hex-val"/>'+
   CATS.map((c,i)=>'<circle id="hexDot'+i+'" r="4" fill="'+CAT_META[c].color+'"/>').join('')+
   labels+'</svg>';
 }
@@ -3073,6 +3085,7 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{openMemoryCard(b2.dataset.mem)});
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
   const tip=CAT_COACH[catLogCat];
