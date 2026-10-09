@@ -4088,23 +4088,32 @@ function openMemoryCard(id){
    (ev.mood?'<span style="color:'+(ev.mood>=5?'var(--good)':ev.mood<=3?'var(--bad)':'var(--ink3)')+'">'+faceSvg(ev.mood,44)+'</span>':'')+
    '<div style="flex:1;min-width:0"><b style="font-size:15px;display:block">'+fmtDate(ev.ts)+'</b><span style="font-size:11.5px;color:var(--ink3)">'+fmtTime(ev.ts)+(ev.polarity>0?t('tag_pos'):ev.polarity<0?t('tag_neg'):'')+'</span></div>'+
   '</div>'+
-  '<div class="mem-qt" style="--rc:'+cm.color+'">'+esc(ev.text)+'</div>'+
+  '<div class="mem-qt" style="--rc:'+cm.color+'">'+esc(ev.text||'')+'</div>'+
   photos+
   '<div style="display:flex;gap:9px;margin-top:14px">'+
    '<button class="btn ghost" id="memEdit" style="flex:1">'+ic('edit',15)+' '+t('mem_edit')+'</button>'+
    '<button class="btn ghost" id="memDel" style="flex:1;color:var(--bad)">'+ic('trash',15)+' '+t('mem_del')+'</button>'+
   '</div>';
  openSheet('#shMem');
+ const ed=$('#memEdit');
+ if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
+ const dl=$('#memDel');
+ if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
+  await DB.del('events',ev.id);
+  S.events=S.events.filter(x=>x.id!==ev.id);
+  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
+ });
  if(catLogCat){
   const wasCat=catLogCat,wasR=catLogRange;
-  $('#shMem').addEventListener('click',function onMemClose(ev){
-   if(ev.target.closest('[data-close]')||ev.target.closest('#memDel')||ev.target.closest('#memEdit')){
+  $('#shMem').addEventListener('click',function onMemClose(ev2){
+   if(ev2.target.closest('[data-close]')||ev2.target.closest('#memDel')||ev2.target.closest('#memEdit')){
     catLogCat=wasCat;catLogRange=wasR;
     setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
     $('#shMem').removeEventListener('click',onMemClose);
    }
   });
  }
+}
 
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
 let asState=null;
