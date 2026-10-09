@@ -310,8 +310,8 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 @keyframes hexPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.03);opacity:1}}
 @keyframes hexFlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .hex-val{fill:url(#hexPulseG);stroke:var(--acc);stroke-width:2;stroke-linejoin:round}
-#hexFlowPoly{animation:hexFlow 9s linear infinite;transform-origin:160px 150px}
-#hexPoly{animation:hexPulse 3.2s ease-in-out infinite;transform-origin:160px 150px}
+#hexSpinWrap{animation:hexFlow 8s linear infinite;transform-origin:160px 150px}
+#hexPoly{animation:hexPulse 3.2s ease-in-out infinite;transform-origin:160px 150px;mix-blend-mode:overlay}
 .bar-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
 .bar-row:last-child{border-bottom:none}
 .bar-ic{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;color:var(--rc);background:var(--card);border:1px solid var(--line)}
@@ -3012,6 +3012,18 @@ function hexSvg(){
    '<stop offset="50%" stop-color="'+cB+'" stop-opacity=".30"/>'+
    '<stop offset="100%" stop-color="'+cC+'" stop-opacity=".22"/>'+
   '</linearGradient>'+
+  '<linearGradient id="hexSpinG" gradientUnits="userSpaceOnUse" x1="'+cx+'" y1="'+cy+'" x2="'+(cx+2*r)+'" y2="'+cy+'">'+
+   '<stop offset="0%" stop-color="'+cA+'" stop-opacity=".45"/>'+
+   '<stop offset="33%" stop-color="'+cB+'" stop-opacity=".35"/>'+
+   '<stop offset="66%" stop-color="'+cC+'" stop-opacity=".30"/>'+
+   '<stop offset="100%" stop-color="'+cA+'" stop-opacity=".45"/>'+
+  '</linearGradient>'+
+  '</defs>';
+  '<linearGradient id="hexPulseG" x1="0%" y1="0%" x2="100%" y2="100%">'+
+   '<stop offset="0%" stop-color="'+cA+'" stop-opacity=".38"/>'+
+   '<stop offset="50%" stop-color="'+cB+'" stop-opacity=".30"/>'+
+   '<stop offset="100%" stop-color="'+cC+'" stop-opacity=".22"/>'+
+  '</linearGradient>'+
   '<linearGradient id="hexSpinG" x1="0%" y1="0%" x2="100%" y2="0%">'+
    '<stop offset="0%" stop-color="'+cA+'" stop-opacity="0"/>'+
    '<stop offset="45%" stop-color="'+cA+'" stop-opacity=".35"/>'+
@@ -3020,9 +3032,10 @@ function hexSvg(){
   '</linearGradient>'+
   '</defs>';
  const grid=[1,.66,.33].map(k=>'<polygon points="'+ringPts(k)+'" fill="none" stroke="var(--line)" stroke-width="1" opacity=".8"/>').join('');
- const spin='<polygon id="hexFlowPoly" points="'+ringPts(1)+'" fill="url(#hexSpinG)" stroke="none"/>';
  const labels=CATS.map((c,i)=>{const a=(-90+i*60)*Math.PI/180;return '<text x="'+(cx+(r+21)*Math.cos(a)).toFixed(1)+'" y="'+(cy+(r+21)*Math.sin(a)+4).toFixed(1)+'" fill="'+CAT_META[c].color+'" class="hex-lab">'+cn(c)+'</text>'}).join('');
- return '<svg viewBox="0 0 320 300" class="hex">'+defs+grid+spin+
+ return '<svg viewBox="0 0 320 300" class="hex">'+defs+
+  '<g id="hexSpinWrap"><rect id="hexSpinRect" x="'+(cx-r-6)+'" y="'+(cy-r-6)+'" width="'+(2*r+12)+'" height="'+(2*r+12)+'" fill="url(#hexSpinG)" opacity="0" pointer-events="none"/></g>'+
+  grid+
   '<polygon id="hexPoly" class="hex-val"/>'+
   CATS.map((c,i)=>'<circle id="hexDot'+i+'" r="4" fill="'+CAT_META[c].color+'"/>').join('')+
   labels+'</svg>';
@@ -3095,7 +3108,11 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
- $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{closeSheets();setTimeout(()=>openMemoryCard(b2.dataset.mem),140)});
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
+  const backCat=catLogCat,backR=catLogRange;
+  closeSheets();
+  setTimeout(()=>{openMemoryCard(b2.dataset.mem);catLogCat=backCat;catLogRange=backR},140)
+ });
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
   const tip=CAT_COACH[catLogCat];
@@ -4100,15 +4117,16 @@ function openMemoryCard(id){
    '<button class="btn ghost" id="memDel" style="flex:1;color:var(--bad)">'+ic('trash',15)+' '+t('mem_del')+'</button>'+
   '</div>';
  openSheet('#shMem');
- const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
- const dl=$('#memDel');
- if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
-  await DB.del('events',ev.id);
-  S.events=S.events.filter(x=>x.id!==ev.id);
-  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
- });
-}
+ if(catLogCat){
+  const wasCat=catLogCat,wasR=catLogRange;
+  $('#shMem').addEventListener('click',function onMemClose(ev){
+   if(ev.target.closest('[data-close]')||ev.target.closest('#memDel')||ev.target.closest('#memEdit')){
+    catLogCat=wasCat;catLogRange=wasR;
+    setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
+    $('#shMem').removeEventListener('click',onMemClose);
+   }
+  });
+ }
 
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
 let asState=null;
