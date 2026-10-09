@@ -308,6 +308,18 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 @keyframes hexPulse{0%,100%{transform:scale(1);opacity:.82}50%{transform:scale(1.03);opacity:1}}
 .hex-val{fill:url(#hexSpinG);stroke:var(--acc);stroke-width:2;stroke-linejoin:round}
 #hexPoly{animation:hexPulse 3.2s ease-in-out infinite;transform-origin:160px 150px}
+.br-stage{display:flex;flex-direction:column;align-items:center;gap:18px;padding:26px 0 6px}
+.br-ring{width:180px;height:180px;display:grid;place-items:center;position:relative}
+.br-ring i{position:absolute;inset:0;border-radius:50%;border:3px solid var(--acc);opacity:.85}
+.br-ring i.b2{inset:14px;border-width:2px;opacity:.4;border-color:var(--c-mind)}
+.br-num{position:relative;z-index:2;font-family:var(--fd);font-size:56px;font-weight:800;color:var(--acc)}
+.br-phase{font-size:14px;font-weight:600;color:var(--ink)}
+.br-sub{font-size:11px;color:var(--ink3)}
+.br-grow{animation:brGrow 4s ease-in-out infinite alternate}
+@keyframes brGrow{from{transform:scale(.82);opacity:.55}to{transform:scale(1.08);opacity:1}}
+.br-shrink{animation:brGrow 8s ease-in-out infinite alternate-reverse}
+.br-acts{display:flex;gap:10px;width:100%}
+.br-acts .btn{flex:1}
 #hexSpinWrap{animation:hexFlow 8s linear infinite;transform-origin:160px 150px}
 #hexPoly{animation:hexPulse 3.2s ease-in-out infinite;transform-origin:160px 150px;mix-blend-mode:overlay}
 .bar-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
@@ -2754,10 +2766,9 @@ function openBodySheet(){
   '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'🫀 اعتني بجسدك':'🫀 Body care')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="rel-sum" style="margin-top:0">'+(AR?'تكاملُ الجسد حصنٌ يجب الاعتناء به. كل قطرة وخطوة وشهيق يُبنى بها الحصن.':'A fortress is built drop by drop, step by step, breath by breath.')+'</div>'+
   '<h4 class="lab" style="margin-top:14px">'+(AR?'🌬️ تمرين التنفس 4-7-8':'🌬️ 4-7-8 breathing')+'</h4>'+
-  '<div class="set-card" style="text-align:center">'+
-   '<div id="brNum" style="font-family:var(--fd);font-size:34px;font-weight:800;color:var(--acc);min-height:44px">'+(AR?'جاهز؟':'Ready?')+'</div>'+
-   '<div id="brPhase" style="font-size:13px;color:var(--ink2);min-height:20px">'+(AR?'أربع دورات فقط':'Four cycles only')+'</div>'+
-   '<button class="btn" id="brGo" style="margin-top:10px">'+(AR?'ابدأ الجلسة':'Start session')+'</button>'+
+  '<div class="set-card">'+
+   '<button class="btn" id="brGo">'+ic('heart',16)+' '+(AR?'ابدأ الجلسة':'Start session')+'</button>'+
+   '<div class="set-note" style="text-align:center">'+(AR?'أربع دورات · شهيق 4 · حبس 7 · زفير 8':'Four cycles · 4 in · 7 hold · 8 out')+'</div>'+
   '</div>'+
   '<h4 class="lab" id="wTitle" style="margin-top:14px">'+(AR?'💧 الماء — '+b.water+' من '+targetW+' أكواب':'💧 Water — '+b.water+' of '+targetW)+'</h4>'+
   '<div class="ch-bar"><i id="wBar" style="width:'+wPct+'%"></i></div>'+
@@ -2786,29 +2797,7 @@ function openBodySheet(){
   '<div class="rel-sum" style="border-right:3px solid var(--c-health)"><b style="color:var(--c-health)">'+esc(tip.t)+'</b> — '+esc(tip.p)+
    '<div style="margin-top:9px"><button class="btn ghost sm" id="tipDone">'+ic('check',14)+' '+(AR?'طبّقتها اليوم':'Applied today')+'</button></div></div>';
   openSheet('#shBody');
- let bt=null;
- const go2=$('#brGo');
- if(go2)go2.onclick=()=>{
-  if(bt){clearTimeout(bt);bt=null;if(brT)brT=null;$('#brNum').textContent=AR?'جاهز؟':'Ready?';$('#brPhase').textContent=AR?'أربع دورات فقط':'Four cycles';return}
-  const phases=[[AR?'شهيق':'Inhale',4],[AR?'احبس':'Hold',7],[AR?'زفير':'Exhale',8]];
-  let cyc=0,pi=0,sec=0;
-  const tick=()=>{
-   const ph=phases[pi];
-   $('#brNum').textContent=(4-sec);
-   $('#brPhase').textContent=ph[0]+' — '+(AR?('دورة '+(cyc+1)+' من 4'):('cycle '+(cyc+1)+'/4'));
-   sec++;
-   if(sec>=ph[1]){sec=0;pi++;if(pi>=phases.length){pi=0;cyc++}}
-   if(cyc>=4){
-    $('#brNum').textContent='✓';
-    $('#brPhase').textContent=AR?'أتممت الجلسة — صفاؤك يزداد':'Session complete';
-    bodyLog('breath',1);
-    toast(AR?'تم تسجيل تمرين التنفس — أحسنت':'Breathing logged','var(--good)','heart');
-    bt=null;return;
-   }
-   bt=setTimeout(tick,1000);
-  };
-  tick();
- };
+  $('#brGo').onclick=openBreathRitual;
   $$('#shBody [data-wa]').forEach(b2=>b2.onclick=async()=>{
   await bodyLog('water',+b2.dataset.wa);
   const n2=bodyToday();
@@ -2852,6 +2841,69 @@ function openBodySheet(){
   await bodyLog('tip',1,{tipTitle:tip.t});
   toast(AR?'أحسنت — عُدت غداً لنصيحة جديدة':'Well done — a new tip tomorrow','var(--good)','sprout');
   tipDone.disabled=true;tipDone.style.opacity=.45;
+ };
+}
+/* طقس التنفس — دائرة تتنفس معك 3.3 */
+function openBreathRitual(){
+ const sh=$('#shBody');if(!sh)return;
+ const AR=LANG==='ar';
+ const phases=[[AR?'شهيق':'Inhale',4,1],[AR?'احبس':'Hold',7,0],[AR?'زفير':'Exhale',8,-1]];
+ let cyc=0,pi=0,sec=0,done=false,tm=null;
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'🌬️ طقس التنفس':'🌬️ Breathing ritual')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="br-stage">'+
+   '<div class="br-ring">'+
+    '<i id="brR1" class="br-grow"></i><i class="b2 br-shrink"></i>'+
+    '<div class="br-num" id="brNum">—</div>'+
+   '</div>'+
+   '<div class="br-phase" id="brPhase">'+(AR?'استعد…':'Get ready…')+'</div>'+
+   '<div class="br-sub" id="brSub">'+(AR?'دورة 1 من 4':'Cycle 1 of 4')+'</div>'+
+   '<div class="br-acts" id="brActs" style="display:none">'+
+    '<button class="btn ghost" id="brRetry">'+ic('history',15)+' '+(AR?'أعد التمرين':'Retry')+'</button>'+
+    '<button class="btn" id="brSave">'+ic('check',15)+' '+(AR?'احفظ التمرين':'Save session')+'</button>'+
+   '</div>'+
+  '</div>';
+ openSheet('#shBody');
+ const stop=()=>{if(tm){clearTimeout(tm);tm=null}};
+ const finish=()=>{
+  done=true;stop();
+  $('#brNum').textContent='✓';
+  $('#brNum').style.animation='pop .45s ease';
+  $('#brPhase').textContent=AR?'أتممت الجلسة — أحسنت':'Session complete';
+  $('#brSub').textContent=AR?'صفاؤك يزداد كل مرة تتنفس فيها بوعي':'Clarity grows with every conscious breath';
+  const acts=$('#brActs');if(acts)acts.style.display='flex';
+ };
+ const tick=()=>{
+  if(done)return;
+  const ph=phases[pi];
+  const num=$('#brNum'),phase=$('#brPhase'),sub=$('#brSub');
+  if(!num){stop();return}
+  const r1=$('#brR1');
+  num.textContent=(ph[1]-sec);
+  phase.textContent=ph[0];
+  sub.textContent=AR?('دورة '+(cyc+1)+' من 4'):('Cycle '+(cyc+1)+' of 4');
+  if(r1){
+   r1.classList.remove('br-grow','br-shrink');
+   void r1.offsetWidth;
+   if(ph[2]===1)r1.classList.add('br-grow');
+   else if(ph[2]===-1)r1.classList.add('br-shrink');
+   else r1.style.transform='scale(1)';
+  }
+  sec++;
+  if(sec>=ph[1]){sec=0;pi++;if(pi>=phases.length){pi=0;cyc++}}
+  if(cyc>=4){finish();return}
+  tm=setTimeout(tick,1000);
+ };
+ const go=$('#brGo');
+ if(go)go.onclick=()=>{openBreathRitual()};
+ const rt=$('#brRetry');
+ if(rt)rt.onclick=()=>{stop();openBreathRitual()};
+ const sv=$('#brSave');
+ if(sv)sv.onclick=async()=>{
+  stop();
+  await bodyLog('breath',1);
+  closeSheets();
+  toast(AR?'سُجّلت جلسة التنفس — خذ صفاءك معك':'Breathing session saved','var(--good)','heart');
  };
 }
 function renderHome(){
