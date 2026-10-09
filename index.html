@@ -308,21 +308,27 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 @keyframes hexPulse{0%,100%{transform:scale(1);opacity:.82}50%{transform:scale(1.03);opacity:1}}
 .hex-val{fill:url(#hexSpinG);stroke:var(--acc);stroke-width:2;stroke-linejoin:round}
 #hexPoly{animation:hexPulse 3.2s ease-in-out infinite;transform-origin:160px 150px}
-/* طقس التنفس — غمر كامل أزرق */
+/* طقس التنفس — غمر أزرق يتنفس */
 #brOverlay{position:absolute;inset:0;z-index:98;background:radial-gradient(120% 100% at 50% 30%,#0E1E33 0%,#081422 55%,#050B14 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;animation:viewIn .4s ease}
 .br-stage{display:flex;flex-direction:column;align-items:center;gap:20px}
-.br-wrap{position:relative;width:min(62vw,240px);height:min(62vw,240px);display:grid;place-items:center}
-.br-halo{position:absolute;inset:-34px;border-radius:50%;background:radial-gradient(circle,rgba(80,160,255,.22) 0%,rgba(80,160,255,.06) 55%,transparent 72%)}
-.br-ring{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 32%,#3D7FD6 0%,#1E4E96 45%,#0E2A5C 78%,#0A1E44 100%);box-shadow:0 0 46px rgba(70,140,240,.45),inset 0 0 34px rgba(150,200,255,.25)}
-.br-ring2{inset:13%;background:radial-gradient(circle at 42% 34%,#5FA0E8 0%,#2C63B8 55%,#16407E 100%);box-shadow:0 0 30px rgba(100,170,255,.35)}
-.br-core{position:relative;z-index:2;width:34%;height:34%;border-radius:50%;background:radial-gradient(circle at 45% 38%,#BBD9FF 0%,#6FA8E8 55%,#3A70C4 100%);box-shadow:0 0 24px rgba(190,220,255,.55)}
-.br-num{position:absolute;z-index:3;font-family:var(--fd);font-size:44px;font-weight:800;color:#EAF4FF;text-shadow:0 2px 14px rgba(10,30,70,.6)}
+.br-wrap{position:relative;width:min(64vw,250px);height:min(64vw,250px);display:grid;place-items:center}
+.br-ring{position:absolute;inset:0;border-radius:50%;
+ background:linear-gradient(135deg,#5FA0E8 0%,#2C63B8 30%,#16407E 60%,#3A70C4 100%);
+ background-size:220% 220%;
+ box-shadow:0 0 60px 14px rgba(70,140,240,.35),inset 0 0 40px rgba(150,200,255,.30);
+ will-change:transform,background-position}
+.br-ring2{inset:15%;background:linear-gradient(315deg,#7FB4F0 0%,#3A70C4 45%,#1E4E96 100%);background-size:200% 200%;box-shadow:inset 0 0 26px rgba(190,220,255,.35)}
+.br-core{position:absolute;inset:32%;border-radius:50%;background:radial-gradient(circle at 42% 36%,#CFE4FF 0%,#7FB4F0 50%,#4A80D0 100%);box-shadow:0 0 26px rgba(200,225,255,.5)}
+.br-num{position:absolute;z-index:3;font-family:var(--fd);font-size:46px;font-weight:800;color:#EAF4FF;text-shadow:0 2px 16px rgba(5,20,50,.75)}
 .br-phase{font-size:15px;font-weight:700;color:#BBD9FF;letter-spacing:.3px}
 .br-sub{font-size:11.5px;color:#7FA8D6}
 .br-acts{display:flex;gap:10px;width:min(72vw,280px)}
 .br-acts .btn{flex:1}
 .br-acts .btn.ghost{color:#BBD9FF;border-color:#2C5A96}
 .br-x{position:absolute;top:calc(env(safe-area-inset-top) + 14px);left:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid #2C5A96;color:#BBD9FF;background:rgba(14,42,92,.4)}
+@keyframes brWave{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
+.br-ring{animation:brWave 5s ease-in-out infinite}
+.br-ring2{animation:brWave 5s ease-in-out infinite reverse}
 .br-shrink{animation:brGrow 8s ease-in-out infinite alternate-reverse}
 .br-acts{display:flex;gap:10px;width:100%}
 .br-acts .btn{flex:1}
@@ -2853,7 +2859,7 @@ function openBodySheet(){
 function openBreathRitual(){
  const AR=LANG==='ar';
  const old=$('#brOverlay');if(old)old.remove();
- const phases=[[AR?'شهيق':'Inhale',4,0],[AR?'احبس':'Hold',7,1],[AR?'زفير':'Exhale',8,2]];
+ const phases=[[AR?'شهيق':'Inhale',4,1],[AR?'احبس':'Hold',7,0],[AR?'زفير':'Exhale',8,-1]];
  let cyc=0,pi=0,sec=0,done=false,t0=performance.now(),raf=null;
  const ov=document.createElement('div');ov.id='brOverlay';
  ov.innerHTML=
@@ -2881,14 +2887,20 @@ function openBreathRitual(){
   if(halo)halo.style.opacity=(0.4+0.6*a).toFixed(2);
  };
  /* نبض مستمر بحساب زمني — لا يخيف أبداً */
- const breathe=()=>{
+ /* محرك النبض المرحلي: اتساع أثناء العد، تثبيت، انقباض */
+ const pulse=()=>{
   if(done)return;
-  const t=(performance.now()-t0)/1000;
-  const wave=(Math.sin(t*2*Math.PI/4)+1)/2;       /* موجة 4 ثوانٍ 0→1→0 */
-  const anti=(Math.sin(t*2*Math.PI/4+Math.PI)+1)/2; /* الداخلية عكسها */
-  setScale(0.78+wave*0.30, 0.70+anti*0.36);
-  raf=requestAnimationFrame(breathe);
+  const ph=phases[pi];
+  if(ph[2]===0){setScale(1.06,0.94);raf=requestAnimationFrame(pulse);return}
+  const el=(ph[2]===1)?ph[1]:ph[1];
+  const prog=sec+((performance.now()-phStart)/1000);
+  const p=Math.min(1,prog/el);
+  const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+  if(ph[2]===1)setScale(0.72+e*0.34, 1.10-e*0.30);
+  else setScale(1.06-e*0.34, 0.80+e*0.30);
+  raf=requestAnimationFrame(pulse);
  };
+ let phStart=performance.now();
  const finish=()=>{
   done=true;stop();
   setScale(1,1);if(halo)halo.style.opacity=1;
@@ -2902,13 +2914,14 @@ function openBreathRitual(){
   const ph=phases[pi];
   num.textContent=(ph[1]-sec);
   phase.textContent=ph[0];
+  phStart=performance.now();
   sub.textContent=AR?('دورة '+(cyc+1)+' من 4'):('Cycle '+(cyc+1)+' of 4');
   sec++;
   if(sec>=ph[1]){sec=0;pi++;if(pi>=phases.length){pi=0;cyc++}}
   if(cyc>=4){finish();return}
   raf=setTimeout(tick,1000);
  };
- breathe();raf=setTimeout(tick,1000);
+ setScale(0.72,1.10);phStart=performance.now();tick();raf=requestAnimationFrame(pulse);
  $2('#brX').onclick=()=>{stop();ov.remove()};
  $2('#brRetry').onclick=()=>{stop();ov.remove();openBreathRitual()};
  $2('#brSave').onclick=async()=>{
