@@ -326,17 +326,10 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 .br-acts .btn{flex:1}
 .br-acts .btn.ghost{color:#BBD9FF;border-color:#2C5A96}
 .br-x{position:absolute;top:calc(env(safe-area-inset-top) + 14px);left:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid #2C5A96;color:#BBD9FF;background:rgba(14,42,92,.4)}
-@keyframes handKnock{
- 0%{left:-46px;transform:translateY(-50%) rotate(0deg);opacity:0}
- 12%{left:14px;transform:translateY(-50%) rotate(0deg);opacity:1}
- 22%{transform:translateY(-50%) translateX(-8px) rotate(-14deg)}
- 32%{transform:translateY(-50%) translateX(2px) rotate(0deg)}
- 42%{transform:translateY(-50%) translateX(-8px) rotate(-14deg);opacity:1}
- 52%{left:14px;transform:translateY(-50%);opacity:1}
- 78%{left:14px;opacity:1}
- 100%{left:-46px;transform:translateY(-50%);opacity:0}
-}
-.rel-hand{animation:handKnock 5.2s ease-in-out infinite}
+ @keyframes relWave{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.rel-win-wave{position:absolute;inset:0;background:linear-gradient(120deg,rgba(232,144,126,.16) 0%,rgba(227,168,62,.07) 40%,rgba(232,144,126,.16) 80%);background-size:250% 250%;animation:relWave 6s ease-in-out infinite}
+ @keyframes relKnock{0%,84%,100%{box-shadow:0 0 0 0 rgba(228,121,107,0)}88%{box-shadow:0 0 0 6px rgba(228,121,107,.30)}92%{box-shadow:0 0 0 0 rgba(228,121,107,0)}96%{box-shadow:0 0 0 9px rgba(228,121,107,.22)}}
+.rel-win{animation:relKnock 5.2s ease-in-out infinite}
  @keyframes brWave{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
 .br-ring{animation:brWave 5s ease-in-out infinite}
 .br-ring2{animation:brWave 5s ease-in-out infinite reverse}
@@ -2687,19 +2680,13 @@ function bodyEntry(){
   '<span>'+(AR?'تكاملُ الجسد حصنٌ يجب الاعتناء به — تمرين، ماء، خطوات، نوم':'Your body is a fortress — breathing, water, steps, sleep')+'</span></span>'+
   ic('chev',16)+'</button>';
 }
-/* شباك العلاقات — يد تطرق من الداخل 3.3 */
+/* شباك العلاقات — تموج ألوان ونبض طرق 3.3 */
 function relWindow(){
  const AR=LANG==='ar';
- const stale=S.staleRels.length;
- const urgent=stale>0;
- const knockMs=urgent?5200:8000;
- const knock=urgent
-  ?(AR?'يدٌ تطرق — '+stale+' '+(stale===1?'علاقة':'علاقات')+' تنتظر صوتك':'A hand knocks — '+stale+' waiting')
-  :(AR?'شباك علاقاتك ينتظر نسيمك':'Your relations window');
- return '<button class="story-btn" data-act="goRelations" style="margin-top:12px;overflow:hidden;position:relative;min-height:64px">'+
-  '<span style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(232,144,126,.10),rgba(227,168,62,.06));backdrop-filter:blur(2px)"></span>'+
-  '<span style="position:absolute;inset:0;opacity:.5;background-image:repeating-linear-gradient(0deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px),repeating-linear-gradient(90deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px)"></span>'+
-  '<span class="rel-hand" style="position:absolute;top:50%;left:-46px;transform:translateY(-50%);font-size:26px">🤝</span>'+
+ const knock=AR?'علاقاتك تنتظر تفاعلك':'Your relations await you';
+ return '<button class="story-btn rel-win" data-act="goRelations" style="margin-top:12px;overflow:hidden;position:relative;min-height:64px">'+
+  '<span class="rel-win-wave"></span>'+
+  '<span style="position:absolute;inset:0;opacity:.4;background-image:repeating-linear-gradient(0deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px),repeating-linear-gradient(90deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px)"></span>'+
   '<span style="position:relative;z-index:2;display:flex;align-items:center;gap:11px">'+
    '<span class="sb-ic" style="background:rgba(232,144,126,.14);color:var(--c-relations)">'+ic('users',20)+'</span>'+
    '<span style="flex:1;min-width:0;text-align:right"><b>'+(AR?'العلاقات':'Relations')+'</b>'+
@@ -3349,64 +3336,100 @@ function renderRelations(){
 }
 
 /* التواصل والإحصاءات */
+/* سجل التواصل — مركز ثلاثي: سجل، أوقات، إدخال جديد 3.3 */
+let csView='log',csKind='call';
 function openContactSheet(rid){
  const r=S.rels.find(x=>x.id===rid);if(!r)return;
  if(!r.calls)r.calls={n:0,d:0};
- csRelId=rid;csDur=0;
+ csRelId=rid;csView='log';csKind='call';
+ drawContactHub();
+ openSheet('#shContact');
+}
+function relContactsOf(r){
+ return S.events.filter(e=>e.type==='contact'&&e.text.indexOf(r.name)>=0).sort((a,b)=>b.ts-a.ts);
+}
+function drawContactHub(){
  const sh=$('#shContact');if(!sh)return;
+ const r=S.rels.find(x=>x.id===csRelId);if(!r)return;
  const AR=LANG==='ar';
- const statLine=r.calls.n>0
-  ?t('cs_stats')+'<b>×'+r.calls.n+' · '+r.calls.d+' '+t('cs_min_s')+'</b>'
-  :t('cs_none');
- const durs=[1,5,10,20].map(d=>'<button class="dq" data-cdur="'+d+'">'+d+' '+t('cs_min_s')+'</button>').join('')+
-  '<button class="dq on" data-cdur="0">'+t('cs_nodur')+'</button>';
+ const evs=relContactsOf(r);
+ const mine=evs.filter(e=>e.who!=='them').length;
+ const theirs=evs.filter(e=>e.who==='them').length;
+ const tot=r.calls.d||0;
+ const totTxt=tot>=60?(Math.floor(tot/60)+(AR?' س ':'h ')+(tot%60)+' '+(AR?'د':'m')):(tot+' '+(AR?'دقيقة':'min'));
  sh.innerHTML=
-  '<div class="sh-grip"></div><div class="sh-head"><b>'+t('cs_t')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
-   '<div class="rel-sum" style="margin-top:0;margin-bottom:10px">'+statLine+
-   '<div style="margin-top:8px"><button class="btn ghost sm" id="csEditStats">'+ic('edit',13)+' '+(AR?'عدّل الإحصاءات':'Edit stats')+'</button></div></div>'+
-  '<label class="lab" style="margin-top:13px">'+t('cs_q')+'</label>'+
-  '<div class="cs-durs">'+durs+'</div>'+
-   '<label class="lab" style="margin-top:13px">'+(AR?'من بادر بهذا التواصل؟':'Who initiated?')+'</label>'+
-  '<div class="dq-row" id="csWho">'+
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'📜 سجل التواصل — ':'📜 Contact log — ')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="card" style="padding:5px 15px;cursor:pointer" id="csStatsGo">'+
+   '<div class="stp-row"><span>'+(AR?'أنا المتصل':'I initiated')+'</span><div class="stp"><b>'+mine+'</b></div></div>'+
+   '<div class="stp-row"><span>'+(AR?'هو/هي المتصل':'They initiated')+'</span><div class="stp"><b>'+theirs+'</b></div></div>'+
+   '<div class="stp-row" style="border-bottom:none"><span>'+(AR?'إجمالي وقت التواصل':'Total contact time')+'</span><div class="stp"><b>'+totTxt+'</b></div></div>'+
+  '</div>'+
+  '<button class="btn" id="csNew" style="margin-top:14px">'+ic('plus',16)+' '+(AR?'تواصل جديد':'New contact')+'</button>'+
+  '<div class="set-note" style="margin-top:12px">'+(AR?'كل تواصل يُسجل هنا بسطره ووقته — وميزان العطاء يقرؤه تلقائياً':'Every contact is logged here — the giving balance reads it automatically')+'</div>';
+ const sg=$('#csStatsGo');if(sg)sg.onclick=()=>{csView='stats';drawContactStats()};
+ const nb=$('#csNew');if(nb)nb.onclick=()=>{csView='new';csKind='call';drawContactNew()};
+}
+function drawContactStats(){
+ const sh=$('#shContact');if(!sh)return;
+ const r=S.rels.find(x=>x.id===csRelId);if(!r)return;
+ const AR=LANG==='ar';
+ const evs=relContactsOf(r);
+ const kindIc={whatsapp:'wa',call:'phone',meetup:'users'};
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'⏱ أوقات التواصل — ':'⏱ Contact times — ')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  (evs.length?evs.map(e=>{
+    const k=e.kind||'call';
+    return '<div class="day-ev"><span class="day-time">'+fmtShort(e.ts)+'</span>'+
+     '<div class="ev-ic" style="--rc:var(--c-relations);width:30px;height:30px">'+ic(kindIc[k]||'phone',15)+'</div>'+
+     '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+(e.minutes?' · '+e.minutes+' '+(AR?'د':'m'):'')+(e.who==='them'?' · '+(AR?'بادرة منه':'from them'):'')+'</span></div>'+
+    '</div>'}).join('')
+   :'<div class="empty">'+ic('phone',24)+'<br>'+(AR?'لا تواصلات مسجلة بعد':'No contacts logged yet')+'</div>')+
+  '<button class="btn ghost" id="csBack" style="margin-top:14px">'+(AR?'رجوع للسجل':'Back to log')+'</button>';
+ const bk=$('#csBack');if(bk)bk.onclick=()=>{csView='log';drawContactHub()};
+}
+function drawContactNew(){
+ const sh=$('#shContact');if(!sh)return;
+ const r=S.rels.find(x=>x.id===csRelId);if(!r)return;
+ const AR=LANG==='ar';
+ const kinds=[['whatsapp',AR?'واتساب':'WhatsApp','wa'],['call',AR?'مكالمة':'Call','phone'],['meetup',AR?'لقاء':'Meetup','users']];
+ sh.innerHTML=
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'➕ تواصل جديد — ':'➕ New contact — ')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<label class="lab">'+(AR?'نوع التواصل':'Contact type')+'</label>'+
+  '<div class="pick-grid c2">'+kinds.map(k=>'<button class="pick-card'+(csKind===k[0]?' on':'')+'" data-csk="'+k[0]+'">'+ic(k[2],20)+'<span>'+k[1]+'</span></button>').join('')+'</div>'+
+  '<label class="lab" style="margin-top:13px">'+(AR?'مدة التواصل بالدقائق (اختياري)':'Duration in minutes (optional)')+'</label>'+
+  '<input id="csMin" type="number" inputmode="numeric" placeholder="'+(AR?'مثال: 10':'e.g. 10')+'">'+
+  '<label class="lab" style="margin-top:13px">'+(AR?'من بادر؟':'Who initiated?')+'</label>'+
+  '<div class="dq-row">'+
    '<button class="dq on" data-who="me">'+(AR?'أنا بدأتُ':'I did')+'</button>'+
    '<button class="dq" data-who="them">'+(AR?'هو/هي بدأ':'They did')+'</button>'+
   '</div>'+
-  '<button class="btn" id="csSave">'+ic('check',16)+' '+t('cs_save')+'</button>'+
-  '<div class="set-note" style="margin-top:12px">'+t('cs_hint')+'</div>';
- openSheet('#shContact');
- $$('#shContact [data-cdur]').forEach(b=>b.onclick=()=>{
-  csDur=+b.dataset.cdur;
-  $$('#shContact [data-cdur]').forEach(x=>x.classList.toggle('on',x===b));
+  '<button class="btn" id="csSaveNew" style="margin-top:16px">'+ic('check',16)+' '+(AR?'حفظ':'Save')+'</button>'+
+  '<button class="btn ghost" id="csBack2" style="margin-top:8px">'+(AR?'رجوع للسجل':'Back to log')+'</button>';
+ $$('#shContact [data-csk]').forEach(b=>b.onclick=()=>{
+  csKind=b.dataset.csk;
+  $$('#shContact [data-csk]').forEach(x=>x.classList.toggle('on',x===b));
  });
-  $$('#shContact [data-who]').forEach(b=>b.onclick=()=>{
+ $$('#shContact [data-who]').forEach(b=>b.onclick=()=>{
   $$('#shContact [data-who]').forEach(x=>x.classList.toggle('on',x===b));
  });
- const es=$('#csEditStats');
- if(es)es.onclick=()=>{closeSheets();setTimeout(()=>openRelStats(rid),160)};
- const sv=$('#csSave');if(sv)sv.onclick=saveContactLog;
-}
-async function saveContactLog(){
- const r=S.rels.find(x=>x.id===csRelId);if(!r)return;
- const prevLast=r.lastContact,prevCalls={n:r.calls.n,d:r.calls.d};
- r.lastContact=Date.now();r.calls.n++;if(csDur)r.calls.d+=csDur;
- await DB.put('rels',r);
- const AR=LANG==='ar';
- const whoEl=$('#shContact [data-who].on');
- const who=whoEl?whoEl.dataset.who:'me';
- const ev={id:uid(),type:'contact',category:'relations',polarity:1,
-  text:(AR?(who==='me'?'تواصلتُ مع ':'تواصل معي '):(who==='me'?'Contacted ':'Contacted by '))+r.name+(csDur?' ('+csDur+' '+t('cs_min_s')+')':''),ts:Date.now(),who:who};
- await DB.put('events',ev);S.events.push(ev);
- dismissed.add('rel:'+csRelId);
- closeSheets();
- toast(t('contact_toast')+r.name+t('contact_toast2'),'var(--c-relations)','phone',t('undo'),async()=>{
-  const rel=S.rels.find(x=>x.id===csRelId);
-  if(rel){rel.lastContact=prevLast;rel.calls=prevCalls;await DB.put('rels',rel)}
-  await DB.del('events',ev.id);
-  S.events=S.events.filter(x=>x.id!==ev.id);
-  toast(t('undo_ok'),'var(--ink2)','x',null,null,2200);
+ const bk=$('#csBack2');if(bk)bk.onclick=()=>{csView='log';drawContactHub()};
+ const sv=$('#csSaveNew');
+ if(sv)sv.onclick=async()=>{
+  const whoEl=$('#shContact [data-who].on');
+  const who=whoEl?whoEl.dataset.who:'me';
+  const mn=parseInt(($('#csMin')?$('#csMin').value:''),10)||0;
+  const kindAr={whatsapp:'واتساب',call:'مكالمة',meetup:'لقاء'};
+  const kindEn={whatsapp:'WhatsApp',call:'Call',meetup:'Meetup'};
+  const text=(AR?(who==='me'?'تواصلتُ مع ':'تواصل معي '):(who==='me'?'Contacted ':'Contacted by '))+r.name+' — '+(AR?kindAr[csKind]:kindEn[csKind])+(mn?' ('+mn+' '+(AR?'د':'m')+')':'');
+  const ev={id:uid(),type:'contact',category:'relations',polarity:1,who:who,kind:csKind,minutes:mn,text:text,ts:Date.now()};
+  await DB.put('events',ev);S.events.push(ev);
+  r.calls.n++;if(mn)r.calls.d+=mn;
+  await DB.put('rels',r);
+  dismissed.add('rel:'+r.id);
+  toast((AR?'سُجّل التواصل مع ':'Contact logged: ')+r.name,'var(--c-relations)','phone');
   refresh();
- },7000);
- refresh();
+  csView='log';drawContactHub();
+ };
 }
 function openRelStats(rid){
  const r=S.rels.find(x=>x.id===rid);if(!r)return;
