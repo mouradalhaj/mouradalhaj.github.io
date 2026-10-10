@@ -3302,6 +3302,7 @@ function renderRelations(){
    '<div class="rel-acts">'+
     (r.phone?'<a class="icon-btn call" href="tel:'+esc(r.phone)+'" style="text-decoration:none">'+ic('phone',16)+'</a>':'<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>')+
     (r.phone?'<a class="icon-btn" href="https://wa.me/'+esc(String(r.phone).replace(/[^\d]/g,''))+'" target="_blank" rel="noopener" style="text-decoration:none">'+ic('wa',16)+'</a>':'')+
+   '<button class="icon-btn" data-act="contact" data-id="'+r.id+'" title="'+(LANG==='ar'?'سجل تواصلاً':'Log contact')+'">'+ic('check',16)+'</button>'+
    '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
    '<button class="icon-btn" data-act="relEdit" data-id="'+r.id+'">'+ic('edit',15)+'</button>'+
    '</div></div>'+
