@@ -3253,12 +3253,13 @@ function renderRelations(){
   rows+='<div class="rel" style="--rc:'+rt.color+'">'+
    '<div class="rel-av">'+esc((r.name||'?')[0])+'</div>'+
    '<div class="rel-b"><b>'+esc(r.name)+'</b><span>'+rt[LANG]+' · '+t('rel_last')+' '+dTxt+'</span>'+
-    '<div class="rel-bar"><i style="width:'+pct+'%;background:'+col+'"></i></div></div>'+
+   '<div class="rel-bar"><i style="width:'+pct+'%;background:'+col+'"></i></div></div>'+
    '<div class="rel-acts">'+
-    '<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>'+
-    '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
+    (r.phone?'<a class="icon-btn call" href="tel:'+esc(r.phone)+'" style="text-decoration:none">'+ic('phone',16)+'</a>':'<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>')+
+    (r.phone?'<a class="icon-btn" href="https://wa.me/'+esc(String(r.phone).replace(/[^\d]/g,''))+'" target="_blank" rel="noopener" style="text-decoration:none">'+ic('wa',16)+'</a>':'')+
+   '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
    '</div></div>'+
-    '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>'+    (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
+   '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>'+    (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
  v.innerHTML=
   '<h3 class="sec-t" style="margin-top:14px">'+ic('users',15)+' '+t('rel_view_t')+'</h3>'+
   '<div class="rel-sum">'+(S.rels.length?t('rel_sum_a')+'<b>'+S.rels.length+'</b>'+t('rel_sum_n')+(S.staleRels.length?'<b style="color:var(--bad)">'+S.staleRels.length+'</b>'+t('rel_stale'):t('rel_good')):t('rel_empty'))+'</div>'+
@@ -3974,6 +3975,11 @@ function buildSheets(){
    '<button class="dq" data-feel="needs">'+(LANG==='ar'?'تحتاج اهتماماً':'Needs care')+'</button>'+
    '<button class="dq" data-feel="tense">'+(LANG==='ar'?'متوترة':'Tense')+'</button>'+
   '</div>'+
+  '<label class="lab">'+(LANG==='ar'?'بيانات التواصل (اختياري — تبقى على جهازك)':'Contact info (optional — stays on device)')+'</label>'+
+  '<input id="relPhone" inputmode="tel" style="direction:ltr;text-align:left" placeholder="'+(LANG==='ar'?'رقم الجوال…':'Phone…')+'">'+
+  '<div style="height:8px"></div>'+
+  '<input id="relIg" style="direction:ltr;text-align:left" placeholder="'+(LANG==='ar'?'معرف إنستغرام أو منصة أخرى…':'Instagram or other handle…')+'">'+
+  '<div style="height:14px"></div>'+
   '<div style="height:14px"></div>'+
   '<label class="lab">'+(LANG==='ar'?'عدد اللقاءات المشتركة (وجهاً لوجه، تقريبي)':'Shared in-person meetups (approx)')+'</label>'+
   '<div class="stp" style="justify-content:center"><button id="meetMinus">−</button><b id="meetCount">0</b><button id="meetPlus">+</button></div>'+
@@ -4350,7 +4356,9 @@ async function saveRel(){
  const feel=feelEl?feelEl.dataset.feel:'good';
  const mcEl=$('#meetCount');
  const meetups=mcEl?parseInt(mcEl.textContent)||0:0;
- const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0},feel:feel,meetups:meetups};
+ const phEl=$('#relPhone'),igEl=$('#relIg');
+ const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0},feel:feel,meetups:meetups,
+  phone:phEl?phEl.value.trim():'',social:igEl?igEl.value.trim():''};
  await DB.put('rels',nr);S.rels.push(nr);
  S.rels.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
  closeSheets();toast(name+t('rel_joined'),'var(--c-relations)','users');
