@@ -3256,6 +3256,34 @@ function openRelEdit(rid){
  const shTitle=$('#shRel .sh-head b');if(shTitle)shTitle.textContent=(LANG==='ar'?'تعديل ':'Edit ')+r.name;
  const sv=$('#relSave');if(sv)sv.dataset.edit=rid;
 }
+/* ميزان العطاء — من يحمل همّ المبادرة؟ 3.3 */
+function givingBalance(){
+ const last30=Date.now()-30*DAY;
+ const out=[];
+ S.rels.forEach(r=>{
+  const cs=S.events.filter(e=>e.type==='contact'&&e.who&&e.text.indexOf(r.name)>=0&&e.ts>=last30);
+  const mine=cs.filter(e=>e.who==='me').length;
+  const theirs=cs.filter(e=>e.who==='them').length;
+  if(mine+theirs>=2)out.push({r:r,mine:mine,theirs:theirs,tot:mine+theirs});
+ });
+ return out.sort((a,b)=>Math.abs(b.mine-b.theirs)-Math.abs(a.mine-a.theirs));
+}
+function givingBalanceHtml(){
+ const AR=LANG==='ar';
+ const rows=givingBalance();
+ if(!rows.length)return '';
+ const top=rows.slice(0,3).map(x=>{
+  const d=x.mine-x.theirs;
+  let line,icol;
+  if(Math.abs(d)<=1){line=AR?'ميزان متوازن — هذه علاقة تُروى من الطرفين':'Balanced — watered from both sides';icol='var(--good)'}
+  else if(d>0){line=AR?('أنت تبادر '+x.mine+' مقابل '+x.theirs+' منه — العلاقة تشتاق لمبادرة منه… أو لقلّة مبادرتك إليه بلا سبب ظاهر'):('You initiate '+x.mine+' vs '+x.theirs+' from them');icol='var(--acc)'}
+  else{line=AR?('هو/هي يبادر '+(-d)+' مرات أكثر منك — أجب الدعوة، فالباب الذي يطرقك اليوم قد يمل من الغد'):('They initiate '+(-d)+'× more — answer the call');icol='var(--c-relations)'}
+  return '<div class="pp-corr">'+ic('pulse',17)+'<div class="pp-corr-b"><b>'+esc(x.r.name)+'</b><p style="color:'+icol+'">'+line+'</p></div><span class="pp-corr-st">'+x.mine+' : '+x.theirs+'</span></div>';
+ }).join('');
+ return '<h3 class="sec-t">'+ic('heart',15)+' '+(AR?'ميزان العطاء — آخر 30 يوماً':'Giving balance — last 30 days')+'</h3>'+
+  '<div class="card" style="padding:5px 15px">'+top+'</div>'+
+  '<div class="int-learn" style="margin-top:8px">'+ic('brain',13)+' <b>'+(AR?'المبادرة هدية لا دَين':'Initiation is a gift, not a debt')+'</b> — '+(AR?'الميزان يُنبه لا يُحاسب. أحياناً نحن السند، وأحياناً يأتي دورنا أن نستقبل.':'A gentle mirror, not a scorecard.')+'</div>';
+}
 function renderRelations(){
  const v=$('#v-relations');if(!v)return;
  let rows='';
@@ -3282,6 +3310,7 @@ function renderRelations(){
   '<h3 class="sec-t" style="margin-top:14px">'+ic('users',15)+' '+t('rel_view_t')+'</h3>'+
   '<div class="rel-sum">'+(S.rels.length?t('rel_sum_a')+'<b>'+S.rels.length+'</b>'+t('rel_sum_n')+(S.staleRels.length?'<b style="color:var(--bad)">'+S.staleRels.length+'</b>'+t('rel_stale'):t('rel_good')):t('rel_empty'))+'</div>'+
   '<div>'+rows+'</div>'+
+   givingBalanceHtml()+
   '<div class="page-add"><button class="btn ghost" data-act="relAdd">'+ic('plus',16)+' '+t('rel_add')+'</button></div>'+
   '<div style="height:16px"></div>';
 }
@@ -3303,12 +3332,20 @@ function openContactSheet(rid){
   '<div class="rel-sum" style="margin-top:0">'+statLine+'</div>'+
   '<label class="lab" style="margin-top:13px">'+t('cs_q')+'</label>'+
   '<div class="cs-durs">'+durs+'</div>'+
+   '<label class="lab" style="margin-top:13px">'+(AR?'من بادر بهذا التواصل؟':'Who initiated?')+'</label>'+
+  '<div class="dq-row" id="csWho">'+
+   '<button class="dq on" data-who="me">'+(AR?'أنا بدأتُ':'I did')+'</button>'+
+   '<button class="dq" data-who="them">'+(AR?'هو/هي بدأ':'They did')+'</button>'+
+  '</div>'+
   '<button class="btn" id="csSave">'+ic('check',16)+' '+t('cs_save')+'</button>'+
   '<div class="set-note" style="margin-top:12px">'+t('cs_hint')+'</div>';
  openSheet('#shContact');
  $$('#shContact [data-cdur]').forEach(b=>b.onclick=()=>{
   csDur=+b.dataset.cdur;
   $$('#shContact [data-cdur]').forEach(x=>x.classList.toggle('on',x===b));
+ });
+  $$('#shContact [data-who]').forEach(b=>b.onclick=()=>{
+  $$('#shContact [data-who]').forEach(x=>x.classList.toggle('on',x===b));
  });
  const sv=$('#csSave');if(sv)sv.onclick=saveContactLog;
 }
@@ -3318,8 +3355,10 @@ async function saveContactLog(){
  r.lastContact=Date.now();r.calls.n++;if(csDur)r.calls.d+=csDur;
  await DB.put('rels',r);
  const AR=LANG==='ar';
+ const whoEl=$('#shContact [data-who].on');
+ const who=whoEl?whoEl.dataset.who:'me';
  const ev={id:uid(),type:'contact',category:'relations',polarity:1,
-  text:(AR?'تواصلت مع ':'Contacted ')+r.name+(csDur?' ('+csDur+' '+t('cs_min_s')+')':''),ts:Date.now()};
+  text:(AR?(who==='me'?'تواصلتُ مع ':'تواصل معي '):(who==='me'?'Contacted ':'Contacted by '))+r.name+(csDur?' ('+csDur+' '+t('cs_min_s')+')':''),ts:Date.now(),who:who};
  await DB.put('events',ev);S.events.push(ev);
  dismissed.add('rel:'+csRelId);
  closeSheets();
