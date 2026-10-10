@@ -2949,6 +2949,18 @@ function openBreathRitual(){
   toast(AR?'سُجّلت جلسة التنفس — خذ صفاءك معك':'Breathing session saved','var(--good)','heart');
  };
 }
+/* لوحة الأبعاد النفسية السبعة — تحت ملخص الأداء 3.3 */
+function psDimsCard(){
+ const r=todayRate();
+ if(!r||!r.ps)return '';
+ const AR=LANG==='ar';
+ return '<div class="card" style="margin-top:10px;padding:13px 15px"><h5 style="font-size:11px;color:var(--ink3);font-weight:500;margin-bottom:8px">'+ic('star',13)+' '+(AR?'نتيجتك':'Your result')+'</h5>'+
+  PS_DIMS.map(d2=>{
+   const raw=r.ps[d2.id]||0;
+   const pct=d2.inv?(6-raw)*20:raw*20;
+   return '<div style="display:flex;align-items:center;gap:9px;padding:4px 0"><span style="width:60px;font-size:11px;color:'+d2.col+';flex:none">'+t(d2.k)+'</span><div style="flex:1;height:8px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:'+d2.col+'"></i></div><em style="font-size:10.5px;font-style:normal;width:36px;text-align:left;color:var(--ink2);flex:none">'+pct+'%</em></div>';
+  }).join('')+'</div>';
+}
 function renderHome(){
  const v=$('#v-home');if(!v)return;
  const h=new Date().getHours();
@@ -2976,13 +2988,6 @@ function renderHome(){
   '<div><span class="st-chip">'+ic('flame',14)+' '+(streak>0?streak+' '+pd(streak)+' · '+(AR?'سلسلة التوثيق':'logging streak'):(AR?'ابدأ سلسلتك اليوم':'Start your streak'))+'</span>'+
   (intent?'<span class="in-chip">'+ic('sun2',13)+' '+t('intent_today')+esc(intent)+'</span>':'')+'</div>'+
   rateCard()+
-  (r?(function(){if(!r.ps)return '';const lvls=psLevels();
-   return '<div class="card" style="margin-top:10px;padding:13px 15px"><h5 style="font-size:11px;color:var(--ink3);font-weight:500;margin-bottom:8px">'+ic('star',13)+' '+(AR?'نتيجتك':'Your result')+'</h5>'+
-   PS_DIMS.map(d2=>{
-    const raw=r.ps[d2.id]||0;
-    const pct=d2.inv?(6-raw)*20:raw*20;
-    return '<div style="display:flex;align-items:center;gap:9px;padding:4px 0"><span style="width:60px;font-size:11px;color:'+d2.col+';flex:none">'+t(d2.k)+'</span><div style="flex:1;height:8px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:'+d2.col+'"></i></div><em style="font-size:10.5px;font-style:normal;width:36px;text-align:left;color:var(--ink2);flex:none">'+pct+'%</em></div>';
-   }).join('')+'</div>';})():'')+
   joySection()+
     (function(){const tick=recent.slice(0,8);if(!tick.length)return '';
    const chip=e=>{const cm=CAT_META[e.category]||CAT_META.mind;
@@ -3005,6 +3010,7 @@ function renderHome(){
    '<div class="mood-row">'+[6,5,4,3,2,1].map(m=>'<button class="mood-btn '+(moodToday&&moodToday.mood===m?'on':'')+'" data-act="mood" data-m="'+m+'">'+faceSvg(m,28)+'<span>'+mw(m)+'</span></button>').join('')+'</div>'+
   '</section>'+
   perfHtml()+
+  psDimsCard()+
   '<button class="story-btn" data-act="openStory"><span class="sb-ic">'+ic('book',20)+'</span><span style="flex:1;min-width:0"><b>'+t('story_open')+'</b><span>'+t('story_open_s')+'</span></span>'+ic('chev',16)+'</button>'+
   (showA2hs?'<div class="hint-card">'+t('a2hs')+'<br><button class="hint-x" data-act="a2hs">'+t('a2hs_ok')+'</button></div>':'')+
   '<h3 class="sec-t">'+ic('spark',15)+' '+t('recs_t')+'</h3>'+
