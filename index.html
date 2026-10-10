@@ -326,7 +326,18 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 .br-acts .btn{flex:1}
 .br-acts .btn.ghost{color:#BBD9FF;border-color:#2C5A96}
 .br-x{position:absolute;top:calc(env(safe-area-inset-top) + 14px);left:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid #2C5A96;color:#BBD9FF;background:rgba(14,42,92,.4)}
-@keyframes brWave{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
+@keyframes handKnock{
+ 0%{left:-46px;transform:translateY(-50%) rotate(0deg);opacity:0}
+ 12%{left:14px;transform:translateY(-50%) rotate(0deg);opacity:1}
+ 22%{transform:translateY(-50%) translateX(-8px) rotate(-14deg)}
+ 32%{transform:translateY(-50%) translateX(2px) rotate(0deg)}
+ 42%{transform:translateY(-50%) translateX(-8px) rotate(-14deg);opacity:1}
+ 52%{left:14px;transform:translateY(-50%);opacity:1}
+ 78%{left:14px;opacity:1}
+ 100%{left:-46px;transform:translateY(-50%);opacity:0}
+}
+.rel-hand{animation:handKnock 5.2s ease-in-out infinite}
+ @keyframes brWave{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
 .br-ring{animation:brWave 5s ease-in-out infinite}
 .br-ring2{animation:brWave 5s ease-in-out infinite reverse}
 .br-shrink{animation:brGrow 8s ease-in-out infinite alternate-reverse}
@@ -2676,6 +2687,26 @@ function bodyEntry(){
   '<span>'+(AR?'تكاملُ الجسد حصنٌ يجب الاعتناء به — تمرين، ماء، خطوات، نوم':'Your body is a fortress — breathing, water, steps, sleep')+'</span></span>'+
   ic('chev',16)+'</button>';
 }
+/* شباك العلاقات — يد تطرق من الداخل 3.3 */
+function relWindow(){
+ const AR=LANG==='ar';
+ const stale=S.staleRels.length;
+ const urgent=stale>0;
+ const knockMs=urgent?5200:8000;
+ const knock=urgent
+  ?(AR?'يدٌ تطرق — '+stale+' '+(stale===1?'علاقة':'علاقات')+' تنتظر صوتك':'A hand knocks — '+stale+' waiting')
+  :(AR?'شباك علاقاتك ينتظر نسيمك':'Your relations window');
+ return '<button class="story-btn" data-act="goRelations" style="margin-top:12px;overflow:hidden;position:relative;min-height:64px">'+
+  '<span style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(232,144,126,.10),rgba(227,168,62,.06));backdrop-filter:blur(2px)"></span>'+
+  '<span style="position:absolute;inset:0;opacity:.5;background-image:repeating-linear-gradient(0deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px),repeating-linear-gradient(90deg,transparent 0 11px,rgba(120,90,50,.25) 11px 12px)"></span>'+
+  '<span class="rel-hand" style="position:absolute;top:50%;left:-46px;transform:translateY(-50%);font-size:26px">🤝</span>'+
+  '<span style="position:relative;z-index:2;display:flex;align-items:center;gap:11px">'+
+   '<span class="sb-ic" style="background:rgba(232,144,126,.14);color:var(--c-relations)">'+ic('users',20)+'</span>'+
+   '<span style="flex:1;min-width:0;text-align:right"><b>'+(AR?'العلاقات':'Relations')+'</b>'+
+   '<span style="display:block;font-size:11px;color:var(--ink2)">'+esc(knock)+'</span></span>'+
+   ic('chev',16)+
+  '</span></button>';
+}
 function todayBodyKey(){return isoDate(Date.now())}
 function bodyToday(){
  const ds=dayStart(Date.now());
@@ -2972,6 +3003,7 @@ function renderHome(){
    const row=tick.map(chip).join('');
    return '<div class="news-ticker"><div class="news-ticker-head">'+ic('history',14)+'<b>'+t('mem_t')+'</b><span>'+(AR?'يتمرّر تلقائياً — المس للإيقاف':'auto-scrolls — touch to pause')+'</span></div><div class="news-lane"><div class="news-track">'+row+row+'</div></div></div>';})()+
   bodyEntry()+
+  relWindow()+
   questHtml()+
   '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
   sparkCard()+
@@ -3306,7 +3338,7 @@ function renderRelations(){
    '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
    '<button class="icon-btn" data-act="relEdit" data-id="'+r.id+'">'+ic('edit',15)+'</button>'+
    '</div></div>'+
-   '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>'+    (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
+       (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
  v.innerHTML=
   '<h3 class="sec-t" style="margin-top:14px">'+ic('users',15)+' '+t('rel_view_t')+'</h3>'+
   '<div class="rel-sum">'+(S.rels.length?t('rel_sum_a')+'<b>'+S.rels.length+'</b>'+t('rel_sum_n')+(S.staleRels.length?'<b style="color:var(--bad)">'+S.staleRels.length+'</b>'+t('rel_stale'):t('rel_good')):t('rel_empty'))+'</div>'+
@@ -3330,7 +3362,8 @@ function openContactSheet(rid){
   '<button class="dq on" data-cdur="0">'+t('cs_nodur')+'</button>';
  sh.innerHTML=
   '<div class="sh-grip"></div><div class="sh-head"><b>'+t('cs_t')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
-  '<div class="rel-sum" style="margin-top:0">'+statLine+'</div>'+
+   '<div class="rel-sum" style="margin-top:0;margin-bottom:10px">'+statLine+
+   '<div style="margin-top:8px"><button class="btn ghost sm" id="csEditStats">'+ic('edit',13)+' '+(AR?'عدّل الإحصاءات':'Edit stats')+'</button></div></div>'+
   '<label class="lab" style="margin-top:13px">'+t('cs_q')+'</label>'+
   '<div class="cs-durs">'+durs+'</div>'+
    '<label class="lab" style="margin-top:13px">'+(AR?'من بادر بهذا التواصل؟':'Who initiated?')+'</label>'+
@@ -3348,6 +3381,8 @@ function openContactSheet(rid){
   $$('#shContact [data-who]').forEach(b=>b.onclick=()=>{
   $$('#shContact [data-who]').forEach(x=>x.classList.toggle('on',x===b));
  });
+ const es=$('#csEditStats');
+ if(es)es.onclick=()=>{closeSheets();setTimeout(()=>openRelStats(rid),160)};
  const sv=$('#csSave');if(sv)sv.onclick=saveContactLog;
 }
 async function saveContactLog(){
@@ -4511,6 +4546,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openPick')openPickSheet();
  else if(act==='openStory')openStorySheet();
  else if(act==='catLog')openCatLog(b.dataset.c);
+ else if(act==='goRelations')go('relations');
  else if(act==='openBody')openBodySheet();
  else if(act==='openRitual')openRitual(new Date().getHours()<12?'m':'e');
  else if(act==='quickAdd')quickAdd();
