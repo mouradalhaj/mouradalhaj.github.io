@@ -3239,6 +3239,23 @@ function renderChat(){
 }
 
 /* العلاقات */
+/* توحيد الأرقام: عربي-هندي → لاتيني (المعيار العالمي للاتصال) 3.3 */
+function normDigits(s){
+ const map={'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9','۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
+ return String(s||'').replace(/[٠-٩۰-۹]/g,d=>map[d]).replace(/[^\d+]/g,'');
+}
+function openRelEdit(rid){
+ const r=S.rels.find(x=>x.id===rid);if(!r)return;
+ openSheet('#shRel');
+ const nEl=$('#relName');if(nEl)nEl.value=r.name||'';
+ const pEl=$('#relPhone');if(pEl)pEl.value=r.phone||'';
+ const igEl=$('#relIg');if(igEl)igEl.value=r.social||'';
+ const mc=$('#meetCount');if(mc)mc.textContent=String(r.meetups||0);
+ $$('#relTypes .pick-card').forEach(c=>c.classList.toggle('on',c.dataset.rt===r.type));
+ $$('#relFeel .dq').forEach(c=>c.classList.toggle('on',c.dataset.feel===(r.feel||'good')));
+ const shTitle=$('#shRel .sh-head b');if(shTitle)shTitle.textContent=(LANG==='ar'?'تعديل ':'Edit ')+r.name;
+ const sv=$('#relSave');if(sv)sv.dataset.edit=rid;
+}
 function renderRelations(){
  const v=$('#v-relations');if(!v)return;
  let rows='';
@@ -3258,6 +3275,7 @@ function renderRelations(){
     (r.phone?'<a class="icon-btn call" href="tel:'+esc(r.phone)+'" style="text-decoration:none">'+ic('phone',16)+'</a>':'<button class="icon-btn call" data-act="contact" data-id="'+r.id+'">'+ic('phone',16)+'</button>')+
     (r.phone?'<a class="icon-btn" href="https://wa.me/'+esc(String(r.phone).replace(/[^\d]/g,''))+'" target="_blank" rel="noopener" style="text-decoration:none">'+ic('wa',16)+'</a>':'')+
    '<button class="icon-btn" data-act="delRel" data-id="'+r.id+'">'+ic('trash',15)+'</button>'+
+   '<button class="icon-btn" data-act="relEdit" data-id="'+r.id+'">'+ic('edit',15)+'</button>'+
    '</div></div>'+
    '<button class="rel-cnt" data-act="relStats" data-id="'+r.id+'">'+ic('pulse',13)+' '+statTxt+'</button>'+    (r.feel?'<button class="rel-cnt" style="color:'+(r.feel==='great'?'var(--good)':r.feel==='tense'?'var(--bad)':'var(--acc)')+'">'+(LANG==='ar'?(r.feel==='great'?'♥ مميزة':r.feel==='good'?'♥ جيدة':r.feel==='needs'?'◐ تحتاج اهتماماً':'◐ متوترة'):(r.feel==='great'?'♥ Great':r.feel==='good'?'♥ Good':r.feel==='needs'?'◐ Needs care':'◐ Tense'))+'</button>':'')+    (r.meetups?'<span class="rel-cnt">'+ic('users',13)+' '+r.meetups+' '+(LANG==='ar'?'لقاء':'meetup')+(r.meetups===1?'':'ات')+'</span>':'');});
  v.innerHTML=
@@ -4357,8 +4375,23 @@ async function saveRel(){
  const mcEl=$('#meetCount');
  const meetups=mcEl?parseInt(mcEl.textContent)||0:0;
  const phEl=$('#relPhone'),igEl=$('#relIg');
- const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0},feel:feel,meetups:meetups,
-  phone:phEl?phEl.value.trim():'',social:igEl?igEl.value.trim():''};
+ const phone=normDigits(phEl?phEl.value:'');
+ const social=igEl?igEl.value.trim():'';
+ const editId=$('#relSave')?$('#relSave').dataset.edit:null;
+ if(editId){
+  const r=S.rels.find(x=>x.id===editId);
+  if(r){
+   r.name=name;r.type=type;r.feel=feel;r.meetups=meetups;r.phone=phone;r.social=social;
+   if(rd||q!==undefined)r.lastContact=lc;
+   await DB.put('rels',r);
+   S.rels.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+   const sv=$('#relSave');if(sv)delete sv.dataset.edit;
+   const shT=$('#shRel .sh-head b');if(shT)shT.textContent=t('rel_sh');
+   closeSheets();toast((LANG==='ar'?'حُدّث ':'Updated ')+name,'var(--good)','check');
+   refresh();return;
+  }
+ }
+ const nr={id:uid(),name:name,type:type,lastContact:lc,calls:{n:0,d:0},feel:feel,meetups:meetups,phone:phone,social:social};
  await DB.put('rels',nr);S.rels.push(nr);
  S.rels.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
  closeSheets();toast(name+t('rel_joined'),'var(--c-relations)','users');
@@ -4459,7 +4492,16 @@ window.__rfStage='ربط الأفعال';
  else if(act==='contact')openContactSheet(id);
  else if(act==='relStats')openRelStats(id);
  else if(act==='delRel'){const r=S.rels.find(x=>x.id===id);askConfirm(t('rel_del_t')+(r?r.name:''),t('rel_del_p'),t('del'),async()=>{await DB.del('rels',id);S.rels=S.rels.filter(x=>x.id!==id);refresh();toast(t('rel_deleted'),'var(--ink3)','trash')})}
- else if(act==='relAdd')openSheet('#shRel');
+ else if(act==='relAdd'){
+  const sv2=$('#relSave');if(sv2)delete sv2.dataset.edit;
+  const nE=$('#relName');if(nE)nE.value='';
+  const pE=$('#relPhone');if(pE)pE.value='';
+  const iE=$('#relIg');if(iE)iE.value='';
+  const mE=$('#meetCount');if(mE)mE.textContent='0';
+  const shT2=$('#shRel .sh-head b');if(shT2)shT2.textContent=t('rel_sh');
+  openSheet('#shRel');
+ }
+ else if(act==='relEdit'){closeSheets();setTimeout(()=>openRelEdit(id),140)}
  else if(act==='decToggle'){const dec=b.closest('.dec');if(dec)dec.classList.toggle('open')}
  else if(act==='decDone'){const d=S.decisions.find(x=>x.id===id);if(d){d.status='done';await DB.put('decisions',d);toast(t('dec_done_t'),'var(--good)','check');refresh()}}
  else if(act==='decDel'){askConfirm(t('dec_arch_t'),t('dec_arch_p'),t('del'),async()=>{await DB.del('decisions',id);S.decisions=S.decisions.filter(x=>x.id!==id);refresh()})}
