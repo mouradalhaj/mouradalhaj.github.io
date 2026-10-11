@@ -3223,11 +3223,7 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
- $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
-  closeSheets();
-  const mid=b2.dataset.mem;
-  setTimeout(()=>openMemoryCard(mid,true),140)
- });
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{closeSheets();setTimeout(()=>openMemoryCard(b2.dataset.mem),140)});
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
   const tip=CAT_COACH[catLogCat];
@@ -4313,17 +4309,14 @@ async function saveEvent(){
  const n=new Date();
  const ts=new Date(+parts[0],+parts[1]-1,+parts[2],n.getHours(),n.getMinutes()).getTime();
  if(ts>dayStart(Date.now())+DAY-1){toast(t('future'),'var(--acc)','cal');return}
-  if(evEditId){
+ if(evEditId){
   const ex=S.events.find(x=>x.id===evEditId);
   if(ex){
    ex.text=text;ex.category=cat;ex.polarity=pol;ex.mood=mood||null;ex.secondary=(evSecPick&&evSecPick.length)?[].concat(evSecPick):(secondarySuggest(text,cat)||[]);
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
-   const lr=window.__logReturn;window.__logReturn=null;
    await DB.put('events',ex);
   }
-  evEditId=null;
-  if(lr){catLogCat=lr.cat;catLogRange=lr.r;closeSheets();setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},200);return}
-  closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
   refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
@@ -4340,10 +4333,9 @@ async function saveEvent(){
 }
 
 /* بطاقة الذكرى */
-function openMemoryCard(id,fromLog){
+function openMemoryCard(id){
  const ev=S.events.find(x=>x.id===id);if(!ev)return;
  const sh=$('#shMem');if(!sh)return;
- window.__logReturn=fromLog?{cat:catLogCat,r:catLogRange}:null;
  const cm=CAT_META[ev.category]||CAT_META.mind;
  const photos=(ev.att&&ev.att.length)?('<div class="mem-photos">'+ev.att.map((s,i)=>'<div class="att-th"><img src="'+s+'" data-att="'+ev.id+':'+i+'" alt=""></div>').join('')+'</div>'):'';
  sh.innerHTML=
@@ -4366,10 +4358,7 @@ function openMemoryCard(id,fromLog){
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
   await DB.del('events',ev.id);
   S.events=S.events.filter(x=>x.id!==ev.id);
-  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');
-  const lr=window.__logReturn;window.__logReturn=null;
-  if(lr){catLogCat=lr.cat;catLogRange=lr.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},200);return}
-  refresh();
+  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
 }
 
