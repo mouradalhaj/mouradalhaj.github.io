@@ -3188,6 +3188,7 @@ function openCatLog(cat){
 }
 function drawCatLog(){
  const sh=$('#shCatLog');if(!sh||!catLogCat)return;
+ window.__memBack=null;
  const AR=LANG==='ar',c=catLogCat,cm=CAT_META[c];
  const now=Date.now();
  const from=catLogRange==='day'?dayStart(now):catLogRange==='week'?dayStart(now)-6*DAY:catLogRange==='month'?dayStart(now)-29*DAY:0;
@@ -3224,9 +3225,9 @@ function drawCatLog(){
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
  $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
-  const backCat=catLogCat,backR=catLogRange;
   closeSheets();
-  setTimeout(()=>{openMemoryCard(b2.dataset.mem);catLogCat=backCat;catLogRange=backR},140)
+  const memId=b2.dataset.mem;
+  setTimeout(()=>{catLogCat=catLogCat||catLogCat;openMemoryCard(memId,true)},140)
  });
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
@@ -4275,6 +4276,7 @@ function openEventSheet(text,cat,dateTs,evId){
   else{
    text=ev.text;cat=ev.category;dateTs=ev.ts;
    evMoodPick=ev.mood||null;
+   evSecPick=(ev.secondary||[]).slice();
    if(ev.att)evAttsTemp=[].concat(ev.att);
   }
  }else{evMoodPick=null}
@@ -4292,13 +4294,12 @@ function openEventSheet(text,cat,dateTs,evId){
  if(diff>1){const dt=$('#evDate');if(dt)dt.value=isoDate(dateTs)}
  renderEvAtts();
  evText.dispatchEvent(new Event('input'));
-  window.__evDone=()=>{
-  const back=window.__memBack;
-  if(back){catLogCat=back.cat;catLogRange=back.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
-  window.__memBack=null;
- };
  openSheet('#shEvent');
  if(!text)setTimeout(()=>{try{evText.focus()}catch(e){}},420);
+ window.__evDone=()=>{
+  const back=window.__memBack;window.__memBack=null;
+  if(back){catLogCat=back.cat;catLogRange=back.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
+ };
 }
 async function saveEvent(){
  const evText=$('#evText');if(!evText)return;
@@ -4338,9 +4339,10 @@ async function saveEvent(){
 }
 
 /* بطاقة الذكرى */
-function openMemoryCard(id){
+function openMemoryCard(id,fromCat){
  const ev=S.events.find(x=>x.id===id);if(!ev)return;
  const sh=$('#shMem');if(!sh)return;
+ window.__memBack=fromCat?{cat:catLogCat,r:catLogRange}:null;
  const cm=CAT_META[ev.category]||CAT_META.mind;
  const photos=(ev.att&&ev.att.length)?('<div class="mem-photos">'+ev.att.map((s,i)=>'<div class="att-th"><img src="'+s+'" data-att="'+ev.id+':'+i+'" alt=""></div>').join('')+'</div>'):'';
  sh.innerHTML=
@@ -4358,29 +4360,23 @@ function openMemoryCard(id){
   '</div>';
  openSheet('#shMem');
  const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
+ if(ed)ed.onclick=()=>{
+  const b=window.__memBack;window.__memBack=null;
+  closeSheets();
+  setTimeout(()=>{openEventSheet(null,null,null,ev.id);window.__memBack=b},160);
+ };
  const dl=$('#memDel');
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
   await DB.del('events',ev.id);
   S.events=S.events.filter(x=>x.id!==ev.id);
-  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
+  closeSheets();
+  toast(t('mem_deleted'),'var(--ink2)','trash');
+  const b=window.__memBack;window.__memBack=null;
+  if(b){catLogCat=b.cat;catLogRange=b.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
+  refresh();
  });
- if(catLogCat){
-  window.__memBack=null;
-  const wasCat=catLogCat,wasR=catLogRange;
-  $('#shMem').addEventListener('click',function onMemClose(ev2){
-   if(ev2.target.closest('[data-close]')||ev2.target.closest('#memDel')||ev2.target.closest('#memEdit')){
-   if(ev2.target.closest('#memEdit')){window.__memBack={cat:wasCat,r:wasR};return}
-    if(ev2.target.closest('#memDel')){window.__memBack=null;catLogCat=wasCat;catLogRange=wasR;return}
-    window.__memBack={cat:wasCat,r:wasR};
-    catLogCat=wasCat;catLogRange=wasR;
-    setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
-    $('#shMem').removeEventListener('click',onMemClose);
-   }
-  });
- }
 }
-
+ 
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
 let asState=null;
 function openAssessPick(){
@@ -4746,7 +4742,7 @@ document.addEventListener('click',e=>{
   const lb=$('#lightbox'),img=$('#lbImg');
   if(src&&lb&&img){img.src=src;lb.classList.add('show');return}}
  const mm=e.target.closest('[data-mem]');
- if(mm){openMemoryCard(mm.dataset.mem);return}
+ if(mm){catLogCat=null;openMemoryCard(mm.dataset.mem);return}
 });
 document.getElementById('lkForgot').onclick=()=>{
  if(S.settings.secQ){
