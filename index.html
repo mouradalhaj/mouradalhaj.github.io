@@ -547,6 +547,8 @@ html[data-theme="light"] input[type=date]{color-scheme:light}
 .btn.sm{width:auto;padding:10px 18px;font-size:13px}
 .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line2);border-radius:24px 24px 0 0;transform:translateY(105%);transition:transform .38s cubic-bezier(.3,.9,.3,1);z-index:50;padding:14px 20px calc(env(safe-area-inset-bottom) + 20px);max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .sheet.open{transform:none}
+#shMem{z-index:56}
+#shEvent{z-index:58}
 .sh-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
 .sh-head b{font-family:var(--fd);font-size:16.5px}
 .sh-x{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--ink2)}
@@ -2144,6 +2146,22 @@ function askConfirm(title,text,okLabel,cb){
  if(ok)ok.onclick=()=>{m.classList.remove('show');cb()};
  if(no)no.onclick=()=>m.classList.remove('show');
 }
+function closeOne(id){
+ const sh=$(id);if(sh)sh.classList.remove('open');
+ const b=$('#backdrop');
+ if(b&&!$$('#phone .sheet.open').length)b.classList.remove('show');
+}
+function closeTopSheet(){
+ const open=$$('#phone .sheet.open');
+ if(!open.length){closeSheets();return}
+ let top=null;
+ const sE=$('#shEvent');if(sE&&sE.classList.contains('open'))top=sE;
+ const sM=$('#shMem');if(!top&&sM&&sM.classList.contains('open'))top=sM;
+ if(!top)top=open[open.length-1];
+ top.classList.remove('open');
+ const b=$('#backdrop');
+ if(b&&!$$('#phone .sheet.open').length)b.classList.remove('show');
+} 
 function openSheet(id){console.log('RF ▶ فتح ورقة:',id);const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
 function closeSheets(){console.log('RF ■ إغلاق الكل — كانت مفتوحة:',$$('#phone .sheet.open').map(s=>s.id).join(' + ')||'لا شيء');$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
 
@@ -3223,7 +3241,7 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
- $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{closeSheets();setTimeout(()=>openMemoryCard(b2.dataset.mem),140)});
+  $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>openMemoryCard(b2.dataset.mem));
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
   const tip=CAT_COACH[catLogCat];
@@ -4318,7 +4336,11 @@ async function saveEvent(){
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
    await DB.put('events',ex);
   }
-  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+   const editedId=evEditId;evEditId=null;
+  closeOne('#shEvent');
+  if($('#shMem')&&$('#shMem').classList.contains('open')&&S.events.find(x=>x.id===editedId))openMemoryCard(editedId);
+  if($('#shCatLog')&&$('#shCatLog').classList.contains('open'))drawCatLog();
+  toast(t('ev_updated'),'var(--good)','check');
   refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
@@ -4355,12 +4377,14 @@ function openMemoryCard(id){
   '</div>';
  openSheet('#shMem');
  const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
+ if(ed)ed.onclick=()=>openEventSheet(null,null,null,ev.id);
  const dl=$('#memDel');
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
   await DB.del('events',ev.id);
   S.events=S.events.filter(x=>x.id!==ev.id);
-  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
+   closeOne('#shMem');
+  if($('#shCatLog')&&$('#shCatLog').classList.contains('open'))drawCatLog();
+  toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
 }
 
@@ -4704,7 +4728,7 @@ document.addEventListener('click',async e=>{
  go(el.dataset.tab);
 });
  $('#shMore').addEventListener('click',async e=>{
- if(e.target.closest('[data-close]')){closeSheets();return}
+ if(e.target.closest('[data-close]')){closeTopSheets();return}
  const it=e.target.closest('[data-more]');if(!it)return;
  const m=it.dataset.more;
  closeSheets();
@@ -4720,7 +4744,7 @@ document.addEventListener('click',async e=>{
  else if(m==='wipeAll')setTimeout(()=>askConfirm(t('wipeall_t'),t('wipeall_p'),t('del'),wipeAll),150);
 });
 document.addEventListener('click',e=>{
- if(e.target.closest('[data-close]')){closeSheets();return}
+ if(e.target.closest('[data-close]')){closeTopSheets();return}
  if(e.target.closest('#lightbox')||e.target.closest('[data-lb-close]')){const lb=$('#lightbox');if(lb)lb.classList.remove('show');return}
  const th=e.target.closest('[data-att]');
  if(th){const parts=th.dataset.att.split(':');const scope=parts[0],idx=+parts[1];let src=null;
