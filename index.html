@@ -3186,6 +3186,14 @@ function openCatLog(cat){
  drawCatLog();
  openSheet('#shCatLog');
 }
+/* بوابة العودة الموحدة للسجل — تبني ثم تفتح، لا سباق 3.3 */
+function backToCatLog(){
+ const b=window.__memBack;window.__memBack=null;
+ if(!b)return;
+ catLogCat=b.cat;catLogRange=b.r;
+ closeSheets();
+ setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},220);
+}
 function drawCatLog(){
  const sh=$('#shCatLog');if(!sh||!catLogCat)return;
  window.__memBack=null;
@@ -4296,10 +4304,8 @@ function openEventSheet(text,cat,dateTs,evId){
  evText.dispatchEvent(new Event('input'));
  openSheet('#shEvent');
  if(!text)setTimeout(()=>{try{evText.focus()}catch(e){}},420);
- window.__evDone=()=>{
-  const back=window.__memBack;window.__memBack=null;
-  if(back){catLogCat=back.cat;catLogRange=back.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
- };
+ const cancelBtn=$('#shEvent [data-close]');
+ if(cancelBtn)cancelBtn.addEventListener('click',()=>{setTimeout(backToCatLog,60)});
 }
 async function saveEvent(){
  const evText=$('#evText');if(!evText)return;
@@ -4322,13 +4328,15 @@ async function saveEvent(){
    await DB.put('events',ex);
   }
   evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
-  if(window.__evDone)window.__evDone();
+   backToCatLog();
    refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
  const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
  if(evAttsTemp.length)ev.att=[].concat(evAttsTemp);
  await DB.put('events',ev);S.events.push(ev);
+ if(window.__memBack)backToCatLog();
+ if(window.__memBack)return;
  closeSheets();
  const AR=LANG==='ar';
  const react=pol>0?[t('ev_pos')+(S.profile.name||(AR?'صديقي':'friend'))+' — '+cn(cat)+t('ev_pos2'),'var(--good)','check']
@@ -4372,8 +4380,8 @@ function openMemoryCard(id,fromCat){
   closeSheets();
   toast(t('mem_deleted'),'var(--ink2)','trash');
   const b=window.__memBack;window.__memBack=null;
-  if(b){catLogCat=b.cat;catLogRange=b.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
-  refresh();
+   if(b){window.__memBack=b;backToCatLog();return}
+  refresh(); 
  });
 }
  
