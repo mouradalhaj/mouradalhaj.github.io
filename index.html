@@ -2144,7 +2144,19 @@ function askConfirm(title,text,okLabel,cb){
  if(ok)ok.onclick=()=>{m.classList.remove('show');cb()};
  if(no)no.onclick=()=>m.classList.remove('show');
 }
-function openSheet(id){const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
+/* إغلاق صلب فوري بلا حركة — لعلاج تراكب الأوراق عند التنقل 3.3 */
+function hardCloseSheets(){
+ $$('#phone .sheet').forEach(s=>{
+  s.classList.remove('open');
+  s.style.transition='none';
+  s.style.transform='translateY(105%)';
+  void s.offsetWidth;
+  s.style.transition='';
+ });
+ const b=$('#backdrop');
+ if(b){b.style.transition='none';b.classList.remove('show');void b.offsetWidth;b.style.transition=''}
+}
+function openSheet(id){hardCloseSheets();const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
 function closeSheets(){$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
 
 window.__rfStage='البذر والترحيب';
@@ -3191,7 +3203,7 @@ function backToCatLog(){
  const b=window.__memBack;window.__memBack=null;
  if(!b)return;
  catLogCat=b.cat;catLogRange=b.r;
- closeSheets();
+ hardCloseSheets();
  setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},220);
 }
 function drawCatLog(){
@@ -4368,10 +4380,10 @@ function openMemoryCard(id,fromCat){
   '</div>';
  openSheet('#shMem');
  const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{
+  if(ed)ed.onclick=()=>{
   const b=window.__memBack;window.__memBack=null;
-  closeSheets();
-  setTimeout(()=>{openEventSheet(null,null,null,ev.id);window.__memBack=b},160);
+  hardCloseSheets();
+  setTimeout(()=>{openEventSheet(null,null,null,ev.id);window.__memBack=b},60);
  };
  const dl=$('#memDel');
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
