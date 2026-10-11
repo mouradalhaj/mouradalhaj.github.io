@@ -1258,11 +1258,24 @@ function secondarySuggest(tx,main){
  const cross={
   health:['relations','mind'],relations:['health','mind'],money:['work'],
   work:['money','growth'],mind:['health','growth'],growth:['work','mind']};
+ const REL_WORDS=AR
+  ?['زوجتي','زوجي','زوجت','أمي','امي','أبي','ابي','والدتي','والدي','ابني','بنتي','أطفالي','اطفالي','أخي','اخي','أختي','اختي','صديقي','صديقتي','جاري','حماتي','عائلتي','عائلة','أهلنا','اهلنا']
+  :['wife','husband','mom','mother','dad','father','son','daughter','kids','brother','sister','friend','family'];
+ const HEALTH_MEAL=AR
+  ?['فطور','افطار','غداء','عشاء','وجبة','وجبه','أكلت','اكلت','شربت','سلطة','بروتين','خضار','فواكه','صحي','صحية','دايت','حمية']
+  :['breakfast','lunch','dinner','meal','ate','salad','protein','healthy','diet'];
+ const MIND_WORDS=AR
+  ?['هدوء','استرخاء','تأمل','تامل','راحة','راحه','قرأت','جلسنا','سفرة','شاي','قهوة','نوم','نمت']
+  :['calm','relax','meditate','tea','coffee','rested'];
  const hits=[];
  (cross[main]||[]).forEach(c2=>{
   const n=KW[c2].filter(w=>s.indexOf(w)>=0).length;
   if(n>0)hits.push(c2);
  });
+ const add=c2=>{if(c2!==main&&hits.indexOf(c2)<0)hits.push(c2)};
+ if(main!=='relations'&&REL_WORDS.some(w=>s.indexOf(w)>=0))add('relations');
+ if(main!=='health'&&HEALTH_MEAL.some(w=>s.indexOf(w)>=0))add('health');
+ if(main!=='mind'&&hits.indexOf('mind')<0&&MIND_WORDS.some(w=>s.indexOf(w)>=0))add('mind');
  return hits.slice(0,2);
 }
 function secWeight(ev,c2){
@@ -4279,6 +4292,11 @@ function openEventSheet(text,cat,dateTs,evId){
  if(diff>1){const dt=$('#evDate');if(dt)dt.value=isoDate(dateTs)}
  renderEvAtts();
  evText.dispatchEvent(new Event('input'));
+  window.__evDone=()=>{
+  const back=window.__memBack;
+  if(back){catLogCat=back.cat;catLogRange=back.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
+  window.__memBack=null;
+ };
  openSheet('#shEvent');
  if(!text)setTimeout(()=>{try{evText.focus()}catch(e){}},420);
 }
@@ -4295,15 +4313,16 @@ async function saveEvent(){
  const n=new Date();
  const ts=new Date(+parts[0],+parts[1]-1,+parts[2],n.getHours(),n.getMinutes()).getTime();
  if(ts>dayStart(Date.now())+DAY-1){toast(t('future'),'var(--acc)','cal');return}
- if(evEditId){
+  if(evEditId){
   const ex=S.events.find(x=>x.id===evEditId);
   if(ex){
-   ex.text=text;ex.category=cat;ex.polarity=pol;ex.mood=mood||null;ex.ts=ts;
+   ex.text=text;ex.category=cat;ex.polarity=pol;ex.mood=mood||null;ex.secondary=(evSecPick&&evSecPick.length)?[].concat(evSecPick):(secondarySuggest(text,cat)||[]);
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
    await DB.put('events',ex);
   }
   evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
-  refresh();return;
+  if(window.__evDone)window.__evDone();
+   refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
  const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
@@ -4347,9 +4366,13 @@ function openMemoryCard(id){
   closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
  if(catLogCat){
+  window.__memBack=null;
   const wasCat=catLogCat,wasR=catLogRange;
   $('#shMem').addEventListener('click',function onMemClose(ev2){
    if(ev2.target.closest('[data-close]')||ev2.target.closest('#memDel')||ev2.target.closest('#memEdit')){
+   if(ev2.target.closest('#memEdit')){window.__memBack={cat:wasCat,r:wasR};return}
+    if(ev2.target.closest('#memDel')){window.__memBack=null;catLogCat=wasCat;catLogRange=wasR;return}
+    window.__memBack={cat:wasCat,r:wasR};
     catLogCat=wasCat;catLogRange=wasR;
     setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
     $('#shMem').removeEventListener('click',onMemClose);
