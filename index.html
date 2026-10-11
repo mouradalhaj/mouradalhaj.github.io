@@ -547,8 +547,6 @@ html[data-theme="light"] input[type=date]{color-scheme:light}
 .btn.sm{width:auto;padding:10px 18px;font-size:13px}
 .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line2);border-radius:24px 24px 0 0;transform:translateY(105%);transition:transform .38s cubic-bezier(.3,.9,.3,1);z-index:50;padding:14px 20px calc(env(safe-area-inset-bottom) + 20px);max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
 .sheet.open{transform:none}
-#shMem{z-index:56}
-#shEvent{z-index:58}
 .sh-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
 .sh-head b{font-family:var(--fd);font-size:16.5px}
 .sh-x{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);color:var(--ink2)}
@@ -2146,24 +2144,8 @@ function askConfirm(title,text,okLabel,cb){
  if(ok)ok.onclick=()=>{m.classList.remove('show');cb()};
  if(no)no.onclick=()=>m.classList.remove('show');
 }
-function closeOne(id){
- const sh=$(id);if(sh)sh.classList.remove('open');
- const b=$('#backdrop');
- if(b&&!$$('#phone .sheet.open').length)b.classList.remove('show');
-}
-function closeTopSheet(){
- const open=$$('#phone .sheet.open');
- if(!open.length){closeSheets();return}
- let top=null;
- const sE=$('#shEvent');if(sE&&sE.classList.contains('open'))top=sE;
- const sM=$('#shMem');if(!top&&sM&&sM.classList.contains('open'))top=sM;
- if(!top)top=open[open.length-1];
- top.classList.remove('open');
- const b=$('#backdrop');
- if(b&&!$$('#phone .sheet.open').length)b.classList.remove('show');
-} 
-function openSheet(id){console.log('RF ▶ فتح ورقة:',id);const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
-function closeSheets(){console.log('RF ■ إغلاق الكل — كانت مفتوحة:',$$('#phone .sheet.open').map(s=>s.id).join(' + ')||'لا شيء');$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
+function openSheet(id){const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
+function closeSheets(){$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
 
 window.__rfStage='البذر والترحيب';
 async function seedDemo(){
@@ -3241,7 +3223,11 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
-  $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>openMemoryCard(b2.dataset.mem));
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
+  const backCat=catLogCat,backR=catLogRange;
+  closeSheets();
+  setTimeout(()=>{openMemoryCard(b2.dataset.mem);catLogCat=backCat;catLogRange=backR},140)
+ });
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
   const tip=CAT_COACH[catLogCat];
@@ -4287,11 +4273,9 @@ function openEventSheet(text,cat,dateTs,evId){
   const ev=S.events.find(x=>x.id===evId);
   if(!ev){evEditId=null}
   else{
-   text=ev.text||'';cat=ev.category||'mind';dateTs=ev.ts;
+   text=ev.text;cat=ev.category;dateTs=ev.ts;
    evMoodPick=ev.mood||null;
    if(ev.att)evAttsTemp=[].concat(ev.att);
-   evSecPick=[];
-   console.log('RF-DBG: فتح تعديل',ev.id,'نوعه',ev.type,'ثانوي',JSON.stringify(ev.secondary||null));
   }
  }else{evMoodPick=null}
  const tt=$('#evTitle');if(tt)tt.textContent=evEditId?t('ev_edit_t'):t('ev_t');
@@ -4329,19 +4313,16 @@ async function saveEvent(){
  const n=new Date();
  const ts=new Date(+parts[0],+parts[1]-1,+parts[2],n.getHours(),n.getMinutes()).getTime();
  if(ts>dayStart(Date.now())+DAY-1){toast(t('future'),'var(--acc)','cal');return}
- if(evEditId){
+  if(evEditId){
   const ex=S.events.find(x=>x.id===evEditId);
   if(ex){
    ex.text=text;ex.category=cat;ex.polarity=pol;ex.mood=mood||null;ex.secondary=(evSecPick&&evSecPick.length)?[].concat(evSecPick):(secondarySuggest(text,cat)||[]);
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
    await DB.put('events',ex);
   }
-   const editedId=evEditId;evEditId=null;
-  closeOne('#shEvent');
-  if($('#shMem')&&$('#shMem').classList.contains('open')&&S.events.find(x=>x.id===editedId))openMemoryCard(editedId);
-  if($('#shCatLog')&&$('#shCatLog').classList.contains('open'))drawCatLog();
-  toast(t('ev_updated'),'var(--good)','check');
-  refresh();return;
+  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  if(window.__evDone)window.__evDone();
+   refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
  const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
@@ -4377,15 +4358,27 @@ function openMemoryCard(id){
   '</div>';
  openSheet('#shMem');
  const ed=$('#memEdit');
- if(ed)ed.onclick=()=>openEventSheet(null,null,null,ev.id);
+ if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
  const dl=$('#memDel');
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
   await DB.del('events',ev.id);
   S.events=S.events.filter(x=>x.id!==ev.id);
-   closeOne('#shMem');
-  if($('#shCatLog')&&$('#shCatLog').classList.contains('open'))drawCatLog();
-  toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
+  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
+ if(catLogCat){
+  window.__memBack=null;
+  const wasCat=catLogCat,wasR=catLogRange;
+  $('#shMem').addEventListener('click',function onMemClose(ev2){
+   if(ev2.target.closest('[data-close]')||ev2.target.closest('#memDel')||ev2.target.closest('#memEdit')){
+   if(ev2.target.closest('#memEdit')){window.__memBack={cat:wasCat,r:wasR};return}
+    if(ev2.target.closest('#memDel')){window.__memBack=null;catLogCat=wasCat;catLogRange=wasR;return}
+    window.__memBack={cat:wasCat,r:wasR};
+    catLogCat=wasCat;catLogRange=wasR;
+    setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
+    $('#shMem').removeEventListener('click',onMemClose);
+   }
+  });
+ }
 }
 
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
@@ -4728,7 +4721,7 @@ document.addEventListener('click',async e=>{
  go(el.dataset.tab);
 });
  $('#shMore').addEventListener('click',async e=>{
- if(e.target.closest('[data-close]')){closeTopSheets();return}
+ if(e.target.closest('[data-close]')){closeSheets();return}
  const it=e.target.closest('[data-more]');if(!it)return;
  const m=it.dataset.more;
  closeSheets();
@@ -4744,7 +4737,7 @@ document.addEventListener('click',async e=>{
  else if(m==='wipeAll')setTimeout(()=>askConfirm(t('wipeall_t'),t('wipeall_p'),t('del'),wipeAll),150);
 });
 document.addEventListener('click',e=>{
- if(e.target.closest('[data-close]')){closeTopSheets();return}
+ if(e.target.closest('[data-close]')){closeSheets();return}
  if(e.target.closest('#lightbox')||e.target.closest('[data-lb-close]')){const lb=$('#lightbox');if(lb)lb.classList.remove('show');return}
  const th=e.target.closest('[data-att]');
  if(th){const parts=th.dataset.att.split(':');const scope=parts[0],idx=+parts[1];let src=null;
