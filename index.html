@@ -4269,9 +4269,11 @@ function openEventSheet(text,cat,dateTs,evId){
   const ev=S.events.find(x=>x.id===evId);
   if(!ev){evEditId=null}
   else{
-   text=ev.text;cat=ev.category;dateTs=ev.ts;
+   text=ev.text||'';cat=ev.category||'mind';dateTs=ev.ts;
    evMoodPick=ev.mood||null;
    if(ev.att)evAttsTemp=[].concat(ev.att);
+   evSecPick=[];
+   console.log('RF-DBG: فتح تعديل',ev.id,'نوعه',ev.type,'ثانوي',JSON.stringify(ev.secondary||null));
   }
  }else{evMoodPick=null}
  const tt=$('#evTitle');if(tt)tt.textContent=evEditId?t('ev_edit_t'):t('ev_t');
