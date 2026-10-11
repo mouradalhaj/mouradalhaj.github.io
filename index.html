@@ -1251,7 +1251,24 @@ const REL_T={
  kids:{ar:'أبناء',en:'Kids',icon:'sprout',color:'var(--c-money)'},
  friend:{ar:'صديق',en:'Friend',icon:'users',color:'var(--c-health)'},
  work:{ar:'عمل',en:'Work',icon:'briefcase',color:'var(--c-work)'}};
-function classify(tx){let best=null,bn=0;const s=' '+tx+' ';CATS.forEach(c=>{let n=0;KW[c].forEach(w=>{if(s.indexOf(w)>=0)n++});if(n>bn){bn=n;best=c}});return best}
+/* تصنيف ثانوي — الحدث الواحد يغذي أكثر من جانب 3.3 */
+function secondarySuggest(tx,main){
+ const AR=LANG==='ar';
+ const s=' '+tx+' ';
+ const cross={
+  health:['relations','mind'],relations:['health','mind'],money:['work'],
+  work:['money','growth'],mind:['health','growth'],growth:['work','mind']};
+ const hits=[];
+ (cross[main]||[]).forEach(c2=>{
+  const n=KW[c2].filter(w=>s.indexOf(w)>=0).length;
+  if(n>0)hits.push(c2);
+ });
+ return hits.slice(0,2);
+}
+function secWeight(ev,c2){
+ return (ev.secondary&&ev.secondary.indexOf(c2)>=0)?0.5:0;
+}
+ function classify(tx){let best=null,bn=0;const s=' '+tx+' ';CATS.forEach(c=>{let n=0;KW[c].forEach(w=>{if(s.indexOf(w)>=0)n++});if(n>bn){bn=n;best=c}});return best}
 function sentiment(tx){let p=0,n=0;POS.forEach(w=>{if(tx.indexOf(w)>=0)p++});NEG.forEach(w=>{if(tx.indexOf(w)>=0)n++});return p>n?1:(n>p?-1:0)}
 function topKeyword(tx){
  const s=' '+tx+' ';const list=(KW[classify(tx)||'mind']||[]);let bk=null;
@@ -1341,7 +1358,7 @@ const S={profile:{name:'',job:'',email:'',bday:'',goals:[]},
  ind:{},catDelta:{},life:50,delta:0,spark:[],recs:[],staleRels:[]};
 const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
-let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null;
+let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null,evSecPick=[];
 let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
 let ritualMode=null,ritualPick=null,enteredOnce=false,ratePick={};
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
@@ -1353,8 +1370,13 @@ async function loadAll(){
  S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);
 }
 
-function catScoreAt(c,until){let s=50;S.events.forEach(e=>{if(e.category!==c||e.ts>=until||e.ts<until-30*DAY)return;
- if(e.polarity>0)s+=6;else if(e.polarity<0)s-=7;else s+=1;if(e.mood)s+=((e.mood-4)*4);});return clamp(Math.round(s),5,100)}
+function catScoreAt(c,until){let s=50;S.events.forEach(e=>{if(e.ts>=until||e.ts<until-30*DAY)return;
+ const isMain=e.category===c;
+ const isSec=(!isMain&&e.secondary&&e.secondary.indexOf(c)>=0);
+ if(!isMain&&!isSec)return;
+ const w=isMain?1:0.5;
+ if(e.polarity>0)s+=6*w;else if(e.polarity<0)s-=7*w;else s+=w;
+ if(e.mood&&isMain)s+=((e.mood-4)*4);});return clamp(Math.round(s),5,100)}
 function lifeAt(until){const v=CATS.map(c=>catScoreAt(c,until));return Math.round(v.reduce((a,b)=>a+b,0)/v.length)}
 function calcStreak(){
  let st=0,d0=dayStart(Date.now());
@@ -4059,6 +4081,7 @@ function buildSheets(){
   '<div class="sug-chips" id="evSugs"></div>'+
   '<div class="cat-hint">'+t('ev_cat')+': <b id="evCatName">—</b><span class="auto-tag" id="evAutoTag">'+t('ev_auto')+'</span><span id="evSensed" style="color:var(--acc);font-size:11.5px;font-weight:600"></span></div>'+
   '<div class="pick-grid" id="evCats">'+catCardsHtml()+'</div>'+
+  '<div id="evSecWrap" style="margin-top:9px"></div>'+
   '<div style="height:14px"></div>'+
   '<label class="lab">'+t('ev_mood')+'</label>'+
   '<div class="mood-row-lg" id="evMoodPick">'+moodLgHtml()+'</div>'+
@@ -4126,6 +4149,19 @@ function buildSheets(){
    const nm=$('#evCatName');if(nm)nm.textContent=evCatPick?cn(evCatPick):'—';
    const sn=$('#evSensed');if(sn)sn.textContent=tx&&evCatPick?t('ev_sensed')+cn(evCatPick):'';}
   $$('#evCats .pick-card').forEach(ch=>ch.classList.toggle('on',ch.dataset.cat===evCatPick));
+  const secWrap=$('#evSecWrap');
+  if(secWrap){
+   const secs=tx?secondarySuggest(tx,evCatPick||'mind'):[];
+   secWrap.innerHTML=secs.length?'<span style="font-size:11px;color:var(--ink2)">'+(LANG==='ar'?'يفهم رفيق أن هذا الحدث يغذي أيضاً: ':'Rafiq senses this also feeds: ')+'</span>'+
+    secs.map(c2=>'<button class="chip '+(evSecPick.indexOf(c2)>=0?'on':'')+'" data-sec="'+c2+'" style="padding:5px 11px;font-size:11px">'+cn(c2)+' +½</button>').join('')
+    :'<span style="font-size:10.5px;color:var(--ink3)">'+(LANG==='ar'?'لا تصنيف ثانوي مقترح لهذا الحدث':'No secondary category suggested')+'</span>';
+   $$('#evSecWrap [data-sec]').forEach(b=>b.onclick=()=>{
+    const c2=b.dataset.sec;
+    const i=evSecPick.indexOf(c2);
+    if(i>=0){evSecPick.splice(i,1);b.classList.remove('on')}
+    else{evSecPick.push(c2);b.classList.add('on')}
+   });
+  }
   setSugs();
  }
  evText.addEventListener('input',()=>{evText.style.minHeight='74px';evText.style.minHeight=Math.min(200,evText.scrollHeight)+'px';autoClassify()});
@@ -4219,6 +4255,7 @@ function openEventSheet(text,cat,dateTs,evId){
  if(!evText)return;
  evEditId=evId||null;
  evAttsTemp=[];
+ evSecPick=[];
  if(evId){
   const ev=S.events.find(x=>x.id===evId);
   if(!ev){evEditId=null}
@@ -4268,7 +4305,8 @@ async function saveEvent(){
   evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
   refresh();return;
  }
- const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,ts:ts};
+ const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
+ const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
  if(evAttsTemp.length)ev.att=[].concat(evAttsTemp);
  await DB.put('events',ev);S.events.push(ev);
  closeSheets();
