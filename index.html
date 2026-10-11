@@ -2144,8 +2144,8 @@ function askConfirm(title,text,okLabel,cb){
  if(ok)ok.onclick=()=>{m.classList.remove('show');cb()};
  if(no)no.onclick=()=>m.classList.remove('show');
 }
-function openSheet(id){const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
-function closeSheets(){$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
+function openSheet(id){console.log('RF ▶ فتح ورقة:',id);const b=$('#backdrop'),sh=$(id);if(b)b.classList.add('show');if(sh)sh.classList.add('open')}
+function closeSheets(){console.log('RF ■ إغلاق الكل — كانت مفتوحة:',$$('#phone .sheet.open').map(s=>s.id).join(' + ')||'لا شيء');$$('#phone .sheet').forEach(s=>s.classList.remove('open'));const b=$('#backdrop');if(b)b.classList.remove('show')}
 
 window.__rfStage='البذر والترحيب';
 async function seedDemo(){
