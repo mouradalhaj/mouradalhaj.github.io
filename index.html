@@ -3224,7 +3224,8 @@ function drawCatLog(){
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
- $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=(ev)=>{
+  ev.stopPropagation();
   closeSheets();logReturnTo='catLog';
   setTimeout(()=>openMemoryCard(b2.dataset.mem),140);
  });
