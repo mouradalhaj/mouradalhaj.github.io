@@ -3181,7 +3181,6 @@ const CAT_COACH={
  mind:{ar:'جلسة تنفس 4-7-8 وعشر دقائق تأمل — صفاؤك وقود كل أبعادك.',en:'One 4-7-8 session plus ten minutes of stillness.'},
  growth:{ar:'اقرأ عشر صفحات أو استمع لفصل واحد — النموّ عُشر صفحات يومياً.',en:'Ten pages or one chapter — growth is daily pages.'}};
 let catLogCat=null,catLogRange='all';
-let logReturnTo=null;
 function openCatLog(cat){
  catLogCat=cat;catLogRange='all';
  drawCatLog();
@@ -3225,8 +3224,9 @@ function drawCatLog(){
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
  $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
-  closeSheets();logReturnTo='catLog';
-  setTimeout(()=>openMemoryCard(b2.dataset.mem),140);
+  const backCat=catLogCat,backR=catLogRange;
+  closeSheets();
+  setTimeout(()=>{openMemoryCard(b2.dataset.mem);catLogCat=backCat;catLogRange=backR},140)
  });
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
@@ -4320,10 +4320,9 @@ async function saveEvent(){
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
    await DB.put('events',ex);
   }
-   evEditId=null;closeSheets();
-  if(logReturnTo==='catLog'){logReturnTo=null;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},200);return}
-  toast(t('ev_updated'),'var(--good)','check');
-  refresh();return;
+  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  if(window.__evDone)window.__evDone();
+   refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
  const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
@@ -4359,19 +4358,12 @@ function openMemoryCard(id){
   '</div>';
  openSheet('#shMem');
  const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{
-  const dest=logReturnTo;logReturnTo=null;
-  closeSheets();
-  setTimeout(()=>{openEventSheet(null,null,null,ev.id);if(dest==='catLog')logReturnTo='catLog'},140);
- };
+ if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
  const dl=$('#memDel');
  if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
   await DB.del('events',ev.id);
   S.events=S.events.filter(x=>x.id!==ev.id);
-   closeSheets();
-  if(logReturnTo==='catLog'){logReturnTo=null;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},200)}
-  else toast(t('mem_deleted'),'var(--ink2)','trash');
-  refresh();
+  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
  if(catLogCat){
   window.__memBack=null;
@@ -4754,7 +4746,7 @@ document.addEventListener('click',e=>{
   const lb=$('#lightbox'),img=$('#lbImg');
   if(src&&lb&&img){img.src=src;lb.classList.add('show');return}}
  const mm=e.target.closest('[data-mem]');
- if(mm){logReturnTo=null;openMemoryCard(mm.dataset.mem);return}
+ if(mm){openMemoryCard(mm.dataset.mem);return}
 });
 document.getElementById('lkForgot').onclick=()=>{
  if(S.settings.secQ){
