@@ -3180,7 +3180,7 @@ const CAT_COACH={
  work:{ar:'حدد أهم مهمة وأنجزها قبل الظهر بتسعين دقيقة تركيز كامل.',en:'Top task before noon in one 90-minute block.'},
  mind:{ar:'جلسة تنفس 4-7-8 وعشر دقائق تأمل — صفاؤك وقود كل أبعادك.',en:'One 4-7-8 session plus ten minutes of stillness.'},
  growth:{ar:'اقرأ عشر صفحات أو استمع لفصل واحد — النموّ عُشر صفحات يومياً.',en:'Ten pages or one chapter — growth is daily pages.'}};
-let catLogCat=null,catLogRange='all';let logReturnTo=null;
+let catLogCat=null,catLogRange='all';
 function openCatLog(cat){
  catLogCat=cat;catLogRange='all';
  drawCatLog();
@@ -3224,8 +3224,9 @@ function drawCatLog(){
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
  $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=()=>{
-  closeSheets();logReturnTo='catLog';
-  setTimeout(()=>openMemoryCard(b2.dataset.mem),140);
+  const backCat=catLogCat,backR=catLogRange;
+  closeSheets();
+  setTimeout(()=>{openMemoryCard(b2.dataset.mem);catLogCat=backCat;catLogRange=backR},140)
  });
  const cg=$('#catCoachGo');
  if(cg)cg.onclick=async()=>{
@@ -4291,6 +4292,11 @@ function openEventSheet(text,cat,dateTs,evId){
  if(diff>1){const dt=$('#evDate');if(dt)dt.value=isoDate(dateTs)}
  renderEvAtts();
  evText.dispatchEvent(new Event('input'));
+  window.__evDone=()=>{
+  const back=window.__memBack;
+  if(back){catLogCat=back.cat;catLogRange=back.r;setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180)}
+  window.__memBack=null;
+ };
  openSheet('#shEvent');
  if(!text)setTimeout(()=>{try{evText.focus()}catch(e){}},420);
 }
@@ -4314,11 +4320,12 @@ async function saveEvent(){
    if(evAttsTemp.length)ex.att=[].concat(evAttsTemp);else delete ex.att;
    await DB.put('events',ex);
   }
-  evEditId=null;logReturnTo=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  evEditId=null;closeSheets();toast(t('ev_updated'),'var(--good)','check');
+  if(window.__evDone)window.__evDone();
    refresh();return;
  }
  const secs=(evSecPick&&evSecPick.length)?[].concat(evSecPick):secondarySuggest(text,cat);
- const ev={id:uid(),text:text,cat no egory:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
+ const ev={id:uid(),text:text,category:cat,polarity:pol,mood:mood||null,secondary:secs,ts:ts};
  if(evAttsTemp.length)ev.att=[].concat(evAttsTemp);
  await DB.put('events',ev);S.events.push(ev);
  closeSheets();
@@ -4334,13 +4341,10 @@ async function saveEvent(){
 function openMemoryCard(id){
  const ev=S.events.find(x=>x.id===id);if(!ev)return;
  const sh=$('#shMem');if(!sh)return;
- const fromLog=(logReturnTo==='catLog');logReturnTo=null;
  const cm=CAT_META[ev.category]||CAT_META.mind;
  const photos=(ev.att&&ev.att.length)?('<div class="mem-photos">'+ev.att.map((s,i)=>'<div class="att-th"><img src="'+s+'" data-att="'+ev.id+':'+i+'" alt=""></div>').join('')+'</div>'):'';
  sh.innerHTML=
-  '<div class="sh-grip"></div><div class="sh-head"><b>'+esc(cm[LANG])+'</b>'+
-  (fromLog?'<button class="btn sm ghost" id="memBack" style="margin:0 8px">⬅ '+(LANG==='ar'?'السجل':'Log')+'</button>':'')+
-  '<button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+esc(cm[LANG])+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="mem-hero" style="--rc:'+cm.color+'">'+
    '<div class="mem-big">'+ic(cm.icon,26)+'</div>'+
    (ev.mood?'<span style="color:'+(ev.mood>=5?'var(--good)':ev.mood<=3?'var(--bad)':'var(--ink3)')+'">'+faceSvg(ev.mood,44)+'</span>':'')+
@@ -4353,8 +4357,6 @@ function openMemoryCard(id){
    '<button class="btn ghost" id="memDel" style="flex:1;color:var(--bad)">'+ic('trash',15)+' '+t('mem_del')+'</button>'+
   '</div>';
  openSheet('#shMem');
- const bk=$('#memBack');
- if(bk)bk.onclick=()=>{closeSheets();setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},140)};
  const ed=$('#memEdit');
  if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
  const dl=$('#memDel');
@@ -4363,6 +4365,20 @@ function openMemoryCard(id){
   S.events=S.events.filter(x=>x.id!==ev.id);
   closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
  });
+ if(catLogCat){
+  window.__memBack=null;
+  const wasCat=catLogCat,wasR=catLogRange;
+  $('#shMem').addEventListener('click',function onMemClose(ev2){
+   if(ev2.target.closest('[data-close]')||ev2.target.closest('#memDel')||ev2.target.closest('#memEdit')){
+   if(ev2.target.closest('#memEdit')){window.__memBack={cat:wasCat,r:wasR};return}
+    if(ev2.target.closest('#memDel')){window.__memBack=null;catLogCat=wasCat;catLogRange=wasR;return}
+    window.__memBack={cat:wasCat,r:wasR};
+    catLogCat=wasCat;catLogRange=wasR;
+    setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},180);
+    $('#shMem').removeEventListener('click',onMemClose);
+   }
+  });
+ }
 }
 
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
