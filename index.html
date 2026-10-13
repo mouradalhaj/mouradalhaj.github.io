@@ -3220,12 +3220,23 @@ function drawCatLog(){
      '<div class="ev-ic" style="--rc:'+cm.color+';width:30px;height:30px">'+ic(cm.icon,15)+'</div>'+
      '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
      (e.mood?'<span class="ev-face" style="color:'+(e.mood>=5?'var(--good)':e.mood<=3?'var(--bad)':'var(--ink3)')+'">'+faceSvg(e.mood,20)+'</span>':'')+
+     '<button class="icon-btn" data-mdel="'+e.id+'" style="color:var(--bad)">'+ic('trash',14)+'</button>'+
     '</div>'}).join('')
    :'<div class="empty">'+ic(cm.icon,24)+'<br>'+(AR?'لا أحداث في هذه الفترة — سجّل لحظة ويبدأ السجل':'Nothing in this range yet')+'</div>')+
   '</div>';
  $$('#shCatLog [data-crange]').forEach(b2=>b2.onclick=()=>{catLogRange=b2.dataset.crange;drawCatLog()});
- $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=(ev)=>{
-  ev.stopPropagation();
+ $$('#shCatLog [data-mdel]').forEach(b2=>b2.onclick=(ev2)=>{
+  ev2.stopPropagation();
+  const did=b2.dataset.mdel;
+  askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
+   await DB.del('events',did);
+   S.events=S.events.filter(x=>x.id!==did);
+   toast(t('mem_deleted'),'var(--ink2)','trash');
+   drawCatLog();
+  });
+ });
+ $$('#shCatLog [data-mem]').forEach(b2=>b2.onclick=(ev2)=>{
+  ev2.stopPropagation();
   closeSheets();logReturnTo='catLog';
   setTimeout(()=>openMemoryCard(b2.dataset.mem),140);
  });
