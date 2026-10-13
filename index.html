@@ -706,13 +706,18 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .lab-note b{color:var(--c-growth)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
-/* زر تقرير المختص — نبض ملون 3.4 */
-.ai-report-btn{margin-top:18px;width:100%;background:linear-gradient(135deg,var(--acc),#D4942A);color:var(--acc-ink);font-weight:800;font-size:15px;border-radius:16px;padding:15px 18px;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;border:none;cursor:pointer;transition:transform .15s;box-shadow:0 6px 20px rgba(229,168,62,.25)}
+/* زر تقرير المختص — نبض حقيقي 3.4 */
+.ai-wrap{position:relative;margin-top:18px;padding:10px;border-radius:18px;background:linear-gradient(135deg,rgba(229,168,62,.08),rgba(183,166,220,.06));overflow:visible}
+.ai-report-btn{width:100%;background:linear-gradient(135deg,var(--acc),#D4942A);color:var(--acc-ink);font-weight:800;font-size:15px;border-radius:14px;padding:15px 18px;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;border:none;cursor:pointer;transition:transform .15s;z-index:2}
 .ai-report-btn:active{transform:scale(.97)}
-.ai-report-btn::before{content:'';position:absolute;inset:0;border-radius:16px;border:2px solid var(--acc);animation:aiPulseRing 2.2s ease-out infinite;pointer-events:none}
-.ai-report-btn::after{content:'';position:absolute;inset:0;border-radius:16px;border:2px solid var(--c-mind);animation:aiPulseRing 2.2s ease-out infinite .7s;pointer-events:none}
-@keyframes aiPulseRing{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.08);opacity:0}100%{transform:scale(1.08);opacity:0}}
-.ai-report-note{font-size:11px;color:var(--ink3);line-height:1.8;margin-top:9px;text-align:center}
+.ai-ring{position:absolute;inset:0;border-radius:14px;border:2px solid var(--acc);pointer-events:none;animation:aiRing 2.4s ease-out infinite}
+.ai-ring.r2{border-color:var(--c-mind);animation-delay:.8s}
+.ai-ring.r3{border-color:var(--c-relations);animation-delay:1.6s}
+@keyframes aiRing{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.12);opacity:0}}
+.ai-strip{margin-top:9px;background:var(--card2);border:1px solid var(--line2);border-radius:10px;overflow:hidden;position:relative}
+.ai-strip span{display:block;white-space:nowrap;padding:8px 0;font-size:11.5px;color:var(--ink2);animation:aiMarquee 22s linear infinite;padding-left:100%}
+@keyframes aiMarquee{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.ai-report-note{font-size:11px;color:var(--ink3);line-height:1.8;margin-top:8px;text-align:center}
 .ai-report-note b{color:var(--acc)}
 </style>
 </head>
@@ -3711,7 +3716,11 @@ function renderReport(){
   (rp.achieve?'<div class="rp-sec"><h4>'+ic('check',13)+' '+t('rep_ach')+'</h4><p>«'+esc(rp.achieve.text)+'»</p></div>':'')+
   (rp.warm?'<div class="rp-sec"><h4>'+ic('heart',13)+' '+t('rep_warm')+'</h4><p>«'+esc(rp.warm.text)+'»</p></div>':'')+
   '<div class="page-add"><button class="btn ghost" data-act="waReport">'+ic('wa',17)+' '+t('rep_share')+'</button></div>'+
-  '<button class="ai-report-btn" data-act="aiReport">'+ic('brain',20)+' <span>'+(LANG==='ar'?'🧪 توليد تقرير المختص':'🧪 Generate specialist report')+'</span></button>'+
+  '<div class="ai-wrap">'+
+   '<button class="ai-report-btn" data-act="aiReport">'+ic('brain',20)+' <span>'+(LANG==='ar'?'🧪 توليد تقرير المختص':'🧪 Generate specialist report')+'</span></button>'+
+   '<span class="ai-ring"></span><span class="ai-ring r2"></span><span class="ai-ring r3"></span>'+
+  '</div>'+
+  '<div class="ai-strip"><span>'+(LANG==='ar'?'✨ هنا يتم توليد التقارير — برومبت جاهز لتحليل بياناتك وكأنك تعرضها على مختص وفق المعايير الدولية المعتمدة.. هذه ليست استشارة طبية، بل تقييم لبياناتك لتراقب أداءك وتحسّن جودة حياتك':'✨ Reports hub — a ready prompt analyzing your data like a certified specialist per international standards.. Not medical advice — a personal data review to monitor and improve')+'</span></div>'+
   '<div class="ai-report-note">'+(LANG==='ar'?'يولّد <b>القانون المهني + بياناتك الحية</b> جاهزين للنسخ — الصقه في Claude أو ChatGPT لتحليل وخطيطة 4 أسابيع بمعايير عالمية. <b>لا يغني عن استشارة مختص نفسي.</b>':'Generates <b>professional law + live data</b> ready to paste into Claude or ChatGPT. <b>Not a substitute for professional care.</b>')+'</div>'+
   '<div style="height:16px"></div>';
  requestAnimationFrame(()=>{$$('#v-report .wk-track i').forEach(i=>i.style.width=i.dataset.w+'%')});
