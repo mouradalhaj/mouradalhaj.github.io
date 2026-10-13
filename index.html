@@ -706,6 +706,14 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .lab-note b{color:var(--c-growth)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px}
+/* زر تقرير المختص — نبض ملون 3.4 */
+.ai-report-btn{margin-top:18px;width:100%;background:linear-gradient(135deg,var(--acc),#D4942A);color:var(--acc-ink);font-weight:800;font-size:15px;border-radius:16px;padding:15px 18px;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;border:none;cursor:pointer;transition:transform .15s;box-shadow:0 6px 20px rgba(229,168,62,.25)}
+.ai-report-btn:active{transform:scale(.97)}
+.ai-report-btn::before{content:'';position:absolute;inset:0;border-radius:16px;border:2px solid var(--acc);animation:aiPulseRing 2.2s ease-out infinite;pointer-events:none}
+.ai-report-btn::after{content:'';position:absolute;inset:0;border-radius:16px;border:2px solid var(--c-mind);animation:aiPulseRing 2.2s ease-out infinite .7s;pointer-events:none}
+@keyframes aiPulseRing{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.08);opacity:0}100%{transform:scale(1.08);opacity:0}}
+.ai-report-note{font-size:11px;color:var(--ink3);line-height:1.8;margin-top:9px;text-align:center}
+.ai-report-note b{color:var(--acc)}
 </style>
 </head>
 <body>
@@ -1973,6 +1981,108 @@ function shareWa(text){
  a.target='_blank';a.rel='noopener';
  document.body.appendChild(a);a.click();
  setTimeout(()=>{if(a.parentNode)a.parentNode.removeChild(a)},300);
+}
+/* القانون المهني — برومبت المختص 3.4 */
+const AI_PROMPT_LAW=`أنت الآن تعمل بصفة "محلل بيانات نفسية-سلوكية مساعد" — دورك مهني، منهجي، مقيّد بمعايير عالمية معتمدة.
+
+【الإطار المهني الإلزامي】
+- تعمل وفق أدلة معتمدة عالمياً: DSM-5-TR وICD-11 للتصنيف، وAPA وNICE وWHO للتوجيهات العلاجية.
+- أسلوبك: تحليل منطقي مبني على البيانات المرفقة فقط — لا تخمين، لا افتراض خارج البيانات، لا تفسيرات شعبية.
+- لغتك: مهنية، محترمة، واضحة — تعامل مع صاحب البيانات كشخص بالغ مسؤول يسعى للنمو.
+- عربية فصحى واضحة، مع المصطلحات العلمية بالإنجليزية بين قوسين عند الحاجة.
+
+【الحدود الصارمة — لا تخالفها إطلاقاً】
+1. ممنوع منعاً باتاً وصف أي دواء أو مركب أو جرعة أو بديل دوائي — هذا ليس من اختصاصك، وذكر أي دواء يُلغي صلاحية تقريرك بالكامل.
+2. ممنوع تقديم "تشخيص" نهائي — تقدم "مؤشرات" (Indicators) فقط، وتستخدم عبارات مثل "المؤشرات ترجّح" لا "أنت مصاب بـ".
+3. ممنوع تقديم جلسات علاجية محاكاة — دورك تقرير + خطة سلوكية عملية فقط.
+4. ممنوع الوعظ أو الحديث الديني أو الروحي أو الجمالي.
+5. ممنوع طرح أسئلة متتابعة أو تحويل الرد إلى حوار — أعطِ التقرير النهائي مباشرة ثم توقف.
+6. ممنوع اقتراح تطبيقات أو خدمات أخرى.
+
+【ما يجب فعله بالضبط】
+- اقرأ البيانات المرفقة بدقة وحللها وفق الأدبيات النفسية العالمية.
+- قسّم النتائج إلى: (قوي — متوسط — يحتاج عناية) حسب العتبات المعيارية المرفقة.
+- قدم خطة عمل عملية مدتها 4 أسابيع، مبنية على Cognitive Behavioral Therapy (CBT) وBehavioral Activation (BA) كإطارين معتمدين، مع ذكر اسم المنهج الذي بنيت عليه كل توصية.
+- عند مؤشرات مرتفعة حسب العتبات المرفقة — قل ذلك بوضوح وقدم نصيحة قوية بالاستعانة بمختص.
+- اختم بأهداف قابلة للقياس (SMART Goals) لشهر القادم.
+
+【التنسيق الإلزامي】
+1. ملخص تنفيذي (5 أسطر)
+2. قراءة المؤشرات المعيارية (بالمقارنة مع العتبات العالمية)
+3. نقاط القوة (بتحليل)
+4. الملاحظات التي تحتاج عناية (بدون تهويل)
+5. خطة العمل — 4 أسابيع — مبنية على CBT/BA — مع ذكر المنهج لكل توصية
+6. أهداف شهرية SMART
+7. تنبيه أخلاقي
+
+【إخلاء مسؤولية إلزامي في نهاية التقرير حرفياً】
+"⚠️ هذا تحليل مساعد مبني على بيانات ذاتية مرفقة، وليس تشخيصاً طبياً ولا يغني عن استشارة مختص نفسي. رفيق أداة وعي ذاتي فقط."
+
+إذا فهمت — ابدأ مباشرة بتحليل البيانات التالية وقدم التقرير بالتنسيق المطلوب. لا تسأل أسئلة.
+
+═══════════ البيانات الحية من رفيق ═══════════`;
+/* مولّد تقرير المختص — القانون + البيانات الحية 3.4 */
+function buildAiReport(){
+ const AR=LANG==='ar',L=[];
+ const name=S.profile.name||(AR?'مستخدم رفيق':'Rafiq user');
+ const age=calcAge(S.profile.bday);
+ L.push((AR?'الاسم المستعار: ':'Alias: ')+name+(age?(AR?' · العمر: ':' · Age: ')+age+(AR?' سنة':'y'):''));
+ L.push((AR?'مدة التوثيق: ':'Documentation span: ')+daysSince(S.events.length?S.events[0].ts:Date.now())+(AR?' يوم':' days')+' · '+(AR?'عدد الأحداث: ':'Events: ')+S.events.length);
+ L.push('');
+ L.push(AR?'【المؤشرات السبعة الحالية】':'【Seven life indicators】');
+ CATS.forEach(c=>L.push('- '+cn(c)+': '+S.ind[c]+'/100 '+(S.catDelta[c]>0?'(+'+S.catDelta[c]+')':S.catDelta[c]<0?'('+S.catDelta[c]+')':'(±0)')));
+ L.push((AR?'مؤشر الحياة الكلي: ':'Overall life score: ')+S.life+'/100');
+ const assess=S.events.filter(e=>e.type==='assessment').sort((a,b)=>b.ts-a.ts);
+ if(assess.length){
+  L.push('');
+  L.push(AR?'【نتائج العيادة النفسية المقننة — آخر نتيجة لكل مقياس】':'【Validated clinic results — latest per scale】');
+  const seen={};
+  assess.forEach(a=>{if(seen[a.assess])return;seen[a.assess]=1;
+   const bank=ASSESS_BANK[a.assess];
+   if(!bank)return;
+   const nm=AR?bank.ar:bank.en;
+   const cut=assessCut(a.score);
+   L.push('- '+nm+': '+a.score+' '+(AR?'من':'of')+' '+(bank.qs.length*4)+' — '+(AR?cut.ar:cut.en)+' — '+fmtShort(a.ts));
+  });
+ }
+ const lr=todayRate(),sc=rateScore(lr);
+ if(sc!==null){L.push('');L.push((AR?'التقييم النفسي اليومي الحالي: ':'Daily psych rating: ')+sc+'/100')}
+ const gi=rateGapInfo();
+ if(gi.kind!=='nodata'){L.push((AR?'وعي الفجوة: ':'Gap check: ')+(gi.kind==='up'?t('gap_up'):gi.kind==='dn'?t('gap_dn'):t('gap_close')))}
+ L.push('');
+ L.push(AR?'【محركات النبض التنبؤي】':'【Predictive pulse engines】');
+ L.push('- '+(AR?'رادار الانهيار: ':'Burnout radar: ')+burnoutScore()+'%');
+ const hc=hiddenCorr();
+ if(hc.length){L.push('- '+(AR?'الارتباطات الخفية المرصودة:':'Hidden correlations:'));hc.forEach(x=>L.push('  • '+x.t))}
+ const dm=dualMirror();
+ if(dm){L.push('- '+(AR?'المرآة المزدوجة: ':'Dual mirror: ')+(AR?'شعور ':'feel ')+dm.avgRate+' / '+(AR?'أفعال ':'actions ')+(dm.avgAct!==null?dm.avgAct:'—')+' · '+(AR?'فجوة ':'gap ')+(dm.gap!==null?dm.gap:'—'))}
+ const fp=fpCompute();
+ L.push('');
+ L.push(AR?'【بصمة الشخصية الثمانية】':'【8-axis personality fingerprint】');
+ FP_DIMS.forEach(d=>L.push('- '+(AR?d.ar:d.en)+': '+fp[d.id].score+'% '+(fp[d.id].score>50?(AR?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0]):(AR?d.ar.split(' ↔')[1]:d.en.split(' ↔')[1]))));
+ const st=calcStreak();
+ L.push('');
+ L.push((AR?'سلسلة التوثيق الحالية: ':'Current streak: ')+st+' '+(AR?'يوم':'days')+' · '+(AR?'أوسمة مكتسبة: ':'Badges earned: ')+badges().filter(b=>b.got).length+'/'+badges().length);
+ L.push('');
+ L.push(AR?'ملاحظة: الأرقام أعلاه محسوبة محلياً على جهاز صاحبها بتطبيق رفيق، وفق منهجيات موثقة في التطبيق.':'Note: all metrics computed locally on the owner device by Rafiq app.');
+ return L.join('\n');
+}
+function aiReportCopy(){
+ const full=AI_PROMPT_LAW+'\n\n'+buildAiReport();
+ const done=()=>toast(ARx()?'نُسخ التقرير — الصقه في Claude أو ChatGPT':'Report copied — paste into Claude or ChatGPT','var(--good)','check');
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(full).then(done).catch(()=>fallbackCopy(full,done));
+ }else fallbackCopy(full,done);
+}
+function ARx(){return LANG==='ar'}
+function fallbackCopy(txt,cb){
+ const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+ document.body.appendChild(ta);ta.select();
+ try{document.execCommand('copy');cb()}catch(e){toast(LANG==='ar'?'تعذر النسخ — انسخ يدوياً من النافذة':'Copy failed','var(--bad)','x');window.prompt(LANG==='ar'?'انسخ يدوياً:':'Copy manually:',txt)}
+ if(ta.parentNode)ta.parentNode.removeChild(ta);
+}
+function aiReportWa(){
+ shareWa(AI_PROMPT_LAW+'\n\n'+buildAiReport());
 }
 function weeklyWaText(){
  const rp=weeklyReport(0),AR=LANG==='ar';
@@ -3601,6 +3711,8 @@ function renderReport(){
   (rp.achieve?'<div class="rp-sec"><h4>'+ic('check',13)+' '+t('rep_ach')+'</h4><p>«'+esc(rp.achieve.text)+'»</p></div>':'')+
   (rp.warm?'<div class="rp-sec"><h4>'+ic('heart',13)+' '+t('rep_warm')+'</h4><p>«'+esc(rp.warm.text)+'»</p></div>':'')+
   '<div class="page-add"><button class="btn ghost" data-act="waReport">'+ic('wa',17)+' '+t('rep_share')+'</button></div>'+
+  '<button class="ai-report-btn" data-act="aiReport">'+ic('brain',20)+' <span>'+(LANG==='ar'?'🧪 توليد تقرير المختص':'🧪 Generate specialist report')+'</span></button>'+
+  '<div class="ai-report-note">'+(LANG==='ar'?'يولّد <b>القانون المهني + بياناتك الحية</b> جاهزين للنسخ — الصقه في Claude أو ChatGPT لتحليل وخطيطة 4 أسابيع بمعايير عالمية. <b>لا يغني عن استشارة مختص نفسي.</b>':'Generates <b>professional law + live data</b> ready to paste into Claude or ChatGPT. <b>Not a substitute for professional care.</b>')+'</div>'+
   '<div style="height:16px"></div>';
  requestAnimationFrame(()=>{$$('#v-report .wk-track i').forEach(i=>i.style.width=i.dataset.w+'%')});
 }
@@ -4689,6 +4801,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='openDec')openDecSheet();
  else if(act==='week'){reportWeek=+b.dataset.w;renderReport()}
  else if(act==='waReport')shareWa(weeklyWaText());
+ else if(act==='aiReport')aiReportCopy();
  else if(act==='waTwin')shareWa(twinWaText());
  else if(act==='calDay')openDaySheet(+b.dataset.ts);
  else if(act==='calToday'){const n=new Date();calY=n.getFullYear();calM=n.getMonth();renderCal()}
