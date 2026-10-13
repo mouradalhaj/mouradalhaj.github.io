@@ -4364,25 +4364,38 @@ function openMemoryCard(id){
    (ev.mood?'<span style="color:'+(ev.mood>=5?'var(--good)':ev.mood<=3?'var(--bad)':'var(--ink3)')+'">'+faceSvg(ev.mood,44)+'</span>':'')+
    '<div style="flex:1;min-width:0"><b style="font-size:15px;display:block">'+fmtDate(ev.ts)+'</b><span style="font-size:11.5px;color:var(--ink3)">'+fmtTime(ev.ts)+(ev.polarity>0?t('tag_pos'):ev.polarity<0?t('tag_neg'):'')+'</span></div>'+
   '</div>'+
-  '<div class="mem-qt" style="--rc:'+cm.color+'">'+esc(ev.text||'')+'</div>'+
+  '<div class="mem-qt" id="memQt" style="--rc:'+cm.color+'">'+esc(ev.text||'')+'</div>'+
+  '<div id="memEditWrap" style="display:none;margin-top:10px">'+
+   '<textarea id="memEditTx" style="width:100%;min-height:90px">'+esc(ev.text||'')+'</textarea>'+
+   '<div style="display:flex;gap:9px;margin-top:9px">'+
+    '<button class="btn" id="memSaveTx" style="flex:1">'+ic('check',15)+' '+(LANG==='ar'?'حفظ':'Save')+'</button>'+
+    '<button class="btn ghost" id="memCancelTx" style="flex:1">'+t('cancel')+'</button>'+
+   '</div></div>'+
   photos+
-  '<div style="display:flex;gap:9px;margin-top:14px">'+
-   '<button class="btn ghost" id="memEdit" style="flex:1">'+ic('edit',15)+' '+t('mem_edit')+'</button>'+
-   '<button class="btn ghost" id="memDel" style="flex:1;color:var(--bad)">'+ic('trash',15)+' '+t('mem_del')+'</button>'+
-  '</div>';
+  '<div style="margin-top:14px"><button class="btn ghost" id="memEdit" style="width:100%">'+ic('edit',15)+' '+(LANG==='ar'?'تصحيح الكتابة':'Edit text')+'</button></div>';
  openSheet('#shMem');
  const bk=$('#memBack');
  if(bk)bk.onclick=()=>{closeSheets();setTimeout(()=>{drawCatLog();openSheet('#shCatLog')},140)};
- const ed=$('#memEdit');
- if(ed)ed.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,null,ev.id),140)};
- const dl=$('#memDel');
- if(dl)dl.onclick=()=>askConfirm(t('mem_del_t'),t('mem_del_p'),t('del'),async()=>{
-  await DB.del('events',ev.id);
-  S.events=S.events.filter(x=>x.id!==ev.id);
-  closeSheets();toast(t('mem_deleted'),'var(--ink2)','trash');refresh();
- });
-}
- 
+ const ew=$('#memEditWrap'),qt=$('#memQt'),eb=$('#memEdit');
+ if(eb)eb.onclick=()=>{
+  qt.style.display='none';eb.style.display='none';ew.style.display='block';
+  const tx=$('#memEditTx');tx.focus();tx.setSelectionRange(tx.value.length,tx.value.length);
+ };
+ const cc=$('#memCancelTx');
+ if(cc)cc.onclick=()=>{ew.style.display='none';qt.style.display='block';eb.style.display='block'};
+ const sv=$('#memSaveTx');
+ if(sv)sv.onclick=async()=>{
+  const nt=$('#memEditTx').value.trim();
+  if(!nt){toast(LANG==='ar'?'النص لا يمكن أن يكون فارغاً':'Text cannot be empty','var(--bad)','x');return}
+  ev.text=nt;
+  await DB.put('events',ev);
+  qt.textContent=nt;
+  ew.style.display='none';qt.style.display='block';eb.style.display='block';
+  toast(t('ev_updated'),'var(--good)','check');
+  refresh();
+ };
+} 
+
  /* ====== عيادة رفيق — التقييم النفسي المعياري 3.2 ====== */
 let asState=null;
 function openAssessPick(){
