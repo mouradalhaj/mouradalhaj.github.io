@@ -2516,7 +2516,7 @@ function showRitualIfNeeded(){
  if(S.settings.ritualOff)return;
  const now=new Date(),h=now.getHours(),iso=isoDate(Date.now());
  if(h>=5&&h<12&&S.settings.ritualM!==iso){openRitual('m');return true}
- if(h>=17&&h<24&&!todayRate()&&S.settings.ritualE!==iso){openRitual('e');return true}
+ if(false&&h>=17&&h<24&&!todayRate()&&S.settings.ritualE!==iso){openRitual('e');return true}
  return false;
 }
 function openRitual(mode){
@@ -2562,20 +2562,12 @@ function renderRitual(){
    '<svg class="rt-ic" width="66" height="66" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
    '<h1 class="rt-t">'+t('rt_e_t')+'<em> ·</em> '+fmtShort(Date.now())+'</h1>'+
    '<p class="rt-s">'+t('rt_e_s')+'</p>'+
-   '<div class="rt-sec"><div class="rt-lab">'+t('int_t')+'</div>'+
-   '<div class="rt-chips">'+gen.map(p=>'<button class="rt-chip" data-rcf="'+esc(p)+'">'+esc(p)+'</button>').join('')+'</div></div>'+
    '<div class="rt-sec"><div class="rt-lab">'+t('rt_mood2')+'</div>'+
    '<div class="rt-faces">'+[6,5,4,3,2,1].map(m=>'<button class="rt-face" data-rm="'+m+'">'+faceSvg(m,30)+'<span>'+mw(m)+'</span></button>').join('')+'</div></div>'+
    '<div class="rt-sec"><textarea class="rt-note" id="rtNote" placeholder="'+t('rt_note')+'"></textarea></div>'+
    '<button class="rt-btn" id="rtGo">🌙 '+t('rt_close')+'</button>'+
    '<div class="rt-links"><button id="rtSkip">'+t('rt_skip')+'</button><button id="rtNever">'+t('rt_never')+'</button></div>'+
    '</div>';
-  $$('#ritual [data-rcf]').forEach(b=>b.onclick=()=>{
-   const tx=b.dataset.rcf;
-   const i=ritualPick.conf.indexOf(tx);
-   if(i>=0){ritualPick.conf.splice(i,1);b.classList.remove('on')}
-   else{ritualPick.conf.push(tx);b.classList.add('on')}
-  });
   $$('#ritual [data-rm]').forEach(b=>b.onclick=()=>{
    ritualPick.mood=+b.dataset.rm;
    $$('#ritual [data-rm]').forEach(x=>x.classList.toggle('on',x===b));
