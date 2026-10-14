@@ -714,13 +714,9 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .ai-ring.r2{border-color:var(--c-mind);animation-delay:.8s}
 .ai-ring.r3{border-color:var(--c-relations);animation-delay:1.6s}
 @keyframes aiRing{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.12);opacity:0}}
-.ai-strip{margin-top:9px;background:var(--card2);border:1px solid var(--line2);border-radius:10px;overflow:hidden}
-.ai-track{display:inline-flex;gap:10px;white-space:nowrap;animation:aiSlide 22s linear infinite;padding:8px 0}
-.ai-track span{font-size:11.5px;color:var(--ink2);flex:none}
-@keyframes aiSlideR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes aiSlideL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-html[dir="rtl"] .ai-track{animation-name:aiSlideR}
-html[dir="ltr"] .ai-track{animation-name:aiSlideL}
+.ai-strip{margin-top:9px;background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:9px 13px;text-align:center}
+.ai-strip span{font-size:11px;color:var(--ink2);line-height:1.8;animation:aiBreath 3s ease-in-out infinite;display:inline-block}
+@keyframes aiBreath{0%,100%{opacity:.55}50%{opacity:1}}
 .ai-report-note{font-size:11px;color:var(--ink3);line-height:1.8;margin-top:8px;text-align:center}
 .ai-report-note b{color:var(--acc)}
 </style>
@@ -3724,10 +3720,7 @@ function renderReport(){
    '<button class="ai-report-btn" data-act="aiReport">'+ic('brain',20)+' <span>'+(LANG==='ar'?'🧪 توليد تقرير المختص':'🧪 Generate specialist report')+'</span></button>'+
    '<span class="ai-ring"></span><span class="ai-ring r2"></span><span class="ai-ring r3"></span>'+
   '</div>'+
-  '<div class="ai-strip"><div class="ai-track">'+
-   '<span>'+(LANG==='ar'?'✨ هنا يتم توليد التقارير — برومبت جاهز لتحليل بياناتك وكأنك تعرضها على مختص وفق المعايير الدولية المعتمدة.. هذه ليست استشارة طبية، بل تقييم لبياناتك لتراقب أداءك وتحسّن جودة حياتك':'✨ Reports hub — a ready prompt analyzing your data like a certified specialist per international standards.. Not medical advice — a personal data review to monitor and improve')+'</span>'+
-   '<span>'+(LANG==='ar'?'✨ هنا يتم توليد التقارير — برومبت جاهز لتحليل بياناتك وكأنك تعرضها على مختص وفق المعايير الدولية المعتمدة.. هذه ليست استشارة طبية، بل تقييم لبياناتك لتراقب أداءك وتحسّن جودة حياتك':'✨ Reports hub — a ready prompt analyzing your data like a certified specialist per international standards.. Not medical advice — a personal data review to monitor and improve')+'</span>'+
-  '</div></div>'+
+  '<div class="ai-strip"><span>'+(LANG==='ar'?'✨ هنا يتم توليد التقارير — برومبت جاهز لتحليل بياناتك وكأنك تعرضها على مختص وفق المعايير الدولية المعتمدة.. هذه ليست استشارة طبية، بل تقييم لبياناتك لتراقب أداءك وتحسّن جودة حياتك':'✨ Reports hub — a ready prompt analyzing your data like a certified specialist per international standards.. Not medical advice — a personal data review')+'</span></div>'+
   '<div class="ai-report-note">'+(LANG==='ar'?'يولّد <b>القانون المهني + بياناتك الحية</b> جاهزين للنسخ — الصقه في Claude أو ChatGPT لتحليل وخطيطة 4 أسابيع بمعايير عالمية. <b>لا يغني عن استشارة مختص نفسي.</b>':'Generates <b>professional law + live data</b> ready to paste into Claude or ChatGPT. <b>Not a substitute for professional care.</b>')+'</div>'+
   '<div style="height:16px"></div>';
  requestAnimationFrame(()=>{$$('#v-report .wk-track i').forEach(i=>i.style.width=i.dataset.w+'%')});
