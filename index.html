@@ -725,6 +725,10 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .duty-note .ic{color:var(--acc)}
 .duty-note b{font-size:13px;display:block;color:var(--ink)}
 .duty-note span{font-size:10.5px;color:var(--ink3);display:block;margin-top:2px}
+/* نافذة المهمات الإنسانية — قائمة مدمجة قابلة للتمرير 3.4 */
+.qp-list{max-height:52vh;overflow-y:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
+.qp-list .chip{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:right;padding:9px 12px;font-size:12.5px;border-radius:11px;margin-bottom:6px;line-height:1.6}
+.qp-del{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--line2);color:var(--bad);flex:none;background:var(--card)}
 </style>
 </head>
 <body>
@@ -4836,13 +4840,29 @@ const QUEST_BANK={
 function renderQuestPick(){
  const el=$('#modal');
  if(!el)return;
- el.innerHTML='<div class="md-box"><b>'+(LANG==='ar'?'اختر مهمة يومك الإنسانية':'Pick your human quest')+'</b><p>'+(LANG==='ar'?'أعمال ترفعك وترفع الآخرين — أو اكتب موعدك/واجبك الخاص:':'Deeds that lift you and others — or write your own duty:')+'</p>'+
-  '<div class="chips" style="flex-direction:column;align-items:stretch">'+questBank().map(q=>'<button class="chip" data-qpick="'+esc(q)+'" style="text-align:right">'+esc(q)+'</button>').join('')+'</div>'+
-  '<div style="height:12px"></div><input id="qCustom" placeholder="'+(LANG==='ar'?'مواعيدي وواجباتي المطلوبة مني…':'My own appointments & duties…')+'">'+
+ const AR=LANG==='ar';
+ const manual=S.events.filter(e=>e.type==='interest'&&e.gen==='human'&&dayStart(e.ts)===dayStart(Date.now()));
+ const bank=questBank().filter(q=>!manual.some(m=>m.text===q));
+ el.innerHTML='<div class="md-box"><b>'+(AR?'اختر مهمة يومك الإنسانية':'Pick your human quest')+'</b>'+
+  '<p>'+(AR?'أعمال ترفعك وترفع الآخرين — أو اكتب موعدك/واجبك الخاص:':'Deeds that lift you and others — or write your own:')+'</p>'+
+  '<div class="qp-list">'+bank.map(q=>'<button class="chip" data-qpick="'+esc(q)+'" style="width:100%">'+esc(q)+'</button>').join('')+
+  (manual.length?'<div style="font-size:10.5px;color:var(--ink3);margin:10px 0 6px">'+(AR?'مهامك المضافة اليوم — اضغط 🗑 للحذف:':'Your added today — tap 🗑 to remove:')+'</div>'+
+   manual.map(m=>'<div class="chip" style="width:100%;margin-bottom:6px">'+esc(m.text)+
+    '<button class="qp-del" data-qdel="'+m.id+'">'+ic('trash',13)+'</button></div>').join(''):'')+
+  '</div>'+
+  '<div style="height:12px"></div><input id="qCustom" placeholder="'+(AR?'مواعيدي وواجباتي المطلوبة مني…':'My own appointments & duties…')+'">'+
   '<button class="btn" id="qCustomGo" style="margin-top:10px">'+t('save')+'</button>'+
   '<button class="btn ghost" id="qClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
  el.classList.add('show');
  $$('#modal [data-qpick]').forEach(b=>b.onclick=()=>{el.classList.remove('show');applyQuestPick(b.dataset.qpick)});
+ $$('#modal [data-qdel]').forEach(b=>b.onclick=async()=>{
+  const did=b.dataset.qdel;
+  await DB.del('events',did);
+  S.events=S.events.filter(x=>x.id!==did);
+  el.classList.remove('show');
+  toast(AR?'حُذفت المهمة':'Quest removed','var(--ink2)','trash');
+  refresh();
+ });
  $('#qClose').onclick=()=>el.classList.remove('show');
  $('#qCustomGo').onclick=()=>{
   const v=$('#qCustom').value.trim();if(!v)return;
