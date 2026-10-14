@@ -719,6 +719,12 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 @keyframes aiBreath{0%,100%{opacity:.55}50%{opacity:1}}
 .ai-report-note{font-size:11px;color:var(--ink3);line-height:1.8;margin-top:8px;text-align:center}
 .ai-report-note b{color:var(--acc)}
+/* لافتة مواعيد اليوم — نبض إرشادي 3.4 */
+@keyframes dutyPulse{0%,100%{border-color:var(--line2);box-shadow:0 0 0 0 rgba(229,168,62,0)}50%{border-color:var(--acc);box-shadow:0 0 0 5px rgba(229,168,62,.13)}}
+.duty-note{width:100%;margin-top:9px;padding:12px 14px;border-radius:14px;border:1.5px dashed var(--line2);background:var(--card);display:flex;align-items:center;gap:11px;animation:dutyPulse 3s ease-in-out infinite;text-align:right}
+.duty-note .ic{color:var(--acc)}
+.duty-note b{font-size:13px;display:block;color:var(--ink)}
+.duty-note span{font-size:10.5px;color:var(--ink3);display:block;margin-top:2px}
 </style>
 </head>
 <body>
@@ -2798,7 +2804,11 @@ function questHtml(){
   '</div>'+
   (its.length?'<div style="margin-top:11px;height:6px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:var(--good);transition:width .5s"></i></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-top:4px"><span>'+doneN+' / '+its.length+'</span><span>'+pct+'%</span></div>':'')+
   '<div style="margin-top:10px">'+items+'</div>'+
-  '<button class="btn ghost" data-act="addInt" style="margin-top:9px;padding:9px;font-size:12.5px">'+ic('plus',14)+' '+(AR?'أضف موعداً أو التزاماً أو اهتماماً':'Add appointment, duty or interest')+'</button></div>';
+   '<div class="duty-note">'+
+   ic('sun2',20)+
+   '<span style="flex:1"><b>'+(AR?'هنا مواعيدك وبرنامجك اليومي':'Your appointments & daily plan')+'</b>'+
+   '<span>'+(AR?'أضِفها من زر «هيا» أعلاه — وكل تأشير يوثَّق في أحداثك':'Add from the «Go» button above — every check-in becomes an event')+'</span></span>'+
+  '</div></div>';
 }
 function chCard(){
  const c=weeklyChallenge();
@@ -4818,9 +4828,9 @@ window.__rfStage='ربط الأفعال';
  else if(act==='calNext'){calM++;if(calM>11){calM=0;calY++}renderCal()}
 });
 const QUEST_BANK={
- ar:['ساعدتُ محتاجاً اليوم ولو بصدق صغير','تصدقتُ لعمل خيري','تواصلتُ مع صديق قديم افتقدته','جلسة عائلية كاملة بلا هواتف','سامحتُ شخصاً أجرى عليّ','علّمتُ شخصاً شيئاً أعرفه','شكرتُ أمي/أبي على شيء محدد','زرتُ مريضاً أو مسناً'],
- en:['Helped someone in need today','Gave charity to a cause','Reached out to an old friend','Full family time without phones','Forgave someone who hurt me','Taught someone a skill','Thanked a parent for something specific','Visited a sick or elderly person']};
-function questBank(){
+ ar:['ساعدتُ محتاجاً اليوم ولو بصدق صغير','تصدقتُ لعمل خيري','تواصلتُ مع صديق قديم افتقدته','جلسة عائلية كاملة بلا هواتف','سامحتُ شخصاً أجرى عليّ','علّمتُ شخصاً شيئاً أعرفه','شكرتُ أمي/أبي على شيء محدد','زرتُ مريضاً أو مسناً','أفطرتُ صائماً أو أكرمتُ ضيفاً','أعطيتُ وقفة مواصلات أو مساعدة على الطريق','حملتُ مؤنة جار أو ساعدتُه بحاجة','تصدقتُ بمال خفي حتى لا يعلم المتبرع به','قرأتُ شيئاً مفيداً وأهديتُه لصديق','شجعتُ من أبدى مشقّة بالكلمة الطيبة','ساهمتُ بعشرين ريالاً في خير جماعي','سمعتُ من يضيق به ذرعاً دون مقاطعة'],
+ en:['Helped someone in need today','Gave charity to a cause','Reached out to an old friend','Full family time without phones','Forgave someone who hurt me','Taught someone a skill','Thanked a parent for something specific','Visited a sick or elderly person','Fasted for someone or hosted a guest','Helped someone cross or carry loads','Carried a neighbor burden quietly','Gave anonymous charity','Shared a useful read with a friend','Encouraged someone struggling today','Contributed to a group charity cause','Listened to someone in distress fully']};
+ function questBank(){
  return QUEST_BANK[LANG]||QUEST_BANK.ar;
 }
 function renderQuestPick(){
