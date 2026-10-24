@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- COMMIT: QUALITY_DIMENSION_v1 — بُعد الجودة في العلاقات (هولت-لونستاد) — مبنٍ على نسخة مراد المؤكدة 2026-10-25 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -3472,8 +3473,16 @@ function givingBalanceHtml(){
   else{line=AR?('هو/هي يبادر '+(-d)+' مرات أكثر منك — أجب الدعوة، فالباب الذي يطرقك اليوم قد يمل من الغد'):('They initiate '+(-d)+'× more — answer the call');icol='var(--c-relations)'}
   return '<div class="pp-corr">'+ic('pulse',17)+'<div class="pp-corr-b"><b>'+esc(x.r.name)+'</b><p style="color:'+icol+'">'+line+'</p></div><span class="pp-corr-st">'+x.mine+' : '+x.theirs+'</span></div>';
  }).join('');
+ const c30=S.events.filter(e=>e.type==='contact'&&e.ts>=last30);
+ const qn=c30.filter(e=>e.quality).length;
+ const qf=c30.filter(e=>e.quality==='full').length;
+ let qHtml='';
+ if(qn>0){
+  const pct=Math.round(qf/qn*100);
+  qHtml='<div class="int-learn" style="margin-top:8px">'+ic('star',13)+' <b>'+(AR?'بُعد الجودة — حضور القلب':'Quality — presence of the heart')+'</b> — '+(AR?('من أصل '+qn+' تواصل وُسم بجودته، كان '+qf+' بحضور كامل ('+pct+'%). هولت-لونستاد: جودة الروابط تنبّئ بالصحة أكثر من عددها — لقاء واحد بحضور كامل يغذي القلب أكثر من عشرة بغفلة.'):('Of '+qn+' tagged contacts, '+qf+' were fully present ('+pct+'%). Holt-Lunstad: quality predicts wellbeing better than quantity.'))+'</div>';
+ }
  return '<h3 class="sec-t">'+ic('heart',15)+' '+(AR?'ميزان العطاء — آخر 30 يوماً':'Giving balance — last 30 days')+'</h3>'+
-  '<div class="card" style="padding:5px 15px">'+top+'</div>'+
+  '<div class="card" style="padding:5px 15px">'+top+'</div>'+qHtml+
   '<div class="int-learn" style="margin-top:8px">'+ic('brain',13)+' <b>'+(AR?'المبادرة هدية لا دَين':'Initiation is a gift, not a debt')+'</b> — '+(AR?'الميزان يُنبه لا يُحاسب. أحياناً نحن السند، وأحياناً يأتي دورنا أن نستقبل.':'A gentle mirror, not a scorecard.')+'</div>';
 }
 function renderRelations(){
@@ -3510,7 +3519,7 @@ function renderRelations(){
 
 /* التواصل والإحصاءات */
 /* سجل التواصل — مركز ثلاثي: سجل، أوقات، إدخال جديد 3.3 */
-let csView='log',csKind='call';
+let csView='log',csKind='call',csQual='full';
 function openContactSheet(rid){
  const r=S.rels.find(x=>x.id===rid);if(!r)return;
  if(!r.calls)r.calls={n:0,d:0};
@@ -3540,7 +3549,7 @@ function drawContactHub(){
   '<button class="btn" id="csNew" style="margin-top:14px">'+ic('plus',16)+' '+(AR?'تواصل جديد':'New contact')+'</button>'+
   '<div class="set-note" style="margin-top:12px">'+(AR?'كل تواصل يُسجل هنا بسطره ووقته — وميزان العطاء يقرؤه تلقائياً':'Every contact is logged here — the giving balance reads it automatically')+'</div>';
  const sg=$('#csStatsGo');if(sg)sg.onclick=()=>{csView='stats';drawContactStats()};
- const nb=$('#csNew');if(nb)nb.onclick=()=>{csView='new';csKind='call';drawContactNew()};
+ const nb=$('#csNew');if(nb)nb.onclick=()=>{csView='new';csKind='call';csQual='full';drawContactNew()};
 }
 function drawContactStats(){
  const sh=$('#shContact');if(!sh)return;
@@ -3548,13 +3557,14 @@ function drawContactStats(){
  const AR=LANG==='ar';
  const evs=relContactsOf(r);
  const kindIc={whatsapp:'wa',call:'phone',meetup:'users'};
+ const qTxt={full:AR?'✦ حاضر كلياً':'✦ Fully present',quick:AR?'◐ سريع':'◐ Quick',distracted:AR?'○ مشتت':'○ Distracted'};
  sh.innerHTML=
   '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'⏱ أوقات التواصل — ':'⏱ Contact times — ')+esc(r.name)+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   (evs.length?evs.map(e=>{
     const k=e.kind||'call';
     return '<div class="day-ev"><span class="day-time">'+fmtShort(e.ts)+'</span>'+
      '<div class="ev-ic" style="--rc:var(--c-relations);width:30px;height:30px">'+ic(kindIc[k]||'phone',15)+'</div>'+
-     '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+(e.minutes?' · '+e.minutes+' '+(AR?'د':'m'):'')+(e.who==='them'?' · '+(AR?'بادرة منه':'from them'):'')+'</span></div>'+
+     '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+(e.minutes?' · '+e.minutes+' '+(AR?'د':'m'):'')+(qTxt[e.quality]?' · <b style="color:var(--acc)">'+qTxt[e.quality]+'</b>':'')+(e.who==='them'?' · '+(AR?'بادرة منه':'from them'):'')+'</span></div>'+
     '</div>'}).join('')
    :'<div class="empty">'+ic('phone',24)+'<br>'+(AR?'لا تواصلات مسجلة بعد':'No contacts logged yet')+'</div>')+
   '<button class="btn ghost" id="csBack" style="margin-top:14px">'+(AR?'رجوع للسجل':'Back to log')+'</button>';
@@ -3576,6 +3586,12 @@ function drawContactNew(){
    '<button class="dq on" data-who="me">'+(AR?'أنا بدأتُ':'I did')+'</button>'+
    '<button class="dq" data-who="them">'+(AR?'هو/هي بدأ':'They did')+'</button>'+
   '</div>'+
+  '<label class="lab" style="margin-top:13px">'+(AR?'كيف كان حضورك؟ — بُعد الجودة':'How present were you? — quality')+'</label>'+
+  '<div class="dq-row">'+
+   '<button class="dq on" data-qual="full">'+(AR?'✦ حاضر كلياً':'✦ Fully present')+'</button>'+
+   '<button class="dq" data-qual="quick">'+(AR?'◐ سريع':'◐ Quick')+'</button>'+
+   '<button class="dq" data-qual="distracted">'+(AR?'○ مشتت':'○ Distracted')+'</button>'+
+  '</div>'+
   '<button class="btn" id="csSaveNew" style="margin-top:16px">'+ic('check',16)+' '+(AR?'حفظ':'Save')+'</button>'+
   '<button class="btn ghost" id="csBack2" style="margin-top:8px">'+(AR?'رجوع للسجل':'Back to log')+'</button>';
  $$('#shContact [data-csk]').forEach(b=>b.onclick=()=>{
@@ -3584,6 +3600,10 @@ function drawContactNew(){
  });
  $$('#shContact [data-who]').forEach(b=>b.onclick=()=>{
   $$('#shContact [data-who]').forEach(x=>x.classList.toggle('on',x===b));
+ });
+ $$('#shContact [data-qual]').forEach(b=>b.onclick=()=>{
+  csQual=b.dataset.qual;
+  $$('#shContact [data-qual]').forEach(x=>x.classList.toggle('on',x===b));
  });
  const bk=$('#csBack2');if(bk)bk.onclick=()=>{csView='log';drawContactHub()};
  const sv=$('#csSaveNew');
@@ -3594,12 +3614,15 @@ function drawContactNew(){
   const kindAr={whatsapp:'واتساب',call:'مكالمة',meetup:'لقاء'};
   const kindEn={whatsapp:'WhatsApp',call:'Call',meetup:'Meetup'};
   const text=(AR?(who==='me'?'تواصلتُ مع ':'تواصل معي '):(who==='me'?'Contacted ':'Contacted by '))+r.name+' — '+(AR?kindAr[csKind]:kindEn[csKind])+(mn?' ('+mn+' '+(AR?'د':'m')+')':'');
-  const ev={id:uid(),type:'contact',category:'relations',polarity:1,who:who,kind:csKind,minutes:mn,text:text,ts:Date.now()};
+  const ev={id:uid(),type:'contact',category:'relations',polarity:1,who:who,kind:csKind,minutes:mn,quality:csQual,text:text,ts:Date.now()};
   await DB.put('events',ev);S.events.push(ev);
   r.calls.n++;if(mn)r.calls.d+=mn;
   await DB.put('rels',r);
   dismissed.add('rel:'+r.id);
-  toast((AR?'سُجّل التواصل مع ':'Contact logged: ')+r.name,'var(--c-relations)','phone');
+  if(csQual==='full'&&!r._qualityToastShown){
+   r._qualityToastShown=true;await DB.put('rels',r);
+   toast(AR?'✦ حاضر كلياً! هولت-لونستاد: جودة الروابط تنبّئ بصحتك وسعادتك أكثر من عددها — لقاء واحد صادق يغذي القلب أكثر من عشرة عابرة.':'✦ Fully present! Holt-Lunstad: relationship quality predicts health better than quantity.','var(--c-relations)','star',null,null,5200);
+  }else toast((AR?'سُجّل التواصل مع ':'Contact logged: ')+r.name,'var(--c-relations)','phone');
   refresh();
   csView='log';drawContactHub();
  };
