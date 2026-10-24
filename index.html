@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: QUALITY_DIMENSION_v1.1 — بُعد الجودة (هولت-لونستاد) + إصلاح last30 (خطأ تعريف نطاقي في ميزان العطاء — يظهر على الجوال ذوي تواصلات حديثة فقط) — مبني على نسخة مراد المؤكدة 2026-10-25 -->
+<!-- COMMIT: RF_TEST_GUIDE_v1.4.2 — زر «اختبار الاتصال» صار معلّماً: بلا مفتاح يعطيك الخطوات الثلاث بروابط قابلة للنقر · مفتاح مرفوض/نموذج خاطئ/حد مجاني/شبكة — كل حالة برسالة إنسانية · يعرف أنك في شاشة معاينة ويقول لك إن الإعداد الحقيقي على جهازك — وتذكير دائم: رفيق يعمل بقواعده وذاكرته حتى بلا مفتاح — فوق RF_MEMORY_RECALL_v1.4.1 (ذاكرة اليوميات: قاموس الفترات العربية — يومين/ثلاثة أيام/أسبوعين/شهرين/آخر أسبوع) + جواب ذكي يعرض آخر الدفتر عند فراغ الفترة + يوميات دفترك الحقيقية في بريف العقل السحابي — إصلاح «ماذا فعلت قبل يومين؟» — والعمود الثاني: حوار رفيق بالعقل الثلاثي (مدمج Chrome LanguageModel ← سحابي بمفتاح محلي OpenRouter/Groq/Gemini ← WebLLM تجريبي ← قواعد) + بريف حياة يُرفق بإذن + ورقة عقل الحوار ⚙ + الحياة الحركية: بطاقات تنهض بتتابع ورسائل تنزلق وأزرار تنبض — فوق v1.3.1 — اضغط أي اكتشاف لترى نافذة أدلته من سجل الأحداث الحقيقي (سجل العلاقة · أدلة الميزان بالأطراف · توزيع الساعات والأيام بأشرطة · رقاقات أيام العادة · قوائم الأحداث المشرقة والثقيلة) — مؤشر لا تشخيص 100% محلي — فوق v1.2 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -730,6 +730,22 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .qp-list{max-height:52vh;overflow-y:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
 .qp-list .chip{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:right;padding:9px 12px;font-size:12.5px;border-radius:11px;margin-bottom:6px;line-height:1.6}
 .qp-del{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--line2);color:var(--bad);flex:none;background:var(--card)}
+/* ✧ الحياة الحركية v1.4 — طابع تفاعلي: بطاقات تنهض بتتابع، رسائل تنزلق، أزرار تنبض */
+@keyframes rfRise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+.pp-corr{animation:rfRise .55s cubic-bezier(.25,.9,.3,1) both;animation-delay:calc(var(--i,0)*75ms)}
+.day-ev{animation:rfRise .45s ease both;animation-delay:calc(var(--i,0)*45ms)}
+@keyframes msgIn{from{opacity:0;transform:translateY(9px) scale(.965)}to{opacity:1;transform:none}}
+.msg{animation:msgIn .34s cubic-bezier(.25,.9,.3,1) both}
+.btn:active,.chip:active,.tab:active,.pick-card:active,.rate-btn:active,.assess-entry:active{transform:scale(.96)}
+.chip,.btn,.tab,.pick-card{transition:transform .13s ease}
+@keyframes mindPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,168,62,0)}50%{box-shadow:0 0 0 9px rgba(229,168,62,.15)}}
+.mind-scan-ic{animation:mindPulse 1.5s ease infinite;border-radius:50%}
+.send-btn.on{transform:scale(1.08);box-shadow:0 0 0 5px var(--acc-soft)}
+.rf-badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:var(--ink3);border:1px solid var(--line2);border-radius:100px;padding:3px 11px;margin-top:8px;background:var(--card);max-width:100%}
+.rf-badge b{color:var(--ink2);font-weight:700}
+.rf-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line);font-size:13px}
+.rf-row:last-of-type{border-bottom:none}
+.rf-row select,.rf-row input{max-width:56%;font-size:12.5px}
 </style>
 </head>
 <body>
@@ -773,6 +789,8 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shPick"></div>
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
+    <div class="sheet" id="shMind"></div>
+    <div class="sheet" id="shRfSet"></div>
     <div class="sheet" id="shBody"></div>
     <div class="sheet" id="shCatLog"></div>
     <div id="lightbox"><button class="sh-x" data-lb-close></button><img id="lbImg" alt=""></div>
@@ -2147,16 +2165,24 @@ function twinData(){
 /* memSearch — محرك ذاكرة رفيق: يقرأ أحداثك فيجيب من سجلاتك 3.2 */
 function memSearch(query){
  const s=query.trim();
- const AR=LANG==='ar';
- const now=new Date();
- let days=[];
- const dm=s.match(/(\d+)\s*(يوم|days?)/);
- const dayNames=[['اليوم','today',0],['أمس','yesterday',1],['اول امس','today-2',2]];
  let target=null;
- if(/اليوم|today/i.test(s))target=dayStart(Date.now());
+ if(/اليوم(?!ين)|today/i.test(s))target=dayStart(Date.now());
  else if(/أمس|امس|البارحة|yesterday/i.test(s))target=dayStart(Date.now()-DAY);
- else if(dm){const n2=parseInt(dm[1]);target=dayStart(Date.now()-n2*DAY)}
- else{for(const[w,en,off]of dayNames){if(s.indexOf(w)>=0||s.toLowerCase().indexOf(en)>=0){target=dayStart(Date.now()-off*DAY);break}}}
+ else if(/اول امس|أول أمس|اول أمس|أول امس|day before yesterday/i.test(s))target=dayStart(Date.now()-2*DAY);
+ else if(/(\d+)\s*(يومين|يوم|أيام|ايام|days?)/.test(s)){const dm=s.match(/(\d+)\s*(يومين|يوم|أيام|ايام|days?)/);target=dayStart(Date.now()-parseInt(dm[1])*DAY)}
+ if(!target){
+  const PH=[['يومين',2],['يومان',2],['ثلاثة أيام',3],['ثلاث أيام',3],['ثلاثة ايام',3],['ثلاثه ايام',3],['أربعة أيام',4],['اربعة ايام',4],['أربع أيام',4],['اربع ايام',4],['خمسة أيام',5],['خمسة ايام',5],['خمس ايام',5],['ستة أيام',6],['سته ايام',6],['سبعة أيام',7],['سبعة ايام',7],['سبع ايام',7],['ثمانية أيام',8],['ثمانيه ايام',8],['تسعة أيام',9],['تسعه ايام',9],['عشرة أيام',10],['عشره ايام',10],['أسبوعين',14],['اسبوعين',14],['ثلاثة أسابيع',21],['ثلاث اسابيع',21],['شهرين',60]];
+  let n=0;
+  for(const[w,v]of PH){if(s.indexOf(w)>=0){n=v;break}}
+  if(!n&&/يومين/.test(s))n=2;
+  else if(!n&&/(أسبوع|اسبوع|week)/i.test(s))n=7;
+  else if(!n&&/(شهر|month)/i.test(s))n=30;
+  if(n){
+   if(/(آخر|اخر|أخير|اخير|last)/i.test(s)&&n>=4){const from=dayStart(Date.now()-n*DAY),to=dayStart(Date.now());
+    return S.events.filter(e=>dayStart(e.ts)>=from&&dayStart(e.ts)<=to).sort((a,b)=>b.ts-a.ts).slice(0,8);}
+   target=dayStart(Date.now()-n*DAY);
+  }
+ }
  if(target){const ds=dayStart(target);
   return S.events.filter(e=>dayStart(e.ts)===ds).sort((a,b)=>a.ts-b.ts);}
  const kw=classify(s)||null;
@@ -2175,16 +2201,23 @@ function memSearch(query){
 function memAnswer(query){
  const hits=memSearch(query);
  const AR=LANG==='ar';
- if(!hits.length)return null;
- const target=hits[0];
+ if(!hits.length){
+  const last=S.events.slice().sort((a,b)=>b.ts-a.ts).filter(e=>e.text).slice(0,3);
+  if(!last.length)return null;
+  return (AR?'لم أوثّق شيئاً في الفترة التي سألت عنها — لكن هذا آخر ما في دفترك:':'Nothing logged for that period — but here is your latest:')+'\n'+last.map((e,i)=>(i+1)+'. '+e.text+' — '+timeAgo(e.ts)).join('\n');
+ }
+ const sameDay=hits.length>1&&hits.every(e=>dayStart(e.ts)===dayStart(hits[0].ts));
  let out='';
- if(hits.length===1){
-  out=(AR?('في '+fmtDate(target.ts)+' سجلتَ: «'+hits[0].text+'» — '+cn(hits[0].category)):(hits[0].text+' on '+fmtDate(target.ts)+' — '+cn(hits[0].category)));
+ if(sameDay){
+  out=(AR?('في '+fmtDate(hits[0].ts)+' — '+timeAgo(hits[0].ts)+' — وثّقت '+hits.length+' أحداثاً:'):('On '+fmtDate(hits[0].ts)+' you logged '+hits.length+':'))+'\n';
+  hits.slice(0,6).forEach((e,i)=>out+=(i+1)+'. '+e.text+' · '+cn(e.category)+'\n');
+ }else if(hits.length===1){
+  out=(AR?('في '+fmtDate(hits[0].ts)+' ('+timeAgo(hits[0].ts)+') سجلتَ: «'+hits[0].text+'» — '+cn(hits[0].category)):(hits[0].text+' on '+fmtDate(hits[0].ts)+' — '+cn(hits[0].category)));
  }else{
   out=(AR?('وجدتُ '+hits.length+' ذكريات مرتبطة — أهمها:'):('I found '+hits.length+' related memories:'))+'\n';
-  hits.slice(0,4).forEach((e,i)=>out+=(i+1)+'. '+e.text+' — '+(AR?'قبل ':'')+daysSince(e.ts)+' '+pd(daysSince(e.ts))+' · '+cn(e.category)+'\n');
+  hits.slice(0,4).forEach((e,i)=>out+=(i+1)+'. '+e.text+' — '+timeAgo(e.ts)+' · '+cn(e.category)+'\n');
  }
- const moodNear=S.events.filter(e=>e.type==='mood'&&Math.abs(dayStart(e.ts)-dayStart(target.ts))<3*DAY);
+ const moodNear=S.events.filter(e=>e.type==='mood'&&Math.abs(dayStart(e.ts)-dayStart(hits[0].ts))<3*DAY);
  if(moodNear.length)out+='\n'+(AR?('مزاجك في تلك الفترة: '+mw(moodNear[0].mood)):('Your mood then: '+mw(moodNear[0].mood)));
  return out;
 }
@@ -2210,7 +2243,7 @@ function rafiqReply(tx){
   }
   return {text:out};
  }
- if(has(/وش سويت|وش فعلت|ماذا فعلت|ماذا سجلت|يومياتي|سجلات|أحداث|حدث|أمس|البارحة|قبل يوم|قبل يومين|قبل أسبوع|yesterday|what did i (do|log)|my day|remember|تذكر/i)){
+ if(has(/وش سويت|وش فعلت|شو سويت|شو عملت|ايش سويت|إيش سويت|ماذا فعلت|ماذا عملت|ماذا سجلت|يومياتي|سجلات|أحداث|حدث|أمس|البارحة|قبل يوم|قبل يومين|قبل أسبوع|آخر يوم|اخر يوم|yesterday|what did i (do|log)|my day|remember|تذكر/i)){
   const mem=memAnswer(s);
   if(mem)return {text:mem};
   return {text:(AR?'لا شيء موثق في الفترة التي سألت عنها بعد — سجّل لحظتك وأسرد لك تاريخها متى سألت.':'Nothing documented for that period yet — log it and I will narrate it later.')};
@@ -2380,7 +2413,7 @@ async function obFinish(seed){
 });
 
 window.__rfStage='بناء الواجهة';
-const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab','pulse'];
+const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab','pulse','mind'];
 const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'',lab:'',pulse:''};
 function buildShell(){
  put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.9 — ساعة التشويق والأعمال الإنسانية':'Rafiq 2.9 — countdown clock & human quests')+'</b>');
@@ -2404,7 +2437,7 @@ function go(v){
  if(hb)hb.hidden=v!=='home';
  if(ht){ht.hidden=v==='home';ht.textContent=TITLES[v]?t(TITLES[v]):''}
  if(hd)hd.textContent=fmtDate(Date.now());
- const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings,fingerprint:renderFingerprint,lab:renderLab,pulse:renderPulse};
+ const R={home:renderHome,cal:renderCal,life:renderLife,chat:renderChat,relations:renderRelations,decisions:renderDecisions,report:renderReport,twin:renderTwin,settings:renderSettings,fingerprint:renderFingerprint,lab:renderLab,pulse:renderPulse,mind:renderMind};
  if(R[v]){try{R[v]()}catch(err){__rfErr((err&&err.message||err)+' @'+v)}}
 }
 function refresh(){computeAll();renderDot();go(currentView)}
@@ -3393,11 +3426,11 @@ function renderLife(){
 }
 
 /* المحادثة */
-const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','اقترح لي كتاباً','حكاية أسبوعي','وش سجلت أمس؟','أفكر بشراء سيارة']:['How am I this week?','Suggest a book','My weekly story','What did I log yesterday?','I am thinking of buying a car'];
+const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','اقترح لي كتاباً','حكاية أسبوعي','ماذا فعلت قبل يومين؟','أفكر بشراء سيارة']:['How am I this week?','Suggest a book','My weekly story','What did I do two days ago?','I am thinking of buying a car'];
 function renderChat(){
  const v=$('#v-chat');if(!v)return;
  v.innerHTML=
-  '<div class="chat-head"><div class="chat-av">'+ic('pulse',20)+'</div><div><b>'+t('tab_chat')+'</b><span>'+t('chat_sub')+'</span></div></div>'+
+  '<div class="chat-head"><div class="chat-av">'+ic('pulse',20)+'</div><div style="flex:1;min-width:0"><b>'+t('tab_chat')+'</b><span>'+t('chat_sub')+'</span>'+rfBadgeHtml()+'</div><button data-act="rfSet" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--ink2);display:grid;place-items:center;flex:none" title="'+(LANG==='ar'?'عقل حوار رفيق':'Rafiq chat brain')+'">'+ic('gear',16)+'</button></div>'+
   '<div id="chatList"></div>'+
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
   '<button class="assess-entry" data-act="openAssess">'+ic('star',16)+' '+(LANG==='ar'?'قيّم نفسك أو شخصاً تحب 🧠':'Rate yourself or someone 🧠')+'</button>'+
@@ -3407,8 +3440,11 @@ function renderChat(){
  if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً».'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions.\nTry: “my weekly story” or “suggest a book”.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
  drawMsgs();
  const inp=$('#chatInp'),snd=$('#chatSend');
- if(snd)snd.onclick=()=>{if(!inp)return;const tx=inp.value.trim();if(!tx)return;inp.value='';sendChat(tx)};
- if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter'){const tx=inp.value.trim();if(tx){inp.value='';sendChat(tx)}}});
+ if(snd)snd.onclick=()=>{if(!inp)return;const tx=inp.value.trim();if(!tx)return;inp.value='';if(snd)snd.classList.remove('on');sendChat(tx)};
+ if(inp){
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){const tx=inp.value.trim();if(tx){inp.value='';if(snd)snd.classList.remove('on');sendChat(tx)}}});
+  inp.addEventListener('input',()=>{if(snd)snd.classList.toggle('on',inp.value.trim().length>0)});
+ }
  $$('#v-chat .chat-sugs .chip').forEach(c=>c.onclick=()=>sendChat(c.dataset.sug));
  function drawMsgs(){
   list.innerHTML=S.chat.slice(-40).map(m=>'<div class="msg '+(m.role==='rf'?'rf':'me')+'">'+esc(m.text)+'</div>').join('');
@@ -3424,9 +3460,10 @@ function renderChat(){
   await pushMsg('me',tx);
   const tp=document.createElement('div');tp.className='typing';tp.innerHTML='<i></i><i></i><i></i>';
   list.appendChild(tp);list.scrollTop=list.scrollHeight;
-  await wait(650+Math.random()*550);
+  let r=null;
+  try{r=await rfBrain(tx)}catch(e){r=null}
   if(tp.parentNode)tp.parentNode.removeChild(tp);
-  const r=rafiqReply(tx);
+  if(!r||!r.text)r=rafiqReply(tx);
   await pushMsg('rf',r.text,r.actions);
  }
 }
@@ -4087,6 +4124,445 @@ function renderPulse(){
   '<div class="lab-note"><b>'+(AR?'🧪 من معمل رفيق — 3.3':'🧪 Rafiq Lab — 3.3')+':</b> '+(AR?'هذه التوقعات والارتباطات مبنية على بياناتك الحقيقية بمحرك إحصائي محلي على جهازك — لا شيء يغادر هاتفك. تنبؤات المستقبل تقديرية من إيقاعك، وتزداد دقة كل يوم تسجل فيه.':'Built on your real data, locally. Forecasts grow sharper daily.')+'</div>'+
   '<div style="height:18px"></div>';
 }
+/* ================== العقل المحلي — محرك الاكتشافات (LOCAL_MIND_v1.2) ================== */
+/* عين رفيق على بياناتك: يقرأ مخزن الأحداث محلياً 100% ويكشف الأنماط الخفية — مؤشر لا تشخيص */
+function mindScan(){
+ const AR=LANG==='ar',now=Date.now();
+ const C=S.events.filter(e=>e.type==='contact');
+ const c30=C.filter(e=>now-e.ts<=30*DAY);
+ const e14=S.events.filter(e=>now-e.ts<=14*DAY);
+ const out=[];
+ /* 1) علاقة تنتظر صوتك */
+ const stale=(S.staleRels&&S.staleRels[0])||null;
+ if(stale){const dd=daysSince(stale.lastContact);
+  out.push({ic:'users',w:95,kind:'rel',name:stale.name,days:dd,
+   evs:relContactsOf(stale).slice(0,12),
+   t:AR?'علاقة تنتظر صوتك':'A bond awaits your voice',
+   b:AR?('مضى <b>'+dd+' '+pd(dd)+'</b> على تواصلك مع <b>'+esc(stale.name)+'</b>. العلاقات لا تحتاج مناسبة كبيرة — تحتاج دقيقة صادقة واحدة.'):
+        ('It has been <b>'+dd+' '+pd(dd)+'</b> since you last reached <b>'+esc(stale.name)+'</b>. Bonds need one honest minute, not an occasion.'),
+   act:'contact',id:stale.id,lbl:AR?'افتح السجل':'Open log'});}
+ /* 2) علاقة بلا صوت */
+ const mute=S.rels.find(r=>r.name&&!(r.calls&&r.calls.n)&&!C.some(e=>(e.text||'').indexOf(r.name)>=0));
+ if(mute)out.push({ic:'phone',w:88,kind:'mute',name:mute.name,
+  t:AR?'علاقة بلا صوت بعد':'A bond with no sound yet',
+  b:AR?('<b>'+esc(mute.name)+'</b> في دفترك منذ مدة، لكنه بلا تواصل واحد مسجّل. ابدأ اليوم بسطر واحد — أول حديث يفتح الطريق كله.'):
+       ('<b>'+esc(mute.name)+'</b> is in your list with zero logged contacts. Start with one line today.'),
+  act:'contact',id:mute.id,lbl:AR?'سجل أول تواصل':'Log first contact'});
+ /* 3) قرار معلّق */
+ const dc=S.decisions.filter(d=>d.status!=='done'&&now-d.ts>=7*DAY).sort((a,b)=>a.ts-b.ts)[0];
+ if(dc){const dd=daysSince(dc.ts);
+  out.push({ic:'dec',w:80,kind:'decision',dec:dc,days:dd,
+   t:AR?'قرار ينتظر جرأتك':'A decision awaits your nerve',
+   b:AR?('قرار <b>«'+esc(dc.title)+'»</b> مفتوح منذ '+dd+' '+pd(dd)+'. القرارات المعلّقة تستهلك طاقة أكثر من الأرقام المكتملة — إما اجلعه بوجوه مفتوحة أو أرحه.'):
+        ('<b>«'+esc(dc.title)+'»</b> has been open '+dd+' '+pd(dd)+'. Either decide it or release it.'),
+   act:'dec'});}
+ /* 4) ميزان العطاء — من يحمل العلاقة */
+ let gave=null;
+ for(const r of S.rels){if(!r.name)continue;
+  const evs=c30.filter(e=>(e.text||'').indexOf(r.name)>=0);
+  const mi=evs.filter(e=>e.who!=='them').length,th=evs.filter(e=>e.who==='them').length;
+  const n=mi+th;if(n<3)continue;const rt=mi/n;
+  if(rt>=0.8){gave={r:r,mi:mi,th:th,n:n,side:'mine',evs:evs.slice(0,12)};break}
+  if(rt<=0.2){gave={r:r,mi:mi,th:th,n:n,side:'theirs',evs:evs.slice(0,12)};break}}
+ if(gave)out.push(gave.side==='mine'
+  ?{ic:'heart',w:75,kind:'balance',id:gave.r.id,name:gave.r.name,mi:gave.mi,th:gave.th,n:gave.n,evs:gave.evs,
+    t:AR?'أنت من يحمل هذه العلاقة':'You carry this bond',
+    b:AR?('<b>'+esc(gave.r.name)+'</b>: '+gave.mi+' من آخر '+gave.n+' تواصل كانت من طرفك. لا حكم هنا — فقط مؤشر. جرّب التوقف يوماً وترَ من يصل أولاً.'):
+         ('<b>'+esc(gave.r.name)+'</b>: '+gave.mi+' of your last '+gave.n+' contacts were yours. A pointer, not a verdict.')}
+  :{ic:'heart',w:75,kind:'balance',id:gave.r.id,name:gave.r.name,mi:gave.mi,th:gave.th,n:gave.n,evs:gave.evs,
+    t:AR?'هو من يصلك دائماً':'They always reach you',
+    b:AR?('<b>'+esc(gave.r.name)+'</b> يبادر في معظم تواصلكما الأخيرة ('+gave.n+' تواصل — منها '+gave.mi+' من طرفك فقط). ربما يحتاج أن تصل أنت هذه المرة.'):
+         ('<b>'+esc(gave.r.name)+'</b> initiates almost all of your recent contacts. Maybe reach them this time.')});
+ /* 5) نجم قلبك */
+ const cnt={};c30.forEach(e=>{const nm=e.text||'';S.rels.forEach(r=>{if(r.name&&nm.indexOf(r.name)>=0)cnt[r.name]=(cnt[r.name]||0)+1})});
+ let topN=null;Object.keys(cnt).forEach(n=>{if(!topN||cnt[n]>cnt[topN].n)topN={name:n,n:cnt[n]}});
+ const starBars=Object.keys(cnt).map(n=>({n:n,c:cnt[n]})).sort((a,b)=>b.c-a.c).slice(0,4);
+ if(topN&&topN.n>=3)out.push({ic:'star',w:70,kind:'star',name:topN.name,evs:c30.filter(e=>(e.text||'').indexOf(topN.name)>=0).slice(0,12),bars:starBars,tot:c30.length,
+  t:AR?'نجم قلبك هذا الشهر':'Star of your month',
+  b:AR?('<b>'+esc(topN.name)+'</b> حاضر في <b>'+topN.n+'</b> تواصل آخر 30 يوماً. قلبك يعرف طريقه إليه — الإحصاءات تسميه "شبكة الدعم المركزية" وأنت تسميه صديقاً.'):
+       ('<b>'+esc(topN.name)+'</b> appears in <b>'+topN.n+'</b> contacts this month. Your heart knows its way.')});
+ /* 6) ساعتك الذهبية */
+ if(c30.length>=4){const hb=[0,0,0,0];const HN=AR?['الصباح الباكر','النهار','المساء','ساعات الليل']:['mornings','afternoons','evenings','late nights'];
+  c30.forEach(e=>{const h=new Date(e.ts).getHours();hb[h<5?3:h<12?0:h<17?1:h<21?2:3]++});
+  let bi=0;for(let i=1;i<4;i++)if(hb[i]>hb[bi])bi=i;
+  if(hb[bi]/c30.length>=0.55)out.push({ic:'clock',w:60,kind:'gold',bars:HN.map((n,i)=>({n:n,c:hb[i]})),tot:c30.length,
+   t:AR?'ساعتك الذهبية':'Your golden hours',
+   b:AR?('<b>'+HN[bi]+'</b> هي ساعتك الاجتماعية: <b>'+Math.round(hb[bi]/c30.length*100)+'%</b> من تواصلاتك الشهرية وقعت فيها. استغل هذا الإيقاع لأهم علاقة تحتاج عناية اليوم.'):
+        ('<b>'+HN[bi]+'</b> hold <b>'+Math.round(hb[bi]/c30.length*100)+'%</b> of your monthly contacts.')});}
+ /* 7) يوم قلبك */
+ if(c30.length>=3){const dw=[0,0,0,0,0,0,0];c30.forEach(e=>dw[new Date(e.ts).getDay()]++);
+  let di=0;for(let i=1;i<7;i++)if(dw[i]>dw[di])di=i;
+  if(dw[di]/c30.length>=0.4)out.push({ic:'cal',w:55,kind:'day',bars:WD().map((n,i)=>({n:n,c:dw[i]})),tot:c30.length,
+   t:AR?'يوم قلبك':'Your heart day',
+   b:AR?('<b>'+WD()[di]+'</b> هو يومك الاجتماعي بامتياز: '+dw[di]+' تواصل في شهر واحد. عاداتك الأسبوعية تتشكل بلا أن تشعر — وهذا اليوم من تشكيلك.'):
+        ('<b>'+WD()[di]+'</b> is your social day — '+dw[di]+' contacts this month.')});}
+ /* 8) بصمة الحضور — جودة التواصل (هولت-لونستاد) */
+ const qn=c30.filter(e=>e.quality).length;
+ const qf=c30.filter(e=>e.quality==='full').length;
+ const qk=c30.filter(e=>e.quality==='quick').length;
+ const qd=c30.filter(e=>e.quality==='distracted').length;
+ if(qn>=3){
+  if(qf/qn>=0.7)out.push({ic:'spark',w:65,kind:'quality',cf:qf,ck:qk,cd:qd,evs:c30.filter(e=>e.quality).sort((a,b)=>b.ts-a.ts).slice(0,12),
+   t:AR?'بصمة حضور نادرة':'A rare presence fingerprint',
+   b:AR?('<b>'+Math.round(qf/qn*100)+'%</b> من تواصلاتك الأخيرة كانت بحضور كامل ✦. نسبة يفتخر بها قليلون — هولت-لونستاد كان يصف علاقاتك بـ"الحاضرة كلياً".'):
+        ('<b>'+Math.round(qf/qn*100)+'%</b> of your recent contacts were fully present ✦. Rare and valuable.')});
+  else if(qd/qn>=0.5)out.push({ic:'moon',w:65,kind:'quality',cf:qf,ck:qk,cd:qd,evs:c30.filter(e=>e.quality).sort((a,b)=>b.ts-a.ts).slice(0,12),
+   t:AR?'المؤشر الحنون':'The gentle signal',
+   b:AR?('(نصف تواصلاتك الأخيرة سُجّلت "مشتت" ○). لا حكم — ربما أسبوعك مزدحم. لكن اعلم: تواصل واحد بحضور كامل يساوي ثلاثة سريعة. جرّبه غداً.'):
+        ('Half of your recent contacts were logged distracted ○. One present call beats three quick ones.')});}
+ /* 9) إيقاع التوثيق */
+ const byDay={};S.events.forEach(e=>{const k=dayStart(e.ts);byDay[k]=(byDay[k]||0)+1});
+ let stk=0,cur=dayStart(now);
+ if(!byDay[cur])cur-=DAY;
+ const stkDays=[];
+ while(byDay[cur]){stk++;stkDays.push({ts:cur,n:byDay[cur]});cur-=DAY}
+ stkDays.reverse();
+ const stkEvs=stk?S.events.filter(e=>e.ts>=stkDays[0].ts).sort((a,b)=>b.ts-a.ts).slice(0,10):[];
+ if(stk>=3)out.push({ic:'flame',w:45,kind:'streak',days:stkDays,evs:stkEvs,totN:stkDays.reduce((a,x)=>a+x.n,0),
+  t:AR?'عادة تتشكل':'A habit is forming',
+  b:AR?('<b>'+stk+' أيام متتالية</b> من التوثيق. العادات لا تولد كبيرة — تولد هكذا: صغيرة ومتكررة. اليوم الثالث كان دائماً أصدق الانعطافات.'):
+       ('<b>'+stk+' consecutive days</b> of logging. Day three is where habits bend.')});
+ /* 10) توازن الأسبوعين */
+ if(e14.length>=4){const posE=e14.filter(e=>e.polarity>0).sort((a,b)=>b.ts-a.ts),negE=e14.filter(e=>e.polarity<0).sort((a,b)=>b.ts-a.ts);
+  const pos=posE.length,neg=negE.length;
+  if(pos+neg>=4)out.push(pos>neg
+   ?{ic:'sun2',w:40,kind:'twoweeks',pos:pos,neg:neg,posE:posE.slice(0,12),negE:negE.slice(0,12),
+     t:AR?'سماؤك صافية':'Clear skies',
+     b:AR?('<b>'+pos+' أحداث مشرقة</b> مقابل '+neg+' ثقيلة في أسبوعين. سجّلها كما تسجّل النجوم — الذاكرة تميل للثقل، وبياناتك تقول غير ذلك.'):
+          ('<b>'+pos+' bright events</b> vs '+neg+' heavy in two weeks. Your data contradicts the memory bias.')}
+   :{ic:'shield',w:40,kind:'twoweeks',pos:pos,neg:neg,posE:posE.slice(0,12),negE:negE.slice(0,12),
+     t:AR?'أسبوعان ثقيلان':'Two heavy weeks',
+     b:AR?('<b>'+neg+' أحداث صعبة</b> مقابل '+pos+' مشرقة آخر أسبوعين. هذا مؤشر لا تشخيص — أعطِ نفسك رحمة إضافية، ولوّن أسبوعك بعلاقة واحدة تُهدئك.'):
+          ('<b>'+neg+' heavy events</b> vs '+pos+' bright. A pointer, not a diagnosis — be gentle with yourself.')});}
+ return out;
+}
+function renderMind(){
+ const v=$('#v-mind');if(!v)return;
+ const AR=LANG==='ar';
+ const list=mindScan().sort((a,b)=>b.w-a.w).slice(0,7);
+ let rows='';
+ if(list.length){
+  rows=list.map((d,i)=>
+   '<div class="pp-corr" data-mindopen="'+i+'" style="cursor:pointer;--i:'+i+'">'+ic(d.ic,17)+
+    '<div class="pp-corr-b"><b>'+d.t+'</b><p>'+d.b+'</p>'+
+    (d.act==='contact'?'<button class="btn ghost" data-mindrel="'+d.id+'" style="margin-top:9px;padding:7px 14px;font-size:12px">'+ic('phone',13)+' '+d.lbl+'</button>':d.act==='dec'?'<button class="btn ghost" data-minddec style="margin-top:9px;padding:7px 14px;font-size:12px">'+ic('dec',13)+' '+(AR?'افتح القرارات':'Open decisions')+'</button>':'')+
+    '</div><span class="pp-corr-st">'+(AR?'اضغط للتفاصيل':'tap for details')+'</span></div>').join('');
+ }else rows='<div class="empty">'+ic('brain',26)+'<br>'+(AR?'لا أنماط كافية بعد — سجّل تواصلاتك ومزاجك وأحداثك أياماً قليلة، وسيرفع العقل المحلي الستار عن عاداتك الخفية حين تجهز البيانات.':'Not enough patterns yet — log a few days and the Local Mind will surface them.')+'</div>';
+ v.innerHTML=
+  '<span class="lab-dev">'+(AR?'العقل المحلي · 1.3.1':'LOCAL MIND · 1.3.1')+'</span>'+
+  '<div class="fp-line" style="margin-top:40px;border-right:3px solid var(--c-mind)">'+
+   '<h4 style="font-family:var(--fd);font-size:19px;font-weight:800;color:var(--ink)"><span class="mind-scan-ic" style="display:inline-flex">'+ic('brain',18)+'</span> '+(AR?'العقل المحلي':'The Local Mind')+'</h4>'+
+   '<p style="font-size:12px;color:var(--ink2);line-height:1.9;margin-top:8px">'+(AR?'عين رفيق على بياناتك: أقرأ أحداثك المخزنة في هاتفك وأكشف عاداتك الخفية — متى يفتح قلبك، من ينتظر صوتك، ماذا يتشكل في عمق أيامك. <b>اضغط أي اكتشاف لترى أدلته من سجلك الحقيقي</b>. مؤشر لا تشخيص، ولا شيء يغادر جهازك أبداً.':'Rafiq reads your local events and surfaces hidden patterns. Tap any discovery to see its evidence. A pointer, not a diagnosis.')+'</p>'+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('spark',15)+' '+(AR?'اكتشافات المسح الحالي':'Current scan')+' <span style="font-weight:400;font-size:11px;color:var(--ink3)">('+list.length+')</span></h3>'+
+  '<div class="card" style="padding:5px 15px">'+rows+'</div>'+
+  '<div class="page-add"><button class="btn ghost" id="mindRescan">'+ic('pulse',16)+' '+(AR?'فحص جديد':'Rescan')+'</button></div>'+
+  '<div class="lab-note"><b>'+(AR?'🧠 كيف يعمل؟':'How it works')+':</b> '+(AR?'محرك إحصائي خالص يسكن هذا الملف: يقرأ مخزن الأحداث (IndexedDB) ويحسب الفوارق الزمنية والتكرارات والنسب، ثم يصيغ ما يراه بصوت رفيق — وكل اكتشاف نافذة تفتحها لتشاهد أدلتها بنفسك. كل فحص يولد من جديد من بياناتك الحية.':'A pure statistical engine over your local IndexedDB — every discovery opens a window onto its own evidence.')+'</div>'+
+  '<div style="height:18px"></div>';
+ const rs=$('#mindRescan');
+ if(rs)rs.onclick=()=>{const n=mindScan().length;rs.classList.add('mind-scan-ic');setTimeout(()=>rs.classList.remove('mind-scan-ic'),1700);renderMind();toast(AR?('العقل رصد '+n+' مؤشراً من بياناتك'):('Mind surfaced '+n+' signals'),'var(--c-mind)','brain')};
+ $$('#v-mind [data-mindrel]').forEach(b=>b.onclick=()=>openContactSheet(b.dataset.mindrel));
+ const md=$('#v-mind [data-minddec]');if(md)md.onclick=()=>go('decisions');
+ $$('#v-mind [data-mindopen]').forEach(b=>b.onclick=(ev)=>{
+  if(ev.target&&ev.target.closest('[data-mindrel],[data-minddec]'))return;
+  drawMindDetail(list[+b.dataset.mindopen]);
+ });
+}
+function mindBarRow(nm,c,tot,AR){
+ const pct=tot?Math.round(c/tot*100):0;
+ return '<div class="stp-row"><span>'+nm+'</span><div style="flex:1;display:flex;align-items:center;gap:10px"><div class="rel-bar" style="flex:1;margin-top:0"><i style="width:'+pct+'%;background:var(--c-mind)"></i></div><div class="stp"><b>'+c+'</b><span style="font-size:10px;color:var(--ink3)">'+pct+'%</span></div></div></div>';
+}
+function mindEvRow(e,col,icn,AR){
+ const qm=e.quality==='full'?' ✦':e.quality==='quick'?' ◐':e.quality==='distracted'?' ○':'';
+ const who=e.who==='them'?(AR?' · من طرفه':' · theirs'):e.who?(AR?' · من طرفي':' · mine'):'';
+ return '<div class="day-ev"><span class="day-time">'+fmtShort(e.ts)+'</span>'+
+  '<div class="ev-ic" style="--rc:'+col+';width:30px;height:30px">'+ic(icn,15)+'</div>'+
+  '<div class="ev-b"><p style="font-size:13px">'+esc(e.text||'')+'</p><span>'+fmtTime(e.ts)+
+  (e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+who+qm+'</span></div></div>';
+}
+function drawMindDetail(d){
+ const sh=$('#shMind');if(!sh)return;
+ const AR=LANG==='ar',MC='var(--c-mind)';
+ const secH=(icn,txt,col)=>'<h5 style="margin:15px 0 5px;font-size:12px;font-weight:700;color:'+col+'">'+ic(icn,13)+' '+txt+'</h5>';
+ const note=txt=>'<div class="set-note" style="margin-top:12px">'+txt+'</div>';
+ const evList=(evs,col,icn)=>evs&&evs.length?evs.map(e=>mindEvRow(e,col,icn,AR)).join(''):'<div class="empty" style="padding:14px 6px">'+ic(icn,22)+'<br>'+(AR?'لا أحداث مسجلة في هذه الفترة':'No logged events in this window')+'</div>';
+ let body='';
+ if(d.kind==='rel'){
+  body='<div class="rel-sum" style="border-right:3px solid '+MC+'">'+(AR?('مضى <b>'+d.days+' '+pd(d.days)+'</b> على آخر تواصل مسجّل مع <b>'+esc(d.name)+'</b> — وهذه آخر الحكايات من سجلكما:'):('<b>'+d.days+' '+pd(d.days)+'</b> since the last logged contact with <b>'+esc(d.name)+'</b>.'))+'</div>'+
+   secH('users',AR?('أدلة السجل ('+d.evs.length+')'):('Log evidence ('+d.evs.length+')'),MC)+evList(d.evs,'var(--c-relations)','users')+
+   '<div class="page-add"><button class="btn" data-mdact="contact" data-rid="'+d.id+'">'+ic('phone',15)+' '+(AR?'سجل تواصلاً الآن':'Log a contact now')+'</button></div>';
+ }else if(d.kind==='mute'){
+  body='<div class="rel-sum" style="border-right:3px solid var(--acc)">'+(AR?('<b>'+esc(d.name)+'</b> ينتظر أول حكاية — لا يوجد أي تواصل مسجّل حتى الآن. أول سطر تكتبه يبدأ السجل كله.'):('<b>'+esc(d.name)+'</b> awaits the first story — nothing logged yet.'))+'</div>'+
+   '<div class="page-add"><button class="btn" data-mdact="contact" data-rid="'+d.id+'">'+ic('plus',15)+' '+(AR?'سجل أول تواصل':'Log first contact')+'</button></div>';
+ }else if(d.kind==='decision'){
+  const dk=(DEC_KINDS&&DEC_KINDS[d.dec.kind]&&DEC_KINDS[d.dec.kind][LANG])||d.dec.kind;
+  body='<div class="rel-sum" style="border-right:3px solid '+MC+'"><b>«'+esc(d.dec.title)+'»</b><br>'+
+   (AR?('<b>النوع:</b> '+esc(String(dk))+(d.dec.amount?' · <b>المبلغ:</b> '+esc(d.dec.amount):'')+' · <b>مفتوح منذ:</b> '+d.days+' '+pd(d.days)):
+       ('<b>Kind:</b> '+esc(String(dk))+(d.dec.amount?' · <b>Amount:</b> '+esc(d.dec.amount):'')+' · <b>Open:</b> '+d.days+' '+pd(d.days)))+
+   (d.dec.analysis&&d.dec.analysis.short?'<br>'+(AR?'خلاصة المختص: ':'Analysis: ')+esc(d.dec.analysis.short):'')+'</div>'+
+   '<div class="page-add"><button class="btn" data-mdact="dec">'+ic('dec',15)+' '+(AR?'افتح القرارات':'Open decisions')+'</button></div>';
+ }else if(d.kind==='balance'){
+  body='<div class="stp-row"><span>'+(AR?'أنا المتصل':'I initiated')+'</span><div class="stp"><b>'+d.mi+'</b></div></div>'+
+   '<div class="stp-row"><span>'+(AR?'هو/هي المتصل':'They initiated')+'</span><div class="stp"><b>'+d.th+'</b></div></div>'+
+   '<div class="stp-row" style="border-bottom:none"><span>'+(AR?'الإجمالي (30 يوماً)':'Total (30d)')+'</span><div class="stp"><b>'+d.n+'</b></div></div>'+
+   secH('heart',AR?('أدلة الميزان ('+d.evs.length+')'):('Balance evidence ('+d.evs.length+')'),MC)+evList(d.evs,'var(--c-relations)','users')+
+   '<div class="page-add"><button class="btn ghost" data-mdact="contact" data-rid="'+d.id+'">'+ic('phone',15)+' '+(AR?'وازن الميزان — تواصل الآن':'Rebalance — reach out')+'</button></div>';
+ }else if(d.kind==='star'){
+  body='<div class="rel-sum" style="border-right:3px solid '+MC+'">'+(AR?('قلبك الاجتماعي هذا الشهر — الترتيب من بياناتك الحقيقية ('+d.tot+' تواصل):'):('Your social constellation this month ('+d.tot+' contacts):'))+'</div>'+
+   d.bars.map(b2=>mindBarRow(esc(b2.n),b2.c,d.tot,AR)).join('')+
+   secH('star',AR?('حكايات '+esc(d.name)+' ('+d.evs.length+')'):(esc(d.name)+' stories ('+d.evs.length+')'),MC)+evList(d.evs,'var(--acc)','star');
+ }else if(d.kind==='gold'){
+  body='<div class="rel-sum" style="border-right:3px solid '+MC+'">'+(AR?('توزيع '+d.tot+' تواصلاً على أوقات يومك — الساعة الذهبية هي الأعلى شريطاً:'):('Distribution of '+d.tot+' contacts across your day:'))+'</div>'+
+   d.bars.map(b2=>mindBarRow(b2.n,b2.c,d.tot,AR)).join('');
+ }else if(d.kind==='day'){
+  body='<div class="rel-sum" style="border-right:3px solid '+MC+'">'+(AR?('توزيع '+d.tot+' تواصلاً على أيام الأسبوع — يوم القلب هو الأعلى شريطاً:'):('Distribution of '+d.tot+' contacts across the week:'))+'</div>'+
+   d.bars.map(b2=>mindBarRow(b2.n,b2.c,d.tot,AR)).join('');
+ }else if(d.kind==='quality'){
+  body='<div class="rp-grid">'+
+   '<div class="rp-box"><b style="color:var(--acc)">✦ '+d.cf+'</b><span>'+(AR?'حاضر كلياً':'Fully present')+'</span></div>'+
+   '<div class="rp-box"><b>◐ '+d.ck+'</b><span>'+(AR?'سريع':'Quick')+'</span></div>'+
+   '<div class="rp-box"><b style="color:var(--ink3)">○ '+d.cd+'</b><span>'+(AR?'مشتت':'Distracted')+'</span></div>'+
+  '</div>'+
+   secH('spark',AR?('التواصلات الموسومة ('+d.evs.length+')'):('Tagged contacts ('+d.evs.length+')'),MC)+evList(d.evs,'var(--acc)','spark')+
+   note(AR?'كل علامة ✦/◐/○ اخترتها أنت بنفسك عند التسجيل — هذه بصمة حضورك كما رسمتها، لا كما تخيلتها.':'Each ✦/◐/○ was chosen by you at logging time — this is your presence fingerprint as drawn, not imagined.');
+ }else if(d.kind==='streak'){
+  body='<div class="rp-grid">'+
+   '<div class="rp-box"><b style="color:var(--c-growth)">'+d.days.length+'</b><span>'+(AR?'يوم متتالٍ':'Days in a row')+'</span></div>'+
+   '<div class="rp-box"><b>'+d.totN+'</b><span>'+(AR?'حدث خلالها':'Events within')+'</span></div>'+
+  '</div>'+
+   secH('cal',AR?'أيام العادة — من الأقدم إلى اليوم':'Habit days — oldest to today',MC)+
+   '<div class="chips" style="margin:8px 0">'+d.days.map((x,i)=>'<span class="chip'+(i===d.days.length-1?' on':'')+'" style="cursor:default">'+fmtShort(x.ts)+' · '+x.n+'</span>').join('')+'</div>'+
+   secH('history',AR?('آخر ما وثّقته ('+d.evs.length+')'):('Recently logged ('+d.evs.length+')'),MC)+evList(d.evs,'var(--c-growth)','history')+
+   note(AR?'العادة = يوم به حدث واحد على الأقل، متتابعاً. اليوم الأخير مضيء — لا تقطع السلسلة الليلة.':'A habit day = any day with at least one event. The last chip is today — keep the chain alive.');
+ }else if(d.kind==='twoweeks'){
+  body='<div class="rp-grid">'+
+   '<div class="rp-box"><b style="color:var(--good)">+'+d.pos+'</b><span>'+(AR?'حدث مشرق':'Bright')+'</span></div>'+
+   '<div class="rp-box"><b style="color:var(--bad)">−'+d.neg+'</b><span>'+(AR?'حدث ثقيل':'Heavy')+'</span></div>'+
+  '</div>'+
+   secH('sun2',AR?('المشرقة ('+d.posE.length+')'):('Bright ('+d.posE.length+')'),'var(--good)')+evList(d.posE,'var(--good)','sun2')+
+   secH('shield',AR?('الثقيلة ('+d.negE.length+')'):('Heavy ('+d.negE.length+')'),'var(--bad)')+evList(d.negE,'var(--bad)','shield')+
+   note(AR?'هذه أحداثك كما كتبتها أنت — بلا تفسير من عندي. قراءتها بعينك أصدق من أي تحليل.':'Your events as you wrote them — reading them yourself beats any analysis.');
+ }
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b style="color:'+MC+'">'+ic(d.ic,18)+' '+d.t+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+body+
+  '<div class="set-note" style="margin-top:10px">'+ic('shield',12)+' '+(AR?'حُسب محلياً من أحداثك في جهازك — مؤشر لا تشخيص':'Computed locally from your events — a pointer, not a diagnosis')+'</div>';
+ openSheet('#shMind');
+ $$('#shMind [data-mdact]').forEach(b2=>b2.onclick=()=>{
+  closeSheets();
+  if(b2.dataset.mdact==='contact')setTimeout(()=>openContactSheet(b2.dataset.rid),150);
+  else if(b2.dataset.mdact==='dec')setTimeout(()=>go('decisions'),60);
+ });
+}
+
+/* ================== حوار رفيق v1.4 — العقل الثلاثي ==================
+   ① المدمج: Chrome Prompt API (window.LanguageModel) — Gemini Nano على الجهاز، بلا إنترنت ولا مفتاح
+   ② السحابي: مفتاح المستخدم (OpenRouter / Groq / Gemini) — يُحفظ على جهازه حصراً
+   ③ التجريبي: WebLLM عبر WebGPU — تفعيل صريح بضغطة، تحميل مرة واحدة
+   السقوط الدائم: القواعد المحلية rafiqReply()
+   الخصوصية: بريف حياتك لا يُرفق إلا بتفعيلك — والمفتاح لا يغادر جهازك أبداً */
+const RF={sess:null,sessBrief:'',wllm:null};
+const RF_PROVS={
+ openrouter:{url:'https://openrouter.ai/api/v1/chat/completions',model:'google/gemini-2.0-flash-exp:free',style:'openai'},
+ groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',style:'openai'},
+ gemini:{url:'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent',model:'gemini-2.0-flash',style:'gemini'}
+};
+function rfCfg(){return{mode:S.settings.rfMode||'auto',prov:S.settings.rfProv||'openrouter',key:S.settings.rfKey||'',model:S.settings.rfModel||'',ctx:S.settings.rfCtx!==false,wllm:!!S.settings.rfWllm}}
+function rfSaveCfg(p){Object.assign(S.settings,p);saveMeta()}
+function rfBrief(){
+ const AR=LANG==='ar',L=[];
+ L.push((AR?'اسم المستخدم: ':'User: ')+(S.profile.name||(AR?'غير معروف':'unknown')));
+ const ns=(S.staleRels||[]).length;
+ L.push((AR?'علاقاته المسجلة: ':'Logged relations: ')+S.rels.length+(ns?((AR?' — منها '+ns+' تشتاق لصوته (14+ يوماً بلا تواصل)':' — '+ns+' stale (14d+)')):''));
+ const od=S.decisions.filter(d=>d.status==='open');
+ if(od.length)L.push((AR?'قرارات معلقة: ':'Open decisions: ')+od.length+' ('+od.slice(0,2).map(d=>d.title).join('، ')+')');
+ const d14=Date.now()-14*DAY,e14=S.events.filter(e=>e.ts>=d14);
+ const pos=e14.filter(e=>e.polarity>0).length,neg=e14.filter(e=>e.polarity<0).length;
+ if(pos+neg)L.push((AR?'آخر 14 يوماً: ':'Last 14d: ')+pos+(AR?' حدث مشرق، ':' bright, ')+neg+(AR?' ثقيل':' heavy'));
+ let st=0;for(let i=0;i<90;i++){const ds=dayStart(Date.now()-i*DAY);if(S.events.some(e=>dayStart(e.ts)===ds))st++;else break}
+ if(st>=2)L.push((AR?'إيقاع التوثيق: ':'Logging streak: ')+st+(AR?' أيام متتالية':' days in a row'));
+ const d7=Date.now()-7*DAY;
+ const diary=S.events.filter(e=>e.ts>=d7&&e.text&&e.type!=='mood'&&e.type!=='assessment').sort((a,b)=>b.ts-a.ts).slice(0,12);
+ if(diary.length)L.push((AR?'يومياتك الأخيرة من دفترك الحقيقي: ':'Your recent journal entries:')+'\n'+diary.map(e=>'- '+timeAgo(e.ts)+': '+e.text+(e.polarity>0?(AR?' (مشرق)':' (bright)'):e.polarity<0?(AR?' (ثقيل)':' (heavy)'):'')).join('\n'));
+ const ms=mindScan().sort((a,b)=>b.w-a.w).slice(0,3).map(d=>d.t).join(' · ');
+ if(ms)L.push((AR?'أبرز ما يراه العقل المحلي: ':'Top local-mind signals: ')+ms);
+ return L.join('\n');
+}
+function rfSysPrompt(){
+ const AR=LANG==='ar',name=S.profile.name||(AR?'صديقي':'friend');
+ let p=AR?
+ ('أنت «رفيق» — رفيق حياة رقمي يسكن جهاز '+name+' ويتحدث من بياناته المحلية. أسلوبك: عربي فصيح مبسط، دافئ أنيس حكيم، جمل قصيرة حية، من جملتين إلى ست، بلا مقدمات إنشائية ولا كليشيهات.\nمبادئك الثابتة:\n• أنت مؤشر لا تشخيص — لا تُصدر حكماً نفسياً أو طبياً أو مالياً قاطعاً.\n• امسك شعور المستخدم أولاً ثم المعنى — عاطفة قبل نصيحة.\n• سؤال واحد كحد أقصى في الرد.\n• لا تكرر كلامه ولا تسرد البريف حرفياً — لمّح إليه بحكمة كمن يعرف صاحبه منذ سنوات.\n• إن ظهرت أزمة نفسية حقيقية: أرح قلبه وأوصِ بلطف بمختص بشري.\n• إن ذُكرت ميزات التطبيق (حكاية أسبوعي، ميزان العطاء، العقل المحلي، القرارات، خزان السعادة) اشرحها بسطر واحد وادعُ لتجربتها.\n• إن كتب بالإنجليزية أجب بالإنجليزية.')
+ :('You are "Rafiq" — a digital life companion living on '+name+'\'s device, speaking from his local data. Style: warm, wise, concise, 2-6 sentences, no cliches. Principles: pointer not diagnosis; emotion before advice; max one question per reply; allude to the life brief instead of reciting it; for real mental-health crises be warm and gently suggest a human professional; reply in the user\'s language.');
+ if(rfCfg().ctx){const b=rfBrief();if(b)p+=(AR?'\n\n[بريف حياة '+name+' — من سجله المحلي على جهازه]\n':'\n\n[Life brief of '+name+' — from on-device log]\n')+b}
+ return p;
+}
+async function rfBuiltIn(){
+ const LM=window.LanguageModel;
+ if(!LM||!LM.create)return null;
+ try{
+  const av=LM.availability?await LM.availability():'available';
+  if(av==='unavailable'||av==='no')return null;
+  const brief=rfSysPrompt();
+  if(!RF.sess||RF.sessBrief!==brief){
+   try{if(RF.sess&&RF.sess.destroy)RF.sess.destroy()}catch(e2){}
+   RF.sess=await LM.create({initialPrompts:[{role:'system',content:brief}]});
+   RF.sessBrief=brief;
+  }
+  return RF.sess;
+ }catch(e){RF.sess=null;return null}
+}
+async function rfCloud(tx){
+ const c=rfCfg();if(!c.key)return null;
+ const p=RF_PROVS[c.prov]||RF_PROVS.openrouter,model=c.model||p.model;
+ const hist=S.chat.slice(-12).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)}));
+ const sys=rfSysPrompt();
+ const ac=new AbortController();const tm=setTimeout(()=>ac.abort(),25000);
+ try{
+  let resp;
+  if(p.style==='openai'){
+   const hdrs={'Content-Type':'application/json','Authorization':'Bearer '+c.key};
+   if(c.prov==='openrouter')hdrs['X-Title']='Rafiq';
+   resp=await fetch(p.url,{method:'POST',headers:hdrs,signal:ac.signal,body:JSON.stringify({model:model,messages:[{role:'system',content:sys}].concat(hist),temperature:0.8,max_tokens:420})});
+  }else{
+   resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(c.key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:hist.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),generationConfig:{temperature:0.8,maxOutputTokens:420}})});
+  }
+  if(!resp.ok){clearTimeout(tm);return null}
+  const j=await resp.json();
+  let out='';
+  if(p.style==='openai')out=(j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'';
+  else out=(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts?j.candidates[0].content.parts.map(x=>x.text||'').join(''):'');
+  clearTimeout(tm);
+  out=String(out).trim();
+  return out?{text:out,eng:'cloud'}:null;
+ }catch(e){clearTimeout(tm);return null}
+}
+async function rfWebllm(log){
+ try{
+  if(!RF.wllm){
+   const mod=await import('https://esm.run/@mlc-ai/web-llm');
+   const eng=new mod.MLCEngine();
+   await eng.reload('Qwen2.5-0.5B-Instruct-q4f16_1-MLC',{initProgressCallback:pr=>{if(log&&pr&&pr.text)log(pr.text)}});
+   RF.wllm=eng;
+  }
+  return RF.wllm;
+ }catch(e){return null}
+}
+async function rfTryWebLLM(tx){
+ const c=rfCfg();if(!c.wllm)return null;
+ try{
+  const eng=await rfWebllm(null);if(!eng)return null;
+  const msgs=[{role:'system',content:rfSysPrompt()}].concat(S.chat.slice(-8).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)})));
+  const r=await eng.chat.completions.create({messages:msgs,temperature:0.8,max_tokens:300});
+  const out=String((r&&r.choices&&r.choices[0]&&r.choices[0].message&&r.choices[0].message.content)||'').trim();
+  return out?{text:out,eng:'wllm'}:null;
+ }catch(e){rfSaveCfg({rfWllm:false});RF.wllm=null;return null}
+}
+const RF_TOOL_RX=/(تذكرني|ذكّرني|ذكرني|remind me)|(حكاية|قصة|story)|(واتساب|واتس|whatsapp)|(أفكر|أنوي|انوي|قرار|شراء|اشتري|وظيفة|مشروع|decision|job offer)|(اقترح|suggest|book)/i;
+async function rfBrain(tx){
+ if(RF_TOOL_RX.test(tx))return rafiqReply(tx);
+ const c=rfCfg();
+ if(c.mode!=='cloudOnly'){
+  const s=await rfBuiltIn();
+  if(s){try{const out=String(await s.prompt(tx)||'').trim();if(out)return {text:out,eng:'built'}}catch(e2){RF.sess=null}}
+ }
+ const cl=await rfCloud(tx);
+ if(cl)return cl;
+ const w=await rfTryWebLLM(tx);
+ if(w)return w;
+ const fb=rafiqReply(tx);
+ return {text:fb.text,actions:fb.actions,eng:'rules'};
+}
+function rfBadgeHtml(){
+ const AR=LANG==='ar',c=rfCfg();let n;
+ if(c.mode==='cloudOnly')n=c.key?((AR?'سحابي · ':'Cloud · ')+c.prov):(AR?'سحابي — أضف مفتاحك':'Cloud — add your key');
+ else if(window.LanguageModel&&window.LanguageModel.create)n=AR?'العقل المدمج — على جهازك':'Built-in — on-device';
+ else if(c.key)n=(AR?'سحابي · ':'Cloud · ')+c.prov;
+ else n=AR?'قواعد محلية — افتح ⚙ لعقل أقوى':'Local rules — open ⚙ for a stronger brain';
+ return '<div class="rf-badge"><span class="pulse-dot"></span>'+ic('brain',12)+' <b>'+esc(n)+'</b></div>';
+}
+function openRfSet(){
+ const AR=LANG==='ar',c=rfCfg(),sh=$('#shRfSet');if(!sh)return;
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b style="color:var(--c-mind)">'+ic('brain',17)+' '+(AR?'عقل حوار رفيق':'Rafiq chat brain')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'
+ +'<div class="set-note">'+ic('shield',12)+' '+(AR?'المفتاح يُحفظ على جهازك حصراً ولا يغادرها. العقل المدمج: كل شيء يبقى على جهازك. المفتاح السحابي: نصوص المحادثة فقط تمر عبر المزود — وبريف حياتك لا يُرسل إلا بتفعيلك له.':'Your key stays on-device. Built-in brain: everything stays local. Cloud key: only chat text goes through the provider; life brief attaches only if you enable it.')+'</div>'
+ +'<div class="card" style="margin-top:12px">'
+ +'<div class="rf-row"><span>'+(AR?'الترتيب':'Routing')+'</span><select id="rfMode"><option value="auto"'+(c.mode==='auto'?' selected':'')+'>'+(AR?'تلقائي (مدمج ← سحابي)':'Auto (built-in ← cloud)')+'</option><option value="cloudOnly"'+(c.mode==='cloudOnly'?' selected':'')+'>'+(AR?'السحابي حصراً':'Cloud only')+'</option></select></div>'
+ +'<div class="rf-row"><span>'+(AR?'المزود':'Provider')+'</span><select id="rfProv">'+['openrouter','groq','gemini'].map(p=>'<option value="'+p+'"'+(c.prov===p?' selected':'')+'>'+(p==='openrouter'?'OpenRouter':p==='groq'?'Groq — سريع ومجاني':'Google Gemini')+'</option>').join('')+'</select></div>'
+ +'<div class="rf-row"><span>'+(AR?'مفتاح API':'API key')+'</span><input id="rfKey" type="password" autocomplete="off" placeholder="sk-..." value="'+esc(c.key)+'"></div>'
+ +'<div class="rf-row"><span>'+(AR?'النموذج (اختياري)':'Model (optional)')+'</span><input id="rfModel" placeholder="'+esc((RF_PROVS[c.prov]||RF_PROVS.openrouter).model)+'" value="'+esc(c.model)+'"></div>'
+ +'<div class="rf-row"><span>'+(AR?'شارك سياق حياتك':'Share life context')+'</span><button class="chip'+(c.ctx?' on':'')+'" id="rfCtxT">'+(c.ctx?(AR?'مفعّل ✓':'On ✓'):(AR?'مغلق':'Off'))+'</button></div>'
+ +'</div>'
+ +'<div class="page-add" style="display:flex;gap:9px"><button class="btn ghost" id="rfTest" style="flex:1">'+ic('pulse',15)+' '+(AR?'اختبار الاتصال':'Test connection')+'</button><button class="btn" id="rfSaveB" style="flex:1">'+ic('check',15)+' '+t('save')+'</button></div>'
+ +'<div class="page-add"><button class="btn ghost" id="rfWllmB" style="width:100%">'+ic('hex',15)+' '+(AR?(c.wllm?'العقل التجريبي مفعّل — إيقافه':'تشغيل العقل التجريبي (WebLLM · تحميل ~400MB مرة واحدة)'):(c.wllm?'Trial brain on — turn off':'Run trial brain (WebLLM · ~400MB once)'))+'</button></div>'
+ +'<div id="rfOut" style="font-size:12px;color:var(--ink2);padding:0 6px;line-height:1.9;max-height:120px;overflow-y:auto"></div>'
+ +'<div class="set-note" style="margin-top:10px">'+ic('globe',12)+' '+(AR?'مفاتيح مجانية: OpenRouter → openrouter.ai/keys · Groq → console.groq.com/keys · Gemini → aistudio.google.com/apikey':'Free keys: openrouter.ai/keys · console.groq.com/keys · aistudio.google.com/apikey')+'</div>';
+ let ctxOn=c.ctx;
+ const ctxB=$('#rfCtxT');
+ if(ctxB)ctxB.onclick=()=>{ctxOn=!ctxOn;ctxB.classList.toggle('on',ctxOn);ctxB.textContent=ctxOn?(AR?'مفعّل ✓':'On ✓'):(AR?'مغلق':'Off')};
+ const sv=$('#rfSaveB');
+ if(sv)sv.onclick=()=>{rfSaveCfg({rfMode:$('#rfMode').value,rfProv:$('#rfProv').value,rfKey:$('#rfKey').value.trim(),rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});closeSheets();toast(AR?'حُفظ عقل الحوار ✓':'Chat brain saved ✓','var(--c-mind)','brain');if(currentView==='chat')go('chat')};
+ const ts=$('#rfTest');
+ if(ts)ts.onclick=async()=>{
+  const out=$('#rfOut');if(!out)return;
+  rfSaveCfg({rfMode:$('#rfMode').value,rfProv:$('#rfProv').value,rfKey:$('#rfKey').value.trim(),rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});
+  const cc=rfCfg(),hi=AR?'قل مرحباً في جملة واحدة':'Say hi in one sentence';
+  const inFrame=(()=>{try{return window.self!==window.top}catch(e2){return true}})();
+  const LK=(u,txt)=>'<a href="'+u+'" target="_blank" rel="noopener" style="color:var(--c-mind);font-weight:700">'+txt+'</a>';
+  out.textContent=AR?'أجرّب الاتصال…':'Testing…';
+  let r=null,tag='',diag=null;
+  if(cc.mode!=='cloudOnly'){
+   const s=await rfBuiltIn();
+   if(s){try{const o=String(await s.prompt(hi)||'').trim();if(o){r={text:o};tag=AR?'العقل المدمج':'Built-in'}}catch(e2){}}
+  }
+  if(!r&&!cc.key){
+   out.innerHTML='<b style="color:var(--acc)">'+ic('shield',13)+' '+(AR?'ينقصك شيء واحد فقط: المفتاح':'Only one thing missing: your key')+'</b><br>'
+    +(AR?'افتح من متصفحك أحد هذه المواقع: ':'Open any of: ')+LK('https://openrouter.ai/keys','OpenRouter')+' · '+LK('https://console.groq.com/keys','Groq')+' · '+LK('https://aistudio.google.com/apikey','Gemini')
+    +'<br>'+(AR?'١. سجّل حساباً مجانياً واضغط Create Key.':'1. Sign up free, press Create Key.')
+    +'<br>'+(AR?'٢. انسخ المفتاح والصقه في حقل «مفتاح API» أعلاه.':'2. Paste it into the API key field above.')
+    +'<br>'+(AR?'٣. اضغط «اختبار الاتصال» مجدداً — وسنجيبك بالتفصيل إن تعثر شيء.':'3. Press “Test connection” again.')
+    +(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'أنت في شاشة معاينة — المكان الحقيقي للإعداد: رفيق على جهازك/جوالك (المفتاح يُضاف مرة على كل جهاز).':'Preview screen — set it for real inside Rafiq on your device.')+'</span>':'');
+   return;
+  }
+  if(!r){
+   const p=RF_PROVS[cc.prov]||RF_PROVS.openrouter,model=cc.model||p.model;
+   const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),25000);
+   try{
+    let resp;
+    if(p.style==='openai'){
+     const hdrs={'Content-Type':'application/json','Authorization':'Bearer '+cc.key};
+     if(cc.prov==='openrouter')hdrs['X-Title']='Rafiq';
+     resp=await fetch(p.url,{method:'POST',headers:hdrs,signal:ac.signal,body:JSON.stringify({model:model,messages:[{role:'user',content:hi}],max_tokens:60})});
+    }else{
+     resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(cc.key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({contents:[{role:'user',parts:[{text:hi}]}],generationConfig:{maxOutputTokens:60}})});
+    }
+    if(resp.ok){
+     const j=await resp.json();
+     let o=p.style==='openai'?((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||''):(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts?j.candidates[0].content.parts.map(x=>x.text||'').join(''):'');
+     o=String(o).trim();
+     if(o){r={text:o};tag=(AR?'سحابي · ':'Cloud · ')+cc.prov}
+     else diag=AR?'العقل رد بفراغ — جرّب نموذجاً آخر من حقل «النموذج»':'Empty reply — try another model';
+    }else{
+     const st=resp.status;
+     if(st===401||st===403)diag=AR?'المفتاح مرفوض — انسخه كاملاً بلا مسافات من موقع المزود وتأكد أنه مفعّل':'Key rejected — copy it fully, no spaces';
+     else if(st===429)diag=AR?'مفتاحك سليم — لكن الحد المجاني امتلئ الآن، انتظر دقيقة واضغط مجدداً':'Rate limited — wait a minute';
+     else if(st===404||st===400)diag=(AR?'النموذج «'+model+'» غير متاح عند ':'Model not available at ')+cc.prov+(AR?' — امسح حقل «النموذج» ليأخذ الافتراضي، أو اكتب نموذجاً سارياً من موقعهم':' — clear the model field for the default');
+     else diag=(AR?'المزود رد بخطأ ':'Provider error ')+st+(AR?' — جرّب مزوداً آخر':' — try another provider');
+    }
+   }catch(e2){diag=AR?(inFrame?'لا شبكة داخل شاشة المعاينة — هذا طبيعي هنا. المكان الصحيح للتجربة: رفيق على جهازك مباشرة':'تعذر الوصول للشبكة — تحقق من اتصالك أو جرّب مزوداً آخر'):'Network unreachable'}
+   finally{clearTimeout(tm)}
+  }
+  if(r)out.innerHTML='<b style="color:var(--good)">'+ic('check',13)+' '+esc(tag)+'</b><br>'+esc(r.text)+(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'تذكّر: هذا المفتاح يعيش في شاشة المعاينة فقط — على جوالك أضفه مرة من ⚙.':'This key lives in the preview only — add it on your device too.')+'</span>':'');
+  else out.innerHTML='<b style="color:var(--acc)">'+ic('pulse',13)+' '+(diag||(AR?'لم يستجب أي عقل بعد':'No brain responded yet'))+'</b><br><span style="color:var(--ink2)">'+(AR?'ولا تقلق: رفيق يعمل الآن بالقواعد المحلية وذاكرته كاملة — هذا الاختبار فقط لترقية العقل.':'No worry: Rafiq works with local rules + memory. This test only upgrades the brain.')+'</span>';
+ };
+ const wb=$('#rfWllmB');
+ if(wb)wb.onclick=async()=>{
+  const out=$('#rfOut');if(!out)return;
+  if(c.wllm){rfSaveCfg({rfWllm:false});c.wllm=false;wb.innerHTML=ic('hex',15)+' '+(AR?'تشغيل العقل التجريبي (WebLLM · تحميل ~400MB مرة واحدة)':'Run trial brain (WebLLM · ~400MB once)');out.textContent=AR?'أوقفتُ العقل التجريبي.':'Trial brain off.';return}
+  out.textContent=AR?'أحمّل المحرك التجريبي… أول مرة فقط (~400MB) ثم يُخزَّن في متصفحك.':'Loading trial engine… first time only (~400MB), cached in your browser.';
+  const eng=await rfWebllm(msg=>{const o=$('#rfOut');if(o)o.textContent=msg});
+  if(eng){rfSaveCfg({rfWllm:true});c.wllm=true;wb.innerHTML=ic('hex',15)+' '+(AR?'العقل التجريبي مفعّل — إيقافه':'Trial brain on — turn off');out.innerHTML='<b style="color:var(--good)">'+ic('check',13)+'</b> '+(AR?'جهز العقل التجريبي — يُستدعى تلقائياً بعد المدمج والسحابي.':'Trial brain ready — it answers after built-in and cloud.')}
+  else{rfSaveCfg({rfWllm:false});out.innerHTML='<b style="color:var(--bad)">'+ic('x',13)+'</b> '+(AR?'تعذر التحميل — يحتاج Chrome حديثاً + WebGPU + إنترنت للتحميل الأول.':'Load failed — needs modern Chrome + WebGPU + internet for first download.')}
+ };
+ openSheet('#shRfSet');
+}
+
 /* الإعدادات */
 function storageInfo(){
  const isFile=location.protocol==='file:';
@@ -4754,6 +5230,7 @@ function buildMoreSheet(){
   '<div class="sh-grip"></div><div class="sh-head"><b>'+t('tab_more')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="more-hi">'+t('more_hi')+esc(S.profile.name||(LANG==='ar'?'بك':'there'))+'</div>'+
   '<div class="more-sub">'+t('more_sub')+'</div>'+
+  '<button class="more-item" data-more="mind">'+ic('brain',19)+'<span>'+(LANG==='ar'?'🧠 العقل المحلي':'🧠 The Local Mind')+'</span><small>'+(LANG==='ar'?'عين رفيق على بياناتك — اكتشافات لحظية':'Rafiq reads your data — instant discoveries')+'</small></button>'+
   '<button class="more-item" data-more="story">'+ic('book',19)+'<span>'+t('m_story')+'</span><small>'+t('m_story_s')+'</small></button>'+
   '<button class="more-item" data-more="ritual">'+ic('sun2',19)+'<span>'+t('m_ritual')+'</span><small>'+t('m_ritual_s')+'</small></button>'+
   '<button class="more-item" data-more="life">'+ic('hex',19)+'<span>'+t('m_life')+'</span><small>'+t('m_life_s')+'</small></button>'+
@@ -4787,6 +5264,7 @@ window.__rfStage='ربط الأفعال';
  }
  else if(act==='openRate')openRateFlow();
  else if(act==='openAssess')openAssessPick();
+ else if(act==='rfSet')openRfSet();
  else if(act==='wipeChat')askConfirm(LANG==='ar'?'مسح كل الدردشات؟':'Clear all chats?',LANG==='ar'?'ستُمحى كل رسائل المحادثة نهائياً — بياناتك وأحداثك لا تُلمس.':'All chat messages will be erased — your events and data are untouched.',LANG==='ar'?'مسح':'Clear',async()=>{await DB.clear('chat');S.chat=[];go('chat');toast(LANG==='ar'?'مُسحت الدردشات':'Chats cleared','var(--ink2)','trash')});
  else if(act==='toggleIn')toggleInterest(id);
  else if(act==='addInt'){
@@ -4907,7 +5385,7 @@ document.addEventListener('click',async e=>{
  const it=e.target.closest('[data-more]');if(!it)return;
  const m=it.dataset.more;
  closeSheets();
- if(['life','cal','twin','relations','decisions','report','settings'].indexOf(m)>=0)setTimeout(()=>go(m),60);
+ if(['life','cal','twin','relations','decisions','report','settings','mind'].indexOf(m)>=0)setTimeout(()=>go(m),60);
  else if(m==='story')setTimeout(openStorySheet,140);
  else if(m==='fingerprint')setTimeout(()=>{go('fingerprint')},140);
  else if(m==='lab')setTimeout(()=>{go('lab')},140);
