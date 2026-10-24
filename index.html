@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: QUALITY_DIMENSION_v1 — بُعد الجودة في العلاقات (هولت-لونستاد) — مبنٍ على نسخة مراد المؤكدة 2026-10-25 -->
+<!-- COMMIT: QUALITY_DIMENSION_v1.1 — بُعد الجودة (هولت-لونستاد) + إصلاح last30 (خطأ تعريف نطاقي في ميزان العطاء — يظهر على الجوال ذوي تواصلات حديثة فقط) — مبني على نسخة مراد المؤكدة 2026-10-25 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -3473,6 +3473,7 @@ function givingBalanceHtml(){
   else{line=AR?('هو/هي يبادر '+(-d)+' مرات أكثر منك — أجب الدعوة، فالباب الذي يطرقك اليوم قد يمل من الغد'):('They initiate '+(-d)+'× more — answer the call');icol='var(--c-relations)'}
   return '<div class="pp-corr">'+ic('pulse',17)+'<div class="pp-corr-b"><b>'+esc(x.r.name)+'</b><p style="color:'+icol+'">'+line+'</p></div><span class="pp-corr-st">'+x.mine+' : '+x.theirs+'</span></div>';
  }).join('');
+ const last30=Date.now()-30*DAY;
  const c30=S.events.filter(e=>e.type==='contact'&&e.ts>=last30);
  const qn=c30.filter(e=>e.quality).length;
  const qf=c30.filter(e=>e.quality==='full').length;
