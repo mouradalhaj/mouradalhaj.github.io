@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_KEY_DOCTOR_v1.4.3 — «طبيب المفتاح» لعلاج بلاغ مراد من الآيفون (رفض مفتاح بحجة مسافات + رفض نموذج): (1) تنظيف آلي كامل للمفتاح عند الحفظ والاختبار والإرسال — مسافات أطراف وداخلية وأسطر واقتباس و«Bearer» — فلا تُلقى تهمة المسافات على أحد بعدها (2) بصمة المزود من أول المفتاح: sk-or-=OpenRouter · gsk_=Groq · AIza=Gemini — المزود يُضبط تلقائياً ولا يلخبطه أحد (3) نماذج افتراضية حيّة بعد تقاعد قتلى أغسطس 2026: Groq→openai/gpt-oss-120b (القديم llama-3.3-70b-versatile أوقفه Groq يوم 16/8!) · Gemini→gemini-2.5-flash · OpenRouter→llama-3.3-70b-instruct:free (4) زر الاختبار صار طبيباً: جرّب النموذج المكتوب ← إن رُفض جرّب الافتراضي تلقائياً ومسح الخانة ← وعلى OpenRouter استعلام القائمة الحية واختيار أول نموذج مجاني سارٍ وحفظه لك (5) ملاحظة جهاز صريحة في ورقة ⚙: الآيفون بلا عقل مدمج في أي متصفح إطلاقاً — طبيعي 100% — عقلك هناك المفتاح السحابي (6) رسالة 401 الصادقة: «نظّفناه سلفاً — المفتاح نفسه مرفوض: ناقص/منتهي/لمزود آخر» — فوق RF_TEST_GUIDE_v1.4.2 — فوق RF_MEMORY_RECALL_v1.4.1 (ذاكرة اليوميات: قاموس الفترات العربية — يومين/ثلاثة أيام/أسبوعين/شهرين/آخر أسبوع) + جواب ذكي يعرض آخر الدفتر عند فراغ الفترة + يوميات دفترك الحقيقية في بريف العقل السحابي — إصلاح «ماذا فعلت قبل يومين؟» — والعمود الثاني: حوار رفيق بالعقل الثلاثي (مدمج Chrome LanguageModel ← سحابي بمفتاح محلي OpenRouter/Groq/Gemini ← WebLLM تجريبي ← قواعد) + بريف حياة يُرفق بإذن + ورقة عقل الحوار ⚙ + الحياة الحركية: بطاقات تنهض بتتابع ورسائل تنزلق وأزرار تنبض — فوق v1.3.1 — اضغط أي اكتشاف لترى نافذة أدلته من سجل الأحداث الحقيقي (سجل العلاقة · أدلة الميزان بالأطراف · توزيع الساعات والأيام بأشرطة · رقاقات أيام العادة · قوائم الأحداث المشرقة والثقيلة) — مؤشر لا تشخيص 100% محلي — فوق v1.2 -->
+<!-- COMMIT: RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -644,6 +644,21 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
 .fp-trait .fp-tbar{height:5px;border-radius:100px;background:var(--card2);margin-top:7px;overflow:hidden}
 .fp-trait .fp-tbar i{display:block;height:100%;border-radius:100px;background:var(--acc);transition:width 1s cubic-bezier(.3,.8,.3,1)}
 .fp-trait small{font-size:9.5px;color:var(--ink3);display:block;margin-top:5px}
+.fp-trait[data-fpd]{cursor:pointer;transition:transform .18s ease}
+.fp-trait[data-fpd]:active{transform:scale(.96)}
+.fp-hint{display:inline-block;margin-top:6px;font-size:9px;color:var(--acc);font-weight:700;opacity:.85}
+.fp-compat-row[data-fprel]{cursor:pointer;transition:transform .18s ease}
+.fp-compat-row[data-fprel]:active{transform:scale(.985)}
+.fp-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:13px}
+.fp-strip>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center}
+.fp-strip b{font-family:var(--fd);font-size:16px;color:var(--acc);display:block}
+.fp-strip small{font-size:8.5px;color:var(--ink3);display:block;margin-top:2px}
+.md-h2{font-weight:800;color:var(--ink);font-size:14.5px;margin:9px 0 3px;border-bottom:1px solid var(--line2);padding-bottom:3px}
+.md-h3{font-weight:800;color:var(--ink);font-size:13px;margin:7px 0 2px}
+.md-li{position:relative;padding-right:13px;margin:1px 0}
+.md-li::before{content:'•';position:absolute;right:2px;color:var(--acc);font-weight:800}
+.msg.rf code{background:var(--card2);border-radius:6px;padding:1px 6px;font-size:12px}
+.msg.rf.wide{max-width:97%}
 .fp-compat{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 15px}
 .fp-compat-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line)}
 .fp-compat-row:last-child{border-bottom:none}
@@ -790,6 +805,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
     <div class="sheet" id="shMind"></div>
+    <div class="sheet" id="shFp"></div>
     <div class="sheet" id="shRfSet"></div>
     <div class="sheet" id="shBody"></div>
     <div class="sheet" id="shCatLog"></div>
@@ -3426,7 +3442,7 @@ function renderLife(){
 }
 
 /* المحادثة */
-const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','اقترح لي كتاباً','حكاية أسبوعي','ماذا فعلت قبل يومين؟','أفكر بشراء سيارة']:['How am I this week?','Suggest a book','My weekly story','What did I do two days ago?','I am thinking of buying a car'];
+const SUG_QUICK=()=>LANG==='ar'?['كيف حالي هذا الأسبوع؟','اقترح لي كتاباً','حكاية أسبوعي','ماذا فعلت قبل يومين؟','أفكر بشراء سيارة','اكتب لي تقرير أسبوعي']:['How am I this week?','Suggest a book','My weekly story','What did I do two days ago?','I am thinking of buying a car','Write my weekly report'];
 function renderChat(){
  const v=$('#v-chat');if(!v)return;
  v.innerHTML=
@@ -3447,12 +3463,15 @@ function renderChat(){
  }
  $$('#v-chat .chat-sugs .chip').forEach(c=>c.onclick=()=>sendChat(c.dataset.sug));
  function drawMsgs(){
-  list.innerHTML=S.chat.slice(-40).map(m=>'<div class="msg '+(m.role==='rf'?'rf':'me')+'">'+esc(m.text)+'</div>').join('');
+  list.innerHTML=S.chat.slice(-40).map(m=>m.role==='rf'
+   ?'<div class="msg rf'+(String(m.text).length>400?' wide':'')+'">'+rfMd(m.text)+'</div>'
+   :'<div class="msg me">'+esc(m.text)+'</div>').join('');
   list.scrollTop=list.scrollHeight;
  }
  async function pushMsg(role,text,actions){
   const o={id:uid(),role:role,text:text,ts:Date.now()};await DB.put('chat',o);S.chat.push(o);
-  const div=document.createElement('div');div.className='msg '+role;div.textContent=text;list.appendChild(div);
+  const div=document.createElement('div');div.className='msg '+role+(role==='rf'&&String(text).length>400?' wide':'');
+  if(role==='rf')div.innerHTML=rfMd(text);else div.textContent=text;list.appendChild(div);
   if(actions)actions.forEach(a=>{const b=document.createElement('button');b.className='msg-act';b.textContent=a.label;b.onclick=a.run;div.appendChild(document.createElement('br'));div.appendChild(b)});
   list.scrollTop=list.scrollHeight;
  }
@@ -3980,38 +3999,98 @@ function relVitality(r){
  const stats=fpCompute();
  const total=fpTotal(stats);
  const name=S.profile.name||(AR?'صديقي':'friend');
+ const e30=S.events.filter(e=>daysSince(e.ts)<30).length;
+ const dimCount=S.events.filter(e=>e.type==='selfrate').length;
+ const actDims=FP_DIMS.filter(d=>stats[d.id].pos+stats[d.id].neg>0).length;
  let compatRows='';
- S.rels.slice(0,6).forEach(r=>{
+ S.rels.slice(0,6).forEach((r,i)=>{
   if(!r.calls)r.calls={n:0,d:0};
-  const AR=LANG==='ar';
   const vitality=relVitality(r);
   const col=vitality.pct>=75?'var(--good)':vitality.pct>=50?'var(--acc)':'var(--bad)';
-  compatRows+='<div class="fp-compat-row"><div class="fp-compat-av">'+esc(r.name[0])+'</div><div class="fp-compat-b"><b>'+esc(r.name)+'</b><span>'+vitality.desc+'</span></div><span class="fp-compat-pct" style="color:'+col+'">'+vitality.pct+'%</span></div>';
+  compatRows+='<div class="fp-compat-row" data-fprel="'+r.id+'" style="cursor:pointer;--i:'+i+'"><div class="fp-compat-av">'+esc(r.name[0])+'</div><div class="fp-compat-b"><b>'+esc(r.name)+'</b><span>'+vitality.desc+'</span></div><span class="fp-compat-pct" style="color:'+col+'">'+vitality.pct+'%</span><span class="fp-hint">'+(AR?'أدلة ←':'proof →')+'</span></div>';
  });
- if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first')+'</div>';
- if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل حساب التوافق':'Add relationships first for compatibility')+'</div>';
+ if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first for compatibility')+'</div>';
  const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
  v.innerHTML=
-  '<span class="lab-dev">LAB · 3.1</span>'+
+  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.5.0':'LIVING FINGERPRINT · 1.5.0')+'</span>'+
   '<div class="fp-hero">'+logoSvg(40)+
    '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800;margin-top:8px">'+(AR?'بصمة '+esc(name)+' الرقمية':esc(name)+"'s fingerprint")+'</h2>'+
    '<div class="fp-score">'+total+'%</div>'+
    '<p style="font-size:11.5px;color:var(--ink2);margin-top:2px">'+(AR?'قوة تمايز شخصيتك — كلما ارتفعت، كانت سمتك أكثر وضوحاً وتميزاً':'Personality distinctiveness — higher means more pronounced traits')+'</p>'+
+   '<div class="fp-strip">'+
+    '<div><b>'+S.events.length+'</b><small>'+(AR?'ذكرى مغذية':'memories')+'</small></div>'+
+    '<div><b>'+e30+'</b><small>'+(AR?'حدث · 30 يوماً':'events · 30d')+'</small></div>'+
+    '<div><b>'+dimCount+'</b><small>'+(AR?'تقييم نفسي':'ratings')+'</small></div>'+
+    '<div><b>'+actDims+'/8</b><small>'+(AR?'محاور نشطة':'active axes')+'</small></div>'+
+   '</div>'+
    fpRadarSvg(stats)+
   '</div>'+
-  '<div class="fp-line"><h4>'+ic('spark',13)+' '+(AR?'حكاية بصمتك':'Your fingerprint story')+'</h4><p>'+fpNarrative(stats)+'</p></div>'+
-  '<h3 class="sec-t">'+ic('hex',15)+' '+(AR?'محاورك الثمانية بالتفصيل':'Your 8 axes detailed')+'</h3>'+
+  '<div class="fp-line"><h4>'+ic('spark',13)+' '+(AR?'حكاية بصمتك':'Your fingerprint story')+'</h4><p>'+fpNarrative(stats).split(/\n{2,}/).map(x=>x.trim()).filter(Boolean).join('<br><br>')+'</p></div>'+
+  '<h3 class="sec-t">'+ic('hex',15)+' '+(AR?'محاورك الثمانية — اضغط أي محور لترى أدلته':'Your 8 axes — tap any for evidence')+'</h3>'+
   '<div class="fp-traits">'+
-  FP_DIMS.map(d=>{
-   const sc=stats[d.id].score;
+  FP_DIMS.map((d,i)=>{
+   const sc=stats[d.id].score,n=stats[d.id].pos+stats[d.id].neg;
    const side=sc>50?(AR?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0]):(AR?d.ar.split(' ↔')[1]:d.en.split(' ↔')[1]);
-   return '<div class="fp-trait"><b style="color:'+d.col+'">'+side+'</b><div class="fp-tbar"><i style="width:'+sc+'%"></i></div><small>'+(AR?d.ar:d.en)+' · '+sc+'%</small></div>';
+   return '<div class="fp-trait" data-fpd="'+d.id+'" style="cursor:pointer;--i:'+i+'"><b style="color:'+(d.col||'var(--acc)')+'">'+side+'</b><div class="fp-tbar"><i style="width:'+sc+'%"></i></div><small>'+(AR?d.ar:d.en)+' · '+sc+'%'+(n?' · '+n+' '+(AR?'إشارة':'signals'):'')+'</small><span class="fp-hint">'+(AR?'اضغط للأدلة ←':'evidence →')+'</span></div>';
   }).join('')+
   '</div>'+
-  '<h3 class="sec-t">'+ic('users',15)+' '+(AR?'مصفوفة التوافق مع علاقاتك':'Compatibility matrix')+'</h3>'+
+  '<h3 class="sec-t">'+ic('users',15)+' '+(AR?'مصفوفة التوافق — اضغط أي علاقة لتفصيلها':'Compatibility — tap a bond for details')+'</h3>'+
   '<div class="fp-compat">'+compatRows+'</div>'+
   '<div class="fp-line" style="border-right:3px solid var(--acc)"><h4>'+ic('twin',13)+' '+(AR?'ملاحظة رفيق':'A note from Rafiq')+'</h4><p>'+evolveNote+'</p></div>'+
   '<div style="height:18px"></div>';
+ $$('#v-fingerprint [data-fpd]').forEach(b=>b.onclick=()=>fpAxisSheet(b.dataset.fpd));
+ $$('#v-fingerprint [data-fprel]').forEach(b=>b.onclick=()=>fpRelSheet(b.dataset.fprel));
+}
+/* v1.5.0 «البصمة الحية»: كل محور وعلاقة نافذة على أدلتها من دفترك — مؤشر لا تشخيص */
+function fpAxisEvidence(d){
+ const evs=S.events.filter(e=>e.text&&e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest').sort((a,b)=>b.ts-a.ts);
+ const posE=[],negE=[];
+ evs.forEach(e=>{const s=' '+e.text+' ';let hp=false,hn=false;
+  d.pos.forEach(k=>{if(s.indexOf(k)>=0)hp=true});
+  d.neg.forEach(k=>{if(s.indexOf(k)>=0)hn=true});
+  if(hp&&posE.length<8)posE.push(e);else if(hn&&negE.length<8)negE.push(e)});
+ return {posE:posE,negE:negE};
+}
+function fpAxisSheet(id){
+ const sh=$('#shFp');if(!sh)return;
+ const AR=LANG==='ar',d=FP_DIMS.find(x=>x.id===id);if(!d)return;
+ const st=fpCompute()[id],ev=fpAxisEvidence(d),col=d.col||'var(--acc)';
+ const side=st.score>50?(AR?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0]):(AR?d.ar.split(' ↔')[1]:d.en.split(' ↔')[1]);
+ const bal=st.pos+st.neg;
+ const secH=(icn,txt)=>'<h5 style="margin:15px 0 5px;font-size:12px;font-weight:700;color:'+col+'">'+ic(icn,13)+' '+txt+'</h5>';
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b style="color:'+col+'">'+ic('hex',16)+' '+(AR?('محور «'+side+'»'):('Axis: '+side))+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'
+ +'<div class="rel-sum" style="border-right:3px solid '+col+'"><b>'+(AR?d.ar:d.en)+'</b><br>'
+ +(AR?('ميل «'+side+'»: <b>'+st.score+'%</b> من <b>'+bal+'</b> إشارة لغوية التقطها رفيق من نصوص أحداثك'+(bal?'':' — لا إشارات بعد؛ أول حدث يكتب كلمات هذا المحور سيوقظ الحساب فوراً')):('Pull toward "'+esc(side)+'": <b>'+st.score+'%</b> of <b>'+bal+'</b> language signals.'))
+ +'</div>'
+ +(bal?'<div class="stp-row"><span>'+(AR?'إشارات تخدم هذا الاتجاه':'Supporting signals')+'</span><div class="stp"><b>'+st.pos+'</b></div></div>'
+ +'<div class="stp-row" style="border-bottom:none"><span>'+(AR?'إشارات الاتجاه المعاكس':'Opposing signals')+'</span><div class="stp"><b>'+st.neg+'</b></div></div>':'')
+ +(ev.posE.length?secH('spark',AR?('أدلة من دفترك ('+ev.posE.length+')'):('Your log evidence ('+ev.posE.length+')'))+ev.posE.map(e=>mindEvRow(e,col,'spark')).join(''):'')
+ +(ev.negE.length?secH('moon',AR?('أدلة الاتجاه المعاكس ('+ev.negE.length+')'):('Opposite-direction evidence ('+ev.negE.length+')'))+ev.negE.map(e=>mindEvRow(e,'var(--ink3)','moon')).join(''):'')
+ +(!bal?'<div class="empty" style="padding:14px 6px">'+ic('hex',22)+'<br>'+(AR?'لا أحداث تلامس هذا المحور بعد — سجّل يومك وسيظهر شريطه هنا':'No events touch this axis yet')+'</div>':'')
+ +'<div class="set-note" style="margin-top:12px">'+(AR?'حُسب محلياً من كلمات أحداثك — مؤشر لا تشخيص، وكل حدث جديد يعيد الوزن فوراً.':'Computed locally — a pointer, not a diagnosis.')+'</div>';
+ openSheet('#shFp');
+}
+function fpRelSheet(rid){
+ const sh=$('#shFp');if(!sh)return;
+ const AR=LANG==='ar',r=S.rels.find(x=>x.id===rid);if(!r)return;
+ const vit=relVitality(r);
+ const col=vit.pct>=75?'var(--good)':vit.pct>=50?'var(--acc)':'var(--bad)';
+ const reg=daysSince(r.lastContact);
+ const posT=S.events.filter(e=>e.type==='contact'&&e.polarity>0&&e.text.indexOf(r.name)>=0).length;
+ const negT=S.events.filter(e=>e.type==='contact'&&e.polarity<0&&e.text.indexOf(r.name)>=0).length;
+ const evs=S.events.filter(e=>e.text&&e.text.indexOf(r.name)>=0).sort((a,b)=>b.ts-a.ts).slice(0,8);
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b style="color:'+col+'">'+ic('users',16)+' '+(AR?('حيوية علاقتك بـ'+esc(r.name)):('Bond vitality: '+esc(r.name)))+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'
+ +'<div class="rel-sum" style="border-right:3px solid '+col+'"><b>'+vit.pct+'%</b> — '+vit.desc+'</div>'
+ +'<div class="stp-row"><span>'+(AR?'آخر تواصل مسجّل':'Last logged contact')+'</span><div class="stp"><b>'+(reg>90?'90+':reg)+' '+(AR?'يوم':'d')+'</b></div></div>'
+ +'<div class="stp-row"><span>'+(AR?'نبرة الأحداث ✦/✧':'Event tone')+'</span><div class="stp"><b>'+posT+' / '+negT+'</b></div></div>'
+ +'<div class="stp-row"><span>'+(AR?'لقاءات مشتركة':'Meetups')+'</span><div class="stp"><b>'+(r.meetups||0)+'</b></div></div>'
+ +'<div class="stp-row" style="border-bottom:none"><span>'+(AR?'تواصل مسجّل':'Logged calls')+'</span><div class="stp"><b>'+((r.calls&&r.calls.n)||0)+'</b></div></div>'
+ +'<h5 style="margin:15px 0 5px;font-size:12px;font-weight:700;color:'+col+'">'+ic('db',13)+' '+(AR?('آخر الحكايات ('+evs.length+')'):('Latest stories ('+evs.length+')'))+'</h5>'
+ +(evs.length?evs.map(e=>mindEvRow(e,'var(--c-relations)','users')).join(''):'<div class="empty" style="padding:14px 6px">'+ic('users',22)+'<br>'+(AR?'لا حكايات مسجلة بعد — أول سطر يبدأ السجل':'No stories yet')+'</div>')
+ +'<div class="page-add"><button class="btn" data-fprel-act="'+r.id+'">'+ic('phone',15)+' '+(AR?'سجل تواصلاً الآن':'Log a contact now')+'</button></div>'
+ +'<div class="set-note" style="margin-top:10px">'+(AR?'حُسب محلياً من سلوكك الفعلي — مؤشر لا تشخيص.':'Computed locally — a pointer, not a diagnosis.')+'</div>';
+ openSheet('#shFp');
+ const bb=$('#shFp [data-fprel-act]');if(bb)bb.onclick=()=>{closeSheets();openContactSheet(r.id)};
 }
 /* ====== معمل رفيق 🧪 3.1 ====== */
 function renderLab(){
@@ -4175,9 +4254,9 @@ function mindScan(){
          ('<b>'+esc(gave.r.name)+'</b> initiates almost all of your recent contacts. Maybe reach them this time.')});
  /* 5) نجم قلبك */
  const cnt={};c30.forEach(e=>{const nm=e.text||'';S.rels.forEach(r=>{if(r.name&&nm.indexOf(r.name)>=0)cnt[r.name]=(cnt[r.name]||0)+1})});
- let topN=null;Object.keys(cnt).forEach(n=>{if(!topN||cnt[n]>cnt[topN].n)topN={name:n,n:cnt[n]}});
+ let topN=null;Object.keys(cnt).forEach(n=>{if(!topN||cnt[n]>topN.n)topN={name:n,n:cnt[n]}});/* v1.5.0 إصلاح «رسالة الخلل cnt{topN}»: topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب مقارنة topN.n */
  const starBars=Object.keys(cnt).map(n=>({n:n,c:cnt[n]})).sort((a,b)=>b.c-a.c).slice(0,4);
- if(topN&&topN.n>=3)out.push({ic:'star',w:70,kind:'star',name:topN.name,evs:c30.filter(e=>(e.text||'').indexOf(topN.name)>=0).slice(0,12),bars:starBars,tot:c30.length,
+ if(topN&&topN.n>=3)out.push({ic:'star',w:70,kind:'star',name:topN.name,n:topN.n,evs:c30.filter(e=>(e.text||'').indexOf(topN.name)>=0).slice(0,12),bars:starBars,tot:c30.length,
   t:AR?'نجم قلبك هذا الشهر':'Star of your month',
   b:AR?('<b>'+esc(topN.name)+'</b> حاضر في <b>'+topN.n+'</b> تواصل آخر 30 يوماً. قلبك يعرف طريقه إليه — الإحصاءات تسميه "شبكة الدعم المركزية" وأنت تسميه صديقاً.'):
        ('<b>'+esc(topN.name)+'</b> appears in <b>'+topN.n+'</b> contacts this month. Your heart knows its way.')});
@@ -4249,7 +4328,7 @@ function renderMind(){
     '</div><span class="pp-corr-st">'+(AR?'اضغط للتفاصيل':'tap for details')+'</span></div>').join('');
  }else rows='<div class="empty">'+ic('brain',26)+'<br>'+(AR?'لا أنماط كافية بعد — سجّل تواصلاتك ومزاجك وأحداثك أياماً قليلة، وسيرفع العقل المحلي الستار عن عاداتك الخفية حين تجهز البيانات.':'Not enough patterns yet — log a few days and the Local Mind will surface them.')+'</div>';
  v.innerHTML=
-  '<span class="lab-dev">'+(AR?'العقل المحلي · 1.3.1':'LOCAL MIND · 1.3.1')+'</span>'+
+  '<span class="lab-dev">'+(AR?'العقل المحلي · 1.5.0':'LOCAL MIND · 1.5.0')+'</span>'+
   '<div class="fp-line" style="margin-top:40px;border-right:3px solid var(--c-mind)">'+
    '<h4 style="font-family:var(--fd);font-size:19px;font-weight:800;color:var(--ink)"><span class="mind-scan-ic" style="display:inline-flex">'+ic('brain',18)+'</span> '+(AR?'العقل المحلي':'The Local Mind')+'</h4>'+
    '<p style="font-size:12px;color:var(--ink2);line-height:1.9;margin-top:8px">'+(AR?'عين رفيق على بياناتك: أقرأ أحداثك المخزنة في هاتفك وأكشف عاداتك الخفية — متى يفتح قلبك، من ينتظر صوتك، ماذا يتشكل في عمق أيامك. <b>اضغط أي اكتشاف لترى أدلته من سجلك الحقيقي</b>. مؤشر لا تشخيص، ولا شيء يغادر جهازك أبداً.':'Rafiq reads your local events and surfaces hidden patterns. Tap any discovery to see its evidence. A pointer, not a diagnosis.')+'</p>'+
@@ -4371,7 +4450,7 @@ function rfCleanKey(k){let s=String(k||'').trim().replace(/^["'«»\s]+|["'«»\
 function rfGuessKeyProv(k){k=String(k||'');if(/^sk-or-/.test(k))return 'openrouter';if(/^gsk_/.test(k))return 'groq';if(/^AIza/.test(k))return 'gemini';return ''}
 function rfCfg(){return{mode:S.settings.rfMode||'auto',prov:S.settings.rfProv||'openrouter',key:S.settings.rfKey||'',model:S.settings.rfModel||'',ctx:S.settings.rfCtx!==false,wllm:!!S.settings.rfWllm}}
 function rfSaveCfg(p){Object.assign(S.settings,p);saveMeta()}
-function rfBrief(){
+function rfBrief(deep){
  const AR=LANG==='ar',L=[];
  L.push((AR?'اسم المستخدم: ':'User: ')+(S.profile.name||(AR?'غير معروف':'unknown')));
  const ns=(S.staleRels||[]).length;
@@ -4383,19 +4462,25 @@ function rfBrief(){
  if(pos+neg)L.push((AR?'آخر 14 يوماً: ':'Last 14d: ')+pos+(AR?' حدث مشرق، ':' bright, ')+neg+(AR?' ثقيل':' heavy'));
  let st=0;for(let i=0;i<90;i++){const ds=dayStart(Date.now()-i*DAY);if(S.events.some(e=>dayStart(e.ts)===ds))st++;else break}
  if(st>=2)L.push((AR?'إيقاع التوثيق: ':'Logging streak: ')+st+(AR?' أيام متتالية':' days in a row'));
- const d7=Date.now()-7*DAY;
- const diary=S.events.filter(e=>e.ts>=d7&&e.text&&e.type!=='mood'&&e.type!=='assessment').sort((a,b)=>b.ts-a.ts).slice(0,12);
+ const dWin=Date.now()-(deep?14:7)*DAY;
+ const diary=S.events.filter(e=>e.ts>=dWin&&e.text&&e.type!=='mood'&&e.type!=='assessment').sort((a,b)=>b.ts-a.ts).slice(0,deep?20:12);
  if(diary.length)L.push((AR?'يومياتك الأخيرة من دفترك الحقيقي: ':'Your recent journal entries:')+'\n'+diary.map(e=>'- '+timeAgo(e.ts)+': '+e.text+(e.polarity>0?(AR?' (مشرق)':' (bright)'):e.polarity<0?(AR?' (ثقيل)':' (heavy)'):'')).join('\n'));
- const ms=mindScan().sort((a,b)=>b.w-a.w).slice(0,3).map(d=>d.t).join(' · ');
+ const ms=mindScan().sort((a,b)=>b.w-a.w).slice(0,deep?5:3).map(d=>d.t).join(' · ');
  if(ms)L.push((AR?'أبرز ما يراه العقل المحلي: ':'Top local-mind signals: ')+ms);
+ if(deep){
+  const fp=fpCompute();
+  L.push((AR?'محاور الشخصية الثمانية (نسبة الميل لكل قطب): ':'8-axis personality (pole pull %): ')+FP_DIMS.map(d=>(AR?d.ar.split(' ↔')[0]:d.en.split(' ↔')[0])+' '+fp[d.id].score+'%').join(' · '));
+  try{L.push((AR?'رادار الانهيار: ':'Burnout radar: ')+burnoutScore()+'%')}catch(e2){}
+ }
  return L.join('\n');
 }
-function rfSysPrompt(){
+function rfSysPrompt(rep){
  const AR=LANG==='ar',name=S.profile.name||(AR?'صديقي':'friend');
  let p=AR?
  ('أنت «رفيق» — رفيق حياة رقمي يسكن جهاز '+name+' ويتحدث من بياناته المحلية. أسلوبك: عربي فصيح مبسط، دافئ أنيس حكيم، جمل قصيرة حية، من جملتين إلى ست، بلا مقدمات إنشائية ولا كليشيهات.\nمبادئك الثابتة:\n• أنت مؤشر لا تشخيص — لا تُصدر حكماً نفسياً أو طبياً أو مالياً قاطعاً.\n• امسك شعور المستخدم أولاً ثم المعنى — عاطفة قبل نصيحة.\n• سؤال واحد كحد أقصى في الرد.\n• لا تكرر كلامه ولا تسرد البريف حرفياً — لمّح إليه بحكمة كمن يعرف صاحبه منذ سنوات.\n• إن ظهرت أزمة نفسية حقيقية: أرح قلبه وأوصِ بلطف بمختص بشري.\n• إن ذُكرت ميزات التطبيق (حكاية أسبوعي، ميزان العطاء، العقل المحلي، القرارات، خزان السعادة) اشرحها بسطر واحد وادعُ لتجربتها.\n• إن كتب بالإنجليزية أجب بالإنجليزية.')
  :('You are "Rafiq" — a digital life companion living on '+name+'\'s device, speaking from his local data. Style: warm, wise, concise, 2-6 sentences, no cliches. Principles: pointer not diagnosis; emotion before advice; max one question per reply; allude to the life brief instead of reciting it; for real mental-health crises be warm and gently suggest a human professional; reply in the user\'s language.');
- if(rfCfg().ctx){const b=rfBrief();if(b)p+=(AR?'\n\n[بريف حياة '+name+' — من سجله المحلي على جهازه]\n':'\n\n[Life brief of '+name+' — from on-device log]\n')+b}
+ if(rep)p+=AR?('\n\n【وضع التقرير — المهم الآن】المستخدم طلب تقريراً أو تحليلاً أو خطة — اكتب تقريراً منظماً طويلاً على مستوى المحركات الكبيرة:\n• استخدم تنسيق Markdown: عنواناً فرعياً يبدأ بـ ## ، قوائم تبدأ بـ - ، وتأكيدات بين **نص**.\n• التقرير في خمسة أقسام بهذه العناوين بالترتيب: ## نظرة سريعة · ## أبرز ما في دفترك · ## الأنماط التي أراها · ## توصيات هذا الأسبوع · ## خطة الأسبوع القادم.\n• كل ملاحظة تُثبت بحدث حقيقي من اليوميات المرفقة ووقتها النسبي (مثل: «قبل 3 أيام — أنجزت تقرير المشروع») — لا تخمين خارج البيانات المرفقة.\n• استنبط الأنماط بنفسك من الأرقام: التكرار، الفجوات الزمنية، نسب المشرق إلى الثقيل، محاور الشخصية.\n• حافظ على صوتك الدافئ — تقرير منهجي بروح صديق، مؤشر لا تشخيص، واختم بخطوة صغيرة واحدة.'):('\n\n[REPORT MODE] The user asked for a report/analysis/plan — write a long structured report on par with top AI engines. Use Markdown: ## sub-headings, - bullet lists, **bold**. Sections in order: ## Overview · ## Highlights from the log · ## Patterns I see · ## This week\'s recommendations · ## Next week plan. Ground every note in a real journal entry with its relative time — no guessing beyond the data. Warm friend voice, pointer not diagnosis, end with one small step.');
+ if(rfCfg().ctx){const b=rfBrief(rep);if(b)p+=(AR?'\n\n[بريف حياة '+name+(rep?' — نسخة موسّعة للتقرير':'')+' — من سجله المحلي على جهازه]\n':'\n\n[Life brief of '+name+(rep?' — extended for report':'')+' — from on-device log]\n')+b}
  return p;
 }
 async function rfBuiltIn(){
@@ -4413,20 +4498,20 @@ async function rfBuiltIn(){
   return RF.sess;
  }catch(e){RF.sess=null;return null}
 }
-async function rfCloud(tx){
+async function rfCloud(tx,rep){
  const c=rfCfg();if(!c.key)return null;
  const p=RF_PROVS[c.prov]||RF_PROVS.openrouter,model=c.model||p.model;
- const hist=S.chat.slice(-12).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)}));
- const sys=rfSysPrompt();
+ const hist=S.chat.slice(-16).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)}));
+ const sys=rfSysPrompt(rep);
  const ac=new AbortController();const tm=setTimeout(()=>ac.abort(),25000);
  try{
   let resp;
   if(p.style==='openai'){
    const hdrs={'Content-Type':'application/json','Authorization':'Bearer '+c.key};
    if(c.prov==='openrouter')hdrs['X-Title']='Rafiq';
-   resp=await fetch(p.url,{method:'POST',headers:hdrs,signal:ac.signal,body:JSON.stringify({model:model,messages:[{role:'system',content:sys}].concat(hist),temperature:0.8,max_tokens:420})});
+   resp=await fetch(p.url,{method:'POST',headers:hdrs,signal:ac.signal,body:JSON.stringify({model:model,messages:[{role:'system',content:sys}].concat(hist),temperature:0.8,max_tokens:rep?2048:700})});
   }else{
-   resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(c.key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:hist.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),generationConfig:{temperature:0.8,maxOutputTokens:420}})});
+   resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(c.key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:hist.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),generationConfig:{temperature:0.8,maxOutputTokens:rep?2048:700}})});
   }
   if(!resp.ok){clearTimeout(tm);return null}
   const j=await resp.json();
@@ -4449,27 +4534,41 @@ async function rfWebllm(log){
   return RF.wllm;
  }catch(e){return null}
 }
-async function rfTryWebLLM(tx){
+async function rfTryWebLLM(tx,rep){
  const c=rfCfg();if(!c.wllm)return null;
  try{
   const eng=await rfWebllm(null);if(!eng)return null;
-  const msgs=[{role:'system',content:rfSysPrompt()}].concat(S.chat.slice(-8).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)})));
-  const r=await eng.chat.completions.create({messages:msgs,temperature:0.8,max_tokens:300});
+  const msgs=[{role:'system',content:rfSysPrompt(rep)}].concat(S.chat.slice(-8).map(m=>({role:m.role==='rf'?'assistant':'user',content:String(m.text)})));
+  const r=await eng.chat.completions.create({messages:msgs,temperature:0.8,max_tokens:rep?700:420});
   const out=String((r&&r.choices&&r.choices[0]&&r.choices[0].message&&r.choices[0].message.content)||'').trim();
   return out?{text:out,eng:'wllm'}:null;
  }catch(e){rfSaveCfg({rfWllm:false});RF.wllm=null;return null}
 }
 const RF_TOOL_RX=/(تذكرني|ذكّرني|ذكرني|remind me)|(حكاية|قصة|story)|(واتساب|واتس|whatsapp)|(أفكر|أنوي|انوي|قرار|شراء|اشتري|وظيفة|مشروع|decision|job offer)|(اقترح|suggest|book)/i;
+/* v1.5.0 «حوار كالمحركات الكبيرة»: كشف وضع التقرير آلياً + عارض Markdown آمن (esc أولاً ثم تحويل محدود) */
+function rfIsReport(tx){return /(تقرير|تقارير|حلل|حلّل|تحليل|ملخص|خطة|خطتي|قصة أسبوعي|احكِ أسبوعي|اشرح لي|اكتب لي|راجع أسبوعي|قيّم أسبوعي|report|analy[sz]e|summary|plan for)/i.test(String(tx||''))}
+function rfMd(s){
+ let h=esc(String(s||''));
+ h=h.replace(/`([^`\n]+)`/g,'<code>$1</code>');
+ h=h.replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>');
+ h=h.replace(/^###\s+(.+)$/gm,'<div class="md-h3">$1</div>');
+ h=h.replace(/^##\s+(.+)$/gm,'<div class="md-h2">$1</div>');
+ h=h.replace(/^#\s+(.+)$/gm,'<div class="md-h2">$1</div>');
+ h=h.replace(/^[-•]\s+(.+)$/gm,'<div class="md-li">$1</div>');
+ h=h.replace(/^\d+[.)]\s+(.+)$/gm,'<div class="md-li">$1</div>');
+ h=h.replace(/\n/g,'<br>');
+ return h;
+}
 async function rfBrain(tx){
  if(RF_TOOL_RX.test(tx))return rafiqReply(tx);
- const c=rfCfg();
+ const c=rfCfg(),rep=rfIsReport(tx);
  if(c.mode!=='cloudOnly'){
   const s=await rfBuiltIn();
-  if(s){try{const out=String(await s.prompt(tx)||'').trim();if(out)return {text:out,eng:'built'}}catch(e2){RF.sess=null}}
+  if(s){try{const out=String(await s.prompt(rep?tx+'\n\n['+(LANG==='ar'?'اعرض النتيجة تقريراً منظماً بعناوين وقوائم':'Present the answer as a structured report with headings and lists')+']':tx)||'').trim();if(out)return {text:out,eng:'built'}}catch(e2){RF.sess=null}}
  }
- const cl=await rfCloud(tx);
+ const cl=await rfCloud(tx,rep);
  if(cl)return cl;
- const w=await rfTryWebLLM(tx);
+ const w=await rfTryWebLLM(tx,rep);
  if(w)return w;
  const fb=rafiqReply(tx);
  return {text:fb.text,actions:fb.actions,eng:'rules'};
