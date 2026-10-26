@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_TEST_GUIDE_v1.4.2 — زر «اختبار الاتصال» صار معلّماً: بلا مفتاح يعطيك الخطوات الثلاث بروابط قابلة للنقر · مفتاح مرفوض/نموذج خاطئ/حد مجاني/شبكة — كل حالة برسالة إنسانية · يعرف أنك في شاشة معاينة ويقول لك إن الإعداد الحقيقي على جهازك — وتذكير دائم: رفيق يعمل بقواعده وذاكرته حتى بلا مفتاح — فوق RF_MEMORY_RECALL_v1.4.1 (ذاكرة اليوميات: قاموس الفترات العربية — يومين/ثلاثة أيام/أسبوعين/شهرين/آخر أسبوع) + جواب ذكي يعرض آخر الدفتر عند فراغ الفترة + يوميات دفترك الحقيقية في بريف العقل السحابي — إصلاح «ماذا فعلت قبل يومين؟» — والعمود الثاني: حوار رفيق بالعقل الثلاثي (مدمج Chrome LanguageModel ← سحابي بمفتاح محلي OpenRouter/Groq/Gemini ← WebLLM تجريبي ← قواعد) + بريف حياة يُرفق بإذن + ورقة عقل الحوار ⚙ + الحياة الحركية: بطاقات تنهض بتتابع ورسائل تنزلق وأزرار تنبض — فوق v1.3.1 — اضغط أي اكتشاف لترى نافذة أدلته من سجل الأحداث الحقيقي (سجل العلاقة · أدلة الميزان بالأطراف · توزيع الساعات والأيام بأشرطة · رقاقات أيام العادة · قوائم الأحداث المشرقة والثقيلة) — مؤشر لا تشخيص 100% محلي — فوق v1.2 -->
+<!-- COMMIT: RF_KEY_DOCTOR_v1.4.3 — «طبيب المفتاح» لعلاج بلاغ مراد من الآيفون (رفض مفتاح بحجة مسافات + رفض نموذج): (1) تنظيف آلي كامل للمفتاح عند الحفظ والاختبار والإرسال — مسافات أطراف وداخلية وأسطر واقتباس و«Bearer» — فلا تُلقى تهمة المسافات على أحد بعدها (2) بصمة المزود من أول المفتاح: sk-or-=OpenRouter · gsk_=Groq · AIza=Gemini — المزود يُضبط تلقائياً ولا يلخبطه أحد (3) نماذج افتراضية حيّة بعد تقاعد قتلى أغسطس 2026: Groq→openai/gpt-oss-120b (القديم llama-3.3-70b-versatile أوقفه Groq يوم 16/8!) · Gemini→gemini-2.5-flash · OpenRouter→llama-3.3-70b-instruct:free (4) زر الاختبار صار طبيباً: جرّب النموذج المكتوب ← إن رُفض جرّب الافتراضي تلقائياً ومسح الخانة ← وعلى OpenRouter استعلام القائمة الحية واختيار أول نموذج مجاني سارٍ وحفظه لك (5) ملاحظة جهاز صريحة في ورقة ⚙: الآيفون بلا عقل مدمج في أي متصفح إطلاقاً — طبيعي 100% — عقلك هناك المفتاح السحابي (6) رسالة 401 الصادقة: «نظّفناه سلفاً — المفتاح نفسه مرفوض: ناقص/منتهي/لمزود آخر» — فوق RF_TEST_GUIDE_v1.4.2 — فوق RF_MEMORY_RECALL_v1.4.1 (ذاكرة اليوميات: قاموس الفترات العربية — يومين/ثلاثة أيام/أسبوعين/شهرين/آخر أسبوع) + جواب ذكي يعرض آخر الدفتر عند فراغ الفترة + يوميات دفترك الحقيقية في بريف العقل السحابي — إصلاح «ماذا فعلت قبل يومين؟» — والعمود الثاني: حوار رفيق بالعقل الثلاثي (مدمج Chrome LanguageModel ← سحابي بمفتاح محلي OpenRouter/Groq/Gemini ← WebLLM تجريبي ← قواعد) + بريف حياة يُرفق بإذن + ورقة عقل الحوار ⚙ + الحياة الحركية: بطاقات تنهض بتتابع ورسائل تنزلق وأزرار تنبض — فوق v1.3.1 — اضغط أي اكتشاف لترى نافذة أدلته من سجل الأحداث الحقيقي (سجل العلاقة · أدلة الميزان بالأطراف · توزيع الساعات والأيام بأشرطة · رقاقات أيام العادة · قوائم الأحداث المشرقة والثقيلة) — مؤشر لا تشخيص 100% محلي — فوق v1.2 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -4361,10 +4361,14 @@ function drawMindDetail(d){
    الخصوصية: بريف حياتك لا يُرفق إلا بتفعيلك — والمفتاح لا يغادر جهازك أبداً */
 const RF={sess:null,sessBrief:'',wllm:null};
 const RF_PROVS={
- openrouter:{url:'https://openrouter.ai/api/v1/chat/completions',model:'google/gemini-2.0-flash-exp:free',style:'openai'},
- groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile',style:'openai'},
- gemini:{url:'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent',model:'gemini-2.0-flash',style:'gemini'}
+ openrouter:{url:'https://openrouter.ai/api/v1/chat/completions',model:'meta-llama/llama-3.3-70b-instruct:free',style:'openai'},
+ groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'openai/gpt-oss-120b',style:'openai'},
+ gemini:{url:'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent',model:'gemini-2.5-flash',style:'gemini'}
 };
+/* v1.4.3 «طبيب المفتاح»: تنظيف كامل للمفتاح (مسافات أطراف وداخلية وأسطر واقتباس و«Bearer») + بصمة المزود من أول المفتاح:
+   sk-or-… = OpenRouter · gsk_… = Groq · AIza… = Gemini — كي لا يلخبط مراد المزود أبداً */
+function rfCleanKey(k){let s=String(k||'').trim().replace(/^["'«»\s]+|["'«»\s]+$/g,'');s=s.replace(/^bearer\s+/i,'').replace(/\s+/g,'');return s}
+function rfGuessKeyProv(k){k=String(k||'');if(/^sk-or-/.test(k))return 'openrouter';if(/^gsk_/.test(k))return 'groq';if(/^AIza/.test(k))return 'gemini';return ''}
 function rfCfg(){return{mode:S.settings.rfMode||'auto',prov:S.settings.rfProv||'openrouter',key:S.settings.rfKey||'',model:S.settings.rfModel||'',ctx:S.settings.rfCtx!==false,wllm:!!S.settings.rfWllm}}
 function rfSaveCfg(p){Object.assign(S.settings,p);saveMeta()}
 function rfBrief(){
@@ -4489,6 +4493,7 @@ function openRfSet(){
  +'<div class="rf-row"><span>'+(AR?'النموذج (اختياري)':'Model (optional)')+'</span><input id="rfModel" placeholder="'+esc((RF_PROVS[c.prov]||RF_PROVS.openrouter).model)+'" value="'+esc(c.model)+'"></div>'
  +'<div class="rf-row"><span>'+(AR?'شارك سياق حياتك':'Share life context')+'</span><button class="chip'+(c.ctx?' on':'')+'" id="rfCtxT">'+(c.ctx?(AR?'مفعّل ✓':'On ✓'):(AR?'مغلق':'Off'))+'</button></div>'
  +'</div>'
+ +((()=>{const nb=!(window.LanguageModel&&window.LanguageModel.create);if(!nb)return '';return '<div class="set-note" style="margin-top:10px">'+ic('pulse',12)+' <b>'+(AR?'ملاحظة جهازك:':'About your device:')+'</b> '+(AR?'هذا المتصفح بلا عقل مدمج — وعلى الآيفون لا يوجد عقل مدمج في أي متصفح إطلاقاً (طبيعي 100%). عقلك الأقوى هنا هو «المفتاح السحابي» بالأسفل — أضفه مرة واحدة وسيتكلم رفيق بعقل كامل. خيارا «المدمج/التجريبي» لأجهزة كروم سطح المكتب وأندرويد الحديثة.':'This browser has no built-in brain — on iPhone no browser has one at all (100% normal). Your strongest brain here is the cloud key below.')+'</div>'})())
  +'<div class="page-add" style="display:flex;gap:9px"><button class="btn ghost" id="rfTest" style="flex:1">'+ic('pulse',15)+' '+(AR?'اختبار الاتصال':'Test connection')+'</button><button class="btn" id="rfSaveB" style="flex:1">'+ic('check',15)+' '+t('save')+'</button></div>'
  +'<div class="page-add"><button class="btn ghost" id="rfWllmB" style="width:100%">'+ic('hex',15)+' '+(AR?(c.wllm?'العقل التجريبي مفعّل — إيقافه':'تشغيل العقل التجريبي (WebLLM · تحميل ~400MB مرة واحدة)'):(c.wllm?'Trial brain on — turn off':'Run trial brain (WebLLM · ~400MB once)'))+'</button></div>'
  +'<div id="rfOut" style="font-size:12px;color:var(--ink2);padding:0 6px;line-height:1.9;max-height:120px;overflow-y:auto"></div>'
@@ -4497,59 +4502,92 @@ function openRfSet(){
  const ctxB=$('#rfCtxT');
  if(ctxB)ctxB.onclick=()=>{ctxOn=!ctxOn;ctxB.classList.toggle('on',ctxOn);ctxB.textContent=ctxOn?(AR?'مفعّل ✓':'On ✓'):(AR?'مغلق':'Off')};
  const sv=$('#rfSaveB');
- if(sv)sv.onclick=()=>{rfSaveCfg({rfMode:$('#rfMode').value,rfProv:$('#rfProv').value,rfKey:$('#rfKey').value.trim(),rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});closeSheets();toast(AR?'حُفظ عقل الحوار ✓':'Chat brain saved ✓','var(--c-mind)','brain');if(currentView==='chat')go('chat')};
+ if(sv)sv.onclick=()=>{const ck=rfCleanKey($('#rfKey').value),gp=rfGuessKeyProv(ck);let pv=$('#rfProv').value,auto='';
+ if(gp&&gp!==pv){pv=gp;auto=' — '+(AR?'عرفتُ من شكل مفتاحك أنه ':'key looks like ')+(gp==='groq'?'Groq':gp==='openrouter'?'OpenRouter':'Gemini')+(AR?' وضبطتُ المزود لك ✓':' — provider set ✓')}
+ rfSaveCfg({rfMode:$('#rfMode').value,rfProv:pv,rfKey:ck,rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});closeSheets();toast((AR?'حُفظ عقل الحوار ✓':'Chat brain saved ✓')+auto,'var(--c-mind)','brain');if(currentView==='chat')go('chat')};
  const ts=$('#rfTest');
  if(ts)ts.onclick=async()=>{
   const out=$('#rfOut');if(!out)return;
-  rfSaveCfg({rfMode:$('#rfMode').value,rfProv:$('#rfProv').value,rfKey:$('#rfKey').value.trim(),rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});
+  const ck=rfCleanKey($('#rfKey').value),gp=rfGuessKeyProv(ck);let pv=$('#rfProv').value,gnote='';
+  if(gp&&gp!==pv){pv=gp;$('#rfProv').value=gp;gnote=(AR?'عرفتُ من شكل مفتاحك أنه ':'Key looks like ')+(gp==='groq'?'Groq':gp==='openrouter'?'OpenRouter':'Gemini')+(AR?' — ضبطتُ المزود لك. ':' — provider auto-set. ')}
+  rfSaveCfg({rfMode:$('#rfMode').value,rfProv:pv,rfKey:ck,rfModel:$('#rfModel').value.trim(),rfCtx:ctxOn});
   const cc=rfCfg(),hi=AR?'قل مرحباً في جملة واحدة':'Say hi in one sentence';
   const inFrame=(()=>{try{return window.self!==window.top}catch(e2){return true}})();
+  const built=!!(window.LanguageModel&&window.LanguageModel.create);
   const LK=(u,txt)=>'<a href="'+u+'" target="_blank" rel="noopener" style="color:var(--c-mind);font-weight:700">'+txt+'</a>';
+  const pvName=p=>p==='openrouter'?'OpenRouter':p==='groq'?'Groq':'Google Gemini';
   out.textContent=AR?'أجرّب الاتصال…':'Testing…';
-  let r=null,tag='',diag=null;
-  if(cc.mode!=='cloudOnly'){
-   const s=await rfBuiltIn();
-   if(s){try{const o=String(await s.prompt(hi)||'').trim();if(o){r={text:o};tag=AR?'العقل المدمج':'Built-in'}}catch(e2){}}
-  }
-  if(!r&&!cc.key){
-   out.innerHTML='<b style="color:var(--acc)">'+ic('shield',13)+' '+(AR?'ينقصك شيء واحد فقط: المفتاح':'Only one thing missing: your key')+'</b><br>'
-    +(AR?'افتح من متصفحك أحد هذه المواقع: ':'Open any of: ')+LK('https://openrouter.ai/keys','OpenRouter')+' · '+LK('https://console.groq.com/keys','Groq')+' · '+LK('https://aistudio.google.com/apikey','Gemini')
-    +'<br>'+(AR?'١. سجّل حساباً مجانياً واضغط Create Key.':'1. Sign up free, press Create Key.')
-    +'<br>'+(AR?'٢. انسخ المفتاح والصقه في حقل «مفتاح API» أعلاه.':'2. Paste it into the API key field above.')
-    +'<br>'+(AR?'٣. اضغط «اختبار الاتصال» مجدداً — وسنجيبك بالتفصيل إن تعثر شيء.':'3. Press “Test connection” again.')
-    +(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'أنت في شاشة معاينة — المكان الحقيقي للإعداد: رفيق على جهازك/جوالك (المفتاح يُضاف مرة على كل جهاز).':'Preview screen — set it for real inside Rafiq on your device.')+'</span>':'');
-   return;
-  }
-  if(!r){
-   const p=RF_PROVS[cc.prov]||RF_PROVS.openrouter,model=cc.model||p.model;
+  const tryOnce=async(prov,key,model)=>{
+   const p=RF_PROVS[prov]||RF_PROVS.openrouter;
    const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),25000);
    try{
     let resp;
     if(p.style==='openai'){
-     const hdrs={'Content-Type':'application/json','Authorization':'Bearer '+cc.key};
-     if(cc.prov==='openrouter')hdrs['X-Title']='Rafiq';
+     const hdrs={'Content-Type':'application/json','Authorization':'Bearer '+key};
+     if(prov==='openrouter')hdrs['X-Title']='Rafiq';
      resp=await fetch(p.url,{method:'POST',headers:hdrs,signal:ac.signal,body:JSON.stringify({model:model,messages:[{role:'user',content:hi}],max_tokens:60})});
     }else{
-     resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(cc.key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({contents:[{role:'user',parts:[{text:hi}]}],generationConfig:{maxOutputTokens:60}})});
+     resp=await fetch(p.url.replace('{m}',encodeURIComponent(model))+'?key='+encodeURIComponent(key),{method:'POST',headers:{'Content-Type':'application/json'},signal:ac.signal,body:JSON.stringify({contents:[{role:'user',parts:[{text:hi}]}],generationConfig:{maxOutputTokens:60}})});
     }
+    clearTimeout(tm);
     if(resp.ok){
      const j=await resp.json();
-     let o=p.style==='openai'?((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||''):(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts?j.candidates[0].content.parts.map(x=>x.text||'').join(''):'');
-     o=String(o).trim();
-     if(o){r={text:o};tag=(AR?'سحابي · ':'Cloud · ')+cc.prov}
-     else diag=AR?'العقل رد بفراغ — جرّب نموذجاً آخر من حقل «النموذج»':'Empty reply — try another model';
-    }else{
-     const st=resp.status;
-     if(st===401||st===403)diag=AR?'المفتاح مرفوض — انسخه كاملاً بلا مسافات من موقع المزود وتأكد أنه مفعّل':'Key rejected — copy it fully, no spaces';
-     else if(st===429)diag=AR?'مفتاحك سليم — لكن الحد المجاني امتلئ الآن، انتظر دقيقة واضغط مجدداً':'Rate limited — wait a minute';
-     else if(st===404||st===400)diag=(AR?'النموذج «'+model+'» غير متاح عند ':'Model not available at ')+cc.prov+(AR?' — امسح حقل «النموذج» ليأخذ الافتراضي، أو اكتب نموذجاً سارياً من موقعهم':' — clear the model field for the default');
-     else diag=(AR?'المزود رد بخطأ ':'Provider error ')+st+(AR?' — جرّب مزوداً آخر':' — try another provider');
+     const o=p.style==='openai'?((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||''):(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts?j.candidates[0].content.parts.map(x=>x.text||'').join(''):'');
+     const txt=String(o).trim();
+     return {ok:!!txt,text:txt,st:200,empty:!txt};
     }
-   }catch(e2){diag=AR?(inFrame?'لا شبكة داخل شاشة المعاينة — هذا طبيعي هنا. المكان الصحيح للتجربة: رفيق على جهازك مباشرة':'تعذر الوصول للشبكة — تحقق من اتصالك أو جرّب مزوداً آخر'):'Network unreachable'}
-   finally{clearTimeout(tm)}
+    let msg='';try{const j2=await resp.json();msg=(j2.error&&(j2.error.message||j2.error.code))||j2.message||''}catch(e3){}
+    return {ok:false,st:resp.status,msg:String(msg).slice(0,140)};
+   }catch(e2){clearTimeout(tm);return {ok:false,st:0,msg:'network'}}
+  };
+  let r=null,tag='',diag='',note2='';
+  if(!ck){
+   out.innerHTML='<b style="color:var(--acc)">'+ic('shield',13)+' '+(AR?'ينقصك شيء واحد فقط: المفتاح':'Only one thing missing: your key')+'</b><br>'
+    +(AR?'افتح من متصفحك أحد هذه المواقع: ':'Open any of: ')+LK('https://console.groq.com/keys','Groq')+' · '+LK('https://openrouter.ai/keys','OpenRouter')+' · '+LK('https://aistudio.google.com/apikey','Gemini')
+    +'<br>'+(AR?'١. أنصحك بـ Groq (سريع ومجاني) — سجّل حساباً واضغط Create Key.':'1. Groq recommended — sign up free, press Create Key.')
+    +'<br>'+(AR?'٢. انسخ المفتاح والصقه في حقل «مفتاح API» — وأي مسافات أو أسطر زائدة أنظّفها لك تلقائياً.':'2. Paste the key — we auto-clean any stray spaces or newlines.')
+    +'<br>'+(AR?'٣. اضغط «اختبار الاتصال» — وإن تعثر شيء سأقول لك بالضبط الخطوة التالية.':'3. Press “Test connection” again.')
+    +(!built?'<br><span style="color:var(--ink2)">'+(AR?'وعلى جهازك (الآيفون) لا يوجد عقل مدمج في المتصفح إطلاقاً — طبيعي 100% — فالمفتاح هو عقلك المتقدم الوحيد هنا.':'On iPhone no browser has a built-in brain — the key is your advanced brain here.')+'</span>':'')
+    +(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'أنت في شاشة معاينة — المكان الحقيقي للإعداد: رفيق على جهازك/جوالك (المفتاح يُضاف مرة على كل جهاز).':'Preview screen — set it for real inside Rafiq on your device.')+'</span>':'');
+   return;
   }
-  if(r)out.innerHTML='<b style="color:var(--good)">'+ic('check',13)+' '+esc(tag)+'</b><br>'+esc(r.text)+(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'تذكّر: هذا المفتاح يعيش في شاشة المعاينة فقط — على جوالك أضفه مرة من ⚙.':'This key lives in the preview only — add it on your device too.')+'</span>':'');
-  else out.innerHTML='<b style="color:var(--acc)">'+ic('pulse',13)+' '+(diag||(AR?'لم يستجب أي عقل بعد':'No brain responded yet'))+'</b><br><span style="color:var(--ink2)">'+(AR?'ولا تقلق: رفيق يعمل الآن بالقواعد المحلية وذاكرته كاملة — هذا الاختبار فقط لترقية العقل.':'No worry: Rafiq works with local rules + memory. This test only upgrades the brain.')+'</span>';
+  const p=RF_PROVS[pv]||RF_PROVS.openrouter,m1=cc.model||p.model;
+  const a1=await tryOnce(pv,ck,m1);
+  if(a1.ok){r={text:a1.text};tag=(AR?'سحابي · ':'Cloud · ')+pvName(pv)+(cc.model?(' · '+cc.model):'')}
+  else if(a1.st===0){diag=AR?(inFrame?'لا شبكة داخل شاشة المعاينة — طبيعي هنا. المكان الصحيح للتجربة: رفيق على جهازك مباشرة':'تعذر الوصول للشبكة — تحقق من اتصالك ثم اضغط مجدداً'):'Network unreachable'}
+  else if(a1.st===429){diag=AR?'مفتاحك سليم 100% — لكن حدّك المجاني امتلئ الآن. انتظر دقيقة (أو ساعة) ثم اضغط مجدداً':'Rate limited — your key is fine, wait a bit'}
+  else if(a1.st===401||a1.st===403){diag=AR?('المفتاح نفسه غير مقبول عند '+pvName(pv)+' — ونحن نظّفناه من أي مسافات وأسطر سلفاً، فالسبب غالباً واحد من ثلاثة: منسوخ ناقصاً، أو منتهي/معطّل من لوحة المزود، أو مفتاح لمزود آخر. الحل: أنشئ مفتاحاً جديداً من موقع '+pvName(pv)+' نفسه ('+LK(pv==='groq'?'https://console.groq.com/keys':pv==='openrouter'?'https://openrouter.ai/keys':'https://aistudio.google.com/apikey',pvName(pv))+') والصقه ثم اضغط مجدداً.'):('Key itself rejected by '+pvName(pv)+' (we already cleaned spaces) — recreate it from the provider site.');}
+  else{
+   const tried=[m1];
+   if(cc.model&&cc.model!==p.model){
+    const a2=await tryOnce(pv,ck,p.model);
+    tried.push(p.model);
+    if(a2.ok){r={text:a2.text};tag=(AR?'سحابي · ':'Cloud · ')+pvName(pv)+' · '+p.model;rfSaveCfg({rfModel:''});const mi=$('#rfModel');if(mi)mi.value='';
+     note2=(AR?'النموذج «'+cc.model+'» مرفوض عند '+pvName(pv)+' — جرّبتُ لك الافتراضي «'+p.model+'» فلنجح ✓ ومسحتُ خانة النموذج.':'Model “'+cc.model+'” rejected — tried the default “'+p.model+'” ✓ and cleared the field.');
+    }
+   }
+   if(!r&&pv==='openrouter'&&(a1.st===400||a1.st===404||a1.st===0||a1.empty)){
+    try{
+     const lr=await fetch('https://openrouter.ai/api/v1/models');
+     if(lr.ok){
+      const lj=await lr.json();
+      const frees=((lj.data||[]).filter(x=>x&&x.id&&/:free$/.test(x.id)).map(x=>x.id)).slice(0,3);
+      for(const fid of frees){
+       const a3=await tryOnce('openrouter',ck,fid);
+       if(a3.ok){r={text:a3.text};tag=(AR?'سحابي · OpenRouter · ':'Cloud · OpenRouter · ')+fid;rfSaveCfg({rfModel:fid});const mi=$('#rfModel');if(mi)mi.value=fid;
+        note2=(AR?'اخترتُ لك نموذجاً مجانياً حياً ('+fid+') وحفظته لك ✓':'Picked a live free model ('+fid+') and saved it ✓');
+        break}
+      }
+     }
+    }catch(e4){}
+   }
+   if(!r){
+    if(a1.st===400||a1.st===404)diag=(AR?'لم يقبل '+pvName(pv)+' النموذج: ':'Model rejected by '+pvName(pv)+': ')+esc(tried.join('، '))+(AR?' — جربتُ لك البدائل أعلاه ولم ينجح منها شيء. النماذج السارية اليوم: ':' — tried the alternatives above with no luck. Live models today: ')+(pv==='openrouter'?LK('https://openrouter.ai/models?q=free','openrouter.ai/models?q=free'):pv==='groq'?LK('https://console.groq.com/docs/models','console.groq.com/docs/models'):LK('https://ai.google.dev/gemini-api/docs/models','ai.google.dev/gemini-api/docs/models'))+(AR?' — أو امسح خانة «النموذج» تماماً ليأخذ الافتراضي المحدّث.':' — or clear the model field to use the updated default.');
+    else diag=(AR?'المزود رد بخطأ ':'Provider error ')+a1.st+(a1.msg?(' — '+esc(a1.msg)):'')+(AR?' — جرّب مزوداً آخر أو لاحقاً':' — try another provider or later');
+   }
+  }
+  if(r)out.innerHTML=(gnote?'<span style="color:var(--acc)">'+ic('pulse',12)+' '+esc(gnote)+'</span><br>':'')+(note2?'<span style="color:var(--acc)">'+ic('pulse',12)+' '+esc(note2)+'</span><br>':'')+'<b style="color:var(--good)">'+ic('check',13)+' '+esc(tag)+'</b><br>'+esc(r.text)+(inFrame?'<br><span style="color:var(--ink2)">'+(AR?'تذكّر: هذا المفتاح يعيش في شاشة المعاينة فقط — على جوالك أضفه مرة من ⚙.':'This key lives in the preview only — add it on your device too.')+'</span>':'');
+  else out.innerHTML=(gnote?'<span style="color:var(--acc)">'+ic('pulse',12)+' '+esc(gnote)+'</span><br>':'')+'<b style="color:var(--acc)">'+ic('pulse',13)+' '+(diag||(AR?'لم يستجب أي عقل بعد':'No brain responded yet'))+'</b><br><span style="color:var(--ink2)">'+(AR?'ولا تقلق: رفيق يعمل الآن بالقواعد المحلية وذاكرته كاملة — هذا الاختبار فقط لترقية العقل.':'No worry: Rafiq works with local rules + memory. This test only upgrades the brain.')+'</span>';
  };
  const wb=$('#rfWllmB');
  if(wb)wb.onclick=async()=>{
