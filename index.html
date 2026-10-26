@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
+<!-- COMMIT: RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -295,6 +295,26 @@ html[dir="ltr"] .news-track{animation-name:newsSlideL}
 .plant-card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center;padding:12px 10px 6px}
 .plant-stage{width:170px;height:190px;position:relative;cursor:pointer;margin:0 auto}
 .plant-stage:active{transform:scale(.97)}
+/* ✧ رفيق التجول v1.5.2 — روبوت يسكن بطاقة الوردة ويتجول حولها */
+.plant-card{position:relative}
+.rfBot-roam{position:absolute;bottom:36px;left:7%;width:62px;height:76px;z-index:3;cursor:pointer;animation:rfBotRoam 17s ease-in-out infinite alternate;-webkit-tap-highlight-color:transparent;user-select:none}
+@keyframes rfBotRoam{0%{left:7%}44%{left:66%}56%{left:66%}100%{left:7%}}
+.rfBot-flip{width:100%;height:100%;position:relative;transition:transform .35s ease}
+.rfBot-flip.rfBot-fL{transform:scaleX(-1)}
+.rfBot-jumper{width:100%;height:100%}
+.rfBot-jumper.rfBot-jump{animation:rfBotJump .7s cubic-bezier(.3,1.5,.5,1)}
+@keyframes rfBotJump{0%{transform:translateY(0)}28%{transform:translateY(-17px) rotate(-4deg)}52%{transform:translateY(0) rotate(2deg)}68%{transform:translateY(-8px) rotate(-1deg)}100%{transform:translateY(0)}}
+.rfBot-body{width:54px;height:58px;margin:0 auto;animation:rfBotBob 1.5s ease-in-out infinite}
+@keyframes rfBotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.rfBot-eye{transform-box:fill-box;transform-origin:center;animation:rfBotBlink 4.3s infinite}
+@keyframes rfBotBlink{0%,92.5%,96.5%,100%{transform:scaleY(1)}94.5%{transform:scaleY(.12)}}
+.rfBot-shadow{position:absolute;bottom:-7px;left:50%;width:42px;height:9px;margin-left:-21px;background:rgba(0,0,0,.30);border-radius:50%;filter:blur(2px);animation:rfBotSh 1.5s ease-in-out infinite}
+@keyframes rfBotSh{0%,100%{transform:scaleX(1);opacity:.85}50%{transform:scaleX(.82);opacity:.55}}
+.rfBot-say{position:absolute;bottom:92px;left:50%;transform:translateX(-50%) translateY(6px);min-width:120px;max-width:230px;background:var(--card2,var(--card));border:1.5px solid var(--acc);color:var(--ink);border-radius:14px 14px 14px 3px;padding:8px 12px;font-size:11.5px;font-weight:600;line-height:1.65;opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;box-shadow:0 8px 22px rgba(0,0,0,.28);z-index:5;text-align:center}
+.rfBot-say.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.voice-btn{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--ink2);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.voice-btn.on{background:var(--bad);border-color:var(--bad);color:#fff;animation:voicePulse 1.15s infinite}
+@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(226,92,92,.45)}55%{box-shadow:0 0 0 10px rgba(226,92,92,0)}}
 .plant-cap{text-align:center;font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.8}
 .plant-cap b{color:var(--acc)}
 @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
@@ -1507,7 +1527,7 @@ function buildRecs(){
   recs.push({id:'mood:low',cat:'mind',title:t('rec_mood_t'),text:t('rec_mood_p'),action:t('rec_act_log')});
  if(S.ind.health>=70&&S.events.some(e=>e.category==='health'&&e.polarity>0&&e.ts>now-3*DAY))
   recs.push({id:'good:health',cat:'health',title:t('rec_good_t'),text:(S.profile.name||'')+(LANG==='ar'?'، صحتك ':' — your health is ')+S.ind.health+t('rec_good_b'),action:null});
- S.reminders.forEach(r=>recs.push({id:'rem:'+r.id,cat:'growth',title:t('rec_rem_t'),text:r.text,action:t('done')}));
+ S.reminders.forEach(r=>recs.push({id:'rem:'+r.id,cat:'growth',title:t('rec_rem_t'),text:r.text+(r.ts?' · '+fmtTime(r.ts):''),action:t('done')}));
  return recs.filter(r=>!dismissed.has(r.id)).slice(0,4);
 }
 
@@ -2286,6 +2306,14 @@ function rafiqReply(tx){
   if(mem)return {text:mem};
   return {text:(AR?'لا شيء موثق في الفترة التي سألت عنها بعد — سجّل لحظتك وأسرد لك تاريخها متى سألت.':'Nothing documented for that period yet — log it and I will narrate it later.')};
  }
+ if(has(/أضف مهمة|اضف مهمة|ضيف مهمة|أضيف مهمة|ضع مهمة|حط مهمة|سجل لي مهمة|مهمة جديدة|أضفها لمهمات|اضفها لمهمات|ضيفها لمهمات|ضعها في مهمات|add (a )?task/i)){
+  let txt=s.replace(/(أضفها لمهمات|اضفها لمهمات|ضيفها لمهمات|ضعها في مهمات|أضف مهمة|اضف مهمة|ضيف مهمة|أضيف مهمة|ضع مهمة|حط مهمة|سجل لي مهمة|مهمة جديدة|add (a )?task)/i,'')
+   .replace(/^\s*(لي|في|إلى|الى|ل)?\s*(مهمات اليوم|اليوم)?\s*[:،\-—]?\s*/,'').replace(/^[،:\-—\s]+/,'').trim();
+  if(!txt)return {text:(AR?'أي مهمة أحفظ لك اليوم؟ قلها كاملة مثل: «ضيف مهمة أتصل بأخي».':'Tell me the task fully: “add task call my brother”.')};
+  addChatTask(txt);
+  const n=todayInterests().filter(p=>!p.done).length;
+  return {text:(AR?'سجّلتها في مهمات اليوم ✓\n«'+txt+'»\nصار عندك '+n+' '+(n===1?'مهمة بانتظارك':'مهمات بانتظارك')+' — تلقاها ببطاقة «مهمة اليوم» بالرئيسية، وأنا أتحقق معك المساء.':'Added to today ✓\n“'+txt+'” — '+n+' pending task(s).')};
+ }
  if(has(/أفكر|انوي|أنوي|قرار|شراء|اشتري|استثمر|وظيفة|مشروع|decision|job offer/i)){
   let subj=s.replace(/.*(أفكر في|أفكر بـ|أفكر ب|انوي|أنوي|قرار|بشراء|شراء|اشتري)/,'').replace(/[؟?.!]/g,'').trim()||(AR?'قرار جديد':'A new decision');
   const m=S.ind.money,w=S.ind.work;
@@ -2299,9 +2327,15 @@ function rafiqReply(tx){
  }
  if(has(/تذكرني|ذكّرني|ذكرني|remind me/i)){
   const txt=s.replace(/.*(تذكرني بـ|تذكرني|ذكّرني بـ|ذكّرني|remind me to|remind me)/i,'').trim();
-  if(!txt)return {text:AR?'أكمل: «ذكّرني بـ…»':'Complete: “Remind me to…”'};
-  S.reminders.push({id:uid(),text:txt});saveMeta();
-  return {text:AR?'سجّلته وسيظهر في صفحتك الرئيسية.':'Added to your home page.'};
+  if(!txt)return {text:(AR?'أكمل: «ذكّرني بـ…» — وتقدر تحدد وقت: «بعد ساعتين» أو «الساعة 8 مساءً» أو «بكرة الصبح».':'Complete: “Remind me to…” — add a time: “in 2 hours”.')};
+  const w=parseWhen(txt);
+  const clean=txt.replace(/(بعد\s*[\d٠-٩]+\s*\S+)|(بعد\s*(نصف|ساعتين|ثلاث|أربع|خمس|ست|سبع|ثماني|تسع|عشر|عشرة)?\s*(دقايق|دقائق|ساعات?|ساعتين|يومين|أيام|ايام|يوم|أسبوع|اسبوع|أسبوعين|شهور|شهر))|(الساعة\s*[\d٠-٩]{1,2}([:٫:][\d٠-٩]{1,2})?\s*(صباحاً|صباح|فجر|مساءً|مساء|المساء|ليلاً|ليل|بالليل)?)|(بكرة|بكره|غدا|غداً|tomorrow)|(الصبح|صباحاً|صباح|صبح|العصر|بعد العصر|المغرب|المساء|الليل)/ig,'').replace(/[،,\-—\s]+/g,' ').trim();
+  const rem={id:uid(),text:(clean&&clean.length>2?clean:txt),ts:w?w.ts:0};
+  S.reminders.push(rem);saveMeta();
+  if(!w)return {text:(AR?'سجّلته وسيظهر في صفحتك الرئيسية.':'Added to your home page.')};
+  rfScheduleReminder(rem);
+  try{if(window.Notification&&window.Notification.permission==='default')window.Notification.requestPermission()}catch(e){}
+  return {text:(AR?'ذكّرتك «'+rem.text+'» — بنبّهك '+w.label+' — وإذا سمح جهازك بالإشعارات بيجيك إشعار كمان 🔔':'Reminder “'+rem.text+'” set for '+w.label+' — push if your device allows.')};
  }
  if(has(/حكاية|قصة|story/i)){
   setTimeout(()=>openStorySheet(),400);
@@ -3224,7 +3258,21 @@ function renderHome(){
   bodyEntry()+
   relWindow()+
   questHtml()+
-  '<div class="plant-card"><div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
+  '<div class="plant-card"><div class="rfBot-roam" id="rfHomeBot" title="'+(AR?'رفيق — اضغطني':'Rafiq — tap me')+'">'+
+    '<div class="rfBot-shadow"></div>'+
+    '<div class="rfBot-flip"><div class="rfBot-jumper"><div class="rfBot-body">'+
+     '<svg viewBox="0 0 64 64" fill="none" width="54" height="58" aria-hidden="true">'+
+      '<line x1="32" y1="9" x2="32" y2="15" stroke="var(--acc)" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="6.5" r="3.4" fill="var(--acc)"/>'+
+      '<rect x="13" y="16" width="38" height="31" rx="11" fill="var(--c-mind)" opacity=".95"/>'+
+      '<rect x="20" y="25" width="24" height="15" rx="7.5" fill="#fff"/>'+
+      '<circle class="rfBot-eye" cx="27" cy="32.5" r="3.1" fill="#232323"/><circle class="rfBot-eye" cx="37" cy="32.5" r="3.1" fill="#232323"/>'+
+      '<path d="M8 29v6M56 29v6" stroke="var(--acc)" stroke-width="2.8" stroke-linecap="round"/>'+
+      '<rect x="23" y="50" width="18" height="6.5" rx="3.2" fill="var(--acc)" opacity=".5"/>'+
+     '</svg>'+
+    '</div></div></div>'+
+    '<div class="rfBot-say" id="rfBotSay"></div>'+
+   '</div>'+
+   '<div class="plant-stage" id="plantTap">'+plantSvg(plantStage())+'</div><p class="plant-cap">'+plantWord(plantStage())+'</p></div>'+
   sparkCard()+
   chCard()+
   '<section class="life-card" data-act="goLife">'+
@@ -3251,6 +3299,7 @@ function renderHome(){
   '<div style="height:18px"></div>';
  const arc=$('#ringArc'),num=$('#ringNum');
  if(arc&&num){countUp(num,S.life);requestAnimationFrame(()=>{arc.style.strokeDashoffset=(2*Math.PI*62*(1-S.life/100)).toFixed(1)})}
+ try{wireHomeBot()}catch(e){}
 }
 async function quickAdd(){
  const el=$('#quickEv');if(!el)return;
@@ -3473,7 +3522,7 @@ function renderChat(){
   '<div class="chat-sugs">'+SUG_QUICK().map(s=>'<button class="chip" data-sug="'+esc(s)+'">'+esc(s)+'</button>').join('')+'</div>'+
   '<button class="assess-entry" data-act="openAssess">'+ic('star',16)+' '+(LANG==='ar'?'قيّم نفسك أو شخصاً تحب 🧠':'Rate yourself or someone 🧠')+'</button>'+
   '<button class="assess-entry" data-act="wipeChat" style="border-color:var(--line);color:var(--ink2)">'+ic('trash',14)+' '+(LANG==='ar'?'مسح الدردشات':'Clear chats')+'</button>'+
-  '<div class="composer"><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
+  '<div class="composer"><button class="voice-btn" id="chatMic" title="'+(LANG==='ar'?'اضغط وتحدث — أكتب وأرد':'Tap and speak')+'">'+ic('mic',19)+'</button><input id="chatInp" placeholder="'+t('chat_ph')+'" autocomplete="off"><button class="send-btn" id="chatSend">'+ic('send',19)+'</button></div>';
  const list=$('#chatList');if(!list)return;
  if(!S.chat.length)DB.put('chat',{id:uid(),role:'rf',ts:Date.now(),text:LANG==='ar'?(('أنا هنا يا '+(S.profile.name||'صديقي'))+'. أعرف أحداثك ومزاجك وصورك وعلاقاتك وقراراتك — وأحكي ذاكرتك.\nجرّب: «حكاية أسبوعي» أو «اقترح لي كتاباً».'):(('I am here, '+(S.profile.name||'friend'))+'. I know your events, moods, photos, people and decisions.\nTry: “my weekly story” or “suggest a book”.')}).then(async()=>{S.chat=(await DB.all('chat')).sort((a,b)=>a.ts-b.ts);drawMsgs()});
  drawMsgs();
@@ -3485,6 +3534,11 @@ function renderChat(){
   inp.addEventListener('input',()=>{if(snd)snd.classList.toggle('on',inp.value.trim().length>0)});
  }
  $$('#v-chat .chat-sugs .chip').forEach(c=>c.onclick=()=>sendChat(c.dataset.sug));
+ window.__rfSend=sendChat;
+ const mic=$('#chatMic');
+ if(mic)mic.onclick=startChatVoice;
+ const stopRec=()=>{try{if(window.__rfChatRec){window.__rfChatRec.__manual=true;window.__rfChatRec.stop()}}catch(e){}try{if(window.__rfChatReset)window.__rfChatReset()}catch(e2){}};
+ if(snd)snd.addEventListener('click',stopRec,true);
  function drawMsgs(){
   list.innerHTML=S.chat.slice(-40).map(m=>m.role==='rf'
    ?'<div class="msg rf'+(String(m.text).length>400?' wide':'')+'">'+rfMd(m.text)+'</div>'
@@ -3506,6 +3560,8 @@ function renderChat(){
   try{r=await rfBrain(tx)}catch(e){r=null}
   if(tp.parentNode)tp.parentNode.removeChild(tp);
   if(!r||!r.text)r=rafiqReply(tx);
+  if(RF.pendingTask&&r.eng!=='rules'){const pt=RF.pendingTask;
+   r.actions=(r.actions||[]).concat([{label:(LANG==='ar'?'➕ أضفها لمهمات اليوم':'➕ Add to today'),run:()=>{RF.pendingTask=null;addChatTask(pt).then(()=>toast(LANG==='ar'?'انضمت لمهمات اليوم ✓ — تلقاها بالرئيسية':'Added to today','var(--good)','target'))}}]);}
   await pushMsg('rf',r.text,r.actions);
  }
 }
@@ -4461,7 +4517,7 @@ function drawMindDetail(d){
    ③ التجريبي: WebLLM عبر WebGPU — تفعيل صريح بضغطة، تحميل مرة واحدة
    السقوط الدائم: القواعد المحلية rafiqReply()
    الخصوصية: بريف حياتك لا يُرفق إلا بتفعيلك — والمفتاح لا يغادر جهازك أبداً */
-const RF={sess:null,sessBrief:'',wllm:null,noteModel:false,welcomed:false};
+const RF={sess:null,sessBrief:'',wllm:null,noteModel:false,welcomed:false,pendingTask:null};
 /* v1.5.1 «حارس السحابة»: نماذج تقاعدت تُصحَّح آلياً + سقف سياق لكل نموذج — allam-2-7b أزيل من Groq رسمياً (اكتوبر 2026) وكان سياقه أصغر نموذج (4096 توكن) — سبب «الغرابة» عند مراد: فشل صامت ثم سقوط للعقل التجريبي */
 const RF_RETIRED={groq:['allam-2-7b','allam-2-7b-instruct','gemma2-9b-it','gemma-7b-it','mixtral-8x7b-32768','llama2-70b-4096','llama-3.1-70b-versatile'],openrouter:['gemini-2.0-flash-exp:free','meta-llama/llama-3.1-405b-instruct:free'],gemini:['gemini-1.5-flash','gemini-1.5-pro','gemini-pro','gemini-2.0-flash-exp']};
 const RF_CTXLIM={'openai/gpt-oss-120b':131072,'openai/gpt-oss-20b':131072,'llama-3.1-8b-instant':131072,'llama-3.3-70b-versatile':131072,'qwen/qwen3.8-27b':16384,'meta-llama/llama-3.3-70b-instruct:free':131072,'gemini-2.5-flash':1048576};
@@ -4516,8 +4572,8 @@ function rfBrief(deep){
 function rfSysPrompt(rep){
  const AR=LANG==='ar',name=S.profile.name||(AR?'صديقي':'friend');
  let p=AR?
- ('أنت «رفيق» — رفيق حياة رقمي يسكن جهاز '+name+' ويتحدث من بياناته المحلية. أسلوبك: عربي فصيح مبسط، دافئ أنيس حكيم، جمل قصيرة حية، من جملتين إلى ست، بلا مقدمات إنشائية ولا كليشيهات.\nمبادئك الثابتة:\n• أنت مؤشر لا تشخيص — لا تُصدر حكماً نفسياً أو طبياً أو مالياً قاطعاً.\n• امسك شعور المستخدم أولاً ثم المعنى — عاطفة قبل نصيحة.\n• سؤال واحد كحد أقصى في الرد.\n• لا تكرر كلامه ولا تسرد البريف حرفياً — لمّح إليه بحكمة كمن يعرف صاحبه منذ سنوات.\n• إن ظهرت أزمة نفسية حقيقية: أرح قلبه وأوصِ بلطف بمختص بشري.\n• إن ذُكرت ميزات التطبيق (حكاية أسبوعي، ميزان العطاء، العقل المحلي، القرارات، خزان السعادة) اشرحها بسطر واحد وادعُ لتجربتها.\n• إن كتب بالإنجليزية أجب بالإنجليزية.')
- :('You are "Rafiq" — a digital life companion living on '+name+'\'s device, speaking from his local data. Style: warm, wise, concise, 2-6 sentences, no cliches. Principles: pointer not diagnosis; emotion before advice; max one question per reply; allude to the life brief instead of reciting it; for real mental-health crises be warm and gently suggest a human professional; reply in the user\'s language.');
+ ('أنت «رفيق» — رفيق حياة رقمي يسكن جهاز '+name+' ويتحدث من بياناته المحلية. أسلوبك: عربي فصيح مبسط، دافئ أنيس حكيم، جمل قصيرة حية، من جملتين إلى ست، بلا مقدمات إنشائية ولا كليشيهات.\nمبادئك الثابتة:\n• أنت مؤشر لا تشخيص — لا تُصدر حكماً نفسياً أو طبياً أو مالياً قاطعاً.\n• امسك شعور المستخدم أولاً ثم المعنى — عاطفة قبل نصيحة.\n• سؤال واحد كحد أقصى في الرد.\n• لا تكرر كلامه ولا تسرد البريف حرفياً — لمّح إليه بحكمة كمن يعرف صاحبه منذ سنوات.\n• إن ظهرت أزمة نفسية حقيقية: أرح قلبه وأوصِ بلطف بمختص بشري.\n• إن ذُكرت ميزات التطبيق (حكاية أسبوعي، ميزان العطاء، العقل المحلي، القرارات، خزان السعادة) اشرحها بسطر واحد وادعُ لتجربتها.\n• إن كتب بالإنجليزية أجب بالإنجليزية.\n• إن لمست واجباً مهمل اليوم (اتصال بغائب، التزام صحي، عمل مؤجل) اقترح مهمة صغيرة قابلة للتنفيذ اليوم — بسطر وحيد في نهاية ردك بالضبط: ⟨مقترح⟩نص المهمة قصيراً⟨/مقترح⟩ — مرة واحدة كلما اقتضت الحاجة، ولا تستعمل هذا الرمز إلا لمهمة فعلية.')
+ :('You are "Rafiq" — a digital life companion living on '+name+'\'s device, speaking from his local data. Style: warm, wise, concise, 2-6 sentences, no cliches. Principles: pointer not diagnosis; emotion before advice; max one question per reply; allude to the life brief instead of reciting it; for real mental-health crises be warm and gently suggest a human professional; reply in the user\'s language. When you notice a neglected duty today (call someone, health, postponed work), you may end your reply with exactly one line: ⟨مقترح⟩short task text⟨/مقترح⟩ — sparingly, real tasks only.');
  if(rep)p+=AR?('\n\n【وضع التقرير — المهم الآن】المستخدم طلب تقريراً أو تحليلاً أو خطة — اكتب تقريراً منظماً طويلاً على مستوى المحركات الكبيرة:\n• استخدم تنسيق Markdown: عنواناً فرعياً يبدأ بـ ## ، قوائم تبدأ بـ - ، وتأكيدات بين **نص**.\n• التقرير في خمسة أقسام بهذه العناوين بالترتيب: ## نظرة سريعة · ## أبرز ما في دفترك · ## الأنماط التي أراها · ## توصيات هذا الأسبوع · ## خطة الأسبوع القادم.\n• كل ملاحظة تُثبت بحدث حقيقي من اليوميات المرفقة ووقتها النسبي (مثل: «قبل 3 أيام — أنجزت تقرير المشروع») — لا تخمين خارج البيانات المرفقة.\n• استنبط الأنماط بنفسك من الأرقام: التكرار، الفجوات الزمنية، نسب المشرق إلى الثقيل، محاور الشخصية.\n• حافظ على صوتك الدافئ — تقرير منهجي بروح صديق، مؤشر لا تشخيص، واختم بخطوة صغيرة واحدة.'):('\n\n[REPORT MODE] The user asked for a report/analysis/plan — write a long structured report on par with top AI engines. Use Markdown: ## sub-headings, - bullet lists, **bold**. Sections in order: ## Overview · ## Highlights from the log · ## Patterns I see · ## This week\'s recommendations · ## Next week plan. Ground every note in a real journal entry with its relative time — no guessing beyond the data. Warm friend voice, pointer not diagnosis, end with one small step.');
  if(rfCfg().ctx){const b=rfBrief(rep);if(b)p+=(AR?'\n\n[بريف حياة '+name+(rep?' — نسخة موسّعة للتقرير':'')+' — من سجله المحلي على جهازه]\n':'\n\n[Life brief of '+name+(rep?' — extended for report':'')+' — from on-device log]\n')+b}
  return p;
@@ -4595,7 +4651,97 @@ async function rfTryWebLLM(tx,rep){
   return out?{text:out,eng:'wllm'}:null;
  }catch(e){rfSaveCfg({rfWllm:false});RF.wllm=null;return null}
 }
-const RF_TOOL_RX=/(تذكرني|ذكّرني|ذكرني|remind me)|(حكاية|قصة|story)|(واتساب|واتس|whatsapp)|(أفكر|أنوي|انوي|قرار|شراء|اشتري|وظيفة|مشروع|decision|job offer)|(اقترح|suggest|book)/i;
+/* v1.5.2 «رفيق التجول» — (أ) تذكير بوقت حقيقي + إشعار محلي (ب) الحوار يكتب في مهمات اليوم (ج) مستخرج اقتراح المهام من العقول الكبيرة (د) روبوت الصفحة الرئيسية */
+function parseWhen(s){
+ const str=String(s||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+ const now=Date.now();
+ const m1=str.match(/بعد\s*(\d+)\s*(دقيقة|دقائق|دقايق|ساعة|ساعات|يوم|أيام|ايام|أسبوع|اسبوع|أسبوعين|أشهر|شهر|week|days?|hours?|minutes?|min)/i);
+ if(m1){const n=+m1[1],u=m1[2].toLowerCase();
+  const mult=/دق|min/.test(u)?6e4:/ساع|hour/.test(u)?36e5:/أسبوع|اسبوع|week/.test(u)?6048e5:/شهر|month/.test(u)?2592e6:864e5;
+  const ts=now+n*mult;return {ts:ts,label:fmtTime(ts)};}
+ const m1w=str.match(/بعد\s*(نصف|ساعتين|ثلاث|أربع|خمس|ست|سبع|ثماني|تسع|عشر|عشرة)?\s*(دقايق|دقائق|ساعات?|ساعتين|يومين|أيام|ايام|يوم|أسبوع|اسبوع|أسبوعين|شهور|شهر)/i);
+ if(m1w){const u=m1w[2];
+  const wmap={'نصف':0.5,'ساعتين':2,'ثلاث':3,'أربع':4,'خمس':5,'ست':6,'سبع':7,'ثماني':8,'تسع':9,'عشر':10,'عشرة':10};
+  let n=m1w[1]?(wmap[m1w[1]]||2):1;
+  if(/ساعتين/.test(u))n=2;if(/يومين/.test(u))n=2;if(/أسبوعين|اسبوعين/.test(u))n=2;
+  const mult=/دقا?يق/.test(u)?6e4:/ساع/.test(u)?36e5:/أسبوع|اسبوع/.test(u)?6048e5:/شهر/.test(u)?2592e6:864e5;
+  const ts=now+Math.round(n*mult);return {ts:ts,label:fmtTime(ts)};}
+ const m2=str.match(/(?:الساعة|الساعه|at)\s*(\d{1,2})(?:[:٫:،](\d{1,2}))?\s*(صباحاً|صباح|فجر|مساءً|مساء|المساء|ليلاً|ليل|بالليل|pm|am)?/i);
+ if(m2){let h=+m2[1];const mi=m2[2]?+m2[2]:0;const ap=(m2[3]||'').toLowerCase();
+  if(/مساء|مسا|ليل|pm/.test(ap)&&h<12)h+=12;
+  if(/صباح|فجر|am/.test(ap)&&h===12)h=0;
+  if(!ap&&h<=7)h+=12;
+  const d=new Date();d.setHours(h,mi,0,0);
+  if(d.getTime()<=now)d.setDate(d.getDate()+1);
+  return {ts:d.getTime(),label:fmtTime(d.getTime())};}
+ if(/بكرة|بكره|غدا|غداً|tomorrow/i.test(str)){const d=new Date();d.setDate(d.getDate()+1);
+  if(/الصبح|صباح|صبح/.test(str))d.setHours(9,0,0,0);
+  else if(/العصر|بعد العصر|المغرب|مغرب/.test(str))d.setHours(16,0,0,0);
+  else if(/المساء|مساء|الليل|ليل/.test(str))d.setHours(20,0,0,0);
+  else d.setHours(10,0,0,0);
+  return {ts:d.getTime(),label:fmtTime(d.getTime())};}
+ if(/الصبح|صباحاً|صباح|صبح/.test(str)){const d=new Date();d.setHours(9,0,0,0);if(d.getTime()<=now)d.setDate(d.getDate()+1);return {ts:d.getTime(),label:fmtTime(d.getTime())}}
+ return null;
+}
+function rfScheduleReminder(r){
+ if(!r||!r.ts||r.__sched)return;r.__sched=true;
+ const wait=r.ts-Date.now();if(wait<=0)return;
+ setTimeout(()=>{
+  S.reminders=S.reminders.filter(x=>x.id!==r.id);try{saveMeta()}catch(e){}
+  const AR=LANG==='ar';
+  try{toast((AR?'⏰ تذكير رفيق: ':'⏰ Rafiq reminder: ')+r.text,'var(--acc)','clock')}catch(e){}
+  try{if(window.Notification&&window.Notification.permission==='granted')new window.Notification((AR?'رفيق — تذكير':'Rafiq — reminder'),{body:r.text})}catch(e2){}
+ },wait);
+}
+async function addChatTask(text){
+ const txt=(text||'').trim();if(!txt)return false;
+ const cat=/اتصل|مكالمة|زوجتي|زوجتك|أهلي|اهلي|أخي|اخوي|صديق|والدين|أمي|امي|أبي|ابي|زور|زيارة|علاقة/i.test(txt)?'relations':/عمل|مشروع|اجتماع|تقرير|مدير|عميل|وظيفة|دوام/i.test(txt)?'work':/رياضة|تمرين|مشى|مشي|نوم|صحة|أدوية|دواء|فحص/i.test(txt)?'health':/كتاب|أقرأ|اقرا|تعلم|دورة|محاضرة/i.test(txt)?'growth':'mind';
+ const ev={id:uid(),type:'interest',category:cat,polarity:1,text:txt,done:false,gen:'mine',ts:Date.now()};
+ try{await DB.put('events',ev)}catch(e){}
+ S.events.push(ev);
+ return true;
+}
+function rfTaskProposal(out){
+ const str=String(out||'');
+ const m=str.match(/⟨مقترح⟩([\s\S]{2,140}?)⟨\/مقترح⟩/);
+ if(m){RF.pendingTask=m[1].replace(/[«»"]/g,'').trim();
+  return str.replace(/⟨مقترح⟩[\s\S]{2,140}?⟨\/مقترح⟩/,'').replace(/\n{3,}/g,'\n\n').trim();}
+ return str;
+}
+function homeBotLine(idle){
+ const AR=LANG==='ar',st=calcStreak(),its=todayInterests(),pend=its.filter(p=>!p.done).length,stg=plantStage();
+ const L=[];
+ if(!idle){
+  if(st>0)L.push(AR?'أنتما مع بعض '+st+' '+(st===1?'يوم توثيق':'أيام توثيق')+' متتالية — لا تكسر السلسلة!':'Streak: '+st+' days!');
+  if(pend>0)L.push(AR?'عندك '+pend+' '+(pend===1?'مهمة اليوم':'مهمات اليوم')+' — وحدة وحدة وبتخلّصهم':'You have '+pend+' pending today');
+  else if(its.length)L.push(AR?'خلّصت مهماتك كلها — أنت نجم النهاردة':'All quests done — you star');
+  if(stg>=3)L.push(AR?'وردتك عم تتزهّر قدامك — هالزهرة من دفترك انت':'Your plant blooms from your log');
+  if(S.life>=70)L.push(AR?'النبض قوي هالوقت ('+S.life+'/100) — استمر':'Life pulse: '+S.life+'/100');
+  if(S.life<45)L.push(AR?'النبض نازل شوي — سجّل لحظة حلوة وارفعنا معك':'Life a bit low — log a bright moment');
+ }
+ L.push(AR?'جرّب تقلي: «ضيف مهمة أتصل بأخي» وبريّح راسك':'Try: “add task”');
+ L.push(AR?'أنا أسكن جهازك — بياناتك عندك وأنا معك دائماً':'On-device forever');
+ L.push(AR?'اضغط عليّ متى ما احتجت نسمة تشجيع':'Tap me for a push');
+ L.push(AR?'وردة اليوم بتنمو بكل لحظة بتوثّقها':'Every log grows the rose');
+ return L[Math.floor(Math.random()*L.length)];
+}
+function wireHomeBot(){
+ const bot=document.getElementById('rfHomeBot');if(!bot)return;
+ const say=document.getElementById('rfBotSay'),flip=bot.querySelector('.rfBot-flip'),jmp=bot.querySelector('.rfBot-jumper');
+ if(flip)bot.addEventListener('animationiteration',()=>flip.classList.toggle('rfBot-fL'));
+ let sayT=null;
+ const show=(txt,dur)=>{if(!say)return;say.textContent=txt;say.classList.add('on');clearTimeout(sayT);sayT=setTimeout(()=>{if(say)say.classList.remove('on')},dur||4200)};
+ bot.addEventListener('click',e=>{e.stopPropagation();
+  if(jmp){jmp.classList.remove('rfBot-jump');void jmp.offsetWidth;jmp.classList.add('rfBot-jump')}
+  show(homeBotLine(false),5200);});
+ clearInterval(window.__rfBotIdle);
+ window.__rfBotIdle=setInterval(()=>{
+  if(!document.getElementById('rfHomeBot')){clearInterval(window.__rfBotIdle);window.__rfBotIdle=null;return}
+  show(homeBotLine(true),4200);
+ },34000);
+ setTimeout(()=>{if(document.getElementById('rfHomeBot')&&say)show((LANG==='ar'?'أنا هون يا ':'Here, ')+(S.profile.name||(LANG==='ar'?'صديقي':'friend'))+' — عم طوف على الوردة 😊',4800)},1700);
+}
+const RF_TOOL_RX=/(تذكرني|ذكّرني|ذكرني|remind me)|(حكاية|قصة|story)|(واتساب|واتس|whatsapp)|(أفكر|أنوي|انوي|قرار|شراء|اشتري|وظيفة|مشروع|decision|job offer)|(اقترح|suggest|book)|(أضف مهمة|اضف مهمة|ضيف مهمة|أضيف مهمة|ضع مهمة|حط مهمة|سجل لي مهمة|مهمة جديدة|add (a )?task)/i;
 /* v1.5.0 «حوار كالمحركات الكبيرة»: كشف وضع التقرير آلياً + عارض Markdown آمن (esc أولاً ثم تحويل محدود) */
 function rfIsReport(tx){return /(تقرير|تقارير|حلل|حلّل|تحليل|ملخص|خطة|خطتي|قصة أسبوعي|احكِ أسبوعي|اشرح لي|اكتب لي|راجع أسبوعي|قيّم أسبوعي|report|analy[sz]e|summary|plan for)/i.test(String(tx||''))}
 function rfMd(s){
@@ -4611,17 +4757,26 @@ function rfMd(s){
  return h;
 }
 async function rfBrain(tx){
- if(RF_TOOL_RX.test(tx))return rafiqReply(tx);
- const c=rfCfg(),rep=rfIsReport(tx);
+ const c0=String(tx||'').trim();
+ if(RF.pendingTask){
+  if(/(ضيفها|أضفها|اضفها|ضيف لمهمات|أضف لمهمات|اضف لمهمات|ضعها في مهمات)|^(نعم|ايوه|أيوه|ايه|أي|أكيد|اكيد|تم|تمام|اوك|أوكي|أوك|يلا|يا الله|ok|yes|yeah|sure)\b/i.test(c0)){
+   const t0=RF.pendingTask;RF.pendingTask=null;
+   addChatTask(t0);
+   return {text:(LANG==='ar'?'تم ✓ سجّلت «'+t0+'» في مهمات اليوم — تلقاها ببطاقة «مهمة اليوم» بالرئيسية وأنا أتحقق معك المساء.':'Done ✓ added “'+t0+'” to today.')};
+  }
+  if(/^(لا|لاء|منسية|خليها|لاحقاً|تركها|no|skip|later)\b/i.test(c0)){RF.pendingTask=null;return {text:(LANG==='ar'?'تمسّك — خليتها تمر. ما ينكسف رفيق يسأل 🙂':'Skipped — no worries.')}};
+ }
+ if(RF_TOOL_RX.test(c0))return rafiqReply(c0);
+ const c=rfCfg(),rep=rfIsReport(c0);
  if(c.mode!=='cloudOnly'){
   const s=await rfBuiltIn();
-  if(s){try{const out=String(await s.prompt(rep?tx+'\n\n['+(LANG==='ar'?'اعرض النتيجة تقريراً منظماً بعناوين وقوائم':'Present the answer as a structured report with headings and lists')+']':tx)||'').trim();if(out)return {text:out,eng:'built'}}catch(e2){RF.sess=null}}
+  if(s){try{const out=String(await s.prompt(rep?c0+'\n\n['+(LANG==='ar'?'اعرض النتيجة تقريراً منظماً بعناوين وقوائم':'Present the answer as a structured report with headings and lists')+']':c0)||'').trim();if(out){const o2=rfTaskProposal(out);if(o2)return {text:o2,eng:'built'}}}catch(e2){RF.sess=null}}
  }
- const cl=await rfCloud(tx,rep);
- if(cl)return cl;
- const w=await rfTryWebLLM(tx,rep);
- if(w)return w;
- const fb=rafiqReply(tx);
+ const cl=await rfCloud(c0,rep);
+ if(cl){cl.text=rfTaskProposal(cl.text);return cl}
+ const w=await rfTryWebLLM(c0,rep);
+ if(w){w.text=rfTaskProposal(w.text);return w}
+ const fb=rafiqReply(c0);
  return {text:fb.text,actions:fb.actions,eng:'rules'};
 }
 function rfBadgeHtml(){
@@ -5085,6 +5240,52 @@ function startVoice(){
   };
   r.start();
  }catch(err){toast(t('voice_bad'),'var(--acc)','mic')}
+}
+/* v1.5.2 — مايك حوار رفيق: تتكلم → يكتب → يرسل وحده بعد سكوت قصير ويرد، وبلا لوحة مفاتيح */
+function startChatVoice(){
+ const inp=$('#chatInp');if(!inp)return;
+ const mb=$('#chatMic'),send=window.__rfSend;
+ if(mb&&mb.classList.contains('on')){try{if(window.__rfChatRec){window.__rfChatRec.__manual=true;window.__rfChatRec.stop()}}catch(e){}return}
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast(LANG==='ar'?'جهازك/متصفحك لا يدعم الإدخال الصوتي هنا — جرّب كروم أو سفاري حديث':'Voice input not supported in this browser','var(--acc)','mic');return}
+ try{
+  const r=new SR();window.__rfChatRec=r;
+  r.lang=LANG==='ar'?'ar-SA':'en-US';
+  r.continuous=true;r.interimResults=true;r.maxAlternatives=1;
+  let base='',sendT=null;
+  const ph=inp.placeholder;
+  if(mb)mb.classList.add('on');
+  inp.placeholder=LANG==='ar'?'أسمعك… تكلم مرتاح — أرسل وأرد تلقائياً 🎙️':'Listening… I auto-send when you pause';
+  const reset=()=>{clearTimeout(sendT);if(mb)mb.classList.remove('on');inp.placeholder=ph;window.__rfChatRec=null};
+  window.__rfChatReset=()=>{base='';try{if(inp)inp.value=''}catch(e){}};
+  r.onresult=e=>{
+   let fin='',inter='';
+   for(let i=e.resultIndex;i<e.results.length;i++){
+    if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';
+    else inter+=e.results[i][0].transcript;
+   }
+   if(fin)base+=fin;
+   inp.value=(base+inter).replace(/\s+/g,' ').trim();
+   if(fin){
+    clearTimeout(sendT);
+    sendT=setTimeout(()=>{
+     const tx=inp.value.trim();
+     base='';
+     try{r.stop()}catch(e2){}
+     if(tx){inp.value='';if(send)send(tx)}
+    },1400);
+   }
+  };
+  r.onend=()=>{
+   const manual=!!r.__manual;
+   const tx=manual?'':inp.value.trim();
+   reset();
+   if(tx){inp.value='';if(send)send(tx)}
+  };
+  r.onerror=()=>{reset();toast(LANG==='ar'?'ما قدرت أسمع — تأكد من إذن المايك':'Mic permission needed','var(--bad)','mic')};
+  r.start();
+  toast(LANG==='ar'?'🎙️ مايك الحوار شغال — احكي وأنا أكتب وأرد. اضغط المايك لإيقافه':'Mic on — speak, I write & reply','var(--c-mind)','mic');
+ }catch(err){toast(LANG==='ar'?'تعذر تشغيل المايك':'Mic failed to start','var(--bad)','mic')}
 }
 function setEvQuick(q){
  $$('#shEvent .dq').forEach(b=>b.classList.toggle('on',b.dataset.dq===q));
@@ -5693,6 +5894,7 @@ window.__rfStage='فتح قاعدة البيانات';
   if(m&&m.profile){
    S.profile=Object.assign(S.profile,m.profile||{});
    S.reminders=(m&&m.reminders)||[];
+   try{S.reminders.forEach(r=>{if(r&&r.ts&&r.ts>Date.now())rfScheduleReminder(r)})}catch(e){}
    await loadAll();try{await bodyCleanupOnce()}catch(e){}computeAll();renderDot();enterApp(false);
   }else renderOb();
   if(S.settings.pin&&S.settings.pinOn)showLock();
