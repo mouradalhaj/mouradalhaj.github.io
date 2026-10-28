@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_PLANNER_v1.7.0 — «دفتر المواعيد» (بلاغ مراد: أريد من سجل حدث في التقويم مذكرة مواعيد مستقبلية بالتاريخ والساعة تظهر في مهام اليوم للتنفيذ، بعلامة صح أو مبرر إن لم تنجز — نسيت/تأجّلت/ألغيتها/كتابة حرة — ويعزز ذلك الفهم والالتزام والمتابعة والمزاج، وأريد جدولاً بيانياً لطيفاً للأيام أو الشهور كختصر تفاعلي): (1) مذكرة المواعيد في التقويم تحت زر أساسي جديد: عنوان + يوم (اليوم/بكرة/بعد بكرة/تاريخ محدد) + ساعة + تصنيف يُلتقط آلياً — تُحفظ حدث خطة gen:plan في الدفتر المحلي وتظهر نقطة يومها في شبكة التقويم وتُضغط الأيام القادمة ذات المواعيد. (2) في «مهام اليوم» تظهر شارة الساعة (تحمرّ إن فاتت) وشارة «موعد» وزر ✗ للمبرر — وعند فوات أيام ماضية تنزل قسم «مستحقة عليك» بلا مهرب: صحّ أو مبرر موثق (نسيت/تأجّلت/ألغيتها/كتابة حرة) أو زر «انقلها لبكرة» يعيد جدولتها بلطف. (3) «في الأفق»: أقرب ثلاثة مواعيد قادمة تبقى أمام عين المراد كل يوم في بطاقة المهام. (4) جدول «نبض نشاطك» التفاعلي في التقويم: آخر 14 يوماً أو آخر 6 شهور — أعمدة تنمو بحركة، رقم فوق كل عمود، نقطة خضراء ليوم أنجز موعده وحمراء ليوم فائت، نسبة الالتزام 30 يوماً، وضغط العمود يفتح يومه أو شهره. (5) جرس الوقت الحقيقي: عند ساعة الموعد توست + إشعار محلي إن سمح الجهاز، ويُعاد جدولته عند كل إقلاع. (6) حارس حسابي: مواعيد المستقبل لا تدخل إحصاءات ملخص الأداء — زر «سجل حدثاً» القديم بقي شاهداً بجانب المذكرة — فوق RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
+<!-- COMMIT: RF_NAV_CRAFT_v1.8.0 — «شريطي كما أريد» (بلاغ مراد: بدي أطور شريط المهام أسفل التطبيق بحيث أقدر أضيف وألغي شو بدي — الشاشة الرئيسية ثابتة والمزيد ثابت وبقدر أعمل كمان أربع خيارات مثلاً التقويم ورفيق أو العقل المحلي أو حكايتي أو بصمة أو أي شيء): (1) buildTabbar تعمّر الشريط من S.settings.nav: الرئيسية والمزيد وزر + ثابتة لا تتحرك، وأربع خانات مرنة كحدّها من بنك NAV_POOL (تقويم · رفيق · العقل المحلي · حكايتي · بصمتي · لوحة الحياة · التوأم الرقمي · العلاقات · القرارات · التقرير · النبض التنبؤي) — الافتراضي تقويم + رفيق كما كان فيُحفظ ماضي مراد، والاختيار يدوم في IndexedDB ويُعاد بناؤه عند كل إقلاع وتغيير لغة. (2) مصنع «شريطي كما أريد» openNavSheet: ورقة حية بلا زر حفظ — شرائح خاناتك تنزع بـ X وتتحرك بأسهم موجّهة صحيحاً مع اتجاه العربية، وبنك الخيارات يضاف بنقرة، واهتزاز خفيف لكل لمسة، وزر إرجاع الافتراضي، وحين تكتمل الخانات الأربع يغفو البنك برسالة لطيفة تطلب فضح خانة أولاً. (3) ضغطة طويلة 480ms على أي تبويب تفتح المصنع فوراً (بحارس nvLpFired كي لا يُفتح عرض بعد رفع الإصبع) + مدخل «شريطي كما أريد» على رأس قائمة المزيد — و«حكايتي» صارت تبويباً ممكن الوظيفة: نقرتها تفتح ورقة الحكاية لا صفحة وهمية. (4) كثافة ذكية: 3 خانات فأكثر تضيف صف dense فيصغّر الخط والأيقونات فلا يزدحم الشريط أبداً. (5) تيثاق العناوين: ti_mind وti_fp وti_pulse وti_lab أُضيفت إلى T وTITLES فلا ترويسة فارغة عند زيارة العقل المحلي أو البصمة أو النبض أو المعمل من الشريط أو المزيد — فوق RF_PLANNER_v1.7.0 — «دفتر المواعيد» (بلاغ مراد: أريد من سجل حدث في التقويم مذكرة مواعيد مستقبلية بالتاريخ والساعة تظهر في مهام اليوم للتنفيذ، بعلامة صح أو مبرر إن لم تنجز — نسيت/تأجّلت/ألغيتها/كتابة حرة — ويعزز ذلك الفهم والالتزام والمتابعة والمزاج، وأريد جدولاً بيانياً لطيفاً للأيام أو الشهور كختصر تفاعلي): (1) مذكرة المواعيد في التقويم تحت زر أساسي جديد: عنوان + يوم (اليوم/بكرة/بعد بكرة/تاريخ محدد) + ساعة + تصنيف يُلتقط آلياً — تُحفظ حدث خطة gen:plan في الدفتر المحلي وتظهر نقطة يومها في شبكة التقويم وتُضغط الأيام القادمة ذات المواعيد. (2) في «مهام اليوم» تظهر شارة الساعة (تحمرّ إن فاتت) وشارة «موعد» وزر ✗ للمبرر — وعند فوات أيام ماضية تنزل قسم «مستحقة عليك» بلا مهرب: صحّ أو مبرر موثق (نسيت/تأجّلت/ألغيتها/كتابة حرة) أو زر «انقلها لبكرة» يعيد جدولتها بلطف. (3) «في الأفق»: أقرب ثلاثة مواعيد قادمة تبقى أمام عين المراد كل يوم في بطاقة المهام. (4) جدول «نبض نشاطك» التفاعلي في التقويم: آخر 14 يوماً أو آخر 6 شهور — أعمدة تنمو بحركة، رقم فوق كل عمود، نقطة خضراء ليوم أنجز موعده وحمراء ليوم فائت، نسبة الالتزام 30 يوماً، وضغط العمود يفتح يومه أو شهره. (5) جرس الوقت الحقيقي: عند ساعة الموعد توست + إشعار محلي إن سمح الجهاز، ويُعاد جدولته عند كل إقلاع. (6) حارس حسابي: مواعيد المستقبل لا تدخل إحصاءات ملخص الأداء — زر «سجل حدثاً» القديم بقي شاهداً بجانب المذكرة — فوق RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -130,6 +130,25 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 .tab-add button:active{transform:translateY(-20px) scale(.92)}
 .tab-dot{position:absolute;top:5px;right:calc(50% - 15px);width:8px;height:8px;border-radius:50%;background:var(--bad);display:none}
 .tab-dot.show{display:block}
+/* v1.8.0 «شريطي كما أريد» — كثافة ذكية + مصنع الشريط */
+#tabbar.dense .tab{font-size:8.5px;gap:2px}
+#tabbar.dense .tab svg.ic{width:19px;height:19px}
+.nv-hint{font-size:12px;color:var(--ink3);line-height:1.8;margin:10px 2px 0}
+.nv-fixed{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.nv-fx{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ink2);border:1px dashed var(--line);border-radius:999px;padding:5px 11px}
+.nv-slots{display:flex;flex-direction:column;gap:8px;margin-top:9px}
+.nv-chip{display:flex;align-items:center;gap:9px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:8px 11px}
+.nv-chip>svg.ic{color:var(--acc)}
+.nv-chip b{flex:1;font-size:13.5px;color:var(--ink)}
+.nv-x{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--bad);background:rgba(255,90,90,.09)}
+.nv-mv{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--ink);border:1px solid var(--line);font-size:16px;line-height:1}
+.nv-mv:disabled,.nv-add:disabled{opacity:.28}
+.nv-pool{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.nv-add{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px;font-size:12.5px;color:var(--ink);text-align:right}
+html[dir="ltr"] .nv-add{text-align:left}
+.nv-add svg.ic{color:var(--acc);flex:none}
+.nv-cap{font-size:11.5px;color:#E5A83E;margin-top:9px;line-height:1.6}
+.nv-rst{margin-top:14px;width:100%;text-align:center;font-size:12.5px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;padding:11px}
 .greet-t{font-family:var(--fd);font-size:21px;font-weight:700;margin-top:10px}
 .greet-t small{display:block;font-family:var(--fb);font-size:12.5px;font-weight:400;color:var(--ink2);margin-top:5px}
 .st-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:4px 11px;margin-top:9px}
@@ -898,6 +917,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shPick"></div>
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
+    <div class="sheet" id="shNav"></div>
     <div class="sheet" id="shMind"></div>
     <div class="sheet" id="shFp"></div>
     <div class="sheet" id="shRfSet"></div>
@@ -969,7 +989,7 @@ const FP_DIMS=[
 let LANG='ar';
 const T={
  tab_home:['الرئيسية','Home'],tab_cal:['التقويم','Calendar'],tab_chat:['رفيق','Rafiq'],tab_more:['المزيد','More'],
- ti_cal:['التقويم','Calendar'],ti_life:['لوحة الحياة','Life Dashboard'],ti_relations:['العلاقات','Relationships'],ti_decisions:['مركز القرارات','Decision Center'],ti_report:['التقرير الأسبوعي','Weekly Report'],ti_twin:['التوأم الرقمي','Digital Twin'],ti_settings:['الإعدادات','Settings'],
+ ti_cal:['التقويم','Calendar'],ti_life:['لوحة الحياة','Life Dashboard'],ti_relations:['العلاقات','Relationships'],ti_decisions:['مركز القرارات','Decision Center'],ti_report:['التقرير الأسبوعي','Weekly Report'],ti_twin:['التوأم الرقمي','Digital Twin'],ti_settings:['الإعدادات','Settings'],ti_mind:['العقل المحلي','Local Mind'],ti_fp:['بصمة شخصيتي','My Fingerprint'],ti_pulse:['النبض التنبؤي','Predictive Pulse'],ti_lab:['معمل رفيق','Rafiq Lab'],
  save:['حفظ','Save'],cancel:['إلغاء','Cancel'],del:['حذف','Delete'],done:['تم','Done'],next:['متابعة','Continue'],
  ob_h:['رفيق <em>·</em> شريك حياتك','Rafiq <em>·</em> your life companion'],
  ob_p:['مرآة ذكية تقيس رفاهك بسبعة أبعاد علمية، تتعلّم من فهمها لك، وتحوّل ذاكرتك حكايات واهتماماتك إنجازات.','A smart mirror: 7 science dims, learns from understanding you, turns memory into stories.'],
@@ -1520,7 +1540,7 @@ function applyLang(){
 
 window.__rfStage='الحالة';
 const S={profile:{name:'',job:'',email:'',bday:'',goals:[]},
- settings:{lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},
+ settings:{lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},
  events:[],rels:[],decisions:[],chat:[],reminders:[],
  ind:{},catDelta:{},life:50,delta:0,spark:[],recs:[],staleRels:[]};
 const dismissed=new Set();
@@ -2540,18 +2560,43 @@ async function obFinish(seed){
 
 window.__rfStage='بناء الواجهة';
 const VIEWS=['home','cal','life','chat','relations','decisions','report','twin','settings','fingerprint','lab','pulse','mind'];
-const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'',lab:'',pulse:''};
+const TITLES={home:'',cal:'ti_cal',life:'ti_life',chat:'',relations:'ti_relations',decisions:'ti_decisions',report:'ti_report',twin:'ti_twin',settings:'ti_settings',fingerprint:'ti_fp',lab:'ti_lab',pulse:'ti_pulse',mind:'ti_mind'};
+/* ===== v1.8.0 «شريطي كما أريد» — شريط مهام يملؤه مراد: الرئيسية والمزيد وزر الإضافة ثابتة وأربع خانات مرنة من بنك 11 خياراً — بلاغ مراد ===== */
+const NAV_POOL=[
+ {id:'cal',icon:'cal',ar:'التقويم',en:'Calendar'},
+ {id:'chat',icon:'chat',ar:'رفيق',en:'Rafiq'},
+ {id:'mind',icon:'brain',ar:'العقل المحلي',en:'Local Mind'},
+ {id:'story',icon:'book',ar:'حكايتي',en:'My Story'},
+ {id:'fingerprint',icon:'twin',ar:'بصمتي',en:'Fingerprint'},
+ {id:'life',icon:'hex',ar:'لوحة الحياة',en:'Life'},
+ {id:'twin',icon:'sprout',ar:'التوأم الرقمي',en:'Digital Twin'},
+ {id:'relations',icon:'users',ar:'العلاقات',en:'Relations'},
+ {id:'decisions',icon:'dec',ar:'القرارات',en:'Decisions'},
+ {id:'report',icon:'report',ar:'التقرير',en:'Report'},
+ {id:'pulse',icon:'pulse',ar:'النبض التنبؤي',en:'Pulse'}
+];
+function navSlots(){
+ const v=S.settings.nav;
+ const arr=(v&&v.length?v:['cal','chat']).filter((x,i,a)=>NAV_POOL.some(m=>m.id===x)&&a.indexOf(x)===i);
+ return arr.slice(0,4);
+}
+function navName(m){return LANG==='ar'?m.ar:m.en}
+function buildTabbar(){
+ const nav=navSlots();
+ put('#tabbar','<button class="tab" data-tab="home">'+ic('home',21)+'<span>'+t('tab_home')+'</span></button>'+
+  nav.map(id=>{const m=NAV_POOL.find(x=>x.id===id);return '<button class="tab" data-tab="'+id+'">'+ic(m.icon,21)+'<span>'+navName(m)+'</span></button>'}).join('')+
+  '<div class="tab-add"><button id="fabAdd" aria-label="new">'+ic('plus',26)+'</button></div>'+
+  '<button class="tab" data-tab="more" id="tabMore">'+ic('grid',21)+'<span>'+t('tab_more')+'</span><i class="tab-dot" id="moreDot"></i></button>');
+ if(nav.length>=3)$('#tabbar').classList.add('dense');
+ $$('#tabbar .tab').forEach(el=>el.classList.toggle('on',el.dataset.tab===currentView));
+}
 function buildShell(){
  put('#stageCap',ic('pulse',15)+' <b style="color:var(--ink)">'+(LANG==='ar'?'رفيق 2.9 — ساعة التشويق والأعمال الإنسانية':'Rafiq 2.9 — countdown clock & human quests')+'</b>');
  put('#appHead','<div class="h-brand" id="hBrand">'+logoSvg(34)+'<b>'+t('tab_chat')+'</b></div>'+
   '<div class="h-title" id="hTitle" hidden></div>'+
   '<div class="h-date" id="hDate">'+fmtDate(Date.now())+'</div>');
  put('#views',VIEWS.map(v=>'<section class="view" id="v-'+v+'" data-view="'+v+'"></section>').join(''));
- put('#tabbar','<button class="tab" data-tab="home">'+ic('home',21)+'<span>'+t('tab_home')+'</span></button>'+
-  '<button class="tab" data-tab="cal">'+ic('cal',21)+'<span>'+t('tab_cal')+'</span></button>'+
-  '<div class="tab-add"><button id="fabAdd" aria-label="new">'+ic('plus',26)+'</button></div>'+
-  '<button class="tab" data-tab="chat">'+ic('chat',21)+'<span>'+t('tab_chat')+'</span></button>'+
-  '<button class="tab" data-tab="more" id="tabMore">'+ic('grid',21)+'<span>'+t('tab_more')+'</span><i class="tab-dot" id="moreDot"></i></button>');
+ try{buildTabbar()}catch(err){__rfErr((err&&err.message||err)+' @buildTabbar')}
  try{buildSheets()}catch(err){__rfErr((err&&err.message||err)+' @buildSheets')}
 }
 function go(v){
@@ -4339,7 +4384,7 @@ function rfImpactScale(){
  if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first for compatibility')+'</div>';
  const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
  v.innerHTML=
-  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.7.0':'LIVING FINGERPRINT · 1.7.0')+'</span>'+
+  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.8.0':'LIVING FINGERPRINT · 1.8.0')+'</span>'+
   '<div class="fp-hero">'+logoSvg(40)+
    '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800;margin-top:8px">'+(AR?'بصمة '+esc(name)+' الرقمية':esc(name)+"'s fingerprint")+'</h2>'+
    '<div class="fp-score">'+total+'%</div>'+
@@ -5861,7 +5906,7 @@ async function finishAssessment(){
 /* v1.6.1 «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات — تُفتح تفاصيله بـ «+ المزيد من التفاصيل» (طلب مراد) */
 function aboutDetailsHtml(){
  const AR=LANG==='ar';
- return '<span class="abt-stamp">RF_PLANNER_v1.7.0 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
+ return '<span class="abt-stamp">RF_NAV_CRAFT_v1.8.0 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
   '<p>'+(AR?'بياناتك تعيش على جهازك وحده — في مخزن IndexedDB المحلي. لا حسابات، لا سحابة، لا تتبع، لا إعلانات، ولا خادم يعرف اسمك.':'Your data lives on this device only — local IndexedDB. No accounts, no cloud, no tracking, no ads.')+'</p>'+
   '<p>'+(AR?'الوحيد الذي يعبر جهازك هو طلب نموذج الذكاء الصناعي — وإنما إذا فعّلت أنت مفتاح Groq بنفسك، ونصّه ملخص أحداثك فقط. وبدون مفتاح يعمل رفيق كاملاً بلا إنترنت.':'Only outbound traffic is the AI model request, and only if you enabled your own Groq key. Without it, Rafiq works fully offline.')+'</p>'+
   '<p>'+(AR?'حقوقك بنقرة: «تصدير نسخة احتياطية» يخرج كل شيء ملفاً واحداً، و«مسح كل شيء» يمحي ذاكرة رفيق نهائياً — أنت المالك الوحيد.':'Export in one tap, erase in one tap — you are the sole owner.')+'</p>'+
@@ -5949,11 +5994,50 @@ async function saveDec(){
  requestAnimationFrame(()=>{const f=$('#v-decisions .dec');if(f)f.classList.add('open')});
  toast(t('dec_analyzed'),'var(--acc)','dec');
 }
+/* ===== v1.8.0 «شريطي كما أريد» — مصنع الشريط: أضف وانزع وحرّك، حفظ فوري بلا زر — ضغطة طويلة على أي تبويب تفتحه ===== */
+function navSave(){saveMeta();buildTabbar();renderDot()}
+function openNavSheet(){
+ const AR=LANG==='ar';
+ const fixed=[{i:'home',n:t('tab_home')},{i:'plus',n:AR?'زر الإضافة':'Add button'},{i:'grid',n:t('tab_more')}];
+ function draw(){
+  const nav=navSlots();
+  const pool=NAV_POOL.filter(m=>nav.indexOf(m.id)<0);
+  put('#shNav',
+   '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'شريطي كما أريد':'My bar, my way')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+   '<div class="nv-hint">'+(AR?'الرئيسية والمزيد وزر الإضافة ثابتة لا تتحرك — والخانات المرنة أربعة كحدّها أنت من تملؤها: اضغط خياراً ليضاف، وانزع ما لا تريده، ورتّب بأسهم التحويل. كل لمسة تُحفظ فوراً في جهازك.':'Home, More and Add are pinned — the four flexible slots are yours: tap to add, X to remove, arrows to reorder. Every tap saves instantly on your device.')+'</div>'+
+   '<div class="nv-fixed">'+fixed.map(f=>'<span class="nv-fx">'+ic(f.i,14)+' '+f.n+'</span>').join('')+'</div>'+
+   '<label class="lab" style="margin-top:13px">'+(AR?'خاناتك الحالية':'Your slots')+' ('+nav.length+'/4)</label>'+
+   '<div class="nv-slots">'+(nav.length?nav.map((id,i)=>{const m=NAV_POOL.find(x=>x.id===id);return '<div class="nv-chip">'+ic(m.icon,18)+'<b>'+navName(m)+'</b>'+
+    '<button class="nv-mv" data-nv="mv" data-i="'+i+'" data-d="-1"'+(i===0?' disabled':'')+' title="'+(AR?'قرّب للبداية':'move earlier')+'">›</button>'+
+    '<button class="nv-mv" data-nv="mv" data-i="'+i+'" data-d="1"'+(i===nav.length-1?' disabled':'')+' title="'+(AR?'أزح للنهاية':'move later')+'">‹</button>'+
+    '<button class="nv-x" data-nv="rm" data-i="'+i+'">'+ic('x',14)+'</button></div>'}).join(''):'<div class="nv-hint">'+(AR?'لا خانات مرنة بعد — أضف أول خيار من البنك أسفله':'No flexible slots yet — add your first from the pool below')+'</div>')+'</div>'+
+   (nav.length>=4?'<div class="nv-cap">'+(AR?'الخانات الأربع اكتملت — انزع واحدة لتفسح لغيرها':'All four slots are full — remove one to make room')+'</div>':'')+
+   '<label class="lab" style="margin-top:13px">'+(AR?'بنك الخيارات — اضغط ليضاف':'Tap to add')+'</label>'+
+   '<div class="nv-pool">'+pool.map(m=>'<button class="nv-add" data-nv="add" data-id="'+m.id+'"'+(nav.length>=4?' disabled':'')+'>'+ic(m.icon,17)+'<span>'+navName(m)+'</span></button>').join('')+'</div>'+
+   '<button class="nv-rst" data-nv="rst">'+(AR?'إرجاع الترتيب الافتراضي (تقويم + رفيق)':'Restore default (Calendar + Rafiq)')+'</button>');
+ }
+ draw();
+ openSheet('#shNav');
+ const sh=$('#shNav');
+ sh.onclick=e=>{
+  if(e.target.closest('[data-close]')){closeSheets();return}
+  const b=e.target.closest('[data-nv]');if(!b)return;
+  const act=b.dataset.nv;
+  if(act==='add')S.settings.nav=navSlots().concat([b.dataset.id]);
+  else if(act==='rm')S.settings.nav=navSlots().filter((x,i)=>i!==+b.dataset.i);
+  else if(act==='mv'){const arr=navSlots(),i=+b.dataset.i,j=i+ +b.dataset.d;if(j<0||j>=arr.length)return;const sw=arr[i];arr[i]=arr[j];arr[j]=sw;S.settings.nav=arr}
+  else if(act==='rst')S.settings.nav=['cal','chat'];
+  else return;
+  try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
+  navSave();draw();
+ };
+}
 function buildMoreSheet(){
  put('#shMore',
   '<div class="sh-grip"></div><div class="sh-head"><b>'+t('tab_more')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="more-hi">'+t('more_hi')+esc(S.profile.name||(LANG==='ar'?'بك':'there'))+'</div>'+
   '<div class="more-sub">'+t('more_sub')+'</div>'+
+  '<button class="more-item" data-more="navcraft">'+ic('edit',19)+'<span>'+(LANG==='ar'?'✨ شريطي كما أريد':'✨ My bar, my way')+'</span><small>'+(LANG==='ar'?'رتّب شريط المهام أسفل الشاشة — أضف وانزع ورتّب':'Arrange your bottom bar — add, remove, reorder')+'</small></button>'+
   '<button class="more-item" data-more="mind">'+ic('brain',19)+'<span>'+(LANG==='ar'?'🧠 العقل المحلي':'🧠 The Local Mind')+'</span><small>'+(LANG==='ar'?'عين رفيق على بياناتك — اكتشافات لحظية':'Rafiq reads your data — instant discoveries')+'</small></button>'+
   '<button class="more-item" data-more="story">'+ic('book',19)+'<span>'+t('m_story')+'</span><small>'+t('m_story_s')+'</small></button>'+
   '<button class="more-item" data-more="ritual">'+ic('sun2',19)+'<span>'+t('m_ritual')+'</span><small>'+t('m_ritual_s')+'</small></button>'+
@@ -6102,10 +6186,20 @@ document.addEventListener('click',async e=>{
  const pt=e.target.closest('#plantTap');
  if(pt){go('twin');return}
 });
+ /* v1.8.0 «شريطي كما أريد»: ضغطة طويلة 480ms على أي تبويب تفتح مصنع الشريط — بحارس nvLpFired كي لا يُفتح عرض بعد رفع الإصبع */
+ let nvLpT=null,nvLpFired=false;
+ $('#tabbar').addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.tab');if(!el||el.dataset.tab==='more')return;
+  nvLpFired=false;clearTimeout(nvLpT);
+  nvLpT=setTimeout(()=>{nvLpFired=true;try{navigator.vibrate&&navigator.vibrate(18)}catch(_){}openNavSheet()},480);
+ });
+ ['pointerup','pointerleave','pointercancel'].forEach(ev=>$('#tabbar').addEventListener(ev,()=>clearTimeout(nvLpT)));
  $('#tabbar').addEventListener('click',e=>{
+ if(nvLpFired){nvLpFired=false;return}
  if(e.target.closest('#fabAdd')){openEventSheet();return}
  const el=e.target.closest('.tab');if(!el)return;
  if(el.dataset.tab==='more'){buildMoreSheet();openSheet('#shMore');return}
+ if(el.dataset.tab==='story'){openStorySheet();return}
  go(el.dataset.tab);
 });
  $('#shMore').addEventListener('click',async e=>{
@@ -6114,6 +6208,7 @@ document.addEventListener('click',async e=>{
  const m=it.dataset.more;
  closeSheets();
  if(['life','cal','twin','relations','decisions','report','settings','mind'].indexOf(m)>=0)setTimeout(()=>go(m),60);
+ else if(m==='navcraft')setTimeout(openNavSheet,60);
  else if(m==='story')setTimeout(openStorySheet,140);
  else if(m==='fingerprint')setTimeout(()=>{go('fingerprint')},140);
  else if(m==='lab')setTimeout(()=>{go('lab')},140);
@@ -6173,7 +6268,7 @@ async function exportBackup(){
   for(const d of (data.decisions||[]))await DB.put('decisions',d);
   for(const c of (data.chat||[]))await DB.put('chat',c);
   if(data.meta)await DB.put('meta',{key:'main',profile:data.meta.profile||{},reminders:data.meta.reminders||[],seeded:data.meta.seeded,settings:data.meta.settings});
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(data.meta&&data.meta.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(data.meta&&data.meta.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -6204,7 +6299,7 @@ window.__rfStage='فتح قاعدة البيانات';
   window.__rfStage='قراءة البيانات المحفوظة';
   let m=null;
   try{m=(await DB.all('meta')).find(x=>x.key==='main')}catch(e){}
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(m&&m.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(m&&m.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
