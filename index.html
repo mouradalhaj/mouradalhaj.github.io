@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
+<!-- COMMIT: RF_PLANNER_v1.7.0 — «دفتر المواعيد» (بلاغ مراد: أريد من سجل حدث في التقويم مذكرة مواعيد مستقبلية بالتاريخ والساعة تظهر في مهام اليوم للتنفيذ، بعلامة صح أو مبرر إن لم تنجز — نسيت/تأجّلت/ألغيتها/كتابة حرة — ويعزز ذلك الفهم والالتزام والمتابعة والمزاج، وأريد جدولاً بيانياً لطيفاً للأيام أو الشهور كختصر تفاعلي): (1) مذكرة المواعيد في التقويم تحت زر أساسي جديد: عنوان + يوم (اليوم/بكرة/بعد بكرة/تاريخ محدد) + ساعة + تصنيف يُلتقط آلياً — تُحفظ حدث خطة gen:plan في الدفتر المحلي وتظهر نقطة يومها في شبكة التقويم وتُضغط الأيام القادمة ذات المواعيد. (2) في «مهام اليوم» تظهر شارة الساعة (تحمرّ إن فاتت) وشارة «موعد» وزر ✗ للمبرر — وعند فوات أيام ماضية تنزل قسم «مستحقة عليك» بلا مهرب: صحّ أو مبرر موثق (نسيت/تأجّلت/ألغيتها/كتابة حرة) أو زر «انقلها لبكرة» يعيد جدولتها بلطف. (3) «في الأفق»: أقرب ثلاثة مواعيد قادمة تبقى أمام عين المراد كل يوم في بطاقة المهام. (4) جدول «نبض نشاطك» التفاعلي في التقويم: آخر 14 يوماً أو آخر 6 شهور — أعمدة تنمو بحركة، رقم فوق كل عمود، نقطة خضراء ليوم أنجز موعده وحمراء ليوم فائت، نسبة الالتزام 30 يوماً، وضغط العمود يفتح يومه أو شهره. (5) جرس الوقت الحقيقي: عند ساعة الموعد توست + إشعار محلي إن سمح الجهاز، ويُعاد جدولته عند كل إقلاع. (6) حارس حسابي: مواعيد المستقبل لا تدخل إحصاءات ملخص الأداء — زر «سجل حدثاً» القديم بقي شاهداً بجانب المذكرة — فوق RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -248,6 +248,22 @@ input,textarea,select{-webkit-appearance:none;appearance:none}
 /* v1.6.2: دخول ملخص الأداء عند تبديل المدى */
 #pfWrap{animation:pfIn .32s ease}
 @keyframes pfIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+/* v1.7.0 «دفتر المواعيد» — شارات الوقت وصفوف المستحق وجدول نبض النشاط */
+.plan-time{flex:none;display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:700;color:var(--acc);background:var(--acc-soft);border:1px solid var(--line2);border-radius:8px;padding:3px 7px;margin-top:4px}
+.int-x{flex:none;width:27px;height:27px;border-radius:9px;border:1px solid var(--line2);background:var(--card);color:var(--bad);display:grid;place-items:center}
+.int-item.ovd{border-right:3px solid var(--bad);border-radius:10px;background:rgba(228,121,107,.07);padding-right:8px}
+.ovd-t{font-size:11px;font-weight:700;color:var(--bad);margin:13px 0 7px;display:flex;align-items:center;gap:6px}
+.plan-row{display:flex;align-items:center;gap:9px;padding:9px 2px;border-bottom:1px solid var(--line)}
+.plan-row:last-child{border-bottom:none}
+.cal-chart{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:14px}
+.cc-bars{display:flex;gap:4px;align-items:flex-end;height:96px;margin-top:12px}
+.cc-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%;background:none;border:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cc-col:active .cc-bar{filter:brightness(1.3)}
+.cc-bar{width:100%;max-width:24px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--acc),#7a5a1e);height:0;transition:height .65s cubic-bezier(.2,.8,.2,1);position:relative;display:block}
+.cc-n{position:absolute;top:-15px;right:50%;transform:translateX(50%);font-size:9px;color:var(--ink2);font-weight:700}
+.cc-lab{font-size:8.5px;color:var(--ink3)}
+.cc-dot{width:5px;height:5px;border-radius:50%;flex:none}
+.cc-dot.g{background:var(--good)}.cc-dot.r{background:var(--bad)}
 .rec{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-right:3px solid var(--rc,var(--acc));border-radius:14px;padding:12px 13px;margin-bottom:9px}
 .rec-ic{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;color:var(--rc,var(--acc));background:var(--card2);border:1px solid var(--line)}
 .rec-b{flex:1;min-width:0}
@@ -887,6 +903,8 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shRfSet"></div>
     <div class="sheet" id="shBody"></div>
     <div class="sheet" id="shCatLog"></div>
+    <div class="sheet" id="shPlan"></div>
+    <div class="sheet" id="shWhy"></div>
     <div id="lightbox"><button class="sh-x" data-lb-close></button><img id="lbImg" alt=""></div>
     <div id="toast"></div>
     <div id="modal"></div>
@@ -1611,7 +1629,7 @@ function weeklyReport(off){
 function perfStats(range){
  const now=Date.now();
  const start=range==='day'?dayStart(now):range==='week'?dayStart(now)-6*DAY:dayStart(now)-29*DAY;
- const ev=S.events.filter(e=>e.ts>=start);
+ const ev=S.events.filter(e=>e.ts>=start&&e.ts<=now);/* v1.7.0: مواعيد المستقبل المثبتة لا تُحتسب أداءً بعد */
  const acts=ev.filter(e=>e.type!=='mood'&&e.type!=='promise'&&e.type!=='selfrate'&&e.type!=='interest');
  const pos=acts.filter(e=>e.polarity>0).length,neg=acts.filter(e=>e.polarity<0).length;
  const moods=ev.filter(e=>e.type==='mood');
@@ -2932,11 +2950,17 @@ function questHtml(){
  const doneN=its.filter(p=>p.done).length;
  let items='';
  if(its.length){
-  items=its.map(p=>'<div class="int-item '+(p.done?'did':'')+'">'+
+  const nowTs=Date.now();
+  items=its.map(p=>{
+   const isPlan=p.gen==='plan';
+   const late=isPlan&&p.due&&p.due<nowTs&&!p.done;
+   const tchip=isPlan&&p.due?'<span class="plan-time" style="'+(late?'color:var(--bad);background:rgba(228,121,107,.12);border-color:var(--bad)':'')+'">'+ic('clock',10)+' '+fmtTime(p.due)+'</span>':'';
+   const xbtn=isPlan&&!p.done?'<button class="int-x" title="'+(AR?'لم أنجزها — وثّق المبرر':'Not done — add reason')+'" data-act="planWhy" data-id="'+p.id+'">'+ic('x',13)+'</button>':'';
+   return '<div class="int-item '+(p.done?'did':'')+'">'+
    '<button class="int-check '+(p.done?'on':'')+'" data-act="toggleIn" data-id="'+p.id+'">'+ic('check',14)+'</button>'+
-   '<div class="int-txt">'+esc(p.text)+'</div>'+
-   '<span class="int-gen">'+(p.gen==='human'?(AR?'إنسانية':'human'):p.gen==='mine'?(AR?'من إيقاعك':'rhythm'):t('int_ready'))+'</span></div>').join('');
- }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+(AR?'اختر مهمتك الإنسانية، أو أضف مواعيدك والتزاماتك واهتماماتك — وكل تأشير يُوثَّق في أحداثك تلقائياً':'Pick your human quest, or add duties & interests — every check-in becomes a documented event')+'</p>';
+   '<div class="int-txt">'+esc(p.text)+tchip+'</div>'+
+   '<span class="int-gen">'+(p.gen==='human'?(AR?'إنسانية':'human'):p.gen==='mine'?(AR?'من إيقاعك':'rhythm'):isPlan?(AR?'موعد':'plan'):t('int_ready'))+'</span>'+xbtn+'</div>'}).join('');
+ }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+(AR?'اختر مهمتك الإنسانية، أو ثبّت مواعيدك من مذكرة التقويم — وكل تأشير يُوثَّق في أحداثك تلقائياً':'Pick your human quest, or schedule appointments from the calendar planner — every check-in becomes a documented event')+'</p>';
  const pct=its.length?Math.round(doneN/its.length*100):0;
  return '<div class="quest '+(humanDone&&pend.length===0?'done':'')+'" style="display:block">'+
   '<div style="display:flex;align-items:center;gap:11px">'+
@@ -2945,7 +2969,21 @@ function questHtml(){
    '<button class="quest-go" data-act="questGo">'+t('q_go')+'</button>'+
   '</div>'+
   (its.length?'<div style="margin-top:11px;height:6px;border-radius:100px;background:var(--card2);overflow:hidden"><i style="display:block;height:100%;border-radius:100px;width:'+pct+'%;background:var(--good);transition:width .5s"></i></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-top:4px"><span>'+doneN+' / '+its.length+'</span><span>'+pct+'%</span></div>':'')+
+  /* v1.7.0: المستحقة من أيام ماضية — لا موعد يضيع بلا محاسبة (صح أو مبرر) */
+  (function(){const ds=dayStart(Date.now());
+   const ovd=S.events.filter(e=>e.type==='interest'&&e.gen==='plan'&&!e.done&&!e.missed&&dayStart(e.ts)<ds).sort((a,b2)=>(a.due||a.ts)-(b2.due||b2.ts));
+   if(!ovd.length)return '';
+   return '<div class="ovd-t">'+ic('clock',13)+' '+(AR?'مستحقة عليك من أيام ماضية — صحّ أو وثّق المبرر':'Overdue — mark done or justify')+'</div>'+
+    ovd.map(p=>'<div class="int-item ovd"><button class="int-check" data-act="toggleIn" data-id="'+p.id+'">'+ic('check',14)+'</button><div class="int-txt">'+esc(p.text)+'<span class="plan-time" style="color:var(--bad);background:rgba(228,121,107,.12);border-color:var(--bad)">'+ic('clock',10)+' '+fmtShort(p.ts)+(p.due?' · '+fmtTime(p.due):'')+'</span></div><button class="int-x" data-act="planWhy" data-id="'+p.id+'">'+ic('x',13)+'</button></div>').join('');
+  })()+
   '<div style="margin-top:10px">'+items+'</div>'+
+  /* v1.7.0: في الأفق — المواعيد القادمة تبقى أمام عينك كل يوم */
+  (function(){const ds=dayStart(Date.now());
+   const up=S.events.filter(e=>e.type==='interest'&&e.gen==='plan'&&!e.done&&!e.missed&&dayStart(e.ts)>ds).sort((a,b2)=>(a.due||a.ts)-(b2.due||b2.ts)).slice(0,3);
+   if(!up.length)return '';
+   return '<div style="margin-top:11px"><div class="ovd-t" style="color:var(--acc)">'+ic('sun2',13)+' '+(AR?'في الأفق':'On the horizon')+'</div>'+
+    up.map(p=>'<div class="int-item" style="opacity:.78"><span class="plan-time">'+fmtShort(p.ts)+(p.due?' · '+fmtTime(p.due):'')+'</span><div class="int-txt" style="font-size:11.5px;opacity:.9">'+esc(p.text)+'</div></div>').join('')+'</div>';
+  })()+
    '<div class="duty-note">'+
    ic('sun2',20)+
    '<span style="flex:1"><b>'+(AR?'هنا مواعيدك وبرنامجك اليومي':'Your appointments & daily plan')+'</b>'+
@@ -3370,7 +3408,7 @@ function renderCal(){
   const evs=byDay[ts]||[];
   const cats=[];evs.forEach(e=>{if(cats.indexOf(e.category)<0)cats.push(e.category)});
   const cls='cal-d'+(ts===today?' today':'')+(evs.length?' has':'')+(ts>today?' future':'');
-  cells+='<button class="'+cls+'" '+(ts<=today?'data-act="calDay" data-ts="'+ts+'"':'')+'>'+
+  cells+='<button class="'+cls+'" '+((ts<=today||evs.length)?'data-act="calDay" data-ts="'+ts+'"':'')+'>'+
    '<b>'+d+'</b>'+(cats.length?'<span class="cal-dots">'+cats.slice(0,4).map(c=>'<i style="background:'+CAT_META[c].color+'"></i>').join('')+'</span>':'')+
   '</button>';
  }
@@ -3389,8 +3427,14 @@ function renderCal(){
    '<div class="rp-box"><b style="display:flex;justify-content:center;color:'+(avgMood>=5?'var(--good)':(avgMood&&avgMood<=3)?'var(--bad)':'var(--acc)')+'">'+(avgMood?faceSvg(avgMood,30):'—')+'</b><span>'+t('cal_s3')+'</span></div>'+
   '</div>'+
   (bestD?'<div class="rel-sum" style="margin-top:13px">'+t('cal_best_a')+'<b>'+WD()[new Date(bestD).getDay()]+'</b>'+t('cal_best_b')+bestN+t('cal_best_c')+'</div>':'')+
-  '<div class="page-add"><button class="btn ghost" data-act="openEvent">'+ic('plus',16)+' '+t('cal_add')+'</button></div>'+
+  /* v1.7.0 «دفتر المواعيد» — طلب مراد: مواعيد مثبتة بالتاريخ والساعة + جدول نبض النشاط التفاعلي */
+  calPlansHtml()+
+  '<div id="calChartWrap">'+calChartInner()+'</div>'+
+  '<div class="page-add" style="margin-top:14px"><button class="btn" data-act="openPlan">'+ic('clock',16)+' '+(LANG==='ar'?'مذكرة مواعيد — خطّط ليومك':'Planner — schedule ahead')+'</button></div>'+
+  '<div class="page-add" style="margin-top:8px"><button class="btn ghost" data-act="openEvent">'+ic('plus',16)+' '+t('cal_add')+'</button></div>'+
   '<div style="height:16px"></div>';
+ /* v1.7.0: أعمدة نبض النشاط تنمو بعد الرسم وتُضغط فيفتح يومها/شهرها */
+ wireCalChart();
 }
 function openDaySheet(ts){
  const sh=$('#shDay');if(!sh)return;
@@ -3401,7 +3445,7 @@ function openDaySheet(ts){
  if(list.length){items=list.map(e=>{const cm=CAT_META[e.category]||CAT_META.mind;
   return '<div class="day-ev" data-mem="'+e.id+'"><span class="day-time">'+fmtTime(e.ts)+'</span>'+
    '<div class="ev-ic" style="--rc:'+cm.color+';width:30px;height:30px">'+ic(cm.icon,15)+'</div>'+
-   '<div class="ev-b"><p style="font-size:13px">'+esc(e.text)+'</p><span>'+cn(e.category)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
+   '<div class="ev-b"><p style="font-size:13px">'+esc(e.text)+'</p><span>'+(e.gen==='plan'&&e.due?'⏰ '+fmtTime(e.due)+' · ':'')+cn(e.category)+(e.polarity>0?t('tag_pos'):e.polarity<0?t('tag_neg'):'')+'</span></div>'+
    ((e.att&&e.att.length)?'<span class="ev-th" style="width:34px;height:34px"><img src="'+e.att[0]+'" data-att="'+e.id+':0" alt=""></span>':'')+
   '</div>'}).join('');}
  else{items='<div class="empty">'+ic('moon',24)+'<br>'+t('day_empty')+'</div>';}
@@ -3412,6 +3456,157 @@ function openDaySheet(ts){
   (future?'':'<div class="page-add" style="margin-top:15px"><button class="btn" id="dayAdd">'+ic('plus',16)+' '+t('day_add')+'</button></div>');
  openSheet('#shDay');
  const da=$('#dayAdd');if(da)da.onclick=()=>{closeSheets();setTimeout(()=>openEventSheet(null,null,ts),120)};
+}
+
+/* ===== v1.7.0 «دفتر المواعيد» — مذكرة مواعيد مستقبلية بالتاريخ والساعة، تظهر في مهام يومها للتنفيذ بعلامة صح أو مبرر موثق — طلب مراد: مواعيد أراها يومياً ومحاسبة بالتبرير تعزز الالتزام والمتابعة ===== */
+let calChartR='days',plDay='today',whyChip='';
+function upcomingPlans(){
+ return S.events.filter(e=>e.type==='interest'&&e.gen==='plan'&&!e.done&&!e.missed).sort((a,b)=>(a.due||a.ts)-(b.due||b.ts));
+}
+function calPlansHtml(){
+ const AR=LANG==='ar',up=upcomingPlans().slice(0,4);
+ if(!up.length)return '';
+ return '<div class="card" style="margin-top:14px;padding:12px 15px"><div class="spark-t"><b>'+(AR?'مواعيدك القادمة':'Upcoming appointments')+'</b><span>'+(AR?'ثُبّتت من مذكرة المواعيد':'from your planner')+'</span></div>'+
+  up.map(p=>'<div class="plan-row"><span class="plan-time">'+ic('clock',10)+' '+fmtShort(p.ts)+(p.due?' · '+fmtTime(p.due):'')+'</span><div class="ev-b" style="flex:1;min-width:0"><p style="font-size:12.5px">'+esc(p.text)+'</p></div><button class="icon-btn" data-act="planDel" data-id="'+p.id+'" style="color:var(--bad)">'+ic('trash',14)+'</button></div>').join('')+'</div>';
+}
+function calChartInner(){
+ const AR=LANG==='ar',now=Date.now(),ds=dayStart(now);
+ const act=e=>e.type!=='mood';
+ const chips='<div class="pf-seg" style="margin:10px 0 4px"><button class="chip '+(calChartR==='days'?'on':'')+'" data-act="chartR" data-r="days">'+(AR?'آخر 14 يوماً':'14 days')+'</button><button class="chip '+(calChartR==='months'?'on':'')+'" data-act="chartR" data-r="months">'+(AR?'آخر 6 شهور':'6 months')+'</button></div>';
+ if(calChartR==='months'){
+  const cells=[];let maxN=1;
+  for(let i=5;i>=0;i--){const d=new Date(now);d.setDate(1);d.setMonth(d.getMonth()-i);
+   const n=S.events.filter(e=>act(e)&&new Date(e.ts).getFullYear()===d.getFullYear()&&new Date(e.ts).getMonth()===d.getMonth()).length;
+   if(n>maxN)maxN=n;cells.push({n:n,y:d.getFullYear(),m:d.getMonth(),lab:d.toLocaleDateString(LOC(),{month:'short'})});}
+  const bars=cells.map(c=>'<button class="cc-col" data-cy="'+c.y+'" data-cm="'+c.m+'"><i class="cc-bar" data-h="'+Math.max(4,Math.round(c.n/maxN*100))+'%">'+(c.n?'<span class="cc-n">'+c.n+'</span>':'')+'</i><small class="cc-lab">'+c.lab+'</small></button>').join('');
+  return '<div class="cal-chart"><div class="spark-t"><b>'+(AR?'نبض نشاطك':'Activity pulse')+'</b><span>'+(AR?'اضغط أي شهر يفتحه':'tap a month')+'</span></div>'+chips+'<div class="cc-bars">'+bars+'</div></div>';
+ }
+ const cells=[];let maxN=1;
+ for(let i=13;i>=0;i--){const t2=ds-i*DAY;
+  const n=S.events.filter(e=>act(e)&&dayStart(e.ts)===t2).length;
+  if(n>maxN)maxN=n;
+  const pl=S.events.filter(e=>e.type==='interest'&&e.gen==='plan'&&dayStart(e.ts)===t2);
+  const mark=pl.some(p=>p.done)?'g':pl.some(p=>p.missed)?'r':'';
+  cells.push({n:n,ts:t2,mark:mark,lab:new Date(t2).getDate()});}
+ const bars=cells.map(c=>'<button class="cc-col" data-ccol="'+c.ts+'"><i class="cc-bar" data-h="'+Math.max(4,Math.round(c.n/maxN*100))+'%">'+(c.n?'<span class="cc-n">'+c.n+'</span>':'')+'</i><span class="cc-dot '+(c.mark||'')+'" style="opacity:'+(c.mark?1:.22)+'"></span><small class="cc-lab">'+c.lab+'</small></button>').join('');
+ const win=S.events.filter(e=>e.type==='interest'&&e.gen==='plan'&&e.ts>=ds-29*DAY&&(e.done||e.missed));
+ const commit=win.length?Math.round(win.filter(e=>e.done).length/win.length*100):null;
+ return '<div class="cal-chart"><div class="spark-t"><b>'+(AR?'نبض نشاطك':'Activity pulse')+'</b><span>'+(AR?'اضغط أي عمود يفتح يومه':'tap a day')+(commit!==null?' · '+(AR?'الالتزام':'Commitment')+' '+commit+'%':'')+'</span></div>'+chips+'<div class="cc-bars">'+bars+'</div>'+
+  '<div style="display:flex;gap:12px;font-size:9.5px;color:var(--ink3);margin-top:8px"><span><i class="cc-dot g" style="display:inline-block"></i> '+(AR?'موعد أنجزته':'done plan')+'</span><span><i class="cc-dot r" style="display:inline-block"></i> '+(AR?'موعد فائت':'missed plan')+'</span></div></div>';
+}
+function wireCalChart(){
+ requestAnimationFrame(()=>$$('#v-cal .cc-bar').forEach(i=>i.style.height=i.dataset.h));
+ $$('#v-cal [data-ccol]').forEach(b2=>b2.onclick=()=>{const tsv=+b2.dataset.ccol;
+  if(tsv){calY=new Date(tsv).getFullYear();calM=new Date(tsv).getMonth();renderCal();setTimeout(()=>openDaySheet(tsv),60)}});
+ $$('#v-cal [data-cy]').forEach(b2=>b2.onclick=()=>{calY=+b2.dataset.cy;calM=+b2.dataset.cm;renderCal()});
+}
+function openPlanSheet(){
+ const sh=$('#shPlan');if(!sh)return;
+ const AR=LANG==='ar';
+ plDay='today';
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'مذكرة مواعيد':'Planner')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="field"><label class="lab">'+(AR?'ما الموعد الذي تثبته؟':'What appointment?')+'</label><input id="plTx" maxlength="120" placeholder="'+(AR?'مثال: اتصل بأخي / تسليم التقرير / موعد الطبيب':'e.g. call brother / deliver report')+'"></div>'+
+  '<label class="lab" style="margin-top:10px">'+(AR?'اليوم':'Day')+'</label>'+
+  '<div class="dq-row"><button class="dq on" data-pd="today">'+(AR?'اليوم':'Today')+'</button><button class="dq" data-pd="tom">'+(AR?'بكرة':'Tomorrow')+'</button><button class="dq" data-pd="dai">'+(AR?'بعد بكرة':'In 2 days')+'</button><button class="dq" data-pd="custom">'+(AR?'تاريخ محدد':'Pick date')+'</button></div>'+
+  '<div id="plDateWrap" hidden style="margin-top:8px"><input type="date" id="plDate" min="'+new Date().toISOString().slice(0,10)+'"></div>'+
+  '<label class="lab" style="margin-top:12px">'+(AR?'الساعة':'Time')+'</label><input type="time" id="plTime" value="19:00">'+
+  '<div class="cat-hint" style="margin-top:10px">'+(AR?'التصنيف الملتقط':'Category')+': <b id="plCat">—</b></div>'+
+  '<button class="btn" id="plSave" style="margin-top:14px">'+ic('check',16)+' '+(AR?'ثبّت الموعد':'Set appointment')+'</button>'+
+  '<div class="set-note" style="margin-top:10px">'+(AR?'يظهر في «مهام اليوم» يوم موعده للتنفيذ — بعلامة صح أو مبرر موثق — وسأذكّرك بساعته إن سمح الجهاز':'Appears in daily quests on its day — done or justified — with an alarm if permitted')+'</div>'+
+  '<div id="plList" style="margin-top:12px"></div>';
+ drawPlList();
+ openSheet('#shPlan');
+ $$('#shPlan [data-pd]').forEach(b2=>b2.onclick=()=>{plDay=b2.dataset.pd;$$('#shPlan [data-pd]').forEach(x=>x.classList.toggle('on',x===b2));const dw=$('#plDateWrap');if(dw)dw.hidden=plDay!=='custom'});
+ const tx=$('#plTx');
+ if(tx)tx.addEventListener('input',()=>{const c2=$('#plCat');if(c2)c2.textContent=classify(tx.value)?cn(classify(tx.value)):'—'});
+ const sb=$('#plSave');if(sb)sb.onclick=savePlan;
+}
+function plTargetTs(){
+ const now=new Date();
+ if(plDay==='tom')return dayStart(now.getTime())+DAY;
+ if(plDay==='dai')return dayStart(now.getTime())+2*DAY;
+ if(plDay==='custom'){const dv=$('#plDate');if(dv&&dv.value){const p2=dv.value.split('-');return new Date(+p2[0],+p2[1]-1,+p2[2]).getTime()}}
+ return dayStart(now.getTime());
+}
+async function savePlan(){
+ const tx2=$('#plTx'),tm=$('#plTime');
+ if(!tx2||!tx2.value.trim()){toast(LANG==='ar'?'اكتب الموعد أولاً':'Write the appointment first','var(--bad)','pen');return}
+ const tsd=plTargetTs();
+ const hm=(tm&&tm.value)?tm.value.split(':'):[19,0];
+ const due=tsd+(+hm[0])*36e5+(+hm[1])*6e4;
+ const cat=classify(tx2.value)||'mind';
+ const ev={id:uid(),type:'interest',category:cat,polarity:1,text:tx2.value.trim(),done:false,gen:'plan',plan:1,ts:tsd,due:due};
+ await DB.put('events',ev);S.events.push(ev);
+ try{if(window.Notification&&window.Notification.permission==='default')window.Notification.requestPermission()}catch(e){}
+ rfScheduleTaskReminder(ev);
+ tx2.value='';
+ toast(LANG==='ar'?'ثُبّت الموعد — أراه يوم '+fmtShort(tsd)+' في مهامك':'Scheduled — shows on '+fmtShort(tsd),'var(--good)','clock');
+ drawPlList();
+ computeAll();renderDot();
+ if(currentView==='cal')renderCal();
+}
+function drawPlList(){
+ const w2=$('#plList');if(!w2)return;
+ const AR=LANG==='ar',up=upcomingPlans().slice(0,6);
+ w2.innerHTML=up.length?'<label class="lab">'+(AR?'مواعيدك المثبتة':'Set appointments')+'</label>'+up.map(p=>'<div class="plan-row"><span class="plan-time">'+ic('clock',10)+' '+fmtShort(p.ts)+(p.due?' · '+fmtTime(p.due):'')+'</span><div class="ev-b" style="flex:1;min-width:0"><p style="font-size:12.5px">'+esc(p.text)+'</p></div><button class="icon-btn" data-pldel="'+p.id+'" style="color:var(--bad)">'+ic('trash',14)+'</button></div>').join(''):'<p style="font-size:11px;color:var(--ink3)">'+(AR?'لا مواعيد مثبتة بعد — أول واحدة تُفتح الطريق':'No appointments yet')+'</p>';
+ $$('#plList [data-pldel]').forEach(b2=>b2.onclick=async()=>{await delPlanCore(b2.dataset.pldel);drawPlList()});
+}
+async function delPlanCore(id){
+ S.events=S.events.filter(x=>x.id!==id);
+ await DB.del('events',id);
+ toast(LANG==='ar'?'أُلغي الموعد':'Appointment removed','var(--ink2)','trash');
+}
+function rfScheduleTaskReminder(ev){
+ if(!ev||!ev.due||ev.__tsched)return;ev.__tsched=true;
+ const wait=ev.due-Date.now();if(wait<=0)return;
+ setTimeout(()=>{
+  if(ev.done||ev.missed)return;
+  const AR=LANG==='ar';
+  try{toast((AR?'⏰ حان موعد: ':'⏰ Due now: ')+ev.text,'var(--acc)','clock')}catch(e){}
+  try{if(window.Notification&&window.Notification.permission==='granted')new window.Notification((AR?'رفيق — موعدك':'Rafiq — your appointment'),{body:ev.text})}catch(e2){}
+ },wait);
+}
+/* ورقة المبرر — الاعتراف وقود الالتزام (طلب مراد: صح أو مبرر نسيت/تأجّل/ألغيت/كتابة حرة) */
+function openWhySheet(id){
+ const sh=$('#shWhy');if(!sh)return;
+ const p2=S.events.find(x=>x.id===id&&x.type==='interest');if(!p2)return;
+ const AR=LANG==='ar';
+ whyChip='';
+ sh.innerHTML='<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'لماذا لم تُنجزها؟':'Why not done?')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="rel-sum" style="margin-top:0"><b>'+esc(p2.text)+'</b><br>'+(AR?'لا غبار على الاعتراف — توثيق المبرر يطوّع عاداتك ويقوّي الالتزام':'Owning it builds commitment')+'</div>'+
+  '<div class="dq-row" style="margin-top:12px"><button class="dq" data-wc="forgot">'+(AR?'نسيت':'Forgot')+'</button><button class="dq" data-wc="delayed">'+(AR?'تأجّلت':'Delayed')+'</button><button class="dq" data-wc="canceled">'+(AR?'ألغيتها':'Cancelled')+'</button></div>'+
+  '<div class="field" style="margin-top:12px"><label class="lab">'+(AR?'أو اكتب مبررك بحرية':'Or write freely')+'</label><textarea id="whyTx" rows="2" placeholder="'+(AR?'ماذا استغل وقتك؟ رفيق يفهم':'What came up? Rafiq understands')+'"></textarea></div>'+
+  '<button class="btn" id="whySave" style="margin-top:12px">'+ic('check',16)+' '+(AR?'وثّق المبرر':'Log the reason')+'</button>'+
+  '<button class="btn ghost" id="whyPost" style="margin-top:8px">'+ic('sun2',15)+' '+(AR?'انقلها لبكرة — موعد جديد':'Move to tomorrow')+'</button>';
+ openSheet('#shWhy');
+ $$('#shWhy [data-wc]').forEach(b2=>b2.onclick=()=>{whyChip=b2.dataset.wc;$$('#shWhy [data-wc]').forEach(x=>x.classList.toggle('on',x===b2))});
+ const wsv=$('#whySave');if(wsv)wsv.onclick=()=>planMissSave(id);
+ const wp=$('#whyPost');if(wp)wp.onclick=()=>planPostpone(id);
+}
+async function planMissSave(id){
+ const p2=S.events.find(x=>x.id===id&&x.type==='interest');if(!p2)return;
+ const AR=LANG==='ar';
+ const free=$('#whyTx')?$('#whyTx').value.trim():'';
+ const lbl={forgot:AR?'نسيت':'Forgot',delayed:AR?'تأجّلت':'Delayed',canceled:AR?'ألغيتها':'Cancelled'}[whyChip]||'';
+ if(!lbl&&!free){toast(AR?'اختر مبرراً أو اكتبه':'Pick or write a reason','var(--bad)','pen');return}
+ p2.missed=1;p2.done=false;p2.reason=[lbl,free].filter(Boolean).join(' — ');
+ await DB.put('events',p2);
+ closeSheets();
+ toast(AR?'وثّقنا المبرر — هذا هو الالتزام الحقيقي':'Reason logged — real commitment','var(--c-mind)','check');
+ refresh();
+}
+async function planPostpone(id){
+ const p2=S.events.find(x=>x.id===id&&x.type==='interest');if(!p2)return;
+ const AR=LANG==='ar';
+ /* v1.7.0: النقل لبكرة يحفظ ساعة اليوم نفسها — لا موعد بكرة بساعة أمس */
+ const oldTs=p2.ts;
+ p2.ts=dayStart(Date.now())+DAY;
+ if(p2.due)p2.due=p2.ts+Math.max(0,p2.due-dayStart(oldTs));
+ p2.missed=0;
+ await DB.put('events',p2);
+ closeSheets();
+ toast(AR?'انقلت لبكرة — موعد جديد':'Moved to tomorrow','var(--acc)','sun2');
+ refresh();
 }
 
 /* لوحة الحياة */
@@ -4144,7 +4339,7 @@ function rfImpactScale(){
  if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first for compatibility')+'</div>';
  const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
  v.innerHTML=
-  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.6.2':'LIVING FINGERPRINT · 1.6.2')+'</span>'+
+  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.7.0':'LIVING FINGERPRINT · 1.7.0')+'</span>'+
   '<div class="fp-hero">'+logoSvg(40)+
    '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800;margin-top:8px">'+(AR?'بصمة '+esc(name)+' الرقمية':esc(name)+"'s fingerprint")+'</h2>'+
    '<div class="fp-score">'+total+'%</div>'+
@@ -5666,7 +5861,7 @@ async function finishAssessment(){
 /* v1.6.1 «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات — تُفتح تفاصيله بـ «+ المزيد من التفاصيل» (طلب مراد) */
 function aboutDetailsHtml(){
  const AR=LANG==='ar';
- return '<span class="abt-stamp">RF_HOME_REVIVE_v1.6.2 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
+ return '<span class="abt-stamp">RF_PLANNER_v1.7.0 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
   '<p>'+(AR?'بياناتك تعيش على جهازك وحده — في مخزن IndexedDB المحلي. لا حسابات، لا سحابة، لا تتبع، لا إعلانات، ولا خادم يعرف اسمك.':'Your data lives on this device only — local IndexedDB. No accounts, no cloud, no tracking, no ads.')+'</p>'+
   '<p>'+(AR?'الوحيد الذي يعبر جهازك هو طلب نموذج الذكاء الصناعي — وإنما إذا فعّلت أنت مفتاح Groq بنفسك، ونصّه ملخص أحداثك فقط. وبدون مفتاح يعمل رفيق كاملاً بلا إنترنت.':'Only outbound traffic is the AI model request, and only if you enabled your own Groq key. Without it, Rafiq works fully offline.')+'</p>'+
   '<p>'+(AR?'حقوقك بنقرة: «تصدير نسخة احتياطية» يخرج كل شيء ملفاً واحداً، و«مسح كل شيء» يمحي ذاكرة رفيق نهائياً — أنت المالك الوحيد.':'Export in one tap, erase in one tap — you are the sole owner.')+'</p>'+
@@ -5819,6 +6014,10 @@ window.__rfStage='ربط الأفعال';
  }
  else if(act==='questGo'){renderQuestPick();}
  else if(act==='perfR'){perfR=b.dataset.r;try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}const pw=$('#pfWrap');if(pw)pw.innerHTML=perfInner();else go('home')}
+ else if(act==='openPlan')openPlanSheet();
+ else if(act==='planDel'){await delPlanCore(id);refresh()}
+ else if(act==='planWhy')openWhySheet(id);
+ else if(act==='chartR'){calChartR=b.dataset.r;const cw=$('#calChartWrap');if(cw){cw.innerHTML=calChartInner();wireCalChart()}else go('cal')}
  else if(act==='recGo'){const r=S.recs[+b.dataset.i];if(!r)return;
   if(r.id.indexOf('rel:')===0)openContactSheet(r.id.slice(4));
   else if(r.id.indexOf('rem:')===0){S.reminders=S.reminders.filter(x=>'rem:'+x.id!==r.id);await saveMeta();dismissed.add(r.id);toast(t('rec_rem_done'),'var(--good)','check');refresh()}
@@ -6034,6 +6233,7 @@ function enterApp(seeded){
  const ob=$('#ob');if(ob)ob.style.display='none';
  const app=$('#app');if(app)app.hidden=false;
  computeAll();renderDot();go('home');
+ try{(S.events||[]).forEach(ev=>{if(ev.type==='interest'&&ev.plan&&!ev.done&&!ev.missed&&ev.due>Date.now())rfScheduleTaskReminder(ev)})}catch(e){}/* v1.7.0: إعادة جدولة أجراس المواعيد عند كل إقلاع */
  setTimeout(thresholdGate,650);
  if(seeded)setTimeout(()=>toast(t('seed_ready')+(S.profile.name||'')+t('seed_ready2'),'var(--acc)','spark'),700);
  if(!locked)setTimeout(showRitualIfNeeded,900);
