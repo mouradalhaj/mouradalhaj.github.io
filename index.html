@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- COMMIT: RF_NAV_CRAFT_v1.8.0 — «شريطي كما أريد» (بلاغ مراد: بدي أطور شريط المهام أسفل التطبيق بحيث أقدر أضيف وألغي شو بدي — الشاشة الرئيسية ثابتة والمزيد ثابت وبقدر أعمل كمان أربع خيارات مثلاً التقويم ورفيق أو العقل المحلي أو حكايتي أو بصمة أو أي شيء): (1) buildTabbar تعمّر الشريط من S.settings.nav: الرئيسية والمزيد وزر + ثابتة لا تتحرك، وأربع خانات مرنة كحدّها من بنك NAV_POOL (تقويم · رفيق · العقل المحلي · حكايتي · بصمتي · لوحة الحياة · التوأم الرقمي · العلاقات · القرارات · التقرير · النبض التنبؤي) — الافتراضي تقويم + رفيق كما كان فيُحفظ ماضي مراد، والاختيار يدوم في IndexedDB ويُعاد بناؤه عند كل إقلاع وتغيير لغة. (2) مصنع «شريطي كما أريد» openNavSheet: ورقة حية بلا زر حفظ — شرائح خاناتك تنزع بـ X وتتحرك بأسهم موجّهة صحيحاً مع اتجاه العربية، وبنك الخيارات يضاف بنقرة، واهتزاز خفيف لكل لمسة، وزر إرجاع الافتراضي، وحين تكتمل الخانات الأربع يغفو البنك برسالة لطيفة تطلب فضح خانة أولاً. (3) ضغطة طويلة 480ms على أي تبويب تفتح المصنع فوراً (بحارس nvLpFired كي لا يُفتح عرض بعد رفع الإصبع) + مدخل «شريطي كما أريد» على رأس قائمة المزيد — و«حكايتي» صارت تبويباً ممكن الوظيفة: نقرتها تفتح ورقة الحكاية لا صفحة وهمية. (4) كثافة ذكية: 3 خانات فأكثر تضيف صف dense فيصغّر الخط والأيقونات فلا يزدحم الشريط أبداً. (5) تيثاق العناوين: ti_mind وti_fp وti_pulse وti_lab أُضيفت إلى T وTITLES فلا ترويسة فارغة عند زيارة العقل المحلي أو البصمة أو النبض أو المعمل من الشريط أو المزيد — فوق RF_PLANNER_v1.7.0 — «دفتر المواعيد» (بلاغ مراد: أريد من سجل حدث في التقويم مذكرة مواعيد مستقبلية بالتاريخ والساعة تظهر في مهام اليوم للتنفيذ، بعلامة صح أو مبرر إن لم تنجز — نسيت/تأجّلت/ألغيتها/كتابة حرة — ويعزز ذلك الفهم والالتزام والمتابعة والمزاج، وأريد جدولاً بيانياً لطيفاً للأيام أو الشهور كختصر تفاعلي): (1) مذكرة المواعيد في التقويم تحت زر أساسي جديد: عنوان + يوم (اليوم/بكرة/بعد بكرة/تاريخ محدد) + ساعة + تصنيف يُلتقط آلياً — تُحفظ حدث خطة gen:plan في الدفتر المحلي وتظهر نقطة يومها في شبكة التقويم وتُضغط الأيام القادمة ذات المواعيد. (2) في «مهام اليوم» تظهر شارة الساعة (تحمرّ إن فاتت) وشارة «موعد» وزر ✗ للمبرر — وعند فوات أيام ماضية تنزل قسم «مستحقة عليك» بلا مهرب: صحّ أو مبرر موثق (نسيت/تأجّلت/ألغيتها/كتابة حرة) أو زر «انقلها لبكرة» يعيد جدولتها بلطف. (3) «في الأفق»: أقرب ثلاثة مواعيد قادمة تبقى أمام عين المراد كل يوم في بطاقة المهام. (4) جدول «نبض نشاطك» التفاعلي في التقويم: آخر 14 يوماً أو آخر 6 شهور — أعمدة تنمو بحركة، رقم فوق كل عمود، نقطة خضراء ليوم أنجز موعده وحمراء ليوم فائت، نسبة الالتزام 30 يوماً، وضغط العمود يفتح يومه أو شهره. (5) جرس الوقت الحقيقي: عند ساعة الموعد توست + إشعار محلي إن سمح الجهاز، ويُعاد جدولته عند كل إقلاع. (6) حارس حسابي: مواعيد المستقبل لا تدخل إحصاءات ملخص الأداء — زر «سجل حدثاً» القديم بقي شاهداً بجانب المذكرة — فوق RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
+<!-- COMMIT: RF_TASK_TIDY_v1.9.1 — «ترتيب قائمة مراد» (بلاغ مراد: المهمات عند اضافتها تظهر مرتين تتكرر عند الضغط عليها ولا يوجد خيار حذفها): (1) سبب التكرار الجذري: applyQuestPick كان يدفع الحدث إلى الذاكرة بعد await DB.put والمكتبة ترسم نفسها فوراً قبل اكتمال الحفظ فتبقى علامة + ظاهرة كأن الإضافة لم تتم فينقر مراد ثانية وتتكون نسختان — والإصلاح ثلاثي: الحارس المطلق يمنع دخول نفس النص لليوم نفسه مرتين فيرفض بلطف «موجودة في قائمتك اليوم أصلاً ✓» مهما تكررت النقرات، وترتيب الحفظ قُلب (الذاكرة أولاً ثم التخزين) فشارة «في قائمتك» تظهر فوراً، والأزرار تتعطل لحظة الإضافة فلا نقرة مزدوجة تسرق الورقة. (2) الحذف قاد من بابين: زر سلة لكل مهمة في «مهام اليوم» بالرئيسية (الموعد استثني — له مبرراته ومساره) يحذف فوراً مع اهتزاز وتوست «تراجع» 6 ثوان يعيد المهمة سليمة بمحتواها، وشارة «في قائمتك» في المكتبة صارت زر إزالة يحمل السلة — تضغطها فتُحذف ويعود زر + — إزالة من مكان الإضافة نفسه، والكتابة الحرة تُفرغ حقلها عند النجاح فقط — فوق RF_DAY_CRAFT_v1.9.0 — «يومي المتقن» (بلاغ مراد الصباحي بخمس رقع: أولاً اعدادات شريط المهام تنقل لصفحة الإعدادات، ثانياً قائمة المهام أوسع ومتعددة ومنوعة ومصنفة وعليها شرح خفيف يوضح أهميتها وكيف الاستفادة منها بشاشة منسدلة ترتفع للأعلى والأسفل دون تداخل ويختار منها دون الخروج وعند الانتهاء تغلق وتعود للرئيسية طبيعياً وتراقب ما أُنجز خلال اليوم مع خيار الكتابة أو الاختيار من القائمة، ثالثاً شعار النبض على الوردة أو الأصيص، رابعاً القفل بترن — رقم سري أو رسم بالأصبع، خامساً المظهر ألوان أكثر): (1) مصنع «شريطي كما أريد» هاجر إلى صفحة الإعدادات: قسم «شريط المهام» يعرض خاناتك الحالية بأسمائها من البنك وزر ترتيب يفتح openNavSheet — زال بند navcraft من قائمة المزيد وبقي الضغط الطويل على أي تبويب اختصار الخبراء. (2) مكتبة مهامي openTaskLib: ورقة منسدلة (.sheet بتمرير عمودي كامل بلا تداخل) بست عائلات مصنفة — 🌟 أعمال دينية (أذكار الصباح والمساء · قراءة القرآن ولو صفحة · الصلاة في وقتها · الدعاء والاستغفار · صدقة اليوم) · ❤️ أخلاق يومية (الصدق · لين الكلام · العدل · الصبر وضبط النفس · الوفاء بالعهد) · 🤝 أعمال إنسانية (مساعدة محتاج · إدخال السرور · بر الوالدين · التعاون · حفظ الحقوق) · 🌱 تطوير شخصي (مهارة أسبوعية · ترتيب الأولويات · تأمل ردود الأفعال · تأمل 3 دقائق · قراءة مفيدة) · 💼 تطوير مهني (درس مهني يومي · دورة شهرية · تواصل مهني جديد · تطبيق مهارة في العمل · تغذية راجعة · تحليل موقف صعب) · 🎯 أهداف ومراجعة (هدف SMART أسبوعي · تقسيم الهدف لمهام صغيرة · مراجعة الأسبوع) — كل مهمة بسطر شرح خفيف يوضح أهميتها وفائدة أدائها بصياغة مطوّرة من قائمة مراد، وشرائح تصفية فوق القائمة، وعدّاد حي «مهام اليوم: منجز/الكل» يهتف «يومك مكتمل 🌟» عند الاكتمال، وزر + ينضم بها لـ«مهام اليوم» فوراً بتصنيفها (نفسية/علاقات/عمل/تطور) الذي يغذي ميزان الأثر، وحقل الكتابة الحرة أسفل الورقة، والاختيار دون مغادرة والإغلاق يعيد للرئيسية بجلسة محدثة والمراقبة عبر شريط التقدم والإنجاز الموجود — استُبدل بها منتقي المهمة القديم المضغوط في #modal وحُرر القيد: questGo يفتح المكتبة وapplyQuestPick يقبل التصنيف. (3) شعار نبض رفيق يحفر على واجهة الأصيص: خط ekg المميز بلون عاجي يُرسم بحركة dasharray متدفقة — وردة مراد تحمل توقيع شريكها في كل مرحلة نمو. (4) القفل بالنمط «بترن»: شرائح طريقة القفل في الإعدادات — [رمز سري] أو [رسم بالإصبع] — شبكة 3×3 تعمل باللمس والمس (pointerdown + setPointerCapture + elementFromPoint) وخط يرسم المسيار بلون الذوق واهتزاز لكل نقطة، النمط 4 نقاط على الأقل يرسم مرتين للتأكيد ويُخزن مغشوشاً hashPin في الجهاز فقط، شاشة القفل تتبدل تلقائياً بين الرمز والنمط — ومن يختار الرمز بلا رمز محفوظ يُفتح له بنمطه فلا يُحبس، والخطأ يهتز ويعيد الرسم، وسؤال الأمان يظل مخلصاً للطريقتين، وحذف القفل يمسح الرمز والنمط معاً، وحارسا الإخفاء والإقلاع يعتران النمط بجوار الرمز. (5) المظهر يتوسع بأربعة ألوان جديدة: ياقوتي · برفاني · وردي · سماوي — بكامل حساباتها للوضعين الليلي والنهاري (dark/light/soft/ink)، وشريحة كل لون تحمل اسمها بتلميح title وaria — فوق RF_NAV_CRAFT_v1.8.0 — «شريطي كما أريد» (بلاغ مراد: بدي أطور شريط المهام أسفل التطبيق بحيث أقدر أضيف وألغي شو بدي — الشاشة الرئيسية ثابتة والمزيد ثابت وبقدر أعمل كمان أربع خيارات مثلاً التقويم ورفيق أو العقل المحلي أو حكايتي أو بصمة أو أي شيء): (1) buildTabbar تعمّر الشريط من S.settings.nav: الرئيسية والمزيد وزر + ثابتة لا تتحرك، وأربع خانات مرنة كحدّها من بنك NAV_POOL (تقويم · رفيق · العقل المحلي · حكايتي · بصمتي · لوحة الحياة · التوأم الرقمي · العلاقات · القرارات · التقرير · النبض التنبؤي) — الافتراضي تقويم + رفيق كما كان فيُحفظ ماضي مراد، والاختيار يدوم في IndexedDB ويُعاد بناؤه عند كل إقلاع وتغيير لغة. (2) مصنع «شريطي كما أريد» openNavSheet: ورقة حية بلا زر حفظ — شرائح خاناتك تنزع بـ X وتتحرك بأسهم موجّهة صحيحاً مع اتجاه العربية، وبنك الخيارات يضاف بنقرة، واهتزاز خفيف لكل لمسة، وزر إرجاع الافتراضي، وحين تكتمل الخانات الأربع يغفو البنك برسالة لطيفة تطلب فضح خانة أولاً. (3) ضغطة طويلة 480ms على أي تبويب تفتح المصنع فوراً (بحارس nvLpFired كي لا يُفتح عرض بعد رفع الإصبع) + مدخل «شريطي كما أريد» على رأس قائمة المزيد — و«حكايتي» صارت تبويباً ممكن الوظيفة: نقرتها تفتح ورقة الحكاية لا صفحة وهمية. (4) كثافة ذكية: 3 خانات فأكثر تضيف صف dense فيصغّر الخط والأيقونات فلا يزدحم الشريط أبداً. (5) تيثاق العناوين: ti_mind وti_fp وti_pulse وti_lab أُضيفت إلى T وTITLES فلا ترويسة فارغة عند زيارة العقل المحلي أو البصمة أو النبض أو المعمل من الشريط أو المزيد — فوق RF_PLANNER_v1.7.0 — «دفتر المواعيد» (بلاغ مراد: أريد من سجل حدث في التقويم مذكرة مواعيد مستقبلية بالتاريخ والساعة تظهر في مهام اليوم للتنفيذ، بعلامة صح أو مبرر إن لم تنجز — نسيت/تأجّلت/ألغيتها/كتابة حرة — ويعزز ذلك الفهم والالتزام والمتابعة والمزاج، وأريد جدولاً بيانياً لطيفاً للأيام أو الشهور كختصر تفاعلي): (1) مذكرة المواعيد في التقويم تحت زر أساسي جديد: عنوان + يوم (اليوم/بكرة/بعد بكرة/تاريخ محدد) + ساعة + تصنيف يُلتقط آلياً — تُحفظ حدث خطة gen:plan في الدفتر المحلي وتظهر نقطة يومها في شبكة التقويم وتُضغط الأيام القادمة ذات المواعيد. (2) في «مهام اليوم» تظهر شارة الساعة (تحمرّ إن فاتت) وشارة «موعد» وزر ✗ للمبرر — وعند فوات أيام ماضية تنزل قسم «مستحقة عليك» بلا مهرب: صحّ أو مبرر موثق (نسيت/تأجّلت/ألغيتها/كتابة حرة) أو زر «انقلها لبكرة» يعيد جدولتها بلطف. (3) «في الأفق»: أقرب ثلاثة مواعيد قادمة تبقى أمام عين المراد كل يوم في بطاقة المهام. (4) جدول «نبض نشاطك» التفاعلي في التقويم: آخر 14 يوماً أو آخر 6 شهور — أعمدة تنمو بحركة، رقم فوق كل عمود، نقطة خضراء ليوم أنجز موعده وحمراء ليوم فائت، نسبة الالتزام 30 يوماً، وضغط العمود يفتح يومه أو شهره. (5) جرس الوقت الحقيقي: عند ساعة الموعد توست + إشعار محلي إن سمح الجهاز، ويُعاد جدولته عند كل إقلاع. (6) حارس حسابي: مواعيد المستقبل لا تدخل إحصاءات ملخص الأداء — زر «سجل حدثاً» القديم بقي شاهداً بجانب المذكرة — فوق RF_HOME_REVIVE_v1.6.2 — «ترقيع الظهور والقرب» (بلاغ مراد: يوصي رفيق وملخص الأداء وكيف مزاجك لا تظهر + قفز لرأس الصفحة عند تبديل مدى ملخص الأداء + ميزان الأثر يفتح لوحة الحياة بدل السجل): (1) السبب الجذري للاختفاء: فاصلة , بدل + في سلسلة innerHTML بعد وسم بطاقة المزاج — عامل الفاصلة جعل كل ما بعدها (محتوى كيف مزاجك، ملخص أدائك، لوحة الأبعاد النفسية، زر القصة، يوصي رفيق) يُحسَب ثم يُرمى بصمت؛ قُلبت + ودَرَس: سلسلة HTML الطويلة تبتلع الأخطاء بصمت، والفحص بالعين على البنية لا بالمظهر فقط. (2) الثلاثي التفاعلي هبط أسفل الصفحة بترتيب جديد: كيف مزاجك ← ملخص أدائك ← يوصي رفيق (الأبعاد النفسية وزر القصة صعدا قبلها). (3) ملخص الأداء تفاعلي في مكانه: الشريط يوم/أسبوع/شهر يعيد رسم #pfWrap وحده بحركة pfIn بدل go('home') التي كانت ترفع المؤشر لرأس الصفحة. (4) refresh() يحفظ مكانك: يحفظ scrollTop ويعيده بعد إعادة الرسم — اختيار المزاج وإخفاء التوصيات لم تعد تقفز للرأس. (5) ميزان الأثر بلا مغادرة: ضغط أي جانب يفتح ورقة سجل الجانب openCatLog (فلاتر يوم/أسبوع/شهر/الكل + إرشاد + حذف + X إغلاق) داخل البصمة نفسها — لا go('life') ولا إعادة فتح بصمة، وكذلك توصيات good: — فلسفة مراد: إغلاق أفضل من عودة. (6) لمسات حيوية: نبضة moodPop لوجه المزاج، اهتزاز خفيف عند التسجيل والتبديل، ختم البصمة وعن رفيق حُدّثا إلى 1.6.2 — فوق RF_PULSE_POLISH_v1.6.1 — «ترقيع سماع مراد» (أربع لمسات على v1.6.0): (1) أزيل شريط «حالتك في توازن» المكرر من الرئيسية — الهالة حول الوردة تكفي وحدها لعرض نبض الحياة فلا رقم مكرر في شاشة واحدة. (2) النبض الاستباقي لا يغيب: إن لم يطابق دفترك أي قاعدة من الثمانية همس رفيق نبضك العام — الدرجة وأقوى جانب — بدل الاكتفاء بالترحيب (ملاحظة مراد: النبض لم يظهر في المعاينة). (3) ميزان الأثر صار حياً: سطر «أقوى جوانبك الآن · يحتاج وقودك» بأيقونتين، أشرطة تنمو بحركة متتابعة، صفوف تدخل انسيابياً، رقم درجة ملون لكل جانب، شريط أثر للأشخاص أيضاً، وشرائح أثر ممتلئة اللون. (4) «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات وتُفتح تفاصيله بـ «+ المزيد من التفاصيل». — فوق RF_LIFE_PULSE_v1.6.0 — «نبض الحياة» (تنفيذ موافقات مراد الخمس على تحليل ملفاته — المرحلة أ كاملة): (1) مؤشر الحياة صار هالة حية حول الوردة في الرئيسية: حلقة تقدم ملونة تتنفس بلون حالة المؤشر ووشاح رقمها فوقها ولافتة «نبض حياتك» تحتها — الضغط على الحلقة يفتح تفصيل المحاور، والوردة نفسها على عادتها تفتح التوأم — وبطاقة المؤشر الكبيرة صارت شريطاً مختصراً كي لا يتكرر الرقم في شاشة واحدة (2) النبض الاستباقي: أول همسة من رفيق التجول عند فتح الرئيسية في كل جلسة تأتي من أنماط دفترك المحلي (مهمات معلقة · علاقة انقطعت · مزاج هابط · ضغط عمل · سلسلة توثيق · اتجاه النبض · عطلة نشِطة) بأسلوب مؤشر لا تشخيص — مرة واحدة لكل جلسة، وإن لم يوجد نمط جاءت همسة الترحيب كعادتها (3) ميزان الأثر في البصمة الشخصية: قسم جديد بين المحاور والتوافق يعرض جوانب حياتك الستة بدرجاتها واتجاهها (↗/↘) وأشخاصك الأكثر حضوراً بدرجة أثرهم (+/−) وعدد إشاراتهم وآخر لقاء — ضغط الجانب يفتح عرض الحياة وضغط الشخص يفتح أدلة علاقته — كله من أحداثك الموثقة في الجهاز فقط (4) «عن رفيق» في قائمة ⚙ صف الصدق: بياناتك تعيش في جهازك وحده IndexedDB · لا حسابات ولا سحابة ولا تتبع ولا إعلانات · الوحيد الذي يعبر الجهاز طلب النموذج إن فعّلت مفتاح Groq بنفسك · تصدير ومسح بنقرة — فوق RF_ROAM_COMPANION_v1.5.2 — «رفيق التجول»: (1) روبوت رفيق الحي يسكن بطاقة الوردة في الصفحة الرئيسية ويتجول حولها (يمشي وتقلب اتجاهه وترمش عيناه ويطفو بظل يتنفس) ويُضغط عليه فيقول سطوراً حية من بياناتك: سلسلة التوثيق ومهماتك المعلقة ومرحلة وردتك ونبض حياتك + همسة ترحيب كل دخول للرئيسية (2) الحوار يكتب في مهمات اليوم: قل «ضيف مهمة أتصل بأخي» فيسجلها فوراً بتصنيفها (علاقات/عمل/صحة/تعلم) ويعدها لك — والعقول الكبيرة تقترح مهام: إن لمس رفيق واجباً مهلماً ختم رده بـ⟨مقترح⟩…⟨/مقترح⟩ يتحول لزر «أضفها لمهمات اليوم» وتكفي كلمة «نعم/ضيفها» للتسجيل (3) مايك حوار رفيق: اضغط 🎙️ وتكلم — يكتب كلامك ويرسله وحده بعد سكوت ثانية ونصف ويرد عليك ويجمع مهماتك — حوار صوتي كامل بلا لوحة مفاتيح (4) التذكير بوقت حقيقي: «ذكرني بالسوق بعد ساعتين / الساعة 8 مساءً / بكرة الصبح» يفهم الوقت ويجدول التنبيه + إشعار محلي Notification إذا سمح الجهاز + إعادة جدولة آلية عند فتح التطبيق — فوق RF_WELCOME_BOT_v1.5.1 — «الترحيب الحي + حارس السحابة»: (1) عند فتح حوار رفيق يظهر روبوت صغير حي يخرج من فقاعة كلام بأنيميشن (عيون ترمش وجسم يطفو) ويعرّف عن نفسه باسم مراد ويُظهر عقله الحالي بشارته — زر «استمرار» يبدده بأنيميشن ويُركّز حقل الكتابة، وزر «عقلي» يفتح ⚙ — مرة واحدة لكل جلسة كي لا يزعج (2) حارس السحابة: قائمة نماذج متقاعدة (على رأسها allam-2-7b الذي أزيل من Groq رسمياً — السبب الخفي لـ«غرابة» ردود مراد: كان يفشل صامتاً ويسقط للعقل التجريبي الضعيف) تُصحَّح فوراً للافتراضي الحي مع toast + إعادة محاولة آلية بالافتراضي عند أي 400/404 (3) سقف سياق لكل نموذج rfClipCtx: allam-2-7b سياقه 4096 توكن فقط والبريف الموسع كان يفجره — الآن يُقص البريف والتاريخ حسب سقف النموذج وتبقى الرسائل الأخيرة سليمة أبداً (4) زر العقل التجريبي يوصي بإيقافه إن كان المفتاح يعمل + سطر «كيف تفكّر عقلي» في ⚙ يشرح ترتيب الطبقات ويرد على شبهة «الاختلاط»: البريف سياق خلفي واحد بلا خلط أبداً — فوق RF_SMART_MIND_v1.5.0 — «العقل الذكي» ثلاث رقع لبلاغ مراد: (1) إصلاح انهيار العقل المحلي «رسالة الخلل cnt{topN}»: في قاعدة «نجم قلبك» كان topN يصير كائناً بعد أول اسم فكان cnt[topN].n ينهار مع ثاني اسم — الصواب topN.n — والعقل المحلي يفتح بلا رسائل خلل (درس: بيانات الاختبار كانت بنجم واحد فما دخلت الحلقة الثانية — زُرع نجمٌ ثانٍ ورابعةٌ بلا صوت في الاختبار) (2) البصمة الشخصية صارت حية تفاعلية لا لوحة صامتة: شريط بيانات حي (ذكرى مغذية/أحداث 30ي/تقييمات نفسية/محاور نشطة) + المحاور الثمانية كلها قابلة للضغط تفتح ورقة أدلة بشريطي الإشارات المؤيدة والمعاكسة + الأحداث الحقيقية التي أشعلت المحور بكلماته المفتاحية + صفوف التوافق تُفتح على تفصيل حيوية العلاقة (إيقاع/نبرة/لقاءات/آخر الحكايات/زر تواصل) — كل بياناتها من دفترك المحلي (3) حوار رفيق يرد كالمحركات الكبيرة: وضع تقرير يُكشف آلياً (تقرير/تحليل/ملخص/خطة/اكتب لي…) ببرومبت منظم بخمسة أقسام وMarkdown (## عناوين · - قوائم · **تأكيد**) وبريف موسّع (14 يوماً + محاور الشخصية الثمانية + رادار الانهيار) وسقف توليد 2048 بدل 420 + عارض Markdown آمن يهرّب HTML أولاً + فقاعات تقارير عريضة + سقف الرد العادي 700 + رقاقة «اكتب لي تقرير أسبوعي» — فوق RF_KEY_DOCTOR_v1.4.3 — مؤشر لا تشخيص 100% محلي -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -149,6 +149,28 @@ html[dir="ltr"] .nv-add{text-align:left}
 .nv-add svg.ic{color:var(--acc);flex:none}
 .nv-cap{font-size:11.5px;color:#E5A83E;margin-top:9px;line-height:1.6}
 .nv-rst{margin-top:14px;width:100%;text-align:center;font-size:12.5px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;padding:11px}
+/* v1.9.0 «يومي المتقن» — القفل بالنمط + مكتبة المهام + شعار الأصيص */
+.pt-wrap{position:relative;width:216px;height:216px;margin:12px auto;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.pt-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pt-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.pt-dot{display:grid;place-items:center;background:none}
+.pt-dot i{width:15px;height:15px;border-radius:50%;background:var(--card2);border:2px solid var(--line2);transition:.15s;display:block}
+.pt-dot.on i{background:var(--acc);border-color:var(--acc);box-shadow:0 0 0 5px var(--acc-soft)}
+.tl-count{font-size:11.5px;color:var(--good);background:var(--acc-soft);border-radius:10px;padding:7px 11px;margin-top:10px;display:flex;align-items:center;gap:6px;width:fit-content}
+.tl-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tl-tab{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:6px 11px}
+.tl-tab.on{border-color:var(--acc);color:var(--acc);background:var(--acc-soft)}
+.tl-group{margin-top:13px}
+.tl-gname{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:7px}
+.tl-row{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line)}
+.tl-row b{font-size:13px;color:var(--ink);display:block}
+.tl-row p{font-size:11px;color:var(--ink3);line-height:1.7;margin-top:3px}
+.tl-add{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--acc-ink);background:var(--acc);margin-top:4px}
+.tl-in{flex:none;display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--good);border:1px solid var(--good);border-radius:100px;padding:4px 9px;margin-top:6px;cursor:pointer;background:transparent;transition:color .18s,border-color .18s,background .18s}
+.tl-in:active{color:var(--bad);border-color:var(--bad);background:rgba(228,121,107,.1)}
+.tl-row.has{opacity:.62}
+.pot-ekg{stroke-dasharray:60;stroke-dashoffset:60;animation:ekgDraw 2.2s ease .3s forwards}
+@keyframes ekgDraw{to{stroke-dashoffset:0}}
 .greet-t{font-family:var(--fd);font-size:21px;font-weight:700;margin-top:10px}
 .greet-t small{display:block;font-family:var(--fb);font-size:12.5px;font-weight:400;color:var(--ink2);margin-top:5px}
 .st-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--acc);border:1px solid var(--line2);border-radius:100px;padding:4px 11px;margin-top:9px}
@@ -886,6 +908,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
         <svg width="64" height="64" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21.5" stroke="#E5A83E" stroke-width="1.6" opacity=".55"/><path d="M11 26h7l3-9 6 16 3-7h7" stroke="#E5A83E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <b id="lkTitle">رفيق مقفل</b><p id="lkSub">أدخل الرمز المكوّن من 4 أرقام</p>
         <div class="lk-dots" id="lkDots"><i></i><i></i><i></i><i></i></div>
+        <div class="pt-wrap" id="lkPat" style="display:none"></div>
         <div class="lk-pad" id="lkPad"></div>
         <button class="lk-forgot" id="lkForgot">نسيت الرمز؟ سؤالك الشخصي</button>
       </div>
@@ -918,6 +941,7 @@ html[dir="ltr"] .mem-qt{border-right:none;border-left:3px solid var(--rc,var(--a
     <div class="sheet" id="shDec"></div>
     <div class="sheet" id="shMore"></div>
     <div class="sheet" id="shNav"></div>
+    <div class="sheet" id="shTaskLib"></div>
     <div class="sheet" id="shMind"></div>
     <div class="sheet" id="shFp"></div>
     <div class="sheet" id="shRfSet"></div>
@@ -1523,7 +1547,11 @@ const ACCENTS={
  amber:{ar:'كهرماني',en:'Amber',dark:'#E5A83E',darkInk:'#241B08',light:'#B07A10',lightInk:'#241B08',softD:'rgba(229,168,62,.13)',softL:'rgba(176,122,16,.12)'},
  emerald:{ar:'زمردي',en:'Emerald',dark:'#5CB98C',darkInk:'#0B2417',light:'#1E7A4F',lightInk:'#F1FBF4',softD:'rgba(92,185,140,.13)',softL:'rgba(30,122,79,.12)'},
  coral:{ar:'مرجاني',en:'Coral',dark:'#E08A76',darkInk:'#2A100A',light:'#B5503C',lightInk:'#FFF4F0',softD:'rgba(224,138,118,.13)',softL:'rgba(181,80,60,.10)'},
- teal:{ar:'فيروزي',en:'Teal',dark:'#5FB8B2',darkInk:'#0A2422',light:'#187E77',lightInk:'#EEFBF9',softD:'rgba(95,184,178,.13)',softL:'rgba(24,126,119,.10)'}};
+ teal:{ar:'فيروزي',en:'Teal',dark:'#5FB8B2',darkInk:'#0A2422',light:'#187E77',lightInk:'#EEFBF9',softD:'rgba(95,184,178,.13)',softL:'rgba(24,126,119,.10)'},
+ sapphire:{ar:'ياقوتي',en:'Sapphire',dark:'#7FA8E8',darkInk:'#0A1B33',light:'#2D62B8',lightInk:'#F2F7FF',softD:'rgba(127,168,232,.13)',softL:'rgba(45,98,184,.10)'},
+ lavender:{ar:'برفاني',en:'Lavender',dark:'#B49BE0',darkInk:'#1D1233',light:'#7C5CC4',lightInk:'#F6F2FF',softD:'rgba(180,155,224,.13)',softL:'rgba(124,92,196,.10)'},
+ rose:{ar:'وردي',en:'Rose',dark:'#E893B4',darkInk:'#33101F',light:'#B84D7E',lightInk:'#FFF3F8',softD:'rgba(232,147,180,.13)',softL:'rgba(184,77,126,.10)'},
+ sky:{ar:'سماوي',en:'Sky',dark:'#8CC7E8',darkInk:'#0C2331',light:'#2B7BA8',lightInk:'#F2FAFF',softD:'rgba(140,199,232,.13)',softL:'rgba(43,123,168,.10)'}};
 function applyTheme(){
  const st=S.settings,dark=st.theme!=='light',A=ACCENTS[st.accent]||ACCENTS.amber;
  const r=document.documentElement.style;
@@ -1540,13 +1568,14 @@ function applyLang(){
 
 window.__rfStage='الحالة';
 const S={profile:{name:'',job:'',email:'',bday:'',goals:[]},
- settings:{lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},
+ settings:{lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],lockKind:'pin',pattern:'',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},
  events:[],rels:[],decisions:[],chat:[],reminders:[],
  ind:{},catDelta:{},life:50,delta:0,spark:[],recs:[],staleRels:[]};
 const dismissed=new Set();
 let currentView='home',reportWeek=0,calY=new Date().getFullYear(),calM=new Date().getMonth();
 let evAttsTemp=[],evCatPick=null,evMoodPick=null,evAuto=true,evEditId=null,evSecPick=[];
-let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week';
+let perfR='week',csRelId=null,csDur=0,pinBuf='',pinEdit=false,storyR='week',patternEdit=false;
+let tlFilter='all';
 let ritualMode=null,ritualPick=null,enteredOnce=false,ratePick={};
 async function saveMeta(){await DB.put('meta',{key:'main',profile:S.profile,reminders:S.reminders,seeded:S.seeded,settings:S.settings})}
 async function loadAll(){
@@ -1774,7 +1803,9 @@ function plantStage(){
 function plantSvg(stage){
  const stem='#7FA05A',leaf='var(--acc)';
  const pot='<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
-  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>';
+  '<path d="M63 138h44l-5 30h-34z" fill="#8A5A34"/><path d="M59 132h52v8h-52z" fill="#A06A3E"/>'+
+  /* v1.9.0: شعار نبض رفيق يحفر على واجهة الأصيص — توقيع الشريك في كل مرحلة */
+  '<path class="pot-ekg" d="M69 153h7l3-7 5 14 3-7h7" stroke="#F6ECD8" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".92"/>';
  if(stage===0)return '<svg width="170" height="190" viewBox="0 0 170 190">'+
   '<ellipse cx="85" cy="168" rx="34" ry="8" fill="rgba(0,0,0,.25)"/>'+
   '<text x="85" y="80" text-anchor="middle" font-size="11" fill="var(--ink3)">'+esc(t('plant_p0'))+'</text></svg>';
@@ -2624,13 +2655,52 @@ function setLang(l){
 
 /* القفل + سؤال الأمان */
 let locked=false;
+/* v1.9.0 «يومي المتقن»: القفل بالنمط — شبكة 3×3 باللمس والمس، الخط يرسم المسيار بلون الذوق، واهتزاز لكل نقطة */
+function mountPattern(host,onDone){
+ if(!host)return;
+ const P={1:[36,36],2:[108,36],3:[180,36],4:[36,108],5:[108,108],6:[180,108],7:[36,180],8:[108,180],9:[180,180]};
+ let seq=[],down=false;
+ host.innerHTML='<svg class="pt-lines" viewBox="0 0 216 216"><polyline points="" fill="none" stroke="var(--acc)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/></svg>'+
+  '<div class="pt-grid">'+[1,2,3,4,5,6,7,8,9].map(n=>'<button type="button" class="pt-dot" data-pt="'+n+'" aria-label="dot '+n+'"><i></i></button>').join('')+'</div>';
+ const poly=host.querySelector('polyline');
+ const dots=[].slice.call(host.querySelectorAll('.pt-dot'));
+ function redraw(){poly.setAttribute('points',seq.map(n=>P[n][0]+','+P[n][1]).join(' '))}
+ function add(n){if(seq.indexOf(n)>=0)return;seq.push(n);const d=dots.find(x=>+x.dataset.pt===n);if(d)d.classList.add('on');try{navigator.vibrate&&navigator.vibrate(6)}catch(_){}}
+ function reset(){seq=[];poly.setAttribute('points','');dots.forEach(d=>d.classList.remove('on'))}
+ host.addEventListener('pointerdown',e=>{const d=e.target.closest('.pt-dot');if(!d)return;down=true;try{host.setPointerCapture(e.pointerId)}catch(_){}add(+d.dataset.pt);redraw();e.preventDefault()});
+ host.addEventListener('pointermove',e=>{if(!down)return;const el=document.elementFromPoint(e.clientX,e.clientY);const d=el&&el.closest?el.closest('.pt-dot'):null;if(d)add(+d.dataset.pt);redraw()});
+ host.addEventListener('pointerup',()=>{if(!down)return;down=false;if(seq.length)onDone(seq.slice())});
+ host.__ptReset=reset;
+}
+function tryUnlockPattern(seq){
+ const lk=$('#lock');
+ if(seq&&seq.length>=4&&hashPin(seq.join('-'))===S.settings.pattern){
+  if(lk)lk.hidden=true;locked=false;
+  const lp=$('#lkPat');if(lp)lp.style.display='none';
+  setTimeout(shieldMaybe,1800);
+ }else{
+  if(lk){lk.classList.add('shake');setTimeout(()=>lk.classList.remove('shake'),450)}
+  toast(LANG==='ar'?'النمط غير صحيح — حاول مجدداً':'Wrong pattern — try again','var(--bad)','x',null,null,1800);
+  const lp=$('#lkPat');if(lp&&lp.__ptReset)lp.__ptReset();
+ }
+}
 function showLock(){
  const l=$('#lock');if(!l)return;
  locked=true;pinBuf='';
  $('#lkTitle').textContent=t('lk_t');
- $('#lkSub').textContent=t('lk_s');
  $('#lkForgot').textContent=t('lk_forgot');
- drawDots();
+ const pat=S.settings.lockKind==='pattern'&&S.settings.pattern?true:!!(S.settings.pattern&&!S.settings.pin);/* v1.9.0: من يختار الرمز بلا رمز محفوظ يُفتح له بنمطه — لا حبس */
+ const pad=$('#lkPad'),dots=$('#lkDots'),lp=$('#lkPat');
+ if(pad)pad.style.display=pat?'none':'';
+ if(dots)dots.style.display=pat?'none':'';
+ if(lp)lp.style.display=pat?'block':'none';
+ if(pat){
+  $('#lkSub').textContent=LANG==='ar'?'ارسم نمطك لفتح رفيق':'Draw your pattern to unlock';
+  mountPattern(lp,function(seq){tryUnlockPattern(seq)});
+ }else{
+  $('#lkSub').textContent=t('lk_s');
+  drawDots();
+ }
  l.hidden=false;
 }
 function drawDots(){
@@ -2688,7 +2758,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='secAns')trySecUnlock();
 });
 document.addEventListener('visibilitychange',()=>{
- if(document.hidden&&S.settings.pin&&S.settings.pinOn)showLock();
+ if(document.hidden&&S.settings.pinOn&&(S.settings.pin||S.settings.pattern))showLock();
 });
 
 /* اللقاء اليومي */
@@ -3001,11 +3071,13 @@ function questHtml(){
    const late=isPlan&&p.due&&p.due<nowTs&&!p.done;
    const tchip=isPlan&&p.due?'<span class="plan-time" style="'+(late?'color:var(--bad);background:rgba(228,121,107,.12);border-color:var(--bad)':'')+'">'+ic('clock',10)+' '+fmtTime(p.due)+'</span>':'';
    const xbtn=isPlan&&!p.done?'<button class="int-x" title="'+(AR?'لم أنجزها — وثّق المبرر':'Not done — add reason')+'" data-act="planWhy" data-id="'+p.id+'">'+ic('x',13)+'</button>':'';
+   /* v1.9.1: زر سلة لحذف المهمة من القائمة — الموعد استثني له مساره ومبرراته */
+   const dbtn=isPlan?'':'<button class="int-x" title="'+(AR?'إزالة المهمة من القائمة':'Remove task')+'" data-act="taskDel" data-id="'+p.id+'">'+ic('trash',13)+'</button>';
    return '<div class="int-item '+(p.done?'did':'')+'">'+
    '<button class="int-check '+(p.done?'on':'')+'" data-act="toggleIn" data-id="'+p.id+'">'+ic('check',14)+'</button>'+
    '<div class="int-txt">'+esc(p.text)+tchip+'</div>'+
-   '<span class="int-gen">'+(p.gen==='human'?(AR?'إنسانية':'human'):p.gen==='mine'?(AR?'من إيقاعك':'rhythm'):isPlan?(AR?'موعد':'plan'):t('int_ready'))+'</span>'+xbtn+'</div>'}).join('');
- }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+(AR?'اختر مهمتك الإنسانية، أو ثبّت مواعيدك من مذكرة التقويم — وكل تأشير يُوثَّق في أحداثك تلقائياً':'Pick your human quest, or schedule appointments from the calendar planner — every check-in becomes a documented event')+'</p>';
+   '<span class="int-gen">'+(p.gen==='human'?(AR?'إنسانية':'human'):p.gen==='mine'?(AR?'من إيقاعك':'rhythm'):isPlan?(AR?'موعد':'plan'):t('int_ready'))+'</span>'+xbtn+dbtn+'</div>'}).join('');
+ }else items='<p style="font-size:11.5px;color:var(--ink3);padding:2px 0">'+(AR?'اختر من «مكتبة مهامي» بالضغط على زر «هيا»، أو ثبّت مواعيدك من مذكرة التقويم — وكل تأشير يُوثَّق تلقائياً':'Open your task library with the Go button, or schedule from the calendar planner — every check-in is documented')+'</p>';
  const pct=its.length?Math.round(doneN/its.length*100):0;
  return '<div class="quest '+(humanDone&&pend.length===0?'done':'')+'" style="display:block">'+
   '<div style="display:flex;align-items:center;gap:11px">'+
@@ -4384,7 +4456,7 @@ function rfImpactScale(){
  if(!S.rels.length)compatRows='<div class="empty">'+ic('users',26)+'<br>'+(AR?'أضف علاقاتك من شاشة العلاقات ليعمل قياس الحيوية':'Add relationships first for compatibility')+'</div>';
  const evolveNote=AR?'شخصيتك ليست ثابتة — كل شهر يعيد رفيق حساب محاورها من ذكرياتك الجديدة، وستشاهد التطور هنا شهداً بأرقام.':'Your personality is not fixed — every month Rafiq recalculates from new memories. Watch yourself evolve here.';
  v.innerHTML=
-  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.8.0':'LIVING FINGERPRINT · 1.8.0')+'</span>'+
+  '<span class="lab-dev">'+(AR?'البصمة الحيّة · 1.9.1':'LIVING FINGERPRINT · 1.9.1')+'</span>'+
   '<div class="fp-hero">'+logoSvg(40)+
    '<h2 style="font-family:var(--fd);font-size:20px;font-weight:800;margin-top:8px">'+(AR?'بصمة '+esc(name)+' الرقمية':esc(name)+"'s fingerprint")+'</h2>'+
    '<div class="fp-score">'+total+'%</div>'+
@@ -5302,6 +5374,27 @@ function renderSettings(){
    '<div class="set-row" style="border-bottom:none"><div><b style="color:var(--bad)">'+t('st_pin_remove')+'</b></div><button class="icon-btn" id="pinDel" style="color:var(--bad)">'+ic('trash',15)+'</button></div>'+
    '<div class="set-note">'+t('st_pin_note')+'</div></div>';
  }
+ /* v1.9.0: بطاقة النمط — إعداد بلمستين أو إدارة النمط المفعّل */
+ let patCard='';
+ if(st.lockKind==='pattern'){
+  if(!st.pattern||patternEdit){
+   patCard='<div class="set-card">'+
+    '<div class="set-note" id="stPatMsg">'+(AR?'ارسم نمطك بصلة 4 نقاط على الأقل — ثم أعده للتأكيد':'Draw your pattern (4+ dots) — then redraw to confirm')+'</div>'+
+    '<div class="pt-wrap" id="stPat"></div>'+
+    (!st.secQ?'<div class="field"><label class="lab">'+t('sec_q_lbl')+'</label><input id="secQin" maxlength="60" placeholder="'+t('sec_q_ph')+'"></div>'+
+    '<div class="field"><label class="lab">'+t('sec_a_lbl')+'</label><input id="secAin" maxlength="40" autocomplete="off"></div>':'')+
+    '<div class="set-note">'+t('st_pin_note')+'</div></div>';
+  }else{
+   patCard='<div class="set-card">'+
+    '<div class="set-row"><div><b>'+(AR?'القفل مفعّل بنمطك':'Locked with your pattern')+'</b><p>'+(AR?'ارسم النمط عند فتح رفيق':'Draw it when opening Rafiq')+'</p></div><button class="sw '+(st.pinOn?'on':'')+'" id="pinTgl"><i></i></button></div>'+
+    '<div class="set-row"><div><b>'+(AR?'ارسم نمطاً جديداً':'Draw a new pattern')+'</b></div><button class="icon-btn" id="patEdit">'+ic('edit',15)+'</button></div>'+
+    '<div class="set-row" style="border-bottom:none"><div><b style="color:var(--bad)">'+t('st_pin_remove')+'</b></div><button class="icon-btn" id="pinDel" style="color:var(--bad)">'+ic('trash',15)+'</button></div>'+
+    '<div class="set-note">'+t('st_pin_note')+'</div></div>';
+  }
+ }
+ const lockSeg='<div class="set-card" style="margin-bottom:10px"><div class="seg" id="stLockKind">'+
+  '<button data-lk="pin" class="'+(st.lockKind!=='pattern'?'on':'')+'">'+ic('shield',14)+' '+(AR?'رمز سري':'Secret code')+'</button>'+
+  '<button data-lk="pattern" class="'+(st.lockKind==='pattern'?'on':'')+'">'+ic('edit',14)+' '+(AR?'رسم بالإصبع':'Finger pattern')+'</button></div></div>';
  v.innerHTML=
   '<h3 class="sec-t" style="margin-top:14px">'+ic('globe',15)+' '+t('st_lang')+'</h3>'+
   '<div class="set-card"><div class="seg" id="stLang">'+
@@ -5310,7 +5403,7 @@ function renderSettings(){
   '</div></div>'+
   '<h3 class="sec-t">'+ic('db',15)+' '+t('st_store')+'</h3>'+
   '<div class="set-card"><div class="set-row"><div><b>'+si.b+'</b>'+(si.note?'<p>'+si.note+'</p>':'')+'</div><span class="acc-badge" style="color:'+si.col+'">'+ic(si.icon,13)+' '+t('st_active')+'</span></div></div>'+
-  '<h3 class="sec-t">'+ic('shield',15)+' '+t('st_pin_t')+'</h3>'+pinCard+
+  '<h3 class="sec-t">'+ic('shield',15)+' '+t('st_pin_t')+'</h3>'+lockSeg+(st.lockKind==='pattern'?patCard:pinCard)+
   '<h3 class="sec-t">'+ic('edit',15)+' '+t('st_profile')+'</h3>'+
   '<div class="set-card">'+
    '<div class="field"><label class="lab">'+t('lbl_name')+'</label><input id="stName" maxlength="24" value="'+esc(p.name||'')+'"></div>'+
@@ -5334,7 +5427,12 @@ function renderSettings(){
     '<button data-th="dark" class="'+(st.theme!=='light'?'on':'')+'">'+ic('moon',15)+' '+t('st_dark')+'</button>'+
     '<button data-th="light" class="'+(st.theme==='light'?'on':'')+'">'+ic('sun',15)+' '+t('st_light')+'</button>'+
    '</div>'+
-   '<div class="swatches">'+Object.keys(ACCENTS).map(k=>'<button class="swatch '+(st.accent===k?'on':'')+'" data-ac="'+k+'" style="background:'+(st.theme==='light'?ACCENTS[k].light:ACCENTS[k].dark)+'"></button>').join('')+'</div>'+
+   '<div class="swatches">'+Object.keys(ACCENTS).map(k=>'<button class="swatch '+(st.accent===k?'on':'')+'" data-ac="'+k+'" title="'+ACCENTS[k][AR?'ar':'en']+'" aria-label="'+ACCENTS[k][AR?'ar':'en']+'" style="background:'+(st.theme==='light'?ACCENTS[k].light:ACCENTS[k].dark)+'"></button>').join('')+'</div>'+
+  '</div>'+
+  '<h3 class="sec-t">'+ic('grid',15)+' '+(AR?'شريط المهام':'Bottom bar')+'</h3>'+
+  '<div class="set-card">'+
+   '<div class="set-row"><div><b>'+(AR?'شريطي كما أريد':'My bar, my way')+'</b><p>'+(AR?'الرئيسية والمزيد وزر الإضافة ثابتة — وخاناتك المرنة الآن:':'Home, More and Add are pinned — your flexible slots now:')+' <b style="color:var(--acc)">'+(navSlots().map(id=>{const m=NAV_POOL.find(x=>x.id===id);return m?navName(m):''}).filter(Boolean).join(' · ')||(AR?'لا خانات — أضف من المصنع':'none — add from the factory'))+'</b></p></div>'+
+   '<button class="icon-btn" id="stNavBtn">'+ic('edit',15)+'</button></div>'+
   '</div>'+
   '<h3 class="sec-t">'+ic('spark',15)+' '+t('st_alerts')+'</h3>'+
   '<div class="set-card">'+
@@ -5396,7 +5494,37 @@ function renderSettings(){
  const pe=$('#pinEdit');
  if(pe)pe.onclick=()=>{pinEdit=true;renderSettings()};
  const pdel=$('#pinDel');
- if(pdel)pdel.onclick=()=>askConfirm(t('st_pin_remove_t'),t('st_pin_remove_p'),t('st_pin_remove'),async()=>{S.settings.pin='';S.settings.pinOn=false;await saveMeta();renderSettings();toast(t('st_pin_removed'),'var(--ink2)','x')});
+ if(pdel)pdel.onclick=()=>askConfirm(t('st_pin_remove_t'),t('st_pin_remove_p'),t('st_pin_remove'),async()=>{S.settings.pin='';S.settings.pattern='';S.settings.pinOn=false;await saveMeta();renderSettings();toast(t('st_pin_removed'),'var(--ink2)','x')});
+ /* v1.9.0: شرائح طريقة القفل — رمز سري أو رسم بالإصبع */
+ $$('#stLockKind [data-lk]').forEach(b=>b.onclick=async()=>{S.settings.lockKind=b.dataset.lk;await saveMeta();renderSettings()});
+ const pe2=$('#patEdit');
+ if(pe2)pe2.onclick=()=>{patternEdit=true;renderSettings()};
+ const stPat=$('#stPat');
+ if(stPat){
+  let first=null;
+  const msg=$('#stPatMsg');
+  mountPattern(stPat,async seq=>{
+   if(seq.length<4){if(msg)msg.textContent=AR?'النمط قصير — صلّ 4 نقاط على الأقل':'Pattern too short — connect at least 4 dots';return}
+   if(!first){first=seq;if(msg)msg.textContent=AR?'أعد رسم النمط نفسه للتأكيد':'Draw the same pattern again to confirm';setTimeout(()=>{if(stPat.__ptReset)stPat.__ptReset()},380);return}
+   if(seq.join('-')===first.join('-')){
+    const sq=$('#secQin')?$('#secQin').value.trim():'',sa=$('#secAin')?$('#secAin').value.trim():'';
+    if(!st.secQ&&(!sq||!sa)){toast(t('sec_needq'),'var(--bad)','shield');first=null;return}
+    S.settings.pattern=hashPin(seq.join('-'));
+    S.settings.pinOn=true;
+    if(sq&&sa){S.settings.secQ=sq;S.settings.secA=hashPin(sa.toLowerCase())}
+    patternEdit=false;
+    await saveMeta();renderSettings();
+    toast(AR?'نمطك محفوظ — رفيق مقفل بالنمط ✓':'Pattern saved — Rafiq is pattern-locked ✓','var(--good)','shield');
+   }else{
+    first=null;toast(AR?'النمطان غير متطابقين — أعد من البداية':'Patterns do not match — start over','var(--bad)','x',null,null,1800);
+    if(stPat.__ptReset)stPat.__ptReset();
+    if(msg)msg.textContent=AR?'ارسم نمطك — ثم أعده للتأكيد':'Draw your pattern — then redraw to confirm';
+   }
+  });
+ }
+ /* v1.9.0: زر ترتيب الشريط في الإعدادات */
+ const snb=$('#stNavBtn');
+ if(snb)snb.onclick=()=>openNavSheet();
  const rt=$('#rtTgl');
  if(rt)rt.onclick=async()=>{S.settings.ritualOff=!S.settings.ritualOff;await saveMeta();renderSettings()};
  const lk=$('#stLink');
@@ -5906,7 +6034,7 @@ async function finishAssessment(){
 /* v1.6.1 «عن رفيق» هاجر من قائمة المزيد إلى بطاقة «عن رفيق · العلامة التجارية» أسفل الإعدادات — تُفتح تفاصيله بـ «+ المزيد من التفاصيل» (طلب مراد) */
 function aboutDetailsHtml(){
  const AR=LANG==='ar';
- return '<span class="abt-stamp">RF_NAV_CRAFT_v1.8.0 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
+ return '<span class="abt-stamp">RF_TASK_TIDY_v1.9.1 · '+(AR?'100% محلي على جهازك':'100% local on-device')+'</span>'+
   '<p>'+(AR?'بياناتك تعيش على جهازك وحده — في مخزن IndexedDB المحلي. لا حسابات، لا سحابة، لا تتبع، لا إعلانات، ولا خادم يعرف اسمك.':'Your data lives on this device only — local IndexedDB. No accounts, no cloud, no tracking, no ads.')+'</p>'+
   '<p>'+(AR?'الوحيد الذي يعبر جهازك هو طلب نموذج الذكاء الصناعي — وإنما إذا فعّلت أنت مفتاح Groq بنفسك، ونصّه ملخص أحداثك فقط. وبدون مفتاح يعمل رفيق كاملاً بلا إنترنت.':'Only outbound traffic is the AI model request, and only if you enabled your own Groq key. Without it, Rafiq works fully offline.')+'</p>'+
   '<p>'+(AR?'حقوقك بنقرة: «تصدير نسخة احتياطية» يخرج كل شيء ملفاً واحداً، و«مسح كل شيء» يمحي ذاكرة رفيق نهائياً — أنت المالك الوحيد.':'Export in one tap, erase in one tap — you are the sole owner.')+'</p>'+
@@ -6037,7 +6165,6 @@ function buildMoreSheet(){
   '<div class="sh-grip"></div><div class="sh-head"><b>'+t('tab_more')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
   '<div class="more-hi">'+t('more_hi')+esc(S.profile.name||(LANG==='ar'?'بك':'there'))+'</div>'+
   '<div class="more-sub">'+t('more_sub')+'</div>'+
-  '<button class="more-item" data-more="navcraft">'+ic('edit',19)+'<span>'+(LANG==='ar'?'✨ شريطي كما أريد':'✨ My bar, my way')+'</span><small>'+(LANG==='ar'?'رتّب شريط المهام أسفل الشاشة — أضف وانزع ورتّب':'Arrange your bottom bar — add, remove, reorder')+'</small></button>'+
   '<button class="more-item" data-more="mind">'+ic('brain',19)+'<span>'+(LANG==='ar'?'🧠 العقل المحلي':'🧠 The Local Mind')+'</span><small>'+(LANG==='ar'?'عين رفيق على بياناتك — اكتشافات لحظية':'Rafiq reads your data — instant discoveries')+'</small></button>'+
   '<button class="more-item" data-more="story">'+ic('book',19)+'<span>'+t('m_story')+'</span><small>'+t('m_story_s')+'</small></button>'+
   '<button class="more-item" data-more="ritual">'+ic('sun2',19)+'<span>'+t('m_ritual')+'</span><small>'+t('m_ritual_s')+'</small></button>'+
@@ -6076,6 +6203,7 @@ window.__rfStage='ربط الأفعال';
  else if(act==='rfSet')openRfSet();
  else if(act==='wipeChat')askConfirm(LANG==='ar'?'مسح كل الدردشات؟':'Clear all chats?',LANG==='ar'?'ستُمحى كل رسائل المحادثة نهائياً — بياناتك وأحداثك لا تُلمس.':'All chat messages will be erased — your events and data are untouched.',LANG==='ar'?'مسح':'Clear',async()=>{await DB.clear('chat');S.chat=[];go('chat');toast(LANG==='ar'?'مُسحت الدردشات':'Chats cleared','var(--ink2)','trash')});
  else if(act==='toggleIn')toggleInterest(id);
+ else if(act==='taskDel')delTaskCore(id);
  else if(act==='addInt'){
   const tx=window.prompt(LANG==='ar'?'أدخل اهتماماتك التي ترغب في إجازتها — وسأتابعها معك حتى تتحقق:':'Enter the interests you want to commit to:');
   if(tx&&tx.trim())await addInterest(tx);
@@ -6096,7 +6224,7 @@ window.__rfStage='ربط الأفعال';
   const sp=sparkOfTheDay();
   openEventSheet(t('spk_applied')+sp.text,sp.cat);
  }
- else if(act==='questGo'){renderQuestPick();}
+ else if(act==='questGo'){openTaskLib();}
  else if(act==='perfR'){perfR=b.dataset.r;try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}const pw=$('#pfWrap');if(pw)pw.innerHTML=perfInner();else go('home')}
  else if(act==='openPlan')openPlanSheet();
  else if(act==='planDel'){await delPlanCore(id);refresh()}
@@ -6136,49 +6264,148 @@ window.__rfStage='ربط الأفعال';
  else if(act==='calPrev'){calM--;if(calM<0){calM=11;calY--}renderCal()}
  else if(act==='calNext'){calM++;if(calM>11){calM=0;calY++}renderCal()}
 });
+/* ===== v1.9.0 «يومي المتقن» — مكتبة مهامي: ست عائلات مصنفة، كل مهمة بشرح خفيف يوضح أهميتها وفائدة أدائها — صياغة مطوّرة من قائمة مراد ===== */
+const TASK_LIB={
+ ar:[
+  {id:'deen',icon:'star',name:'أعمال دينية',cat:'mind',items:[
+   ['أذكار الصباح والمساء','وردٌ يومي يثبت القلب ويصون اليوم من الغفلة — دقائق قليلة تحصّن يومك كله'],
+   ['قراءة القرآن ولو صفحة','صفحة يومية تكمل المصحف في أشهر — أو استمع في طريقك إن تعذّرت التلاوة'],
+   ['الصلاة في وقتها','أساس الثبات والاتزان الروحي — ثبّت الصلوات وابدأ منها يومك'],
+   ['الدعاء والاستغفار','طلب التوفيق والهداية — جوّل يومك بنداء صادق ولو قصيراً'],
+   ['صدقة اليوم ولو بسيطة','الصدقة تسدّ بلاء ولو بقليل — اجعلها عادة يومية يشرح بها قلبك']]},
+  {id:'akhlaq',icon:'heart',name:'أخلاق يومية',cat:'mind',items:[
+   ['الصدق في القول والعمل','صدقك مع الناس ثقة، وصدقك مع نفسك سلام — اجعله عقدك اليومي'],
+   ['لين الكلام واحترام الجميع','الكلمة الطيبة تربح القلوب — اختر رفّة الحديث حتى في خلافك'],
+   ['العدل وعدم الظلم','احفظ حق الآخر ولو كان مخطئاً معك — العدل ميزان القرب'],
+   ['الصبر وضبط النفس','في المواقف الصعبة خذ نفساً عميقاً — الصبر يفتح ما يغلقه الغضب'],
+   ['الوفاء بالعهد والمواعيد','أمانتك سباقة على مصلحتك — وفِ بوعدك ولو ضاق الوقت']]},
+  {id:'insan',icon:'users',name:'أعمال إنسانية',cat:'relations',items:[
+   ['مساعدة محتاج مادياً أو معنوياً','طار لمن حولك — يدٌ ترفع همّاً أو كلمة تخفف عنقاً'],
+   ['إدخال السرور على قلب','ابتسامة أو مكالمة قد تقلب يوم إنسان كله — الخير خفيف وأثره ثقيل'],
+   ['بر الوالدين','دعوة صادقة وزيارة ولو قصيرة — فرحتهما عبادة ترفع عملك'],
+   ['التعاون في البيت والعمل','احمل اليوم جزءاً من كُدّة غيرك — البيوت والمصانع تُبنى بالتعاون'],
+   ['حفظ حقوق الآخرين','لا تأخذ ما ليس لك ولو صغُر — الحقوق مودعة عندك تحفظها']]},
+  {id:'self',icon:'sprout',name:'تطوير شخصي',cat:'growth',items:[
+   ['تعلّم مهارة جديدة هذا الأسبوع','لغة أو كتابة أو تواصل — ربع ساعة يومياً تصنع خلال شهر مبتدئاً'],
+   ['ترتيب أولويات اليوم','اكتب أهم ثلاث مهمات وابدأ بها قبل الضجيج — يومك يحترم قائمتك'],
+   ['تأمل في ردود أفعالي','الذكاء العاطفي يُبنى بالمراجعة — كيف رددت اليوم؟ وكيف أردت لو أعيد؟'],
+   ['تأمل يومي 3 دقائق عمّا تعلمته','علم لا يُدوَّن يتبخر — خلاصة اليوم بثلاث دقائق تصنع ذاكرتك'],
+   ['قراءة كتاب أو مقال مفيد','الصفحات الصغيرة تتراكم — دقائق قراءتك اليوم صانعة فهمك بكرة']]},
+  {id:'career',icon:'briefcase',name:'تطوير مهني',cat:'work',items:[
+   ['درس أو مقال مهني اليوم','معرفة صغيرة كل يوم ترفع سقفك — خصص 10 دقائق لصناعتك'],
+   ['متابعة دورة تدريبية','دورة قصيرة كل شهر — قيادية أو تقنية تبقيك في الواجهة'],
+   ['تواصل مع شخص مهني جديد','شبكتك رأس مالك البشري — رسالة أسبوعية تفتح أبواباً لا تُتوقع'],
+   ['تطبيق مهارة جديدة في العمل','الدرس لا يكتمل إلا بالتطبيق — جرّب اليوم ما تعلمته أمس'],
+   ['طلب تغذية راجعة من زميل أو مدير','سؤال «كيف أتحسن؟» يختصر عليك شهوراً من الحيرة'],
+   ['تحليل موقف صعب مررت به','ماذا كان الحل الأفضل؟ — تجربة اليوم هي أستاذ بكرة']]},
+  {id:'goals',icon:'target',name:'أهداف ومراجعة',cat:'growth',items:[
+   ['هدف أسبوعي قابل للقياس','هدف SMART محدد وموقوت — لا أمنيات عامة بل رقم وتاريخ'],
+   ['تقسيم هدفي لمهام صغيرة اليوم','الجبل يُنفذ حجراً حجراً — وزّع الهدف على أيام أسبوعك'],
+   ['مراجعة تقدمي هذا الأسبوع','نهاية الأسبوع ميزان — ماذا تقدم؟ ماذا تأخر؟ ولماذا؟']]}
+ ],
+ en:[
+  {id:'deen',icon:'star',name:'Daily worship',cat:'mind',items:[
+   ['Morning & evening adhkar','A daily litany that steadies the heart — a few minutes shield your whole day'],
+   ['Quran, even one page','One page a day finishes the mushaf in months — or listen on your commute'],
+   ['Prayers on time','The foundation of spiritual balance — anchor your day to the prayers'],
+   ['Supplication & istighfar','Seeking guidance and success — color your day with a sincere call'],
+   ['Daily charity, however small','Charity wards off harm, even a little — make it a quiet daily habit']]},
+  {id:'akhlaq',icon:'heart',name:'Daily character',cat:'mind',items:[
+   ['Honesty in word and deed','Truth earns trust with people and peace with yourself'],
+   ['Gentle speech, respect for all','Kind words win hearts — choose softness even in disagreement'],
+   ['Fairness, no injustice','Guard others rights even when they wronged you'],
+   ['Patience & self-control','In hard moments take a deep breath — patience opens what anger closes'],
+   ['Keeping promises','Your trustworthiness comes before your interest — keep your word']]},
+  {id:'insan',icon:'users',name:'Human deeds',cat:'relations',items:[
+   ['Help someone in need','Material or moral — a hand that lifts or a word that eases'],
+   ['Bring joy to a heart','A smile or a call can flip someones whole day'],
+   ['Honor your parents','A sincere call or a short visit — their joy lifts your deeds'],
+   ['Cooperate at home & work','Carry part of someone elses load today'],
+   ['Protect others rights','Never take what is not yours, however small']]},
+  {id:'self',icon:'sprout',name:'Personal growth',cat:'growth',items:[
+   ['Learn a new skill this week','A language, writing, communication — 15 minutes a day builds a month'],
+   ['Order todays priorities','Write your top three before the noise — your day respects your list'],
+   ['Reflect on my reactions','Emotional intelligence is built by review — how did you respond today?'],
+   ['3-minute daily reflection','Unwritten learning evaporates — a 3-minute summary builds memory'],
+   ['Read a useful book or article','Small pages accumulate — minutes today build tomorrow']]},
+  {id:'career',icon:'briefcase',name:'Career growth',cat:'work',items:[
+   ['A professional lesson today','Small daily knowledge raises your ceiling — 10 minutes for your craft'],
+   ['Follow a training course','A short monthly course — leadership or technical keeps you current'],
+   ['Connect with a new professional','Your network is your human capital — a weekly message opens doors'],
+   ['Apply a new skill at work','A lesson completes only by application — try yesterday learning today'],
+   ['Ask for feedback','How can I improve? saves months of guessing'],
+   ['Analyze a hard situation','What was the better move? — today experience is tomorrows teacher']]},
+  {id:'goals',icon:'target',name:'Goals & review',cat:'growth',items:[
+   ['A measurable weekly goal','A SMART goal — specific and timed, not a vague wish'],
+   ['Split my goal into small tasks','Mountains move stone by stone — spread the goal across your week'],
+   ['Review my weekly progress','Week end is a scale — what moved? what stalled? why?']]}
+ ]};
 const QUEST_BANK={
  ar:['ساعدتُ محتاجاً اليوم ولو بصدق صغير','تصدقتُ لعمل خيري','تواصلتُ مع صديق قديم افتقدته','جلسة عائلية كاملة بلا هواتف','سامحتُ شخصاً أجرى عليّ','علّمتُ شخصاً شيئاً أعرفه','شكرتُ أمي/أبي على شيء محدد','زرتُ مريضاً أو مسناً','أفطرتُ صائماً أو أكرمتُ ضيفاً','أعطيتُ وقفة مواصلات أو مساعدة على الطريق','حملتُ مؤنة جار أو ساعدتُه بحاجة','تصدقتُ بمال خفي حتى لا يعلم المتبرع به','قرأتُ شيئاً مفيداً وأهديتُه لصديق','شجعتُ من أبدى مشقّة بالكلمة الطيبة','ساهمتُ بعشرين ريالاً في خير جماعي','سمعتُ من يضيق به ذرعاً دون مقاطعة'],
  en:['Helped someone in need today','Gave charity to a cause','Reached out to an old friend','Full family time without phones','Forgave someone who hurt me','Taught someone a skill','Thanked a parent for something specific','Visited a sick or elderly person','Fasted for someone or hosted a guest','Helped someone cross or carry loads','Carried a neighbor burden quietly','Gave anonymous charity','Shared a useful read with a friend','Encouraged someone struggling today','Contributed to a group charity cause','Listened to someone in distress fully']};
  function questBank(){
  return QUEST_BANK[LANG]||QUEST_BANK.ar;
 }
-function renderQuestPick(){
- const el=$('#modal');
- if(!el)return;
- const AR=LANG==='ar';
- const manual=S.events.filter(e=>e.type==='interest'&&e.gen==='human'&&dayStart(e.ts)===dayStart(Date.now()));
- const bank=questBank().filter(q=>!manual.some(m=>m.text===q));
- el.innerHTML='<div class="md-box"><b>'+(AR?'اختر مهمة يومك الإنسانية':'Pick your human quest')+'</b>'+
-  '<p>'+(AR?'أعمال ترفعك وترفع الآخرين — أو اكتب موعدك/واجبك الخاص:':'Deeds that lift you and others — or write your own:')+'</p>'+
-  '<div class="qp-list">'+bank.map(q=>'<button class="chip" data-qpick="'+esc(q)+'" style="width:100%">'+esc(q)+'</button>').join('')+
-  (manual.length?'<div style="font-size:10.5px;color:var(--ink3);margin:10px 0 6px">'+(AR?'مهامك المضافة اليوم — اضغط 🗑 للحذف:':'Your added today — tap 🗑 to remove:')+'</div>'+
-   manual.map(m=>'<div class="chip" style="width:100%;margin-bottom:6px">'+esc(m.text)+
-    '<button class="qp-del" data-qdel="'+m.id+'">'+ic('trash',13)+'</button></div>').join(''):'')+
-  '</div>'+
-  '<div style="height:12px"></div><input id="qCustom" placeholder="'+(AR?'مواعيدي وواجباتي المطلوبة مني…':'My own appointments & duties…')+'">'+
-  '<button class="btn" id="qCustomGo" style="margin-top:10px">'+t('save')+'</button>'+
-  '<button class="btn ghost" id="qClose" style="margin-top:8px">'+t('cancel')+'</button></div>';
- el.classList.add('show');
- $$('#modal [data-qpick]').forEach(b=>b.onclick=()=>{el.classList.remove('show');applyQuestPick(b.dataset.qpick)});
- $$('#modal [data-qdel]').forEach(b=>b.onclick=async()=>{
-  const did=b.dataset.qdel;
-  await DB.del('events',did);
-  S.events=S.events.filter(x=>x.id!==did);
-  el.classList.remove('show');
-  toast(AR?'حُذفت المهمة':'Quest removed','var(--ink2)','trash');
-  refresh();
- });
- $('#qClose').onclick=()=>el.classList.remove('show');
- $('#qCustomGo').onclick=()=>{
-  const v=$('#qCustom').value.trim();if(!v)return;
-  el.classList.remove('show');applyQuestPick(v);
- };
+/* ===== v1.9.0 «يومي المتقن» — مكتبة مهامي: ورقة منسدلة بست عائلات مصنفة وشرح خفيف، تختار منها دون مغادرة وعند الإغلاق تعود للرئيسية محدثة — بلاغ مراد ===== */
+function openTaskLib(){
+ tlFilter='all';
+ drawTaskLib();
+ openSheet('#shTaskLib');
 }
-async function applyQuestPick(txt){
- const ev={id:uid(),type:'interest',category:'growth',polarity:1,text:txt,done:false,gen:'human',ts:Date.now()};
- await DB.put('events',ev);S.events.push(ev);
+function drawTaskLib(){
+ const AR=LANG==='ar';
+ const ds=dayStart(Date.now());
+ const todays=S.events.filter(e=>e.type==='interest'&&e.gen==='human'&&dayStart(e.ts)===ds);
+ const doneN=todays.filter(e=>e.done).length;
+ const lib=TASK_LIB[LANG]||TASK_LIB.ar;
+ const groups=lib.filter(g=>tlFilter==='all'||tlFilter===g.id);
+ put('#shTaskLib',
+  '<div class="sh-grip"></div><div class="sh-head"><b>'+(AR?'مكتبة مهامي':'My task library')+'</b><button class="sh-x" data-close>'+ic('x',15)+'</button></div>'+
+  '<div class="nv-hint">'+(AR?'اختر ما يناسبك فيضُم إلى «مهام اليوم» فتراقبه حتى تؤشّر إنجازه — أو اكتب مهمتك بنفسك أسفل الورقة. كل لمسة تُحفظ فوراً في جهازك.':'Pick what fits and it joins your daily quests to track until done — or write your own below. Every tap saves instantly.')+'</div>'+
+  '<div class="tl-count">'+ic('check',13)+' '+(AR?'مهام اليوم':'Today')+': '+doneN+' / '+todays.length+(todays.length>0&&doneN===todays.length?(AR?' — يومك مكتمل 🌟':' — complete 🌟'):'')+'</div>'+
+  '<div class="tl-tabs">'+lib.map(g=>'<button class="chip tl-tab'+(tlFilter===g.id?' on':'')+'" data-tlf="'+g.id+'">'+ic(g.icon,13)+' '+g.name+'</button>').join('')+'</div>'+
+  groups.map(g=>'<div class="tl-group"><div class="tl-gname">'+ic(g.icon,15)+' '+g.name+'</div>'+
+   g.items.map(it=>{
+    const ex=todays.find(e=>e.text===it[0]);
+    return '<div class="tl-row'+(ex?' has':'')+'"><div style="flex:1;min-width:0"><b>'+esc(it[0])+'</b><p>'+esc(it[1])+'</p></div>'+
+     (ex?'<button class="tl-in" data-tlrm="'+ex.id+'" title="'+(AR?'في قائمتك — اضغط لإزالتها':'In your list — tap to remove')+'">'+ic('check',13)+' '+(AR?'في قائمتك':'added')+' '+ic('trash',11)+'</button>'
+        :'<button class="tl-add" data-tladd="'+esc(it[0])+'" data-tlcat="'+g.cat+'" title="'+(AR?'أضف إلى مهام اليوم':'Add to daily quests')+'">'+ic('plus',14)+'</button>')+'</div>';
+   }).join('')+'</div>').join('')+
+  '<div style="height:14px"></div>'+
+  '<input id="tlCustom" maxlength="120" placeholder="'+(AR?'أو اكتب مهمتك الخاصة…':'Or write your own task…')+'">'+
+  '<button class="btn" id="tlCustomGo" style="margin-top:10px">'+ic('plus',15)+' '+(AR?'أضف مهمتي':'Add my task')+'</button>');
+ $$('#shTaskLib [data-tlf]').forEach(b=>b.onclick=()=>{tlFilter=b.dataset.tlf;drawTaskLib()});
+ $$('#shTaskLib [data-tladd]').forEach(b=>b.onclick=async()=>{b.disabled=true;await applyQuestPick(b.dataset.tladd,b.dataset.tlcat);drawTaskLib()});
+ $$('#shTaskLib [data-tlrm]').forEach(b=>b.onclick=async()=>{b.disabled=true;await delTaskCore(b.dataset.tlrm);drawTaskLib()});
+ const cg=$('#tlCustomGo');
+ if(cg)cg.onclick=async()=>{const v=$('#tlCustom')?$('#tlCustom').value.trim():'';if(!v)return;const ok=await applyQuestPick(v,'growth');if(ok&&$('#tlCustom'))$('#tlCustom').value='';drawTaskLib()};
+}
+async function applyQuestPick(txt,cat){
+ /* v1.9.1: الحارس المطلق ضد التكرار — نفس النص لليوم نفسه لا يدخل مرتين مهما تكررت النقرات */
+ if(S.events.some(e=>e.type==='interest'&&e.text===txt&&dayStart(e.ts)===dayStart(Date.now()))){
+  toast((LANG==='ar'?'موجودة في قائمتك اليوم أصلاً ✓':'Already in your list today ✓'),'var(--ink2)','check',null,null,2600);
+  return false;
+ }
+ const ev={id:uid(),type:'interest',category:cat||'growth',polarity:1,text:txt,done:false,gen:'human',ts:Date.now()};
+ /* v1.9.1: الذاكرة أولاً ثم التخزين — الشارة تظهر فوراً ولا ثغرة لنقرة ثانية */
+ S.events.push(ev);await DB.put('events',ev);
+ try{navigator.vibrate&&navigator.vibrate(10)}catch(_){}
  refresh();
- toast((LANG==='ar'?'مهمة اليوم انضمت لاهتماماتك — أنتظر أن تتحقق':'Your quest joined your interests'),'var(--good)','star');
+ toast((LANG==='ar'?'انضمت لـ«مهام اليوم» — راقبها وأشّر إنجازها':'Joined your daily quests — track and mark it done'),'var(--good)','star');
+ return true;
+}
+/* v1.9.1: حذف مهمة من القائمة — سلة فورية مع «تراجع» يعيدها سليمة 6 ثوان */
+let lastDelTask=null;
+async function delTaskCore(id){
+ const i=S.events.findIndex(x=>x.id===id&&x.type==='interest');if(i<0)return;
+ lastDelTask=S.events[i];
+ await DB.del('events',id);S.events.splice(i,1);
+ try{navigator.vibrate&&navigator.vibrate(12)}catch(_){}
+ refresh();
+ toast((LANG==='ar'?'حُذفت المهمة من قائمتك':'Task removed from your list'),'var(--ink2)','trash',(LANG==='ar'?'تراجع':'Undo'),async()=>{
+  if(!lastDelTask)return;
+  S.events.push(lastDelTask);await DB.put('events',lastDelTask);lastDelTask=null;refresh();
+ },6000);
 }
 document.addEventListener('click',async e=>{
  const pr=e.target.closest('[data-pred]');
@@ -6208,7 +6435,6 @@ document.addEventListener('click',async e=>{
  const m=it.dataset.more;
  closeSheets();
  if(['life','cal','twin','relations','decisions','report','settings','mind'].indexOf(m)>=0)setTimeout(()=>go(m),60);
- else if(m==='navcraft')setTimeout(openNavSheet,60);
  else if(m==='story')setTimeout(openStorySheet,140);
  else if(m==='fingerprint')setTimeout(()=>{go('fingerprint')},140);
  else if(m==='lab')setTimeout(()=>{go('lab')},140);
@@ -6268,7 +6494,7 @@ async function exportBackup(){
   for(const d of (data.decisions||[]))await DB.put('decisions',d);
   for(const c of (data.chat||[]))await DB.put('chat',c);
   if(data.meta)await DB.put('meta',{key:'main',profile:data.meta.profile||{},reminders:data.meta.reminders||[],seeded:data.meta.seeded,settings:data.meta.settings});
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(data.meta&&data.meta.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],lockKind:'pin',pattern:'',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(data.meta&&data.meta.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -6299,7 +6525,7 @@ window.__rfStage='فتح قاعدة البيانات';
   window.__rfStage='قراءة البيانات المحفوظة';
   let m=null;
   try{m=(await DB.all('meta')).find(x=>x.key==='main')}catch(e){}
-  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(m&&m.settings)||{});
+  S.settings=Object.assign({lang:'ar',theme:'dark',accent:'amber',nav:['cal','chat'],lockKind:'pin',pattern:'',toggles:{rel:true,habits:true},a2hsDone:false,pin:'',pinOn:false,secQ:'',secA:'',ritualM:'',ritualE:'',ritualOff:false,intent:null,challenge:null,joyOpen:''},(m&&m.settings)||{});
   if(!S.settings.toggles)S.settings.toggles={rel:true,habits:true};
   LANG=S.settings.lang||'ar';
   applyLang();applyTheme();
@@ -6312,7 +6538,7 @@ window.__rfStage='فتح قاعدة البيانات';
    try{S.reminders.forEach(r=>{if(r&&r.ts&&r.ts>Date.now())rfScheduleReminder(r)})}catch(e){}
    await loadAll();try{await bodyCleanupOnce()}catch(e){}computeAll();renderDot();enterApp(false);
   }else renderOb();
-  if(S.settings.pin&&S.settings.pinOn)showLock();
+  if(S.settings.pinOn&&(S.settings.pin||S.settings.pattern))showLock();
   else{
    const shown=showRitualIfNeeded();
    if(!shown){
